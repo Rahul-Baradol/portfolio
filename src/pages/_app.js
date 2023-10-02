@@ -1,6 +1,7 @@
 import Navbar from '@/components/Navbar'
 import '@/styles/globals.css'
-import { useEffect, useState } from 'react'
+import Head from 'next/head';
+import { useState } from 'react'
 
 export default function App({ Component, pageProps }) {
   const [nonHeroVisible, setNonHeroVisible] = useState(0);
@@ -15,6 +16,10 @@ export default function App({ Component, pageProps }) {
 
   return (
     <>
+      <Head>
+        <title>Rahul Baradol | Portfolio</title>
+      </Head>
+      
       <style jsx>
         {`
           .parent{

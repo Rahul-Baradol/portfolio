@@ -8,11 +8,7 @@ export default function Home({blurness, setBlurness, nonHeroVisible, setNonHeroV
 
   let blurValues = ['blur-none', 'blur-sm', 'blur', 'blur-md', 'blur', 'blur-sm', 'blur-none', 
                     ,'blur-none', 'blur-sm', 'blur', 'blur-md', 'blur', 'blur-sm', 'blur-none'];
-  let incrementUpperBound = 50;
-
-  let blurOut1 = true;
-  let blurOut2 = false;
-  let allowBlurOut2Second = true;
+  let incrementUpperBound = 15;
 
   let blurEffect = {
       top: '45vh'
@@ -20,7 +16,7 @@ export default function Home({blurness, setBlurness, nonHeroVisible, setNonHeroV
 
   useEffect(() => {
       setTimeout(()=>{
-        if (nonHeroToggled === 0) {
+        if (nonHeroToggled === 0 && hero.current != null) {
           hero.current.addEventListener("wheel", (event) => {
             if (event.deltaY > 0) {
               onWheelDown();
@@ -45,8 +41,8 @@ export default function Home({blurness, setBlurness, nonHeroVisible, setNonHeroV
 
           setDesign1("text-sm");
           setDesign2("text-violet-800");
+        } else if (cur === 15) {
           setNonHeroVisible(1);
-        } else if (cur === 18) {
           setNonHeroToggled(1);
         }
         setBlurness(cur);
@@ -127,12 +123,12 @@ export default function Home({blurness, setBlurness, nonHeroVisible, setNonHeroV
                 }
 
                 .transitionFilter {
-                  transition: filter 0.4s;
+                  transition: filter 0.2s;
                 }
             `}
         </style>
 
-        <div className={`h-full bg-cover bg-no-repeat ${styles.heroOuter}`}>
+        <div className={`z-0 h-full bg-cover bg-no-repeat ${styles.heroOuter}`}>
             <div ref={hero} className='relative flex flex-col items-center justify-between w-screen h-screen'>
                 <div className={`text-4xl px-3 relative ${blurValues[blurness]} transitionFilter`} style={blurEffect}>
                   <div className={`transitionBefore1 ${design1}`}>{intro1}</div>
@@ -156,8 +152,8 @@ export default function Home({blurness, setBlurness, nonHeroVisible, setNonHeroV
               <div className='inline-block text-violet-800 mx-1'>Yup.....you read it right I love Leetcode!</div>
               I have made a couple of projects in React, Bootstrap, 
               and Tailwind CSS and I'm currently exploring technologies like Express,
-              MongoDB, Threejs, ...
-              I also love participating in short contests of algorithms.
+              MongoDB, ...
+              I also love participating in short contests of algorithms and I also love System Designing.
               I got a second place in 
               <div className="inline-block text-violet-800 mx-1">Alcoding Practice Placement Test Series</div>
               hosted by my university and I'm currently top <div className='inline-block text-violet-800'>5%</div> on Leetcode!
