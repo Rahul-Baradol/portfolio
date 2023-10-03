@@ -6,7 +6,7 @@ import { menu, close, logoBlackR } from '../assets'
 
 const Navbar = (props) => {
   const [active, setActive] = useState('');
-  const [toggle, setToggle] = useState(false);
+  const [showMenu, setShowMenu] = useState(true);
 
   return (
     <>
@@ -71,7 +71,6 @@ const Navbar = (props) => {
                         return <li key={link.id}
                             className={`${active === link.title ? "text-white" : "text-secondary"} font-medium cursor-pointer`}
                             onClick={() => {
-                              setToggle(!toggle);
                               setActive(link.title);
                             }}
                           >
@@ -84,22 +83,22 @@ const Navbar = (props) => {
 
                   <div className="sm:hidden flex justify-end items-center">
                     <Image
-                        src={toggle ? close : menu}
+                        src={!showMenu ? close : menu}
                         alt="menu"
                         className='w-8 h-auto object-contain cursor-pointer menuImg'
                         onClick={() => {
-                          setToggle(!toggle)
+                          setShowMenu(!showMenu)
                         }}
                     />
 
-                    <div className={`${!toggle ? "hidden" : "flex"} p-6 absolute top-20 right mx-4 my-2 min-w-[140px] z-10 rounded-xl navMenu`}>
+                    <div className={`${showMenu ? "hidden" : "flex"} p-6 absolute top-20 right mx-4 my-2 min-w-[140px] z-10 rounded-xl navMenu`}>
                           <ul className='list-none flex justify-end flex-col gap-4'>
                               {
                                 navLinks.map((link) => {
                                   return <li key={link.id}
                                       className={`${active === link.title ? "text-white" : "text-secondary"} font-poppins font-medium cursor-pointer`}
                                       onClick={() => {
-                                        setToggle(!toggle)
+                                        setShowMenu(!showMenu)
                                         setActive(link.title);
                                       }}
                                     >

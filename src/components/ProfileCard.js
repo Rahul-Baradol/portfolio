@@ -1,23 +1,15 @@
 import React from 'react'
-import styles from '../styles/ProfileCard.module.css'
-import Image from 'next/image'
+import styles from '../styles/contact.module.css'
 
 const ProfileCard = (props) => {
-  
   return (
     <>
-        <a href={`${props.link}`} target='_blank'>
-            <div className={`${styles.card} border-2 border-white rounded-2xl 
-                            flex sm:flex-row gap-2 p-6 card flex-col`}>
-              <Image src={props.logo} className={styles.logo} alt="" />
-              <div className={`flex flex-col`}>
-                <div className={`${styles.title} sm:contents hidden`}> {props.title} </div>
-                <div className={styles.desc}>
-                    {props.description}
-                </div>
-              </div>
-            </div>
-        </a>
+      <a href={props.link} target="_blank"> 
+        <div className={`profileCard ${styles.boxShadowBorder} mb-4 w-[80vw] md:w-[38vw] h-[31vh] flex flex-col items-center justify-center rounded-3xl`}>
+          <div className='text-2xl'>{props.title}</div>
+          <div className='text-xl'>{props.desc}</div>
+        </div>
+      </a>
     </>
   )
 }

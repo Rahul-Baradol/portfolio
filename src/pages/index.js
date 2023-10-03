@@ -142,7 +142,7 @@ export default function Home({blurness, setBlurness, nonHeroVisible, setNonHeroV
         </div>
 
         {(nonHeroToggled) | (nonHeroVisible && blurness <= 0) ? 
-        <div className="flex font-mono sm:justify-around md:flex-row p-5 gap-8 h-fit flex-col items-center w-screen customStyle">
+        <div className="my-4 mb-12 flex font-mono sm:justify-around md:flex-row p-5 gap-8 h-fit flex-col items-center w-screen customStyle">
           <div className='w-[55vw] text-xl'>
             <div className="text-2xl text-violet-800">Hello there...</div>
               I am a <div className="inline-block text-violet-800">2nd year</div> Computer Science student 

@@ -12,6 +12,8 @@ import creator from "./creator.png";
 import mobile from "./mobile.png";
 import web from "./web.png";
 import github from "./github.svg";
+import leetCodeIcon from './leetcode.svg'
+import codeChefIcon from './codechef.svg'
 import menu from "./menu.svg";
 import close from "./close.svg";
 import flowpuzzlesolver from './flowpuzzlesolver.ico'
@@ -40,6 +42,8 @@ import jobit from "./jobit.png";
 import tripguide from "./tripguide.png";
 
 export {
+  leetCodeIcon, 
+  codeChefIcon,
   flowpuzzlesolver,
   logoWhiteR,
   logoColorR,
