@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Link from 'next/link';
 import Image from 'next/image'
-import { navLinks } from '../contants'
+import { navLinks } from '../contants/contants'
 import { menu, close, logoBlackR } from '../assets'
 
 const Navbar = (props) => {

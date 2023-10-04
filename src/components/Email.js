@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styles from '../styles/contact.module.css'
 import emailjs from '@emailjs/browser'
 import EmailSentToast from './EmailSentToast';
+import { emailInfo } from '@/contants/contants';
 
 const Email = () => {
     const [data, setData] = useState({
@@ -32,16 +33,16 @@ const Email = () => {
         setLoading(true);
         setLoadingOpacity('opacity-50');
         emailjs.send(
-            'service_ovdt9sg',
-            'template_epwmkc2',
+            emailInfo.serviceId,
+            emailInfo.templateId,
             {
                 from_name: data.name,
-                to_name: 'Rahul',
+                to_name: emailInfo.toName,
                 from_email: data.email,
-                to_email: 'rahul.baradol.14@gmail.com',
+                to_email: emailInfo.toEmail,
                 message: data.message
             },
-            'Ij2Paklave1Hh2jta'
+            emailInfo.publicKey
         ).then(()=>{
             setToastMessage('Email Sent!');
             setToastOpacity('opacity-100');

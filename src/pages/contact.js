@@ -1,6 +1,7 @@
 import Email from '@/components/Email';
 import ProfileCard from '@/components/ProfileCard';
 import {React, useEffect} from 'react'
+import { contactInfo } from '@/contants/contants';
 
 const contact = (props) => {
   useEffect(()=>{
@@ -19,8 +20,8 @@ const contact = (props) => {
                       items-center gap-5'>
         <Email />
         <div className='w-[80vw] flex flex-col items-center md:flex-row md:justify-around gap-10'>
-          <ProfileCard link="https://github.com/Rahul-Baradol" title="GitHub" desc="@Rahul-Baradol" />
-          <ProfileCard link="https://www.linkedin.com/in/rahul-baradol-22723b289/" title="LinkedIn" />
+          <ProfileCard link={contactInfo.github.link} title={contactInfo.github.title} desc={contactInfo.github.description} />
+          <ProfileCard link={contactInfo.linkedIn.link} title={contactInfo.linkedIn.title} />
         </div>
       </div>
     </>
