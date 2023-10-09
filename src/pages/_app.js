@@ -1,4 +1,4 @@
-import Footer from '@/components/Footer';
+import {NextUIProvider} from "@nextui-org/react";
 import Navbar from '@/components/Navbar'
 import '@/styles/globals.css'
 import Head from 'next/head';
@@ -38,28 +38,29 @@ export default function App({ Component, pageProps }) {
         `}
       </style>
 
-      <div className="parent">
-        <div className="child">
-          <div className="relative z-0 bg-primary">
-            <Navbar nonHeroVisible={nonHeroVisible} />
-            <Component {...pageProps} nonHeroToggled={nonHeroToggled} 
-                                      setNonHeroToggled={setNonHeroToggled} 
-                                      nonHeroVisible={nonHeroVisible} 
-                                      setNonHeroVisible={setNonHeroVisible}
-                                      intro1={intro1}
-                                      setIntro1={setIntro1}
-                                      intro2={intro2}
-                                      setIntro2={setIntro2}
-                                      design1={design1}
-                                      setDesign1={setDesign1}
-                                      design2={design2}
-                                      setDesign2={setDesign2} 
-                                      blurness={blurness}
-                                      setBlurness={setBlurness} />
-          </div>  
+      <NextUIProvider>
+        <div className="parent">
+          <div className="child">
+            <div className="relative z-0">
+              <Navbar nonHeroVisible={nonHeroVisible} />
+              <Component {...pageProps} nonHeroToggled={nonHeroToggled} 
+                                        setNonHeroToggled={setNonHeroToggled} 
+                                        nonHeroVisible={nonHeroVisible} 
+                                        setNonHeroVisible={setNonHeroVisible}
+                                        intro1={intro1}
+                                        setIntro1={setIntro1}
+                                        intro2={intro2}
+                                        setIntro2={setIntro2}
+                                        design1={design1}
+                                        setDesign1={setDesign1}
+                                        design2={design2}
+                                        setDesign2={setDesign2} 
+                                        blurness={blurness}
+                                        setBlurness={setBlurness} />
+            </div>  
+          </div>
         </div>
-      </div>
-
+      </NextUIProvider>
     </>
   )
 }

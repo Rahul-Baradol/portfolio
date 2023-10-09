@@ -22,6 +22,7 @@ const ProjectCard = (props) => {
             <div className={`flex flex-row justify-between w-[78vw] md:w-[40vw]`}>
                 <div className='flex gap-2'>
                     {
+                        console.log(props.technologies) &&
                         props.technologies.map((value, index)=>{
                             return <Image key={index}  src={value[0]}
                                             width={20}

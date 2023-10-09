@@ -1,0 +1,11 @@
+{
+    "work": {
+        "id": "work",
+        "title": "Work"
+    },
+
+    "contact": {
+        "id": "contact",
+        "title": "Contact"
+    }
+}

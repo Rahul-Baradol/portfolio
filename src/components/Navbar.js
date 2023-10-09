@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Link from 'next/link';
 import Image from 'next/image'
-import { navLinks } from '../contants/contants'
+import { navLinks } from '../../constants/constants'
 import { menu, close, logoBlackR } from '../assets'
 
 const Navbar = (props) => {
@@ -69,7 +69,7 @@ const Navbar = (props) => {
                     {
                       navLinks.map((link) => {
                         return <li key={link.id}
-                            className={`${active === link.title ? "text-white" : "text-secondary"} font-medium cursor-pointer`}
+                            className={`${active === link.title ? "text-white" : "text-purple-400"} font-medium cursor-pointer`}
                             onClick={() => {
                               setActive(link.title);
                             }}

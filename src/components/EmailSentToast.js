@@ -9,6 +9,7 @@ const EmailSentToast = (props) => {
                 .toast {
                     transition: opacity 1s;
                     width: max(20vw, 200px);
+                    z-index: 20;
                 }
             `}
         </style>
