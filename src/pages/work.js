@@ -82,12 +82,15 @@ const work = (props) => {
           <div className='text-3xl font-thin mt-1 mb-4'>Projects</div>
           <div className={`w-[90vw] m-10 relative top-3 grid grid-cols-1 md:grid-cols-2 gap-10`}>
             {
-              props.projects.length > 0 && props.projects.map((project, projectId) => {
+              props.projects.map((project, projectId) => {
                 return <Card key={projectId} className="w-[90vw] md:w-[45vw] dark ">
                           <CardHeader className="flex gap-3">
                             <div className="flex flex-col">
                               <p className="text-md">{project.title}</p>
-                              <a href={`${project.siteLink}`} target='_blank' className="text-small text-default-500">{project.siteLinkDesc}</a>
+                              <div className='flex flex-row justify-between w-[43vw]'>
+                                <a href={`${project.siteLink}`} target='_blank' className="text-small text-default-500">{project.siteLinkDesc}</a>
+                                <Code color="primary">{project.personal ? "Personal" : "Team"}</Code>
+                              </div>
                             </div>
                           </CardHeader>
                           <Divider/>
@@ -122,7 +125,8 @@ const work = (props) => {
 
 export async function getServerSideProps() {
   let resProjects = await fetch('http://localhost:3000/api/projects');
-  let projects = await resProjects.json();
+  let projectsDb = await resProjects.json();
+  let projects = projectsDb.projects;
   return {
     props: { projects }
   }

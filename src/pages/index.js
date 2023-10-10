@@ -147,7 +147,7 @@ export default function Home({blurness, setBlurness, nonHeroVisible, setNonHeroV
               <CardBody>
                 <div className="text-2xl text-violet-800">Hello there...</div>
                 <div className='text-xl'>
-                  {aboutme.desc}
+                  {aboutme}
                 </div>
               </CardBody>
             </Card>
@@ -159,7 +159,9 @@ export default function Home({blurness, setBlurness, nonHeroVisible, setNonHeroV
 
 
 export async function getServerSideProps() {
-  const res = await fetch('http://localhost:3000/api/aboutme')
-  const aboutme = await res.json()
+  const res = await fetch('http://localhost:3000/api/other')
+  const data = await res.json()
+  const otherData = data.otherData;
+  const aboutme = otherData[0].aboutme;
   return { props: { aboutme } }
 }
