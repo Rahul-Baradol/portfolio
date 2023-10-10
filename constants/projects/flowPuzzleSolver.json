@@ -1,13 +1,8 @@
 {
     "title": "Flow Puzzle Solver",
     "description": "You must have played the game Flow Free on Mobile! Well this app solves the puzzles from the game Flow Free!",
-    "technologies": [
-      ["/src/assets/tech/reactjs.png", "React JS"], 
-      ["/src/assets/tech/nodejs.png", "Node JS"]
-    ],
-    
-    "projectLinks": [
-      ["https://flowpuzzlesolver.vercel.app/", "/src/assets/flowpuzzlesolver.ico", "F"], 
-      ["https://github.com/Rahul-Baradol/Flow-Puzzle-Solver-React", "/src/assets/github.svg", "GitHub"]
-    ]
+    "technologies": [["React", "primary"], ["Bootstrap", "secondary"]],
+    "siteLink": "https://flowpuzzlesolver.vercel.app/",
+    "siteLinkDesc": "flowpuzzlesolver.vercel.app",
+    "githubLink": "https://github.com/Rahul-Baradol/Flow-Puzzle-Solver-React"
 }

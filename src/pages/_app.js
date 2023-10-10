@@ -30,8 +30,8 @@ export default function App({ Component, pageProps }) {
           }
           .child{
             height: 100vh;
-            margin-right: -20px; /* maximum width of scrollbar */
-            padding-right: 20px; /* maximum width of scrollbar */
+            margin-right: -20px; 
+            padding-right: 20px;
             overflow-x: hidden;
             overflow-y: scroll;
           }

@@ -69,7 +69,7 @@ const Navbar = (props) => {
                     {
                       navLinks.map((link) => {
                         return <li key={link.id}
-                            className={`${active === link.title ? "text-white" : "text-purple-400"} font-medium cursor-pointer`}
+                            className={`text-white font-medium cursor-pointer`}
                             onClick={() => {
                               setActive(link.title);
                             }}
@@ -96,7 +96,7 @@ const Navbar = (props) => {
                               {
                                 navLinks.map((link) => {
                                   return <li key={link.id}
-                                      className={`${active === link.title ? "text-white" : "text-secondary"} font-poppins font-medium cursor-pointer`}
+                                      className={`text-white font-poppins font-medium cursor-pointer`}
                                       onClick={() => {
                                         setShowMenu(!showMenu)
                                         setActive(link.title);

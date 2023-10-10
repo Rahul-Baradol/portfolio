@@ -1,14 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import ProjectCard from '@/components/ProjectCard'
+import React, { useEffect } from 'react'
 import Footer from '@/components/Footer'
-import styles from '../styles/ProfileCard.module.css'
-import { workInfo } from '../../constants/constants'
 import {Card, CardHeader, CardBody, CardFooter, Divider, Link, Image} from "@nextui-org/react";
 import {Code} from "@nextui-org/react";
 
 const work = (props) => {
-  const [projects, setProjects] = useState([]);
-
   useEffect(()=>{
     props.setNonHeroVisible(1);
     props.setNonHeroToggled(1);
@@ -17,14 +12,6 @@ const work = (props) => {
     props.setDesign1("text-sm");
     props.setDesign2("text-violet-800");
   })
-
-  useEffect(()=>{
-    fetch('/api/work').then((res) => {
-      return res.json();
-    }).then((data) => {
-      setProjects(data);
-    })
-  }, [])
 
   return (
     <>
@@ -58,7 +45,7 @@ const work = (props) => {
                 <CardFooter>
                   <Link
                     isExternal
-                    href="https://github.com/nextui-org/nextui"
+                    href="https://leetcode.com/rahul_baradol/"
                   >
                     Leetcode
                   </Link>
@@ -79,7 +66,7 @@ const work = (props) => {
             <CardFooter>
               <Link
                 isExternal
-                href="https://github.com/Rahul-Baradol"
+                href="https://www.codechef.com/users/rahul227"
               >
                 CodeChef
               </Link>
@@ -95,28 +82,31 @@ const work = (props) => {
           <div className='text-3xl font-thin mt-1 mb-4'>Projects</div>
           <div className={`w-[90vw] m-10 relative top-3 grid grid-cols-1 md:grid-cols-2 gap-10`}>
             {
-              projects.length > 0 && projects.map((project, projectId) => {
+              props.projects.length > 0 && props.projects.map((project, projectId) => {
                 return <Card key={projectId} className="w-[90vw] md:w-[45vw] dark ">
                           <CardHeader className="flex gap-3">
                             <div className="flex flex-col">
-                              <p className="text-md">Flow Puzzle Solver</p>
-                              <a href="https://flowpuzzlesolver.vercel.app" target='_blank' className="text-small text-default-500">flowpuzzlesolver.vercel.app</a>
+                              <p className="text-md">{project.title}</p>
+                              <a href={`${project.siteLink}`} target='_blank' className="text-small text-default-500">{project.siteLinkDesc}</a>
                             </div>
                           </CardHeader>
                           <Divider/>
                           <CardBody>
-                            <p>Make beautiful websites regardless of your design experience.</p>
+                            <p>{project.description}</p>
                           </CardBody>
                           <CardFooter className='flex flex-row justify-between'>
                             <Link
                               isExternal
-                              href="https://github.com/nextui-org/nextui"
+                              href={`${project.githubLink}`}
                             >
                               Go to GitHub
                             </Link>
                             <div className='flex gap-2'>
-                              <Code color="primary">React</Code>
-                              <Code color="secondary">Bootstrap</Code>
+                              {
+                                project.technologies.map((value, index)=>{
+                                  return <Code key={index} color={value[1]}>{value[0]}</Code>
+                                })
+                              }
                             </div>
                           </CardFooter>
                     </Card>
@@ -128,6 +118,14 @@ const work = (props) => {
       </main>
     </>
   )
+}
+
+export async function getServerSideProps() {
+  let resProjects = await fetch('http://localhost:3000/api/projects');
+  let projects = await resProjects.json();
+  return {
+    props: { projects }
+  }
 }
 
 export default work

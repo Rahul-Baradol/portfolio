@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-import styles from '../styles/contact.module.css'
 import emailjs from '@emailjs/browser'
-import EmailSentToast from './EmailSentToast';
 import { emailInfo } from '../../constants/constants';
-import { Button, Card, Input, Textarea } from '@nextui-org/react';
+import { Card, Input } from '@nextui-org/react';
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
 
 const Email = () => {
     const [data, setData] = useState({
@@ -12,9 +11,8 @@ const Email = () => {
         message: ''
     });
     const [loading, setLoading] = useState(false);
-    const [loadingOpacity, setLoadingOpacity] = useState('opacity-100');
-    const [toastOpacity, setToastOpacity] = useState('opacity-0');
     const [toastMessage, setToastMessage] = useState('Type the details to send an email.');
+    const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
     let handleOnChange = (e) => {
         let { name, value } = e.target;
@@ -23,16 +21,11 @@ const Email = () => {
 
     let submit = (e) => {
         if (data.name === '' || data.email === '' || data.message === '') {
-            setToastOpacity('opacity-100');
-
-            setTimeout(()=>{
-                setToastOpacity('opacity-0');
-            },3500)
+            onOpen();
             return;
         }
         e.preventDefault();
         setLoading(true);
-        setLoadingOpacity('opacity-50');
         emailjs.send(
             emailInfo.serviceId,
             emailInfo.templateId,
@@ -46,27 +39,18 @@ const Email = () => {
             emailInfo.publicKey
         ).then(()=>{
             setToastMessage('Email Sent!');
-            setToastOpacity('opacity-100');
-            
-            setTimeout(()=>{
-                setToastOpacity('opacity-0');
-                
-                setTimeout(() => {
-                    setLoadingOpacity('opacity-100');
-                    setLoading(false);
-                    setToastMessage('Type the details to send an email.');
-                }, 1500);
-            },3500)
-
+            onOpen();            
+            setLoading(false);
             setData({
                 name: '',
                 email: '',
                 message: ''
             })
+
         }, (error) => {
-            console.log(error);
             setLoading(false);
-            setLoadingOpacity('opacity-100');
+            setToastMessage("Couldn't send the email due to a technical issue.");
+            onOpen();
             setData({
                 name: '',
                 email: '',
@@ -78,13 +62,13 @@ const Email = () => {
 
   return (
     <>
-        <Card className={`${styles.email} ${styles.boxShadowBorder} dark flex flex-col items-center gap-4 rounded-3xl p-6`}>
+        <Card className={`w-[80vw] dark flex flex-col items-center gap-4 rounded-3xl p-6`}>
             <div className='text-3xl'>Contact</div>
             <div className='flex flex-col items-center gap-8'>
                 <div className='flex flex-col items-center gap-3'>
-                    <Input name="name" type="text" onChange={handleOnChange}  className='w-[40vw]' variant="underlined" label="Name" />
-                    <Input name="email" type="email" className='w-[40vw]' onChange={handleOnChange}  variant="underlined" label="Email" />
-                    <Input name="message" type="text" className='w-[40vw]' onChange={handleOnChange}  variant="underlined" label="Message" />
+                    <Input value={data.name} name="name" type="text" onChange={handleOnChange}  className='w-[40vw]' variant="underlined" label="Name" />
+                    <Input value={data.email} name="email" type="email" className='w-[40vw]' onChange={handleOnChange}  variant="underlined" label="Email" />
+                    <Input value={data.message} name="message" type="text" className='w-[40vw]' onChange={handleOnChange}  variant="underlined" label="Message" />
                 </div>
                 <Button
                 onClick={submit}
@@ -114,10 +98,32 @@ const Email = () => {
                     </svg>
                 }
                 >
-                Send
+                {loading ? "Sending..." : "Send"}
                 </Button>
             </div>
-            <EmailSentToast opacity={toastOpacity} message={toastMessage} />
+
+            <Modal className='dark' isOpen={isOpen} onOpenChange={onOpenChange}>
+                <ModalContent>
+                {(onClose) => (
+                    <>
+                    <ModalHeader className="flex flex-col gap-1">Email Status</ModalHeader>
+                    <ModalBody>
+                        <p>
+                            {toastMessage}
+                        </p>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="primary" onPress={()=>{
+                            onClose();
+                            setToastMessage('Type the details to send an email.');
+                        }}>
+                            Okay
+                        </Button>
+                    </ModalFooter>
+                    </>
+                )}
+                </ModalContent>
+            </Modal>
         </Card>
     </>
   )

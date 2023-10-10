@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react'
 import styles from '../styles/Hero.module.css'
-import Me from '@/components/Me'
+import { Card, CardBody } from '@nextui-org/react';
 
-export default function Home({blurness, setBlurness, nonHeroVisible, setNonHeroVisible, nonHeroToggled, setNonHeroToggled, intro1, setIntro1, intro2, setIntro2, design1, setDesign1, design2, setDesign2}) {
+export default function Home({blurness, setBlurness, nonHeroVisible, setNonHeroVisible, nonHeroToggled, setNonHeroToggled, intro1, setIntro1, intro2, setIntro2, design1, setDesign1, design2, setDesign2, aboutme}) {
   const hero = useRef(null);
   const [blurPointer, setBlurPointer] = useState(0);
 
@@ -143,24 +143,23 @@ export default function Home({blurness, setBlurness, nonHeroVisible, setNonHeroV
 
         {(nonHeroToggled) | (nonHeroVisible && blurness <= 0) ? 
         <div className="my-4 mb-12 flex font-mono sm:justify-around md:flex-row p-5 gap-8 h-fit flex-col items-center w-screen customStyle">
-          <div className='w-[55vw] text-xl'>
-            <div className="text-2xl text-violet-800">Hello there...</div>
-              I am a <div className="inline-block text-violet-800">2nd year</div> Computer Science student 
-              who loves building projects and have fun 
-              with existing web technologies! I also love solving
-              problems on Leetcode.
-              <div className='inline-block text-violet-800 mx-1'>Yup.....you read it right I love Leetcode!</div>
-              I have made a couple of projects in React, Bootstrap, 
-              and Tailwind CSS and I'm currently exploring technologies like Express,
-              MongoDB, ...
-              I also love participating in short contests of algorithms and I also love System Designing.
-              I got a second place in 
-              <div className="inline-block text-violet-800 mx-1">Alcoding Practice Placement Test Series</div>
-              hosted by my university and I'm currently top <div className='inline-block text-violet-800'>5%</div> on Leetcode!
+            <Card className='dark w-[90vw]'>
+              <CardBody>
+                <div className="text-2xl text-violet-800">Hello there...</div>
+                <div className='text-xl'>
+                  {aboutme.desc}
+                </div>
+              </CardBody>
+            </Card>
           </div>
-          <Me />
-        </div> 
       : <></>}
       </>
     )
+}
+
+
+export async function getServerSideProps() {
+  const res = await fetch('http://localhost:3000/api/aboutme')
+  const aboutme = await res.json()
+  return { props: { aboutme } }
 }

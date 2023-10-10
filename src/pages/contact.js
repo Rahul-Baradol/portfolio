@@ -1,8 +1,6 @@
-import Email from '@/components/Email';
-import ProfileCard from '@/components/ProfileCard';
-import {React, useEffect} from 'react'
-import { contactInfo } from '../../constants/constants';
+import { React, useEffect } from 'react'
 import { Card, CardBody, Link } from '@nextui-org/react';
+import Email from '@/components/Email';
 
 const contact = (props) => {
   useEffect(()=>{
@@ -20,6 +18,7 @@ const contact = (props) => {
                       flex flex-col md:items-center md:justify-around
                       items-center gap-5'>
         <Email />
+
         <div className='w-[80vw] flex flex-col items-center md:flex-row md:justify-around gap-10'>
           <Card className='dark w-[78vw] md:w-[39vw] h-[25vh] md:mb-10'>
             <CardBody className='flex justify-center items-center'>
@@ -31,7 +30,7 @@ const contact = (props) => {
           <Card className='dark w-[78vw] md:w-[39vw] h-[25vh] md:mb-10'>
             <CardBody className='flex justify-center items-center'>
                 LinkedIn
-                <Link isExternal href="https://www.github.com/Rahul-Baradol" size="lg">Rahul Baradol</Link>
+                <Link isExternal href="https://www.linkedin.com/in/rahul-baradol-22723b289/" size="lg">Rahul Baradol</Link>
             </CardBody>
           </Card>
         </div>
