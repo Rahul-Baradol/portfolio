@@ -5,7 +5,6 @@ import { navLinks } from '../../constants/constants'
 import { menu, close, logoBlackR } from '../assets'
 
 const Navbar = (props) => {
-  const [active, setActive] = useState('');
   const [showMenu, setShowMenu] = useState(true);
 
   return (
@@ -53,7 +52,6 @@ const Navbar = (props) => {
               <div className="w-full flex justify-between items-center max-w-7xl mx-auto">
                 <Link  href="/" className='flex items-center gap-2'
                           onClick={()=>{
-                              setActive('');  
                               window.scrollTo(0, 0);
                           }}>
 
@@ -70,9 +68,6 @@ const Navbar = (props) => {
                       navLinks.map((link) => {
                         return <li key={link.id}
                             className={`text-white font-medium cursor-pointer`}
-                            onClick={() => {
-                              setActive(link.title);
-                            }}
                           >
                             
                           <Link href={`/${link.id}`}>{link.title}</Link>
@@ -99,7 +94,6 @@ const Navbar = (props) => {
                                       className={`text-white font-poppins font-medium cursor-pointer`}
                                       onClick={() => {
                                         setShowMenu(!showMenu)
-                                        setActive(link.title);
                                       }}
                                     >
                                       

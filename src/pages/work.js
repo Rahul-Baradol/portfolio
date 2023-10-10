@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
-import Footer from '@/components/Footer'
-import {Card, CardHeader, CardBody, CardFooter, Divider, Link, Image} from "@nextui-org/react";
+import {Card, CardHeader, CardBody, CardFooter, Divider, Link} from "@nextui-org/react";
 import {Code} from "@nextui-org/react";
 
 const work = (props) => {
@@ -20,10 +19,6 @@ const work = (props) => {
             .desc {
               font-size: max(1vw, 12px);
             }
-
-            .divider {
-              
-            }
         `}
       </style>
 
@@ -40,7 +35,7 @@ const work = (props) => {
                 </CardHeader>
                 <Divider/>
                 <CardBody>
-                  <p>If you are like me who loves to grind those problems, then do connect with me on Leetcode where I am very active!</p>
+                  <p>If you are like me who loves to sit late night, grinding those problems, then do connect with me on Leetcode where I am very active!</p>
                 </CardBody>
                 <CardFooter>
                   <Link
@@ -87,7 +82,7 @@ const work = (props) => {
                           <CardHeader className="flex gap-3">
                             <div className="flex flex-col">
                               <p className="text-md">{project.title}</p>
-                              <div className='flex flex-row justify-between w-[43vw]'>
+                              <div className='flex flex-row justify-between w-[83vw] md:w-[42vw]'>
                                 <a href={`${project.siteLink}`} target='_blank' className="text-small text-default-500">{project.siteLinkDesc}</a>
                                 <Code color="primary">{project.personal ? "Personal" : "Team"}</Code>
                               </div>
@@ -117,7 +112,6 @@ const work = (props) => {
             }
           </div>
         </div>
-        <Footer />
       </main>
     </>
   )
