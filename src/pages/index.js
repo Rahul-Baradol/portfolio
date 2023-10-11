@@ -9,10 +9,6 @@ export default function Home({blurness, setBlurness, nonHeroVisible, setNonHeroV
   const hero = useRef(null);
   const [blurPointer, setBlurPointer] = useState(0);
 
-  // For mobile/tablet
-  let [swipeProperties, setSwipeProperties] = useState({}); 
-  let swipeHandler = useSwipeable(swipeProperties);
-
   let blurValues = ['blur-none', 'blur-sm', 'blur', 'blur-md', 'blur', 'blur-sm', 'blur-none', 
                     ,'blur-none', 'blur-sm', 'blur', 'blur-md', 'blur', 'blur-sm', 'blur-none'];
   let incrementUpperBound = 15;
@@ -30,10 +26,47 @@ export default function Home({blurness, setBlurness, nonHeroVisible, setNonHeroV
             }
           })
 
-          setSwipeProperties({
-            onSwipedDown: (e) => {
-              onWheelDown();
-            }
+          let xDown = null;                                                        
+          let yDown = null;
+
+          function getTouches(evt) {
+            return evt.touches ||             // browser API
+                   evt.originalEvent.touches; // jQuery
+          }                        
+                                                                                  
+          hero.current.addEventListener("touchstart", (evt) => {
+              const firstTouch = getTouches(evt)[0];                                      
+              xDown = firstTouch.clientX;                                      
+              yDown = firstTouch.clientY;                                      
+          });    
+                                                                                
+          hero.current.addEventListener("touchmove", (evt) => {
+              if ( !xDown || !yDown ) {
+                  return;
+              }
+
+              let xUp = evt.touches[0].clientX;                                    
+              let yUp = evt.touches[0].clientY;
+
+              let xDiff = xDown - xUp;
+              let yDiff = yDown - yUp;
+                                                                                  
+              if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
+                  if ( xDiff > 0 ) {
+                      /* right swipe */ 
+                  } else {
+                      /* left swipe */
+                  }                       
+              } else {
+                  if ( yDiff > 0 ) {
+                      onWheelDown();
+                  } else { 
+                      /* up swipe */
+                  }                                                                 
+              }
+              /* reset values */
+              xDown = null;
+              yDown = null;                                             
           });
         }
       }, 2000)
@@ -141,7 +174,7 @@ export default function Home({blurness, setBlurness, nonHeroVisible, setNonHeroV
             `}
         </style>
 
-        <div {...swipeHandler} className={`z-0 h-full bg-cover bg-no-repeat ${styles.heroOuter}`}>
+        <div className={`z-0 h-full bg-cover bg-no-repeat ${styles.heroOuter}`}>
             <div ref={hero} className='relative flex flex-col items-center justify-between w-screen h-screen'>
                 <div className={`text-4xl px-3 relative ${blurValues[blurness]} transitionFilter`} style={blurEffect}>
                   <div className={`transitionBefore1 ${design1}`}>{intro1}</div>
