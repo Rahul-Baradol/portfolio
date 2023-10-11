@@ -1,12 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react'
 import styles from '../styles/Hero.module.css'
 import { Card, CardBody } from '@nextui-org/react';
+import { useSwipeable } from 'react-swipeable';
 
 require('dotenv').config({ path: '.env.local' });
 
 export default function Home({blurness, setBlurness, nonHeroVisible, setNonHeroVisible, nonHeroToggled, setNonHeroToggled, intro1, setIntro1, intro2, setIntro2, design1, setDesign1, design2, setDesign2, aboutme}) {
   const hero = useRef(null);
   const [blurPointer, setBlurPointer] = useState(0);
+
+  // For mobile/tablet
+  let [swipeProperties, setSwipeProperties] = useState({}); 
+  let swipeHandler = useSwipeable(swipeProperties);
 
   let blurValues = ['blur-none', 'blur-sm', 'blur', 'blur-md', 'blur', 'blur-sm', 'blur-none', 
                     ,'blur-none', 'blur-sm', 'blur', 'blur-md', 'blur', 'blur-sm', 'blur-none'];
@@ -24,23 +29,14 @@ export default function Home({blurness, setBlurness, nonHeroVisible, setNonHeroV
               onWheelDown();
             }
           })
+
+          setSwipeProperties({
+            onSwipedDown: (e) => {
+              onWheelDown();
+            }
+          });
         }
       }, 2000)
-
-      function checkDirection() {
-        for (let i = touchstartX; i <= touchendX; i++) {
-          onWheelDown();
-        }
-      }
-      
-      document.addEventListener('touchstart', e => {
-        touchstartX = e.changedTouches[0].screenY
-      })
-      
-      document.addEventListener('touchend', e => {
-        touchendX = e.changedTouches[0].screenY
-        checkDirection()
-      })
     }, [hero, nonHeroToggled])
   
     useEffect(()=>{
@@ -145,7 +141,7 @@ export default function Home({blurness, setBlurness, nonHeroVisible, setNonHeroV
             `}
         </style>
 
-        <div className={`z-0 h-full bg-cover bg-no-repeat ${styles.heroOuter}`}>
+        <div {...swipeHandler} className={`z-0 h-full bg-cover bg-no-repeat ${styles.heroOuter}`}>
             <div ref={hero} className='relative flex flex-col items-center justify-between w-screen h-screen'>
                 <div className={`text-4xl px-3 relative ${blurValues[blurness]} transitionFilter`} style={blurEffect}>
                   <div className={`transitionBefore1 ${design1}`}>{intro1}</div>
