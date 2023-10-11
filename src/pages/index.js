@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from 'react'
 import styles from '../styles/Hero.module.css'
 import { Card, CardBody } from '@nextui-org/react';
 
+require('dotenv').config({ path: '.env.local' });
+
 export default function Home({blurness, setBlurness, nonHeroVisible, setNonHeroVisible, nonHeroToggled, setNonHeroToggled, intro1, setIntro1, intro2, setIntro2, design1, setDesign1, design2, setDesign2, aboutme}) {
   const hero = useRef(null);
   const [blurPointer, setBlurPointer] = useState(0);
@@ -159,7 +161,7 @@ export default function Home({blurness, setBlurness, nonHeroVisible, setNonHeroV
 
 
 export async function getServerSideProps() {
-  const res = await fetch('http://localhost:3000/api/other')
+  const res = await fetch(process.env.OTHER_API_URI);
   const data = await res.json()
   const otherData = data.otherData;
   const aboutme = otherData[0].aboutme;

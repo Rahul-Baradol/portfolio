@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import {Card, CardHeader, CardBody, CardFooter, Divider, Link} from "@nextui-org/react";
 import {Code} from "@nextui-org/react";
 
+require('dotenv').config({ path: '.env.local' });
+
 const Work = (props) => {
   useEffect(()=>{
     props.setNonHeroVisible(1);
@@ -118,7 +120,7 @@ const Work = (props) => {
 }
 
 export async function getServerSideProps() {
-  let resProjects = await fetch('http://localhost:3000/api/projects');
+  let resProjects = await fetch(process.env.PROJECTS_API_URI);
   let projectsDb = await resProjects.json();
   let projects = projectsDb.projects;
   return {
