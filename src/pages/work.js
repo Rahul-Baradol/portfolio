@@ -118,7 +118,7 @@ const Work = (props) => {
 }
 
 export async function getServerSideProps() {
-  let resProjects = await fetch('http://localhost:3000/api/projects');
+  let resProjects = await fetch('http://rahulbaradol.vercel.app/api/projects');
   let projectsDb = await resProjects.json();
   let projects = projectsDb.projects;
   return {
