@@ -26,6 +26,21 @@ export default function Home({blurness, setBlurness, nonHeroVisible, setNonHeroV
           })
         }
       }, 2000)
+
+      function checkDirection() {
+        for (let i = touchstartX; i <= touchendX; i++) {
+          onWheelDown();
+        }
+      }
+      
+      document.addEventListener('touchstart', e => {
+        touchstartX = e.changedTouches[0].screenY
+      })
+      
+      document.addEventListener('touchend', e => {
+        touchendX = e.changedTouches[0].screenY
+        checkDirection()
+      })
     }, [hero, nonHeroToggled])
   
     useEffect(()=>{
