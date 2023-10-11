@@ -59,7 +59,9 @@ export default function Home({blurness, setBlurness, nonHeroVisible, setNonHeroV
                   }                       
               } else {
                   if ( yDiff > 0 ) {
-                      onWheelDown();
+                      for (let cnt = 0; cnt <= yDiff; cnt++) {
+                        onWheelDown();
+                      }
                   } else { 
                       /* up swipe */
                   }                                                                 
