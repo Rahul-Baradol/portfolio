@@ -18,7 +18,7 @@ export default function Home({blurness, setBlurness, nonHeroVisible, setNonHeroV
       setTimeout(()=>{
         if (nonHeroToggled === 0 && hero.current != null) {
           hero.current.addEventListener("wheel", (event) => {
-            if (event.deltaY > 0) {
+            if (event.wheelDeltaY < 0) {
               onWheelDown();
             }
           })
@@ -159,7 +159,7 @@ export default function Home({blurness, setBlurness, nonHeroVisible, setNonHeroV
 
 
 export async function getServerSideProps() {
-  const res = await fetch('https://rahulbaradol.vercel.app/api/other')
+  const res = await fetch('http://localhost:3000/api/other')
   const data = await res.json()
   const otherData = data.otherData;
   const aboutme = otherData[0].aboutme;
