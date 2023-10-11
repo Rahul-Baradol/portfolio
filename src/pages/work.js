@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import {Card, CardHeader, CardBody, CardFooter, Divider, Link} from "@nextui-org/react";
 import {Code} from "@nextui-org/react";
 
-const work = (props) => {
+const Work = (props) => {
   useEffect(()=>{
     props.setNonHeroVisible(1);
     props.setNonHeroToggled(1);
@@ -10,7 +10,7 @@ const work = (props) => {
     props.setIntro2("Rahul Baradol");
     props.setDesign1("text-sm");
     props.setDesign2("text-violet-800");
-  })
+  }, [props])
 
   return (
     <>
@@ -126,4 +126,4 @@ export async function getServerSideProps() {
   }
 }
 
-export default work
+export default Work

@@ -2,7 +2,7 @@ import { React, useEffect } from 'react'
 import { Card, CardBody, Link } from '@nextui-org/react';
 import Email from '@/components/Email';
 
-const contact = (props) => {
+const Contact = (props) => {
   useEffect(()=>{
     props.setNonHeroVisible(1);
     props.setNonHeroToggled(1);
@@ -10,7 +10,7 @@ const contact = (props) => {
     props.setIntro2("Rahul Baradol");
     props.setDesign1("text-sm");
     props.setDesign2("text-violet-800");
-  })
+  }, [props])
 
   return (
     <>
@@ -39,4 +39,4 @@ const contact = (props) => {
   )
 }
 
-export default contact
+export default Contact

@@ -24,7 +24,7 @@ export default function Home({blurness, setBlurness, nonHeroVisible, setNonHeroV
           })
         }
       }, 2000)
-    }, [hero])
+    }, [hero, nonHeroToggled])
   
     useEffect(()=>{
       let cur = Math.floor(blurPointer / incrementUpperBound);
@@ -47,7 +47,7 @@ export default function Home({blurness, setBlurness, nonHeroVisible, setNonHeroV
         }
         setBlurness(cur);
       }
-    }, [blurPointer])
+    }, [blurPointer, blurness, incrementUpperBound, setBlurness, setDesign1, setDesign2, setIntro1, setIntro2, setNonHeroToggled, setNonHeroVisible])
 
     let onWheelDown = () => {
       setBlurPointer(currentValue => currentValue + 1)
