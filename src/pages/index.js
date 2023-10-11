@@ -159,7 +159,7 @@ export default function Home({blurness, setBlurness, nonHeroVisible, setNonHeroV
 
 
 export async function getServerSideProps() {
-  const res = await fetch('http://rahulbaradol.vercel.app/api/other')
+  const res = await fetch('https://rahulbaradol.vercel.app/api/other')
   const data = await res.json()
   const otherData = data.otherData;
   const aboutme = otherData[0].aboutme;
