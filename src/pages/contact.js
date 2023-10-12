@@ -1,16 +1,8 @@
-import { React, useEffect } from 'react'
+import { React } from 'react'
 import { Card, CardBody, Link } from '@nextui-org/react';
 import Email from '@/components/Email';
 
-const Contact = (props) => {
-  useEffect(()=>{
-    props.setNonHeroVisible(1);
-    props.setNonHeroToggled(1);
-    props.setIntro1("I am...");
-    props.setIntro2("Rahul Baradol");
-    props.setDesign1("text-sm");
-    props.setDesign2("text-violet-800");
-  }, [props])
+const Contact = () => {
 
   return (
     <>

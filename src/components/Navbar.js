@@ -43,9 +43,6 @@ const Navbar = (props) => {
           }
         `}
       </style>
-        
-        {
-            props.nonHeroVisible ? 
             <nav className="sm:px-16 px-6 w-full flex items-center 
                             py-5 fixed top-0 z-20 justify-between transtionOpacity bg-opacity-50 navBar">
 
@@ -107,8 +104,6 @@ const Navbar = (props) => {
 
               </div>
             </nav>
-            : <></>
-        }
     </>
   )
 }
