@@ -19,5 +19,5 @@ export {
   logoColorRB,
   logoBlackRB,
   menu,
-  close,
+  close
 };
