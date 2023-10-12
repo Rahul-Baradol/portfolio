@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import styles from '../styles/Hero.module.css'
 import { Card, CardBody } from '@nextui-org/react';
-import { useSwipeable } from 'react-swipeable';
 
 require('dotenv').config({ path: '.env.local' });
 
@@ -77,19 +76,19 @@ export default function Home({blurness, setBlurness, nonHeroVisible, setNonHeroV
     useEffect(()=>{
       let cur = Math.floor(blurPointer / incrementUpperBound);
       if (cur != blurness) {
-        if (cur === 3) {
+        if (cur >= 3) {
           setIntro1("Welcome to my...");
           setIntro2("Portfolio");
 
           setDesign1("");
           setDesign2("text-violet-800");
-        } else if (cur === 10) {
+        } else if (cur >= 10) {
           setIntro1("I am...");
           setIntro2("Rahul Baradol");
 
           setDesign1("text-sm");
           setDesign2("text-violet-800");
-        } else if (cur === 15) {
+        } else if (cur >= 15) {
           setNonHeroVisible(1);
           setNonHeroToggled(1);
         }
