@@ -103,16 +103,16 @@ const Email = () => {
             </div>
 
             <Modal className='dark' isOpen={isOpen} onOpenChange={onOpenChange}>
-                <ModalContent>
+                <ModalContent className='dark'>
                 {(onClose) => (
                     <>
-                    <ModalHeader className="flex flex-col gap-1">Email Status</ModalHeader>
-                    <ModalBody>
-                        <p>
+                    <ModalHeader className="dark flex flex-col gap-1 text-white">Email Status</ModalHeader>
+                    <ModalBody className='dark'>
+                        <p className='text-white'>
                             {toastMessage}
                         </p>
                     </ModalBody>
-                    <ModalFooter>
+                    <ModalFooter className='dark'>
                         <Button color="primary" onPress={()=>{
                             onClose();
                             setToastMessage('Type the details to send an email.');
