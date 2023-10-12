@@ -99,7 +99,7 @@ export default function Home({ aboutme }) {
         <div className={`z-0 h-full bg-cover bg-no-repeat ${styles.heroOuter}`}>
             <div ref={hero} className='relative flex flex-col items-center justify-between w-screen h-screen'>
                 <div className={`text-4xl px-3 relative transitionFilter`} style={blurEffect}>
-                  <div className={`transitionBefore1 text-sm`}>I am...</div>
+                  <div className={`transitionBefore1 text-sm text-white`}>I am...</div>
                   <div className={`transitionBefore2 text-violet-800`}>Rahul Baradol</div>
                 </div>
 
@@ -122,7 +122,7 @@ export default function Home({ aboutme }) {
                 <Card className='dark w-[90vw]'>
                     <CardBody>
                         <div className="text-2xl text-violet-800">Hello there...</div>
-                        <div className='text-xl'>
+                        <div className='text-xl text-white'>
                             {aboutme}
                         </div>
                     </CardBody>
