@@ -10,7 +10,7 @@ export default function Home({blurness, setBlurness, nonHeroVisible, setNonHeroV
 
   let blurValues = ['blur-none', 'blur-sm', 'blur', 'blur-md', 'blur', 'blur-sm', 'blur-none', 
                     ,'blur-none', 'blur-sm', 'blur', 'blur-md', 'blur', 'blur-sm', 'blur-none'];
-  let incrementUpperBound = 15;
+  let incrementUpperBound = 10;
 
   let blurEffect = {
       top: '45vh'
@@ -50,20 +50,10 @@ export default function Home({blurness, setBlurness, nonHeroVisible, setNonHeroV
               let xDiff = xDown - xUp;
               let yDiff = yDown - yUp;
                                                                                   
-              if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
-                  if ( xDiff > 0 ) {
-                      /* right swipe */ 
-                  } else {
-                      /* left swipe */
-                  }                       
-              } else {
-                  if ( yDiff > 0 ) {
-                      for (let cnt = 0; cnt <= yDiff; cnt++) {
-                        onWheelDown();
-                      }
-                  } else { 
-                      /* up swipe */
-                  }                                                                 
+              if ( Math.abs( xDiff ) > Math.abs( yDiff ) && yDiff > 0) {                      
+                for (let cnt = 0; cnt <= yDiff; cnt++) {
+                  onWheelDown();
+                }
               }
               /* reset values */
               xDown = null;
@@ -76,22 +66,22 @@ export default function Home({blurness, setBlurness, nonHeroVisible, setNonHeroV
     useEffect(()=>{
       let cur = Math.floor(blurPointer / incrementUpperBound);
       if (cur != blurness) {
-        if (cur >= 3) {
-          setIntro1("Welcome to my...");
-          setIntro2("Portfolio");
-
-          setDesign1("");
-          setDesign2("text-violet-800");
+        if (cur >= 15) {
+          setNonHeroVisible(1);
+          setNonHeroToggled(1);
         } else if (cur >= 10) {
           setIntro1("I am...");
           setIntro2("Rahul Baradol");
 
           setDesign1("text-sm");
           setDesign2("text-violet-800");
-        } else if (cur >= 15) {
-          setNonHeroVisible(1);
-          setNonHeroToggled(1);
-        }
+        } else if (cur >= 3) {
+          setIntro1("Welcome to my...");
+          setIntro2("Portfolio");
+
+          setDesign1("");
+          setDesign2("text-violet-800");
+        } 
         setBlurness(cur);
       }
     }, [blurPointer, blurness, incrementUpperBound, setBlurness, setDesign1, setDesign2, setIntro1, setIntro2, setNonHeroToggled, setNonHeroVisible])
