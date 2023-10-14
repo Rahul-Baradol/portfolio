@@ -1,15 +1,15 @@
-import { React } from 'react'
+import { React, useEffect } from 'react'
 import { Card, CardBody, Link } from '@nextui-org/react';
 import Email from '@/components/Email';
 
-const Contact = () => {
+const Contact = (props) => {
 
   return (
     <>
       <div className='mx-auto relative top-[15vh] h-fit w-[80vw]
                       flex flex-col md:items-center md:justify-around
                       items-center gap-5'>
-        <Email />
+        <Email emailURI={props.emailURI} />
 
         <div className='w-[80vw] flex flex-col items-center md:flex-row md:justify-around gap-10'>
           <Card className='dark w-[78vw] md:w-[39vw] h-[25vh] md:mb-10'>
@@ -30,5 +30,13 @@ const Contact = () => {
     </>
   )
 }
+
+export async function getServerSideProps() {
+  let fetchedEmailURI = await fetch(process.env.EMAILDETAILS_URI);
+  let emailURI = await fetchedEmailURI.json();
+  return {
+    props: { emailURI }
+  }
+}  
 
 export default Contact

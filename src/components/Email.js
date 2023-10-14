@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import emailjs from '@emailjs/browser'
 import { emailInfo } from '../../constants/constants';
 import { Card, Input } from '@nextui-org/react';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
 
-const Email = () => {
+const Email = (props) => {
     const [data, setData] = useState({
         name: '',
         email: '',
@@ -26,9 +26,10 @@ const Email = () => {
         }
         e.preventDefault();
         setLoading(true);
+
         emailjs.send(
-            emailInfo.serviceId,
-            emailInfo.templateId,
+            props.emailURI.serviceKey,
+            props.emailURI.templateKey,
             {
                 from_name: data.name,
                 to_name: emailInfo.toName,
@@ -36,7 +37,7 @@ const Email = () => {
                 to_email: emailInfo.toEmail,
                 message: data.message
             },
-            emailInfo.publicKey
+            props.emailURI.publicKey
         ).then(()=>{
             setToastMessage('Email Sent!');
             onOpen();            
