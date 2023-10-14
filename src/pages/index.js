@@ -19,7 +19,7 @@ export default function Home({ aboutme }) {
     if (isInView) { 
         mainControls.start("visible");
     }
-  }, [isInView])
+  }, [isInView, mainControls])
 
     return (
       <>

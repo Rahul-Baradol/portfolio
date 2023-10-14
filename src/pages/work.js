@@ -30,7 +30,7 @@ const Work = (props) => {
     if (inViewCodeChef) {
       mainControlsCodeChef.start("visible");
     }
-  }, [inViewProject, inViewLeetcode, inViewCodeChef])
+  }, [inViewProject, inViewLeetcode, inViewCodeChef, mainControlsProject, mainControlsCodeChef, mainControlsLeetcode])
 
   return (
     <>
