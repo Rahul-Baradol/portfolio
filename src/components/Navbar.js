@@ -44,7 +44,7 @@ const Navbar = (props) => {
         `}
       </style>
             <nav className="sm:px-16 px-6 w-full flex items-center 
-                            py-5 fixed top-0 z-20 justify-between transtionOpacity bg-opacity-50 navBar">
+                            py-5 fixed top-0 z-20 justify-between transtionOpacity bg-opacity-50 navBar backdrop-blur-sm">
 
               <div className="w-full flex justify-between items-center max-w-7xl mx-auto">
                 <Link  href="/" className='flex items-center gap-2'
