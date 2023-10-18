@@ -34,14 +34,6 @@ const Work = (props) => {
 
   return (
     <>
-      <style jsx>
-        {`
-            .desc {
-              font-size: max(1vw, 12px);
-            }
-        `}
-      </style>  
-
       <main className="mb-32 flex flex-col items-center h-fit w-[100vw] relative top-[15vh]">
         <div className='flex flex-col p-6 items-center m-2'>
           <div className='text-3xl font-thin mt-1 mb-4 text-white'>Profiles</div>
@@ -118,7 +110,7 @@ const Work = (props) => {
 
         <div className="flex flex-col items-center p-2 m-2">
           <div className='text-3xl font-thin mt-1 mb-4 text-white'>Projects</div>
-          <div ref={projectRef} className={`w-[90vw] m-10 relative top-3 grid grid-cols-1 md:grid-cols-2 gap-10`}>
+          <div ref={projectRef} className={`w-fit m-1 relative grid grid-cols-1 md:grid-cols-2 gap-8`}>
             {
               props.projects.map((project, projectId) => {
                 return <motion.div
@@ -130,14 +122,15 @@ const Work = (props) => {
                             initial="hidden"
                             animate={mainControlsProject}
                             transition={{ duration: 1 }}
+                            className='h-[full]'
                         >
-                          <Card  className="w-[90vw] md:w-[45vw] dark ">
+                          <Card  className="w-[90vw] md:w-[45vw] dark h-full">
                               <CardHeader className="flex gap-3">
                                 <div className="flex flex-col">
                                   <p className="text-md">{project.title}</p>
                                   <div className='flex flex-row justify-between w-[83vw] md:w-[42vw]'>
                                     <a href={`${project.siteLink}`} target='_blank' className="text-small text-default-500">{project.siteLinkDesc}</a>
-                                    <Code color="primary">{project.personal ? "Personal" : "Team"}</Code>
+                                    {/* <Code className='customCode flex justify-center items-center w-fit' color="primary">{project.personal ? "Personal" : "Team"}</Code> */}
                                   </div>
                                 </div>
                               </CardHeader>
@@ -152,7 +145,7 @@ const Work = (props) => {
                                 >
                                   Go to GitHub
                                 </Link>
-                                <div className='flex gap-2'>
+                                <div className='flex gap-2 justify-end scrollbar-hide min-w-[100px] overflow-scroll '>
                                   {
                                     project.technologies.map((value, index)=>{
                                       return <Code key={index} color={value[1]}>{value[0]}</Code>
