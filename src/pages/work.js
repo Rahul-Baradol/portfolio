@@ -145,10 +145,10 @@ const Work = (props) => {
                                 >
                                   Go to GitHub
                                 </Link>
-                                <div className='flex gap-2 justify-end scrollbar-hide min-w-[100px] overflow-scroll '>
+                                <div className='flex gap-2 scrollbar-hide min-w-[100px] overflow-scroll '>
                                   {
                                     project.technologies.map((value, index)=>{
-                                      return <Code key={index} color={value[1]}>{value[0]}</Code>
+                                      return <Code className='ml-auto' key={index} color={value[1]}>{value[0]}</Code>
                                     })
                                   }
                                 </div>
