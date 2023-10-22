@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import {Card, CardHeader, CardBody, CardFooter, Divider, Link} from "@nextui-org/react";
 import {Code} from "@nextui-org/react";
 import { motion, useAnimation, useInView } from 'framer-motion';
+import { TypeAnimation } from 'react-type-animation';
 
 require('dotenv').config({ path: '.env.local' });
 
@@ -36,7 +37,15 @@ const Work = (props) => {
     <>
       <main className="mb-32 flex flex-col items-center h-fit w-[100vw] relative top-[15vh]">
         <div className='flex flex-col p-6 items-center m-2'>
-          <div className='text-3xl font-thin mt-1 mb-4 text-white'>Profiles</div>
+          <div className='text-3xl font-thin mt-1 mb-4 text-white'>
+            <TypeAnimation 
+              sequence={[
+                'Profiles'
+              ]}
+              cursor={false}
+              speed={10}
+            />
+          </div>
           <div className="w-[100vw] items-center md:justify-center h-fit flex md:flex-row flex-col gap-4">
             <motion.div
                 ref={profileRefLeetcode}
@@ -109,7 +118,15 @@ const Work = (props) => {
         <Divider className="my-2 w-[70%] bg-slate-800" />
 
         <div className="flex flex-col items-center p-2 m-2">
-          <div className='text-3xl font-thin mt-1 mb-4 text-white'>Projects</div>
+          <div className='flex flex-col items-center justify-center text-3xl font-thin mt-1 mb-4 text-white'>
+            <TypeAnimation 
+                sequence={[
+                  'Projects'
+                ]}
+                cursor={false}
+                speed={10}
+              />
+          </div>
           <div ref={projectRef} className={`w-fit m-1 relative grid grid-cols-1 md:grid-cols-2 gap-8`}>
             {
               props.projects.map((project, projectId) => {
