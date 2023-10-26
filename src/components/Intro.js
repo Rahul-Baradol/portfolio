@@ -2,10 +2,13 @@ import React, { useState } from 'react'
 import { TypeAnimation } from 'react-type-animation';
 
 const DockerIntro = ({ setIntro }) => {
+    const [pullerDiv, setPullerDiv] = useState(false);
+    const [runType, setRunType] = useState(false);
+    
   return (
     <>
         <div className='p-4'>
-            <div className='flex gap-2'>
+            <div className='flex flex-col justify-start gap-2'>
                 <TypeAnimation
                     preRenderFirstString={false}
                     sequence={[
@@ -15,10 +18,33 @@ const DockerIntro = ({ setIntro }) => {
                         500,
                         'root@client:/# docker pull portfolio\n',
                         1400,
-                        'root@client:/# docker pull portfolio\nUsing default tag: latest\nlatest: pulling from server\n',
+                        () => {
+                            setTimeout(()=>{
+                                setPullerDiv(true);
+                                setTimeout(()=>{
+                                    setRunType(true);
+                                }, 2000)
+                            }, 1000)
+                        }
+                    ]}
+                    speed={60}
+                    style={{ 
+                        whiteSpace: 'pre-line',
+                        fontSize: '1.2em' ,
+                    }}
+                    deletionSpeed={80}
+                    cursor={false}
+                />
+                {pullerDiv ? <div style={{
+                    fontSize: '1.2em'
+                }}>
+                    Using default tag: latest <br /> latest: pulling from server <br />
+                </div> : <></>}
+
+                {runType ? <TypeAnimation 
+                    sequence={[
+                        'root@client:/# docker run portfolio\n',
                         1000,
-                        'root@client:/# docker pull portfolio\nUsing default tag: latest\nlatest: pulling from server\nroot@client:/# docker run portfolio\n',
-                        1400,
                         () => {
                             setIntro(false);
                         }
@@ -28,8 +54,8 @@ const DockerIntro = ({ setIntro }) => {
                         whiteSpace: 'pre-line',
                         fontSize: '1.2em' ,
                     }}
-                    deletionSpeed={80}
-                />
+                    cursor={false}
+                /> : <></>}
             </div>
         </div>
     </>
