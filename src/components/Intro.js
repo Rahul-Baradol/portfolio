@@ -31,12 +31,14 @@ const DockerIntro = ({ setIntro }) => {
                     style={{ 
                         whiteSpace: 'pre-line',
                         fontSize: '1.2em' ,
+                        color: 'white'
                     }}
                     deletionSpeed={80}
                     cursor={false}
                 />
                 {pullerDiv ? <div style={{
-                    fontSize: '1.2em'
+                    fontSize: '1.2em',
+                    color: 'white'
                 }}>
                     Using default tag: latest <br /> latest: pulling from server <br />
                 </div> : <></>}
@@ -53,6 +55,7 @@ const DockerIntro = ({ setIntro }) => {
                     style={{ 
                         whiteSpace: 'pre-line',
                         fontSize: '1.2em' ,
+                        color: 'white'
                     }}
                     cursor={false}
                 /> : <></>}
