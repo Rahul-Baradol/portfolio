@@ -12,19 +12,19 @@ const DockerIntro = ({ setIntro }) => {
                 <TypeAnimation
                     preRenderFirstString={false}
                     sequence={[
-                        'Welcome to my portfolio!\nLet\'s fire up the container for you!',
-                        1000,
+                        'Welcome to my portfolio!\nLet\'s spin up a container for you!',
+                        500,
                         'root@client:/# docker run portfolio',
                         500,
                         'root@client:/# docker pull portfolio\n',
-                        1400,
+                        500,
                         () => {
                             setTimeout(()=>{
                                 setPullerDiv(true);
                                 setTimeout(()=>{
                                     setRunType(true);
-                                }, 2000)
-                            }, 1000)
+                                }, 600)
+                            }, 600)
                         }
                     ]}
                     speed={60}
