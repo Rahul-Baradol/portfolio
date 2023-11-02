@@ -12,8 +12,6 @@ const DockerIntro = ({ setIntro }) => {
                 <TypeAnimation
                     preRenderFirstString={false}
                     sequence={[
-                        'Welcome to my portfolio!\nLet\'s spin up a container for you!',
-                        500,
                         'root@client:/# docker run portfolio',
                         500,
                         'root@client:/# docker pull portfolio\n',
