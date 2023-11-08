@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { TypeAnimation } from 'react-type-animation';
 
 const DockerIntro = ({ setIntro }) => {
+    const [pullerDiv, setPullerDiv] = useState(false);
+    const [runType, setRunType] = useState(false);
+    
   return (
     <>
         <div className='p-4'>
@@ -9,14 +12,39 @@ const DockerIntro = ({ setIntro }) => {
                 <TypeAnimation
                     preRenderFirstString={false}
                     sequence={[
-                        'Welcome to my portfolio!',
+                        'root@client:/# docker run portfolio',
+                        500,
+                        'root@client:/# docker pull portfolio\n',
+                        500,
+                        () => {
+                            setTimeout(()=>{
+                                setPullerDiv(true);
+                                setTimeout(()=>{
+                                    setRunType(true);
+                                }, 600)
+                            }, 600)
+                        }
+                    ]}
+                    speed={60}
+                    style={{ 
+                        whiteSpace: 'pre-line',
+                        fontSize: '1.2em' ,
+                        color: 'white'
+                    }}
+                    deletionSpeed={80}
+                    cursor={false}
+                />
+                {pullerDiv ? <div style={{
+                    fontSize: '1.2em',
+                    color: 'white'
+                }}>
+                    Using default tag: latest <br /> latest: pulling from server <br />
+                </div> : <></>}
+
+                {runType ? <TypeAnimation 
+                    sequence={[
+                        'root@client:/# docker run portfolio\n',
                         1000,
-                        '>> Booting things up...\n',
-                        500,
-                        '>> Booting things up...\n>> Initializing Fancy Stuff...\n',
-                        500,
-                        '>> Booting things up...\n>> Initializing Fancy Stuff...\nAnd here we go.........!',
-                        750,
                         () => {
                             setIntro(false);
                         }
@@ -27,9 +55,8 @@ const DockerIntro = ({ setIntro }) => {
                         fontSize: '1.2em' ,
                         color: 'white'
                     }}
-                    deletionSpeed={80}
-                    cursor={true}
-                />
+                    cursor={false}
+                /> : <></>}
             </div>
         </div>
     </>
