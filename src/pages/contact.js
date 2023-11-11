@@ -11,7 +11,7 @@ const Contact = (props) => {
       <div className='mx-auto relative top-[15vh] h-fit w-[80vw]
                       flex flex-col md:items-center md:justify-around
                       items-center gap-5'>
-        <Email />
+        {/* <Email /> */}
 
         <div className='w-[80vw] flex flex-col items-center md:flex-row md:justify-around gap-10'>
           <Card className='dark w-[78vw] md:w-[39vw] h-[65vh] md:mb-10'>
