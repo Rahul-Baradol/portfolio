@@ -20,7 +20,7 @@ export default function App({ Component, pageProps }) {
     router.events.on("routeChangeComplete", () => {
       setProgress(100);
     })
-  }, [router.query])
+  }, [router.query, router.events])
 
   return (
     <>
