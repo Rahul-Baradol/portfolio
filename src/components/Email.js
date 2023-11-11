@@ -62,6 +62,7 @@ const Email = () => {
                 });
             }
         }).catch((err) => {
+            console.log(err);
             setLoading(false);
             setToastMessage("Couldn't connect to the server. Please check your internet connection.");
             onOpen();

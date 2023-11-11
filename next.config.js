@@ -4,6 +4,9 @@ const nextConfig = {
   env: {
     EMAILDETAILS_URI: process.env.EMAILDETAILS_URI 
   },
+  cors: {
+    origin: "*"
+  },
   headers: [
     { key: "Access-Control-Allow-Origin", value: "*" }, 
     { key: "Access-Control-Allow-Methods", value: "GET,POST" },
