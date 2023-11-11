@@ -5,7 +5,7 @@ import { motion, useAnimation, useInView } from 'framer-motion'
 
 require('dotenv').config({ path: '.env.local' });
 
-export default function Home({ aboutme }) {
+export default function Home() {
     const hero = useRef(null);
     const animeRef = useRef(null);
     const isInView = useInView(animeRef, { once: false });
@@ -123,7 +123,10 @@ export default function Home({ aboutme }) {
                     <CardBody>
                         <div className="text-2xl text-violet-800">Hello there...</div>
                         <div className='text-xl text-white'>
-                            {aboutme}
+                            I am a 2nd year Computer Science student who loves building projects and have fun with existing web technologies! I also love solving problems on Leetcode. Yup.....you read it right I love Leetcode! My tech stack includes React, NextJS, Bootstrap, Tailwind CSS, Node JS, Express JS..so on
+                            and I am currently focusing on Cloud and Devops. I also love participating in short
+                            contests of algorithms. I got a second place in Alcoding Practice Placement Test series hosted by my university and I am top 
+                            5% on Leetcode! I also love System Design and System Engineering!
                         </div>
                     </CardBody>
                 </Card>
@@ -134,10 +137,10 @@ export default function Home({ aboutme }) {
 }
 
 
-export async function getServerSideProps() {
-  const res = await fetch(process.env.OTHER_API_URI);
-  const data = await res.json()
-  const otherData = data.otherData;
-  const aboutme = otherData[0].aboutme;
-  return { props: { aboutme } }
-}
+// export async function getServerSideProps() {
+//   const res = await fetch(process.env.OTHER_API_URI);
+//   const data = await res.json()
+//   const otherData = data.otherData;
+//   const aboutme = otherData[0].aboutme;
+//   return { props: { aboutme } }
+// }
