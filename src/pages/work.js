@@ -3,6 +3,7 @@ import {Card, CardHeader, CardBody, CardFooter, Divider, Link} from "@nextui-org
 import {Code} from "@nextui-org/react";
 import { motion, useAnimation, useInView } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
+import { projects } from '../../constants/constants'
 
 require('dotenv').config({ path: '.env.local' });
 
@@ -181,10 +182,7 @@ const Work = (props) => {
   )
 }
 
-export async function getServerSideProps() {
-  let resProjects = await fetch(process.env.PROJECTS_API_URI);
-  let projectsDb = await resProjects.json();
-  let projects = projectsDb.projects;
+export async function getStaticProps() {
   return {
     props: { projects }
   }
