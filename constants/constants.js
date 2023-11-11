@@ -9,11 +9,6 @@ const navLinks = [
   },
 ];
 
-const emailInfo = {
-  toName: "Rahul",
-  toEmail: "rahul.baradol.14@gmail.com"
-}
-
-export  {  navLinks,
-           emailInfo
-        };
+export  {  
+  navLinks
+};

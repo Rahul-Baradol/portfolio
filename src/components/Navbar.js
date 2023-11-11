@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { navLinks } from '../../constants/constants'
 import { menu, close, logoBlackR } from '../assets'
 
-const Navbar = (props) => {
+const Navbar = () => {
   const [showMenu, setShowMenu] = useState(true);
 
   return (

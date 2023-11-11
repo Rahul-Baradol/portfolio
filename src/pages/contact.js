@@ -9,7 +9,7 @@ const Contact = (props) => {
       <div className='mx-auto relative top-[15vh] h-fit w-[80vw]
                       flex flex-col md:items-center md:justify-around
                       items-center gap-5'>
-        <Email emailURI={props.emailURI} />
+        <Email />
 
         <div className='w-[80vw] flex flex-col items-center md:flex-row md:justify-around gap-10'>
           <Card className='dark w-[78vw] md:w-[39vw] h-[25vh] md:mb-10'>
@@ -30,13 +30,5 @@ const Contact = (props) => {
     </>
   )
 }
-
-export async function getServerSideProps() {
-  let fetchedEmailURI = await fetch(process.env.EMAILDETAILS_URI);
-  let emailURI = await fetchedEmailURI.json();
-  return {
-    props: { emailURI }
-  }
-}  
 
 export default Contact

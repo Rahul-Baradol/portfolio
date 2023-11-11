@@ -1,7 +1,7 @@
 {
   "name": "portfolio",
   "version": "0.1.0",
-  "private": true, 
+  "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -10,15 +10,16 @@
     "export": "next export"
   },
   "dependencies": {
-    "@emailjs/browser": "^3.11.0",
     "@nextui-org/react": "^2.1.13",
     "dotenv": "^16.3.1",
     "framer-motion": "^10.16.4",
     "lodash": "^4.17.21",
     "mongoose": "^7.6.1",
     "next": "^13.5.6",
+    "nodemailer": "^6.9.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-top-loading-bar": "^2.3.1",
     "react-type-animation": "^3.2.0"
   },
   "devDependencies": {

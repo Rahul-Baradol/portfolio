@@ -10,5 +10,4 @@ const projectSchema = new mongoose.Schema({
     personal: {type: Boolean, required: true}
 }, {timestamps: true})
 
-mongoose.models = {}
-export default mongoose.model("projects", projectSchema, "projects");
+export default mongoose.models.projects || mongoose.model("projects", projectSchema, "projects");
