@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useState } from 'react'
 import { Card, Input } from '@nextui-org/react';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
@@ -27,7 +29,7 @@ const Email = () => {
         e.preventDefault();
         setLoading(true);
 
-        fetch(process.env.EMAILDETAILS_URI, {
+        fetch("http://localhost:3000/api/email", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
