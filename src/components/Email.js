@@ -29,7 +29,7 @@ const Email = () => {
         e.preventDefault();
         setLoading(true);
 
-        fetch("http://localhost:3000/api/email", {
+        fetch(process.env.EMAILDETAILS_URI, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
