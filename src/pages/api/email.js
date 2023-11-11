@@ -19,14 +19,6 @@ const handler = (req, res) => {
         text: `Email from ${data.email} named ${data.name}.\nMessage sent: ${data.message}`
     };
 
-    res.setHeader('Access-Control-Allow-Credentials', true)
-    res.setHeader('Access-Control-Allow-Origin', '*') 
-    res.setHeader('Access-Control-Allow-Methods', 'GET,DELETE,PATCH,POST,PUT')
-    res.setHeader(
-        'Access-Control-Allow-Headers',
-        'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-    )
-
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
             return res.status(200).json({
