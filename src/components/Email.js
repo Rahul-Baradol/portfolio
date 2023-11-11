@@ -77,14 +77,14 @@ const Email = () => {
         <>
             <Card className={`w-[80vw] dark flex flex-col items-center gap-4 rounded-3xl p-6`}>
                 <div className='text-3xl'>Contact</div>
-                <div className='flex flex-col items-center gap-8'>
+                <form onSubmit={submit} className='flex flex-col items-center gap-8'>
                     <div className='flex flex-col items-center gap-3'>
                         <Input value={data.name} name="name" type="text" onChange={handleOnChange} className='w-[40vw]' variant="underlined" label="Name" />
                         <Input value={data.email} name="email" type="email" className='w-[40vw]' onChange={handleOnChange} variant="underlined" label="Email" />
                         <Input value={data.message} name="message" type="text" className='w-[40vw]' onChange={handleOnChange} variant="underlined" label="Message" />
                     </div>
                     <Button
-                        onClick={submit}
+                        type='submit'
                         isLoading={loading}
                         color="primary"
                         className='w-[30vw] h-[10vh]'
@@ -113,7 +113,7 @@ const Email = () => {
                     >
                         {loading ? "Sending..." : "Send"}
                     </Button>
-                </div>
+                </form>
 
                 <Modal className='dark' isOpen={isOpen} onOpenChange={onOpenChange}>
                     <ModalContent className='dark'>

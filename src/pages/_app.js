@@ -48,6 +48,7 @@ export default function App({ Component, pageProps }) {
       <NextUIProvider>
         <LoadingBar 
           color="#2d2159"
+          waitingTime={800}
           height={4}
           progress={progress} 
           onLoaderFinished={() => setProgress(0)} 
