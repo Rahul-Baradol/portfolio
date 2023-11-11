@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { emailInfo } from '../../constants/constants';
 import { Card, Input } from '@nextui-org/react';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
 
