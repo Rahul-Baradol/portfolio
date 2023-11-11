@@ -14,14 +14,14 @@ const Contact = (props) => {
         {/* <Email /> */}
 
         <div className='w-[80vw] flex flex-col items-center md:flex-row md:justify-around gap-10'>
-          <Card className='dark w-[78vw] md:w-[39vw] h-[45vh] md:mb-10'>
+          <Card className='dark w-[78vw] md:w-[39vw] h-[65vh] md:mb-10'>
             <CardBody className='flex justify-center items-center'>
                 GitHub
                 <Link isExternal href="https://www.github.com/Rahul-Baradol" size="lg">@Rahul-Baradol</Link>
             </CardBody>
           </Card>
 
-          <Card className='dark w-[78vw] md:w-[39vw] h-[45vh] md:mb-10'>
+          <Card className='dark w-[78vw] md:w-[39vw] h-[65vh] md:mb-10'>
             <CardBody className='flex justify-center items-center'>
                 LinkedIn
                 <Link isExternal href="https://www.linkedin.com/in/rahul-baradol-22723b289/" size="lg">Rahul Baradol</Link>
