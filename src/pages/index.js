@@ -3,6 +3,7 @@ import styles from '../styles/Hero.module.css'
 import { Card, CardBody } from '@nextui-org/react';
 import { motion, useAnimation, useInView } from 'framer-motion'
 import { otherData } from '../../constants/constants'
+import Image from 'next/image';
 
 require('dotenv').config({ path: '.env.local' });
 
@@ -127,7 +128,7 @@ export default function Home({ otherData }) {
                             <div className='text-xl text-white'>
                                 {otherData.aboutme}
                             </div>
-                            <img src="/assets/me/6.svg" className='border-2 w-[160px] h-fit rounded-full' />
+                            <Image src="/assets/me/6.svg" alt="" width={160} height={160} className='border-2 h-fit rounded-full' />
                         </div>
                     </CardBody>
                 </Card>
