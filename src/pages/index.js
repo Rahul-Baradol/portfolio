@@ -121,10 +121,13 @@ export default function Home({ otherData }) {
                 transition={{ duration: 1 }}
             >
                 <Card className='dark w-[90vw]'>
-                    <CardBody>
+                    <CardBody className='border-violet-800 border-t-2 border-l-2 p-8'>
                         <div className="text-2xl text-violet-800">Hello there...</div>
-                        <div className='text-xl text-white'>
-                            {otherData.aboutme}
+                        <div className='mt-6 md:mt-2 flex gap-10 flex-col-reverse md:flex-row justify-between items-center'>
+                            <div className='text-xl text-white'>
+                                {otherData.aboutme}
+                            </div>
+                            <img src="/assets/me/6.svg" className='border-2 w-[160px] h-fit rounded-full' />
                         </div>
                     </CardBody>
                 </Card>

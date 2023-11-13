@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Link from 'next/link';
 import Image from 'next/image'
 import { navLinks } from '../../constants/constants'
-import { menu, close, logoBlackR } from '../assets'
+import { menu, close, logoBlackR } from '../../public/assets'
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(true);
