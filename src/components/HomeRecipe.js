@@ -1,14 +1,16 @@
-import React, { Suspense, useEffect, useRef } from 'react'
-import Image from 'next/image';
+import React, { Suspense, useEffect, useRef, useState } from 'react'
 import { Card, CardBody } from '@nextui-org/react';
 import { motion, useAnimation, useInView } from 'framer-motion'
-import styles from '../styles/Hero.module.css'
+import styles from '../styles/background.module.css'
+import dynamic from 'next/dynamic';
 
 function HomeRecipe(props) {
     const hero = useRef(null);
     const animeRef = useRef(null);
     const isInView = useInView(animeRef, { once: false });
     const mainControls = useAnimation();
+
+    const [Me, setMe] = useState(null);
 
     let blurEffect = {
         top: '45vh'
@@ -19,6 +21,15 @@ function HomeRecipe(props) {
             mainControls.start("visible");
         }
     }, [isInView, mainControls])
+
+    useEffect(() => {
+        setMe(() => {
+            return dynamic(() => import('./MeCompo'), {
+                ssr: false,
+                loading: () => <h1>Loading...</h1>
+            })
+        })
+    }, [setMe])
 
     return (
         <Suspense>
@@ -125,7 +136,10 @@ function HomeRecipe(props) {
                                 <div className='text-xl text-white'>
                                     {props.aboutme}
                                 </div>
-                                <Image src="/assets/me/6.svg" alt="" width={160} height={160} className='border-2 h-fit rounded-full' />
+
+                                {
+                                    Me ? <Me /> : <></>
+                                }
                             </div>
                         </CardBody>
                     </Card>
