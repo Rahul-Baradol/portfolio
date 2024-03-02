@@ -13,6 +13,13 @@ const otherData = {
   aboutme: "I am a 2nd year Computer Science student who loves building projects and have fun with existing web technologies! I also love solving problems on Leetcode. Yup.....you read it right I love Leetcode! My tech stack includes React, NextJS, Bootstrap, Tailwind CSS, Node JS, Express JS..so on and I am also into Cloud and Devops. I also love participating in short contests of algorithms. I got a second place in Alcoding Practice Placement Test series hosted by my university and I am top 5% on Leetcode! I also love System Design and Distributed Systems!"
 }
 
+const skillsDesc = [
+  "Frontend Developer",
+  "Backend Developer",
+  "DevOps",
+  "Cloud Developer"
+]
+
 const projects = [
   {
     "_id": "65255cf087dc8df89ade31e7",
@@ -76,5 +83,6 @@ const projects = [
 export {
   otherData,
   projects,
-  navLinks
+  navLinks,
+  skillsDesc
 };
