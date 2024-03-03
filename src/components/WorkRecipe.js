@@ -33,12 +33,12 @@ function WorkRecipe(props) {
 
     return (
         <>
-            <main className="mb-32 flex flex-col items-center h-fit w-[100vw] relative top-[15vh]">
+            <main className="mb-32 flex flex-col items-center h-fit w-[100vw] ">
                 <div className='flex flex-col p-6 items-center m-2'>
                     <div className='text-3xl font-thin mt-1 mb-4 text-white'>
                         <TypeAnimation
                             sequence={[
-                                'Profiles'
+                                'Experience'
                             ]}
                             cursor={false}
                             speed={10}
@@ -58,8 +58,8 @@ function WorkRecipe(props) {
                             <Card className="dark w-[85vw] md:w-[40vw]">
                                 <CardHeader className="flex gap-3">
                                     <div className="flex flex-col">
-                                        <p className="text-md">LeetCode</p>
-                                        <p className="text-small text-default-500">@rahul_baradol</p>
+                                        <p className="text-md">Software Development Intern</p>
+                                        <p className="text-small text-default-500">@CognitiveLab</p>
                                     </div>
                                 </CardHeader>
                                 <Divider />
@@ -76,40 +76,6 @@ function WorkRecipe(props) {
                                 </CardFooter>
                             </Card>
                         </motion.div>
-
-                        <motion.div
-                            ref={profileRefCodeChef}
-                            variants={{
-                                hidden: { opacity: 0, x: 40 },
-                                visible: { opacity: 1, x: 0 }
-                            }}
-                            initial="hidden"
-                            animate={mainControlsCodeChef}
-                            transition={{ duration: 1 }}
-                        >
-                            <Card className="dark w-[85vw] md:w-[40vw]">
-                                <CardHeader className="flex gap-3">
-                                    <div className="flex flex-col">
-                                        <p className="text-md">CodeChef</p>
-                                        <p className="text-small text-default-500">@rahul227</p>
-                                    </div>
-                                </CardHeader>
-                                <Divider />
-                                <CardBody>
-                                    <p>Love solving those ad-hoc problems? Then do connect with me on CodeChef discuss!</p>
-                                </CardBody>
-                                <CardFooter>
-                                    <Link
-                                        isExternal
-                                        href="https://www.codechef.com/users/rahul227"
-                                    >
-                                        CodeChef
-                                    </Link>
-
-                                </CardFooter>
-                            </Card>
-                        </motion.div>
-
                     </div>
                 </div>
 

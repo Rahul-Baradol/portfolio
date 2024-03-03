@@ -1,10 +1,12 @@
 import React, { Suspense, useEffect, useRef, useState } from 'react'
-import { Card, CardBody } from '@nextui-org/react';
+import { Avatar, Card, CardBody } from '@nextui-org/react';
 import { motion, useAnimation, useInView } from 'framer-motion'
 import { skillsDesc } from '../../constants/constants';
 import styles from '../styles/background.module.css'
 import dynamic from 'next/dynamic';
 import TextTransition, { presets } from 'react-text-transition';
+import { github, linkedin, leetcode } from '../../public/assets';
+import Image from 'next/image';
 
 function HomeRecipe(props) {
     const hero = useRef(null);
@@ -30,7 +32,7 @@ function HomeRecipe(props) {
     }, [lock])
 
     useEffect(() => {
-        if (skillsDesc &&  skillNo !== undefined) {
+        if (skillsDesc && skillNo !== undefined) {
             setLock(true);
         }
     }, [])
@@ -136,17 +138,44 @@ function HomeRecipe(props) {
 
             <div className={`z-0 h-full bg-cover bg-no-repeat ${styles.heroOuter}`}>
                 <div ref={hero} className='relative flex flex-col items-center justify-between w-screen h-screen'>
-                    <div className={`px-3 relative flex flex-col items-center gap-2`} style={blurEffect}>
-                        <div className={`text-4xl md:text-5xl text-violet-800 opacity-100`}>
-                            <span className='px-1 enableOpacity select-none spoiler'>Rahul Baradol</span>
+                    <div className={`px-3 relative flex flex-col items-center gap-28`} style={blurEffect}>
+                        <div className='w-fit h-fit flex flex-col justify-center items-center gap-2'>
+                            <div className={`text-4xl lg:text-5xl text-violet-800 opacity-100`}>
+                                <span className='px-1 enableOpacity select-none spoiler'>Rahul Baradol</span>
+                            </div>
+
+                            <TextTransition direction='down' className='select-none text-xl lg:text-2xl w-[270px] h-[40px] flex justify-center' springConfig={presets.molasses} delay={1000}>{skillsDesc[skillNo]}</TextTransition>
+                        </div>                        
+                    </div>
+
+                    <div className='relative bottom-5 flex flex-row justify-around items-center w-[70vw] sm:w-[20vw] h-[10vh]'>
+                            <a href="https://github.com/Rahul-Baradol" target='_blank' className='border-2 border-violet-600 opacity-50 hover:opacity-100 transition-opacity w-fit h-fit rounded-full overflow-hidden'>
+                                <Image
+                                    width={35}
+                                    height={35}
+                                    src={github}
+                                    alt=""
+                                />
+                            </a>
+
+                            <a href="https://www.linkedin.com/in/rahul-baradol-22723b289/" target='_blank' className='border-2 border-violet-600 opacity-50 hover:opacity-100 transition-opacity w-fit h-fit rounded-full overflow-hidden'>
+                                <Image
+                                    width={35}
+                                    height={35}
+                                    src={linkedin}
+                                    alt=""
+                                />
+                            </a>
+
+                            <a href="https://leetcode.com/rahul_baradol/" target='_blank' className='border-2 border-violet-600 opacity-50 hover:opacity-100 transition-opacity w-fit h-fit rounded-full overflow-hidden'>
+                                <Image
+                                    width={35}
+                                    height={35}
+                                    src={leetcode}
+                                    alt=""
+                                />
+                            </a>
                         </div>
-
-                        <TextTransition direction='down' className='select-none text-xl md:text-2xl w-[270px] h-[40px] flex justify-center' springConfig={presets.molasses} delay={1000}>{skillsDesc[skillNo]}</TextTransition>
-                    </div>
-
-                    <div className="transitionBeforeScroll p-1 flex justify-center h-10 w-5 rounded-2xl border-2 border-white-100 relative bottom-5 -translate-x-3">
-                        <div className="relative rounded-full bg-white w-2 h-2 animation"></div>
-                    </div>
                 </div>
             </div>
 

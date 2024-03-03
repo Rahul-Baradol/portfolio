@@ -3,10 +3,6 @@ const navLinks = [
     id: "work",
     title: "Work",
   },
-  {
-    id: "contact",
-    title: "Contact",
-  },
 ];
 
 const otherData = {
@@ -22,7 +18,6 @@ const skillsDesc = [
 
 const projects = [
   {
-    "_id": "65255cf087dc8df89ade31e7",
     "title": "Flow Puzzle Solver",
     "description": "You must have played the game Flow Free on Mobile! Well this app solves the puzzles from the game Flow Free!",
     "technologies": [
@@ -41,7 +36,6 @@ const projects = [
     "personal": true
   },
   {
-    "_id": "653008561476eee91d0fe224",
     "title": "Shunya's Code of Honour",
     "description": "Hackathon website built for the club Shunya in collaboration with a senior!",
     "technologies": [
@@ -64,7 +58,28 @@ const projects = [
     "personal": false
   },
   {
-    "_id": "65282ddd4d51a00216999d97",
+    "title": "Build My Idea",
+    "description": "Single Page Built for the client using modern technologies",
+    "technologies": [
+      [
+        "React",
+        "primary"
+      ],
+      [
+        "Tailwind CSS",
+        "secondary"
+      ],
+      [
+        "DaisyUI",
+        "success"
+      ]
+    ],
+    "siteLink": "https://build-my-idea.vercel.app/",
+    "siteLinkDesc": "build-my-idea.vercel.app/",
+    "githubLink": "https://github.com/Rahul-Baradol/service-build-my-idea",
+    "personal": false
+  },
+  {
     "title": "Mini Projects",
     "description": "Projects made in my school days just for fun. Java is used for the logic part and FXML is used for the UI!",
     "technologies": [
