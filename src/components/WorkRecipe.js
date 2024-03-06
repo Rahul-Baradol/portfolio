@@ -1,13 +1,11 @@
 import React, { useEffect, useRef } from "react";
-import { Card, CardHeader, CardBody, CardFooter, Divider, Link, Button } from "@nextui-org/react";
+import { Card, CardHeader, CardBody, CardFooter, Divider, Link } from "@nextui-org/react";
 import { motion, useAnimation, useInView } from 'framer-motion';
 import { Code } from "@nextui-org/react";
 import { TypeAnimation } from 'react-type-animation';
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
 import 'react-vertical-timeline-component/style.min.css';
 import { Poppins } from 'next/font/google'
-import { experience } from "../../public/assets";
-import Image from "next/image";
 
 const poppins = Poppins({
     weight: '400',
@@ -55,7 +53,7 @@ function WorkRecipe(props) {
                         />
                     </div>
                     <div className="w-[100vw] items-center md:justify-center h-fit flex md:flex-row flex-col gap-4 bg-[rgb(24 24 27)] text-white border-0">
-                        <VerticalTimeline lineColor="transparent">
+                        <VerticalTimeline lineColor="white">
                             <VerticalTimelineElement
                                 contentStyle={{
                                     background: "transparent",
@@ -89,7 +87,7 @@ function WorkRecipe(props) {
                                         vision model
                                     </p>
 
-                                    <Link className="mt-2" showAnchorIcon href="#" color="primary">
+                                    <Link className="mt-2" showAnchorIcon target="_blank" href="/assets/Certificates/CognitiveLab.png" color="primary">
                                         Show Certificate
                                     </Link>
                                 </div>

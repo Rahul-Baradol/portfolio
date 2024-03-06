@@ -53,8 +53,8 @@ const servicesOffered = [
         "success"
       ]
     ],
-    "siteLink": "https://build-my-idea.vercel.app/",
-    "siteLinkDesc": "build-my-idea.vercel.app/",
+    "siteLink": "https://buildmyidea.vercel.app/",
+    "siteLinkDesc": "buildmyidea.vercel.app/",
     "githubLink": "https://github.com/Rahul-Baradol/service-build-my-idea",
     "personal": false
   },

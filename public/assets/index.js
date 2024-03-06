@@ -7,6 +7,7 @@ import github from './social/github.png'
 import linkedin from './social/linkedin2.png'
 import leetcode from './social/leetcode.png'
 import experience from './experience/quality.png'
+import CognitiveLabCertificate from './Certificates/CognitiveLab.png'
 
 export {
   logoBlackR,
@@ -16,5 +17,6 @@ export {
   github,
   linkedin,
   leetcode,
-  experience
+  experience,
+  CognitiveLabCertificate
 };
