@@ -1,8 +1,5 @@
 const navLinks = [
-  {
-    id: "work",
-    title: "Work",
-  },
+  
 ];
 
 const otherData = {
@@ -16,25 +13,7 @@ const skillsDesc = [
   "Cloud Developer"
 ]
 
-const projects = [
-  {
-    "title": "Flow Puzzle Solver",
-    "description": "You must have played the game Flow Free on Mobile! Well this app solves the puzzles from the game Flow Free!",
-    "technologies": [
-      [
-        "React",
-        "primary"
-      ],
-      [
-        "Bootstrap",
-        "secondary"
-      ]
-    ],
-    "siteLink": "https://flowpuzzlesolver.vercel.app/",
-    "siteLinkDesc": "flowpuzzlesolver.vercel.app",
-    "githubLink": "https://github.com/Rahul-Baradol/Flow-Puzzle-Solver-React",
-    "personal": true
-  },
+const servicesOffered = [
   {
     "title": "Shunya's Code of Honour",
     "description": "Hackathon website built for the club Shunya in collaboration with a senior!",
@@ -79,6 +58,49 @@ const projects = [
     "githubLink": "https://github.com/Rahul-Baradol/service-build-my-idea",
     "personal": false
   },
+]
+
+const projects = [
+  {
+    "title": "Flow Puzzle Solver",
+    "description": "You must have played the game Flow Free on Mobile! Well this app solves the puzzles from the game Flow Free!",
+    "technologies": [
+      [
+        "React",
+        "primary"
+      ],
+      [
+        "Bootstrap",
+        "secondary"
+      ]
+    ],
+    "siteLink": "https://flowpuzzlesolver.vercel.app/",
+    "siteLinkDesc": "flowpuzzlesolver.vercel.app",
+    "githubLink": "https://github.com/Rahul-Baradol/Flow-Puzzle-Solver-React",
+    "personal": true
+  },
+  {
+    "title": "File Compressor/Decompressor",
+    "description": "A simple program which uses huffman tree to compress and decompress the file. File size is reduced to 50% of the size",
+    "technologies": [
+      [
+        "C++",
+        "primary"
+      ],
+      [
+        "Huffman Tree",
+        "primary"
+      ],
+      [
+        "Algorithms",
+        "primary"
+      ]
+    ],
+    "siteLink": "",
+    "siteLinkDesc": "",
+    "githubLink": "https://github.com/Rahul-Baradol/Encoders-And-Encryption-Algorithms",
+    "personal": true
+  },
   {
     "title": "Mini Projects",
     "description": "Projects made in my school days just for fun. Java is used for the logic part and FXML is used for the UI!",
@@ -98,6 +120,7 @@ const projects = [
 export {
   otherData,
   projects,
+  servicesOffered,
   navLinks,
   skillsDesc
 };

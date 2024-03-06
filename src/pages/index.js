@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic';
-import { projects, otherData } from '../../constants/constants'
-import { Spinner } from '@nextui-org/react';
+import { servicesOffered, projects, otherData } from '../../constants/constants'
+import { Divider, Spinner } from '@nextui-org/react';
+import Footer from '@/components/Footer';
 
 require('dotenv').config({ path: '.env.local' });
 
@@ -38,12 +39,14 @@ export default function Home(props) {
          }
 
          {
-            WorkRecipe ? <WorkRecipe projects={props.projects} /> : <></>
+            WorkRecipe ? <WorkRecipe servicesOffered={props.servicesOffered} projects={props.projects} /> : <></>
          }
+
+         <Footer />
       </>
    )
 }
 
 export async function getStaticProps() {
-   return { props: { otherData, projects } }
+   return { props: { otherData, projects, servicesOffered } }
 }

@@ -6,6 +6,7 @@ import me from './me/6.svg'
 import github from './social/github.png'
 import linkedin from './social/linkedin2.png'
 import leetcode from './social/leetcode.png'
+import experience from './experience/quality.png'
 
 export {
   logoBlackR,
@@ -14,5 +15,6 @@ export {
   me,
   github,
   linkedin,
-  leetcode
+  leetcode,
+  experience
 };
