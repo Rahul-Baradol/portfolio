@@ -9,7 +9,7 @@ const Navbar = () => {
 
   return (
     <>
-      <Suspense>
+      {/* <Suspense>
         <style jsx>
           {`
           .transtionOpacity {
@@ -105,7 +105,7 @@ const Navbar = () => {
 
           </div>
         </nav>
-      </Suspense>
+      </Suspense> */}
     </>
   )
 }
