@@ -140,11 +140,11 @@ function HomeRecipe(props) {
                 <div ref={hero} className='relative flex flex-col items-center justify-between w-screen h-screen'>
                     <div className={`px-3 relative flex flex-col items-center gap-28`} style={blurEffect}>
                         <div className='w-fit h-fit flex flex-col justify-center items-center gap-2'>
-                            <div className={`text-4xl lg:text-5xl text-violet-800 opacity-100`}>
+                            <div className={`text-4xl text-violet-800 opacity-100`}>
                                 <span className='px-1 enableOpacity select-none spoiler'>Rahul Baradol</span>
                             </div>
 
-                            <TextTransition direction='down' className='select-none text-xl lg:text-2xl w-[270px] h-[40px] flex justify-center' springConfig={presets.molasses} delay={1000}>{skillsDesc[skillNo]}</TextTransition>
+                            <TextTransition direction='down' className='select-none text-lg lg:text-xl w-[270px] h-[40px] flex justify-center' springConfig={presets.molasses} delay={1000}>{skillsDesc[skillNo]}</TextTransition>
                         </div>                        
                     </div>
 
