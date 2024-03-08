@@ -1,3 +1,5 @@
+import { arduino, asm, aws, c, cpp, css, docker, express, firebase, go, javascript, linux, mongodb, nextjs, nginx, nodejs, python, react, selenium, tailwindcss, typescript } from "../public/assets";
+
 const navLinks = [
   
 ];
@@ -11,6 +13,114 @@ const skillsDesc = [
   "Backend Developer",
   "DevOps",
   "Cloud Developer"
+]
+
+const techIcons = [
+  {
+    "src": asm,
+    "width": "60px",
+    "height": "60px",
+  },
+  {
+    "src": arduino,
+    "width": "60px",
+    "height": "60px",
+  },
+  {
+    "src": aws,
+    "width": "60px",
+    "height": "60px",
+  },
+  {
+    "src": c,
+    "width": "60px",
+    "height": "60px",
+  },
+  {
+    "src": cpp,
+    "width": "60px",
+    "height": "60px",
+  },
+  {
+    "src": css,
+    "width": "60px",
+    "height": "60px",
+  },
+  {
+    "src": docker,
+    "width": "60px",
+    "height": "60px",
+  },
+  {
+    "src": express,
+    "width": "60px",
+    "height": "60px",
+  },
+  {
+    "src": firebase,
+    "width": "60px",
+    "height": "60px",
+  },
+  {
+    "src": go,
+    "width": "60px",
+    "height": "60px",
+  },
+  {
+    "src": javascript,
+    "width": "60px",
+    "height": "60px",
+  },
+  {
+    "src": mongodb,
+    "width": "60px",
+    "height": "60px",
+  },
+  {
+    "src": nextjs,
+    "width": "60px",
+    "height": "60px",
+  },
+  {
+    "src": nginx,
+    "width": "60px",
+    "height": "60px",
+  },
+  {
+    "src": nodejs,
+    "width": "60px",
+    "height": "60px",
+  },
+  {
+    "src": python,
+    "width": "60px",
+    "height": "60px",
+  },
+  {
+    "src": react,
+    "width": "60px",
+    "height": "60px",
+  },
+  {
+    "src": selenium,
+    "width": "60px",
+    "height": "60px",
+  },
+  {
+    "src": tailwindcss,
+    "width": "60px",
+    "height": "60px",
+  },
+  {
+    "src": typescript,
+    "width": "60px",
+    "height": "60px",
+  },
+  {
+    "src": linux,
+    "width": "60px",
+    "height": "60px",
+  },
 ]
 
 const servicesOffered = [
@@ -122,5 +232,6 @@ export {
   projects,
   servicesOffered,
   navLinks,
-  skillsDesc
+  skillsDesc,
+  techIcons
 };
