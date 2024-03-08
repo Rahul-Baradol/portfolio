@@ -1,11 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect } from 'react'
 import { TypeAnimation } from 'react-type-animation';
-import { motion, useAnimation, useInView } from 'framer-motion'
+import { motion, useAnimation } from 'framer-motion'
+import { devQuotes } from '../../constants/constants';
 
-const DockerIntro = ({ setIntro }) => {
-    const [pullerDiv, setPullerDiv] = useState(false);
-    const [runType, setRunType] = useState(false);
-
+const DockerIntro = ({ setIntro, quoteId }) => {
     const mainControls = useAnimation();
 
     useEffect(() => {
@@ -15,12 +13,11 @@ const DockerIntro = ({ setIntro }) => {
     return (
         <>
             <div className='p-4 flex justify-center items-center w-screen h-[95vh]'>
-
                 <motion.div
                     variants={{
-                        hidden: { opacity: 0, x: 50 },
-                        visible: { opacity: 1, x: 0 },
-                        exit: { opacity: 0, x: -50 }
+                        hidden: { opacity: 0 },
+                        visible: { opacity: 1 },
+                        exit: { opacity: 0 }
                     }}
                     initial="hidden"
                     animate={mainControls}
@@ -30,19 +27,12 @@ const DockerIntro = ({ setIntro }) => {
                     <TypeAnimation
                         preRenderFirstString={false}
                         sequence={[
-                            'Hey!',
+                            `"${devQuotes[quoteId].quote}" \n - ${devQuotes[quoteId].author}`,
                             1500,
                             () => {
                                 mainControls.start("exit");
                             },
                             '',
-                            1500,
-                            () => {
-                                mainControls.start("visible")
-                            },
-                            "Welcome to my portfolio!",
-                            1500,
-                            "Welcome to my portfolio! \n I am...",
                             1500,
                             () => {
                                 mainControls.start("exit")
@@ -55,7 +45,7 @@ const DockerIntro = ({ setIntro }) => {
                             fontSize: '1.2em',
                             color: 'white'
                         }}
-                        deletionSpeed={40}
+                        deletionSpeed={80}
                         cursor={false}
                     />
                 </motion.div>

@@ -25,16 +25,6 @@ const poppins400 = Poppins({
 })
 
 function generateRandomNumber(a, b) {
-   // Check if a and b are valid numbers
-   if (typeof a !== 'number' || typeof b !== 'number' || isNaN(a) || isNaN(b)) {
-      throw new Error('Invalid input. Both arguments must be numbers.');
-   }
-
-   // Check if a is greater than or equal to b
-   if (a >= b) {
-      throw new Error('Invalid input. The first argument must be less than the second argument.');
-   }
-
    // Generate random number between a and b (inclusive)
    return Math.floor(Math.random() * (b - a + 1)) + a;
 }

@@ -1,12 +1,43 @@
 import { arduino, asm, aws, c, cpp, css, docker, express, firebase, go, javascript, linux, mongodb, nextjs, nginx, nodejs, python, react, selenium, tailwindcss, typescript } from "../public/assets";
 
 const navLinks = [
-  
+
 ];
 
 const otherData = {
   aboutme: "I am a 2nd year Computer Science student who loves building projects and have fun with existing web technologies! I also love solving problems on Leetcode. Yup.....you read it right I love Leetcode! My tech stack includes React, NextJS, Bootstrap, Tailwind CSS, Node JS, Express JS..so on and I am also into Cloud and Devops. I also love participating in short contests of algorithms. I got a second place in Alcoding Practice Placement Test series hosted by my university and I am top 5% on Leetcode! I also love System Design and Distributed Systems!"
 }
+
+const devQuotes = [
+  {
+    "quote": "Programming is not about typing, it's about thinking.",
+    "author": "Rich Hickey"
+  },
+  {
+    "quote": "Don't write better error messages, write code that doesn't need them.",
+    "author": "Jason C. McDonald"
+  },
+  {
+    "quote": "First, solve the problem. Then, write the code.",
+    "author": "John Johnson"
+  },
+  {
+    "quote": "Code is like humor. When you have to explain it, it's bad.",
+    "author": "Cory House"
+  },
+  {
+    "quote": "The function of good software is to make the complex appear to be simple.",
+    "author": "Grady Booch"
+  },
+  {
+    "quote": "Software is a great combination between artistry and engineering.",
+    "author": "Bill Gates"
+  },
+  {
+    "quote": "There are only two hard things in computer science: cache invalidation and naming things.",
+    "author": "Phil Karlton"
+  }
+]
 
 const skillsDesc = [
   "Computer Science Student",
@@ -234,5 +265,6 @@ export {
   servicesOffered,
   navLinks,
   skillsDesc,
-  techIcons
+  techIcons,
+  devQuotes
 };
