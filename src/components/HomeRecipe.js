@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect, useRef, useState } from 'react'
-import { Avatar, Card, CardBody } from '@nextui-org/react';
+import { Card, CardBody } from '@nextui-org/react';
 import { motion, useAnimation, useInView } from 'framer-motion'
 import { skillsDesc, techIcons } from '../../constants/constants';
 import styles from '../styles/background.module.css'
@@ -7,6 +7,22 @@ import dynamic from 'next/dynamic';
 import TextTransition, { presets } from 'react-text-transition';
 import { github, linkedin, leetcode } from '../../public/assets';
 import Image from 'next/image';
+import { Poppins } from 'next/font/google';
+
+const poppins200 = Poppins({
+   weight: '200',
+   subsets: ['latin'],
+})
+
+const poppins300 = Poppins({
+   weight: '300',
+   subsets: ['latin'],
+})
+
+const poppins400 = Poppins({
+   weight: '400',
+   subsets: ['latin'],
+})
 
 function generateRandomNumber(a, b) {
    // Check if a and b are valid numbers
@@ -41,9 +57,11 @@ function HomeRecipe(props) {
       top: '45vh'
    };
 
-   function loop() {
+   function loopSkills() {
       setSkillNo(ele => (ele + 1) % skillsDesc.length);
+   }
 
+   function loopOffset() {
       let X = [];
       let Y = [];
       for (let i = 0; i < techIcons.length; i++) {
@@ -57,10 +75,15 @@ function HomeRecipe(props) {
 
    useEffect(() => {
       if (lock) {
-         loop();
+         loopSkills();
+         loopOffset
 
-         setInterval(async () => {
-            loop();
+         setInterval(() => {
+            loopSkills();
+         }, 1500);
+
+         setInterval(() => {
+            loopOffset();
          }, 4000);
       }
    }, [lock])
@@ -175,10 +198,10 @@ function HomeRecipe(props) {
                <div className={`px-3 relative flex flex-col items-center gap-28`} style={blurEffect}>
                   <div className='w-fit h-fit flex flex-col justify-center items-center gap-2'>
                      <div className={`text-4xl text-violet-800 opacity-100`}>
-                        <span className='px-1 enableOpacity select-none spoiler'>Rahul Baradol</span>
+                        <span className={`${poppins200.className} px-1 enableOpacity select-none spoiler`}>Rahul Baradol</span>
                      </div>
 
-                     <TextTransition direction='down' className='select-none text-lg lg:text-xl w-[270px] h-[40px] flex justify-center' springConfig={presets.molasses} delay={1000}>{skillsDesc[skillNo]}</TextTransition>
+                     <TextTransition direction='down' className='select-none text-lg lg:text-xl w-[270px] h-[40px] flex justify-center' springConfig={presets.molasses} delay={1500}>{skillsDesc[skillNo]}</TextTransition>
                   </div>
                </div>
 
@@ -225,7 +248,7 @@ function HomeRecipe(props) {
             >
                <Card className='dark w-[90vw]'>
                   <CardBody className='border-violet-800 border-t-2 border-l-2 p-8'>
-                     <div className="text-2xl text-violet-800">Hello there...</div>
+                     <div className={`${poppins400.className} text-2xl text-violet-800`}>Hello there...</div>
                      <div className='mt-6 md:mt-2 flex gap-10 flex-col-reverse md:flex-row justify-between items-center'>
                         <div className='spoiler2 text-xl text-white'>
                            {props.aboutme}
@@ -279,7 +302,7 @@ function HomeRecipe(props) {
                            })
                         }
                      </div>
-                     <div className="text-2xl text-violet-800 flex flex-row justify-end">...Tech</div>
+                     <div className={`${poppins300.className} text-2xl text-violet-800 flex flex-row justify-end`}>...Tech</div>
                   </CardBody>
                </Card>
             </motion.div>

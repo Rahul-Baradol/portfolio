@@ -8,7 +8,7 @@ import 'react-vertical-timeline-component/style.min.css';
 import { Poppins } from 'next/font/google'
 
 const poppins = Poppins({
-    weight: '400',
+    weight: '100',
     subsets: ['latin'],
 })
 
@@ -17,33 +17,17 @@ function WorkRecipe(props) {
     const inViewProject = useInView(projectRef, { once: true });
     const mainControlsProject = useAnimation();
 
-    const profileRefLeetcode = useRef(null);
-    const inViewLeetcode = useInView(profileRefLeetcode, { once: true });
-    const mainControlsLeetcode = useAnimation();
-
-    const profileRefCodeChef = useRef(null);
-    const inViewCodeChef = useInView(profileRefCodeChef, { once: true });
-    const mainControlsCodeChef = useAnimation();
-
     useEffect(() => {
         if (inViewProject) {
             mainControlsProject.start("visible");
         }
-
-        if (inViewLeetcode) {
-            mainControlsLeetcode.start("visible");
-        }
-
-        if (inViewCodeChef) {
-            mainControlsCodeChef.start("visible");
-        }
-    }, [inViewProject, inViewLeetcode, inViewCodeChef, mainControlsProject, mainControlsCodeChef, mainControlsLeetcode])
+    }, [inViewProject, mainControlsProject])
 
     return (
         <>
             <main className="mb-10 flex flex-col items-center h-fit w-[100vw] ">
                 <div className='flex flex-col p-6 items-center m-2'>
-                    <div className='text-3xl font-thin mt-1 mb-4 text-white'>
+                    <div className={`${poppins.className} text-3xl font-thin mt-1 mb-4 text-white`}>
                         <TypeAnimation
                             sequence={[
                                 'Experience'
@@ -99,7 +83,7 @@ function WorkRecipe(props) {
                 <Divider className="my-2 w-[70%] bg-slate-800" />
 
                 <div className="flex flex-col items-center p-2 m-2">
-                    <div className='flex flex-col items-center justify-center text-3xl font-thin mt-1 mb-4 text-white'>
+                    <div className={`${[poppins.className]} flex flex-col items-center justify-center text-3xl font-thin mt-1 mb-4 text-white`}>
                         <TypeAnimation
                             sequence={[
                                 'Services Offered'
@@ -161,7 +145,7 @@ function WorkRecipe(props) {
                 <Divider className="my-2 w-[70%] bg-slate-800" />
 
                 <div className="flex flex-col items-center p-2 m-2">
-                    <div className='flex flex-col items-center justify-center text-3xl font-thin mt-1 mb-4 text-white'>
+                    <div className={`${poppins.className} flex flex-col items-center justify-center text-3xl font-thin mt-1 mb-4 text-white`}>
                         <TypeAnimation
                             sequence={[
                                 'Projects'
