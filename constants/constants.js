@@ -9,10 +9,11 @@ const otherData = {
 }
 
 const skillsDesc = [
-  "Frontend Developer",
-  "Backend Developer",
-  "DevOps",
-  "Cloud Developer"
+  "Computer Science Student",
+  "Full Stack Engineer",
+  "Algorithms",
+  "Cloud Engineer",
+  "DevOps"
 ]
 
 const techIcons = [
