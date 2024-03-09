@@ -41,6 +41,9 @@ function HomeRecipe(props) {
    const [offsetsX, setOffsetsX] = useState([]);
    const [offsetsY, setOffsetsY] = useState([]);
 
+   const [loadedFlags, setLoadedFlags] = useState([]);
+   const [loadedFlagsSocial, setLoadedFlagsSocial] = useState([0, 0, 0]);
+
    let blurEffect = {
       top: '45vh'
    };
@@ -65,6 +68,12 @@ function HomeRecipe(props) {
       if (lock) {
          loopSkills();
          loopOffset();
+
+         let arr = [];
+         for (let i = 0; i < techIcons.length; i++) {
+            arr.push(0);
+         }
+         setLoadedFlags(arr)
 
          setInterval(() => {
             loopSkills();
@@ -169,6 +178,10 @@ function HomeRecipe(props) {
                             color: rgb(91 33 182);
                         }
                     }
+
+                    .wrapper {
+                        border: 2px solid violet; 
+                    }
                 `}
          </style>
 
@@ -185,30 +198,51 @@ function HomeRecipe(props) {
                </div>
 
                <div className='relative bottom-5 flex flex-row justify-around items-center w-[70vw] sm:w-[20vw] h-[10vh]'>
-                  <a href="https://github.com/Rahul-Baradol" target='_blank' className='border-2 border-violet-600 opacity-50 hover:opacity-100 transition-opacity w-fit h-fit rounded-full overflow-hidden'>
+                  <a href="https://github.com/Rahul-Baradol" target='_blank' className={`border-2 border-violet-600 opacity-50 hover:opacity-100 transition-opacity w-fit h-fit rounded-full overflow-hidden`}>
                      <Image
                         width={35}
                         height={35}
                         src={github}
                         alt=""
+                        onLoad={() => {
+                           setLoadedFlagsSocial(arr => {
+                              arr[0] = 1;
+                              return arr;
+                           })
+                        }}
+
                      />
                   </a>
 
-                  <a href="https://www.linkedin.com/in/rahul-baradol-22723b289/" target='_blank' className='border-2 border-violet-600 opacity-50 hover:opacity-100 transition-opacity w-fit h-fit rounded-full overflow-hidden'>
+                  <a href="https://www.linkedin.com/in/rahul-baradol-22723b289/" target='_blank' className={`
+                  border-2 border-violet-600 opacity-50 hover:opacity-100 transition-opacity w-fit h-fit rounded-full overflow-hidden`}>
                      <Image
                         width={35}
                         height={35}
                         src={linkedin}
                         alt=""
+                        onLoad={() => {
+                           setLoadedFlagsSocial(arr => {
+                              arr[1] = 1;
+                              return arr;
+                           })
+                        }}
                      />
                   </a>
 
-                  <a href="https://leetcode.com/rahul_baradol/" target='_blank' className='border-2 border-violet-600 opacity-50 hover:opacity-100 transition-opacity w-fit h-fit rounded-full overflow-hidden'>
+                  <a href="https://leetcode.com/rahul_baradol/" target='_blank' className={`
+                  border-2 border-violet-600 opacity-50 hover:opacity-100 transition-opacity w-fit h-fit rounded-full overflow-hidden`}>
                      <Image
                         width={35}
                         height={35}
                         src={leetcode}
                         alt=""
+                        onLoad={() => {
+                           setLoadedFlagsSocial(arr => {
+                              arr[2] = 1;
+                              return arr;
+                           })
+                        }}
                      />
                   </a>
                </div>
@@ -255,28 +289,34 @@ function HomeRecipe(props) {
                      <div className='mt-6 md:mt-2 grid grid-cols-3 lg:grid-cols-7 gap-10 justify-items-center place-items-center'>
                         {
                            offsetsX.length > 0 && offsetsY.length > 0 && techIcons.map((value, key) => {
-                              return <motion.div
-                                 key={key}
-                                 className='w-fit aspect-square'
-                                 animate={{
-                                    x: [0, offsetsX[key], 0],
-                                    y: [0, offsetsY[key], 0]
-                                 }}
-                                 transition={{
-                                    duration: 4,
-                                    ease: "easeIn",
-                                    times: [0, 1],
-                                    repeat: Infinity,
-                                    repeatDelay: 0
-                                 }}
-                              >
-                                 <Image
-                                    src={value.src}
-                                    alt=""
-                                    className={`w-[50px] aspect-auto`}
-                                    loading='eager'
-                                 />
-                              </motion.div>
+                              return <div key={key} className='w-fit h-fit'>
+                                 <motion.div
+                                    className={`${!loadedFlags[key] ? "before:absolute before:top-0 before:left-0 after:top-0 after:left-0 before:z-10 before:w-[50px] before:h-[50px] before:bg-[#18181b] before:border-2 before:rounded-full after:absolute after:z-20 after:w-[50px] after:h-[50px] after:bg-violet-950 after:border-2 after:rounded-full after:animate-pulse" : ""} w-fit aspect-square`}
+                                    animate={{
+                                       x: [0, offsetsX[key], 0],
+                                       y: [0, offsetsY[key], 0]
+                                    }}
+                                    transition={{
+                                       duration: 4,
+                                       ease: "easeIn",
+                                       times: [0, 1],
+                                       repeat: Infinity,
+                                       repeatDelay: 0
+                                    }}
+                                 >
+                                    <Image
+                                       src={value.src}
+                                       alt=""
+                                       className={`w-[50px] aspect-auto rounded-3xl`}
+                                       onLoad={() => {
+                                          setLoadedFlags(arr => {
+                                             arr[key] = 1;
+                                             return arr;
+                                          })
+                                       }}
+                                    />
+                                 </motion.div>
+                              </div>
                            })
                         }
                      </div>
