@@ -31,8 +31,10 @@ import linux from './tech/linux.png'
 import asm from './tech/asm.png'
 import kafka from './tech/kafka.png'
 import meBlur from './me/me.jpg'
+import logoWhiteR from './sitelogo/R/png/logoWhiteR.png'
 
 export {
+  logoWhiteR,
   meBlur,
   kafka,
   asm,
