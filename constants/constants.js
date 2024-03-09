@@ -5,7 +5,7 @@ const navLinks = [
 ];
 
 const otherData = {
-  aboutme: "I am a 2nd year Computer Science student who loves building projects and have fun with existing web technologies! My core interests lie in understanding databases, load balancers, and also how different systems are built, and how one can build a system which is cost-effective, performant, and fulfills the demands of the customers. I also love solving problems on Leetcode. Yup.....you read it right I love Leetcode!. I also love participating in short contests of algorithms. I got a second place in Alcoding Practice Placement Test series hosted by my university and I am top 4% on Leetcode!"
+  aboutme: "I am a 2nd year Computer Science student who loves building projects and have fun with existing web technologies! My core interests lie in understanding databases, load balancers, and also how different systems are built, and how one can build a cost-effective and performant system which fulfills the demands of the customers. I also love solving problems on Leetcode. Yup.....you read it right I love Leetcode! I also love participating in short contests of algorithms. I got a second place in Alcoding Practice Placement Test series hosted by my university and I am top 4% on Leetcode!"
 }
 
 const devQuotes = [
