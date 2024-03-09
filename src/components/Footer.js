@@ -28,6 +28,7 @@ function Footer() {
                   height={35}
                   src={logoWhiteR}
                   alt=""
+                  loading='eager'
                />
             </a>
          </footer>
