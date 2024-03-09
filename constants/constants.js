@@ -1,11 +1,11 @@
-import { arduino, asm, aws, c, cpp, css, docker, express, firebase, go, javascript, linux, mongodb, nextjs, nginx, nodejs, python, react, selenium, tailwindcss, typescript } from "../public/assets";
+import { arduino, asm, aws, c, cpp, css, docker, express, firebase, go, javascript, kafka, linux, mongodb, nextjs, nginx, nodejs, python, react, selenium, tailwindcss, typescript } from "../public/assets";
 
 const navLinks = [
 
 ];
 
 const otherData = {
-  aboutme: "I am a 2nd year Computer Science student who loves building projects and have fun with existing web technologies! I also love solving problems on Leetcode. Yup.....you read it right I love Leetcode! My tech stack includes React, NextJS, Bootstrap, Tailwind CSS, Node JS, Express JS..so on and I am also into Cloud and Devops. I also love participating in short contests of algorithms. I got a second place in Alcoding Practice Placement Test series hosted by my university and I am top 5% on Leetcode! I also love System Design and Distributed Systems!"
+  aboutme: "I am a 2nd year Computer Science student who loves building projects and have fun with existing web technologies! I also love solving problems on Leetcode. Yup.....you read it right I love Leetcode!. I also love participating in short contests of algorithms. I got a second place in Alcoding Practice Placement Test series hosted by my university and I am top 4% on Leetcode! I also love to learn how different systems are built, and how one can build a system end-to-end which is cost-effective, performant, and fulfills the demands of the customers. "
 }
 
 const devQuotes = [
@@ -49,20 +49,8 @@ const skillsDesc = [
 
 const techIcons = [
   {
-    "name": "asm",
-    "src": asm,
-    "width": "60px",
-    "height": "60px",
-  },
-  {
     "name": "arduino",
     "src": arduino,
-    "width": "60px",
-    "height": "60px",
-  },
-  {
-    "name": "aws",
-    "src": aws,
     "width": "60px",
     "height": "60px",
   },
@@ -73,8 +61,14 @@ const techIcons = [
     "height": "60px",
   },
   {
-    "name": "cpp",
-    "src": cpp,
+    "name": "express",
+    "src": express,
+    "width": "60px",
+    "height": "60px",
+  },
+  {
+    "name": "aws",
+    "src": aws,
     "width": "60px",
     "height": "60px",
   },
@@ -90,15 +84,16 @@ const techIcons = [
     "width": "60px",
     "height": "60px",
   },
+
   {
-    "name": "express",
-    "src": express,
+    "name": "firebase",
+    "src": firebase,
     "width": "60px",
     "height": "60px",
   },
   {
-    "name": "firebase",
-    "src": firebase,
+    "name": "cpp",
+    "src": cpp,
     "width": "60px",
     "height": "60px",
   },
@@ -151,6 +146,18 @@ const techIcons = [
     "height": "60px",
   },
   {
+    "name": "linux",
+    "src": linux,
+    "width": "60px",
+    "height": "60px",
+  },
+  {
+    "name": "kafka",
+    "src": kafka,
+    "width": "60px",
+    "height": "60px",
+  },
+  {
     "name": "selenium",
     "src": selenium,
     "width": "60px",
@@ -168,12 +175,7 @@ const techIcons = [
     "width": "60px",
     "height": "60px",
   },
-  {
-    "name": "linux",
-    "src": linux,
-    "width": "60px",
-    "height": "60px",
-  },
+
 ]
 
 const servicesOffered = [
@@ -224,6 +226,24 @@ const servicesOffered = [
 ]
 
 const projects = [
+  {
+    "title": "Decise - Remote Code Executor",
+    "description": "A microservice based online judge, which evaluates the code in different languages. (Prototype Version)",
+    "technologies": [
+      [
+        "NextJS",
+        "primary"
+      ],
+      [
+        "Kafka",
+        "secondary"
+      ]
+    ],
+    "siteLink": "",
+    "siteLinkDesc": "",
+    "githubLink": "https://github.com/orgs/rce-remote-code-executor/repositories",
+    "personal": true
+  },
   {
     "title": "Flow Puzzle Solver",
     "description": "You must have played the game Flow Free on Mobile! Well this app solves the puzzles from the game Flow Free!",
