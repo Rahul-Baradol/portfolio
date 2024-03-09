@@ -42,7 +42,6 @@ function HomeRecipe(props) {
    const [offsetsY, setOffsetsY] = useState([]);
 
    const [loadedFlags, setLoadedFlags] = useState([]);
-   const [loadedFlagsSocial, setLoadedFlagsSocial] = useState([0, 0, 0]);
 
    let blurEffect = {
       top: '45vh'
@@ -204,13 +203,6 @@ function HomeRecipe(props) {
                         height={35}
                         src={github}
                         alt=""
-                        onLoad={() => {
-                           setLoadedFlagsSocial(arr => {
-                              arr[0] = 1;
-                              return arr;
-                           })
-                        }}
-
                      />
                   </a>
 
@@ -221,12 +213,6 @@ function HomeRecipe(props) {
                         height={35}
                         src={linkedin}
                         alt=""
-                        onLoad={() => {
-                           setLoadedFlagsSocial(arr => {
-                              arr[1] = 1;
-                              return arr;
-                           })
-                        }}
                      />
                   </a>
 
@@ -237,19 +223,13 @@ function HomeRecipe(props) {
                         height={35}
                         src={leetcode}
                         alt=""
-                        onLoad={() => {
-                           setLoadedFlagsSocial(arr => {
-                              arr[2] = 1;
-                              return arr;
-                           })
-                        }}
                      />
                   </a>
                </div>
             </div>
          </div>
 
-         <div ref={animeRef} className="my-4 mb-12 flex font-mono sm:justify-around md:flex-row p-5 gap-8 h-fit flex-col items-center w-screen customStyle">
+         <div ref={animeRef} className="mt-4 mb-12 flex font-mono sm:justify-around md:flex-row p-5 gap-8 h-fit flex-col items-center w-screen customStyle">
             <motion.div
                variants={{
                   hidden: { opacity: 0, y: 50 },
