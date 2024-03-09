@@ -3,11 +3,11 @@ import { Card, CardBody } from '@nextui-org/react';
 import { motion, useAnimation, useInView } from 'framer-motion'
 import { skillsDesc, techIcons } from '../../constants/constants';
 import styles from '../styles/background.module.css'
-import dynamic from 'next/dynamic';
 import TextTransition, { presets } from 'react-text-transition';
-import { github, linkedin, leetcode } from '../../public/assets';
+import { github, linkedin, leetcode, arduino } from '../../public/assets';
 import Image from 'next/image';
 import { Poppins } from 'next/font/google';
+import Me from './MeCompo';
 
 const poppins200 = Poppins({
    weight: '200',
@@ -34,8 +34,6 @@ function HomeRecipe(props) {
    const animeRef = useRef(null);
    const isInView = useInView(animeRef, { once: false });
    const mainControls = useAnimation();
-
-   const [Me, setMe] = useState(null);
 
    const [skillNo, setSkillNo] = useState(-1);
    const [lock, setLock] = useState(false);
@@ -66,7 +64,7 @@ function HomeRecipe(props) {
    useEffect(() => {
       if (lock) {
          loopSkills();
-         loopOffset
+         loopOffset();
 
          setInterval(() => {
             loopSkills();
@@ -89,15 +87,6 @@ function HomeRecipe(props) {
          mainControls.start("visible");
       }
    }, [isInView, mainControls])
-
-   useEffect(() => {
-      setMe(() => {
-         return dynamic(() => import('./MeCompo'), {
-            ssr: false,
-            loading: () => <h1>Loading...</h1>
-         })
-      })
-   }, [setMe])
 
    return (
       <Suspense>
@@ -244,9 +233,7 @@ function HomeRecipe(props) {
                            {props.aboutme}
                         </div>
 
-                        {
-                           Me ? <Me /> : <></>
-                        }
+                        <Me />
                      </div>
                   </CardBody>
                </Card>
@@ -287,6 +274,7 @@ function HomeRecipe(props) {
                                     src={value.src}
                                     alt=""
                                     className={`w-[50px] aspect-auto`}
+                                    loading='eager'
                                  />
                               </motion.div>
                            })

@@ -29,8 +29,10 @@ import typescript from './tech/typescript.png'
 import firebase from './tech/firebase.png'
 import linux from './tech/linux.png'
 import asm from './tech/asm.png'
+import meBlur from './me/me.jpg'
 
 export {
+  meBlur,
   asm,
   logoBlackR,
   menu,
