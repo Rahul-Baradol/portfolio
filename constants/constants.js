@@ -5,7 +5,7 @@ const navLinks = [
 ];
 
 const otherData = {
-  aboutme: "I am a 2nd year Computer Science student who loves building projects and have fun with existing web technologies! I also love solving problems on Leetcode. Yup.....you read it right I love Leetcode!. I also love participating in short contests of algorithms. I got a second place in Alcoding Practice Placement Test series hosted by my university and I am top 4% on Leetcode! I also love to learn how different systems are built, and how one can build a system end-to-end which is cost-effective, performant, and fulfills the demands of the customers. "
+  aboutme: "I am a 2nd year Computer Science student who loves building projects and have fun with existing web technologies! My core interests lie in understanding databases, load balancers, and also how different systems are built, and how one can build a system which is cost-effective, performant, and fulfills the demands of the customers. I also love solving problems on Leetcode. Yup.....you read it right I love Leetcode!. I also love participating in short contests of algorithms. I got a second place in Alcoding Practice Placement Test series hosted by my university and I am top 4% on Leetcode!"
 }
 
 const devQuotes = [
@@ -235,6 +235,10 @@ const projects = [
         "primary"
       ],
       [
+        "GraphQL",
+        "primary"
+      ],
+      [
         "Kafka",
         "secondary"
       ]
@@ -285,17 +289,21 @@ const projects = [
     "personal": true
   },
   {
-    "title": "Mini Projects",
-    "description": "Projects made in my school days just for fun. Java is used for the logic part and FXML is used for the UI!",
+    "title": "MonkeyTyper (Just for Fun)",
+    "description": "A python script which types faster than 300 words per minute :)",
     "technologies": [
       [
-        "Java",
+        "Python",
         "primary"
+      ],
+      [
+        "Selenium",
+        "secondary"
       ]
     ],
     "siteLink": "",
     "siteLinkDesc": "",
-    "githubLink": "https://github.com/Rahul-Baradol/High-School-Projects-JavaFX-",
+    "githubLink": "https://github.com/Rahul-Baradol/monkeytyper",
     "personal": true
   }
 ]
