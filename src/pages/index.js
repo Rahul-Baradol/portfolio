@@ -9,7 +9,7 @@ import { Divider } from '@nextui-org/react';
 
 export default function Home(props) {
    return (
-      <>
+      <main className='h-fit w-screen flex flex-col items-center'>
          <HomeRecipe aboutme={props.otherData.aboutme} />
 
          <Experience />
@@ -21,7 +21,7 @@ export default function Home(props) {
          <Projects projects={props.projects} />
 
          <Footer />
-      </>
+      </main>
    )
 }
 
