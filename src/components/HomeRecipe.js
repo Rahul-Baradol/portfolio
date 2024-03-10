@@ -276,7 +276,7 @@ function HomeRecipe(props) {
                                     transition={{
                                        duration: 4,
                                        ease: "easeIn",
-                                       times: [0, 1],
+                                       times: [0, 0.5, 1],
                                        repeat: Infinity,
                                        repeatDelay: 0
                                     }}
