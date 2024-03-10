@@ -1,8 +1,8 @@
 import { Card, CardBody, CardFooter, CardHeader, Code, Divider } from '@nextui-org/react';
-import { motion, useAnimation, useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Poppins } from 'next/font/google';
 import { Link } from "@nextui-org/react";
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
 import { TypeAnimation } from 'react-type-animation';
 
 const poppins = Poppins({
@@ -11,16 +11,6 @@ const poppins = Poppins({
 })
 
 function Services(props) {
-   const serviceRef = useRef(null);
-   const inViewProject = useInView(serviceRef, { once: true });
-   const mainControlsProject = useAnimation();
-
-   useEffect(() => {
-      if (inViewProject) {
-         mainControlsProject.start("visible");
-      }
-   }, [inViewProject, mainControlsProject])
-
    return (
       <div className="flex flex-col items-center p-2 m-2">
          <div className={`${[poppins.className]} flex flex-col items-center justify-center text-3xl font-thin mt-1 mb-4 text-white`}>
@@ -32,17 +22,22 @@ function Services(props) {
                speed={10}
             />
          </div>
-         <div ref={serviceRef} className={`w-fit m-1 relative grid grid-cols-1 md:grid-cols-2 gap-8`}>
+         <div className={`w-fit m-1 relative grid grid-cols-1 md:grid-cols-2 gap-8`}>
             {
                props.servicesOffered.map((project, projectId) => {
                   return <motion.div
                      key={projectId}
-                     variants={{
-                        hidden: { opacity: 0, y: 50 },
-                        visible: { opacity: 1, y: 0 }
+                     initial={{
+                        opacity: 0,
+                        x: projectId % 2 == 0 ? -50 : 50
                      }}
-                     initial="hidden"
-                     animate={mainControlsProject}
+
+                     whileInView={{
+                        opacity: 1,
+                        x: 0
+                     }}
+
+                     viewport={{ once: true }}
                      transition={{ duration: 1 }}
                      className='h-[full]'
                   >
