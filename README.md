@@ -12,7 +12,7 @@ You can view the live site at [rahulbaradol.in](https://www.rahulbaradol.in/)
 
 This portfolio website includes the following sections/features:
 
-- **Intro:** A welcoming introduction to the site visitors with a random dev quote.
+- **Intro:** A welcoming introduction to the site visitors.
 - **About Me:** A overview about my interests
 - **Skills:** A overview of my technical skills.
 - **Experience:** Highlight of my professional experience of working with organizations
@@ -36,7 +36,7 @@ To set up this project locally, follow these steps:
    ```bash
    git clone https://github.com/Rahul-Baradol/portfolio.git
    ```
-2. Go the folder named portfolio and install the dependencies:
+2. Go to the folder named portfolio and install the dependencies:
    ```bash
    cd portfolio
    npm install -g yarn
