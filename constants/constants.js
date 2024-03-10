@@ -5,7 +5,7 @@ const navLinks = [
 ];
 
 const otherData = {
-  aboutme: "I am a 2nd year Computer Science student who loves building projects and have fun with existing web technologies! My core interests lie in understanding databases, load balancers, and also how different systems are built, and how one can build a cost-effective and performant system which fulfills the demands of the customers. I also love solving problems on Leetcode. Yup.....you read it right I love Leetcode! I also love participating in short contests of algorithms. I got a second place in Alcoding Practice Placement Test series hosted by my university and I am top 4% on Leetcode!"
+  aboutme: "I am a 2nd year Computer Science student who loves building projects and have fun with existing web technologies! My core interests lie in understanding databases, load balancers, and also how different systems are built, and how one can build a cost-effective and performant system which meets the requirements. I also love solving problems on Leetcode. Yup.....you read it right I love Leetcode! I also regularly participate in short contests of algorithms. I got a second place in Alcoding Practice Placement Test series hosted by my university and I am top 4% on Leetcode!"
 }
 
 const devQuotes = [
@@ -36,6 +36,10 @@ const devQuotes = [
   {
     "quote": "There are only two hard things in computer science: cache invalidation and naming things.",
     "author": "Phil Karlton"
+  },
+  {
+    "quote": "Programming isn't about what you know; it's about what you can figure out.",
+    "author": "Chris Pine"
   }
 ]
 
