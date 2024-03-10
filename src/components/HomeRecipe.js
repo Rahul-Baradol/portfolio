@@ -1,10 +1,10 @@
 import React, { Suspense, useEffect, useRef, useState } from 'react'
 import { Card, CardBody } from '@nextui-org/react';
-import { motion, useAnimation, useInView } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { skillsDesc, techIcons } from '../../constants/constants';
 import styles from '../styles/background.module.css'
 import TextTransition, { presets } from 'react-text-transition';
-import { github, linkedin, leetcode, arduino } from '../../public/assets';
+import { github, linkedin, leetcode } from '../../public/assets';
 import Image from 'next/image';
 import { Poppins } from 'next/font/google';
 import Me from './MeCompo';
@@ -31,10 +31,7 @@ function generateRandomNumber(a, b) {
 
 function HomeRecipe(props) {
    const hero = useRef(null);
-   const animeRef = useRef(null);
-   const isInView = useInView(animeRef, { once: false });
-   const mainControls = useAnimation();
-
+   
    const [skillNo, setSkillNo] = useState(-1);
    const [lock, setLock] = useState(false);
 
@@ -89,12 +86,6 @@ function HomeRecipe(props) {
          setLock(true);
       }
    }, [])
-
-   useEffect(() => {
-      if (isInView) {
-         mainControls.start("visible");
-      }
-   }, [isInView, mainControls])
 
    return (
       <Suspense>
@@ -229,14 +220,17 @@ function HomeRecipe(props) {
             </div>
          </div>
 
-         <div ref={animeRef} className="mt-4 mb-12 flex font-mono sm:justify-around md:flex-row p-5 gap-8 h-fit flex-col items-center w-screen customStyle">
+         <div className="mt-4 mb-12 flex font-mono sm:justify-around md:flex-row p-5 gap-8 h-fit flex-col items-center w-screen customStyle">
             <motion.div
-               variants={{
-                  hidden: { opacity: 0, y: 50 },
-                  visible: { opacity: 1, y: 0 }
+               initial={{
+                  opacity: 0, x: -50
                }}
-               initial="hidden"
-               animate={mainControls}
+
+               whileInView={{
+                  opacity: 1, x: 0
+               }}
+
+               viewport={{ once: true }}
                transition={{ duration: 1 }}
             >
                <Card className='dark w-[90vw]'>
@@ -254,14 +248,17 @@ function HomeRecipe(props) {
             </motion.div>
          </div>
 
-         <div ref={animeRef} className="my-4 mb-12 flex font-mono sm:justify-around md:flex-row p-5 gap-8 h-fit flex-col items-center w-screen customStyle">
+         <div className="my-4 mb-12 flex font-mono sm:justify-around md:flex-row p-5 gap-8 h-fit flex-col items-center w-screen customStyle">
             <motion.div
-               variants={{
-                  hidden: { opacity: 0, y: 50 },
-                  visible: { opacity: 1, y: 0 }
+               initial={{
+                  opacity: 0, x: 50
                }}
-               initial="hidden"
-               animate={mainControls}
+
+               whileInView={{
+                  opacity: 1, x: 0
+               }}
+
+               viewport={{ once: true }}
                transition={{ duration: 1 }}
             >
                <Card className='dark w-[90vw] '>
@@ -271,7 +268,7 @@ function HomeRecipe(props) {
                            offsetsX.length > 0 && offsetsY.length > 0 && techIcons.map((value, key) => {
                               return <div key={key} className='w-fit h-fit'>
                                  <motion.div
-                                    className={`${!loadedFlags[key] ? "before:absolute before:top-0 before:left-0 after:top-0 after:left-0 before:z-10 before:w-[50px] before:h-[50px] before:bg-[#18181b] before:border-2 before:rounded-full after:absolute after:z-20 after:w-[50px] after:h-[50px] after:bg-violet-950 after:border-2 after:rounded-full after:animate-pulse" : ""} w-fit aspect-square`}
+                                    className={`${!loadedFlags[key] ? "before:absolute before:top-0 before:left-0 after:top-0 after:left-0 before:z-10 before:w-[55px] before:h-[55px] before:bg-[#18181b] before:border-2 before:rounded-full after:absolute after:z-20 after:w-[55px] after:h-[55px] after:bg-violet-950 after:border-2 after:rounded-full after:animate-pulse" : ""} w-fit aspect-square`}
                                     animate={{
                                        x: [0, offsetsX[key], 0],
                                        y: [0, offsetsY[key], 0]
