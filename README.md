@@ -13,9 +13,9 @@ You can view the live site at [rahulbaradol.in](https://www.rahulbaradol.in/)
 This portfolio website includes the following sections/features:
 
 - **Intro:** A welcoming introduction to the site visitors with a random dev quote.
-- **About Me:** A brief biography about my interests
-- **Skills:** A comprehensive list of my technical skills.
-- **Experience:** Highlight of my professional experience of working with organizations/companies
+- **About Me:** A overview about my interests
+- **Skills:** A overview of my technical skills.
+- **Experience:** Highlight of my professional experience of working with organizations
 - **Services Offered:** Projects built for the clients
 - **Projects:** A brief showcasing of my work
 
@@ -23,7 +23,7 @@ This portfolio website includes the following sections/features:
 
 This website is built using the following technologies:
 
-- **JavaScript (Framework/Library):** NextJS for interactive elements.
+- **JavaScript (Framework/Library):** NextJS with NextUI for modern UI components
 - **Tailwind CSS:** For styling and responsiveness
 - **Framer Motion:** For animations and transitions
 - **Deployment:** Hosted on [Vercel](https://vercel.com/)
@@ -49,4 +49,4 @@ To set up this project locally, follow these steps:
    ```
 
 ## Note
-This project is not open for contributions. Thanks for visiting my portfolio!
+This project is not open for contributions.
