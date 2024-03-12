@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect, useRef, useState } from 'react'
-import { Card, CardBody } from '@nextui-org/react';
+import { Card, CardBody, Tooltip } from '@nextui-org/react';
 import { motion } from 'framer-motion'
 import { skillsDesc, techIcons } from '../../constants/constants';
 import styles from '../styles/background.module.css'
@@ -267,32 +267,34 @@ function HomeRecipe(props) {
                         {
                            offsetsX.length > 0 && offsetsY.length > 0 && techIcons.map((value, key) => {
                               return <div key={key} className='w-fit h-fit'>
-                                 <motion.div
-                                    className={`${!loadedFlags[key] ? "before:absolute before:top-0 before:left-0 after:top-0 after:left-0 before:z-10 before:w-[55px] before:h-[55px] before:bg-[#18181b] before:border-2 before:rounded-full after:absolute after:z-20 after:w-[55px] after:h-[55px] after:bg-violet-950 after:border-2 after:rounded-full after:animate-pulse" : ""} w-fit aspect-square`}
-                                    animate={{
-                                       x: [0, offsetsX[key], 0],
-                                       y: [0, offsetsY[key], 0]
-                                    }}
-                                    transition={{
-                                       duration: 4,
-                                       ease: "easeIn",
-                                       times: [0, 0.5, 1],
-                                       repeat: Infinity,
-                                       repeatDelay: 0
-                                    }}
-                                 >
-                                    <Image
-                                       src={value.src}
-                                       alt=""
-                                       className={`w-[50px] aspect-auto rounded-3xl`}
-                                       onLoad={() => {
-                                          setLoadedFlags(arr => {
-                                             arr[key] = 1;
-                                             return arr;
-                                          })
+                                 <Tooltip showArrow={true} content={`${value.name}`} className='dark'>
+                                    <motion.div
+                                       className={`${!loadedFlags[key] ? "before:absolute before:top-0 before:left-0 after:top-0 after:left-0 before:z-10 before:w-[55px] before:h-[55px] before:bg-[#18181b] before:border-2 before:rounded-full after:absolute after:z-20 after:w-[55px] after:h-[55px] after:bg-violet-950 after:border-2 after:rounded-full after:animate-pulse" : ""} w-fit aspect-square`}
+                                       animate={{
+                                          x: [0, offsetsX[key], 0],
+                                          y: [0, offsetsY[key], 0]
                                        }}
-                                    />
-                                 </motion.div>
+                                       transition={{
+                                          duration: 4,
+                                          ease: "easeIn",
+                                          times: [0, 0.5, 1],
+                                          repeat: Infinity,
+                                          repeatDelay: 0
+                                       }}
+                                    >
+                                       <Image
+                                          src={value.src}
+                                          alt=""
+                                          className={`w-[50px] aspect-auto rounded-3xl`}
+                                          onLoad={() => {
+                                             setLoadedFlags(arr => {
+                                                arr[key] = 1;
+                                                return arr;
+                                             })
+                                          }}
+                                       />
+                                    </motion.div>
+                                 </Tooltip>
                               </div>
                            })
                         }
