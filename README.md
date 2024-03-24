@@ -47,6 +47,3 @@ To set up this project locally, follow these steps:
    ```bash
    yarn dev
    ```
-
-## Note
-This project is not open for contributions.
