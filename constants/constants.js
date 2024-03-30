@@ -249,7 +249,7 @@ const projects = [
     ],
     "siteLink": "",
     "siteLinkDesc": "",
-    "githubLink": "https://github.com/orgs/rce-remote-code-executor/repositories",
+    "githubLink": "https://github.com/Rahul-Baradol/remote-code-executor",
     "personal": true
   },
   {
