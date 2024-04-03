@@ -48,7 +48,7 @@ const skillsDesc = [
   "Full Stack Engineer",
   "Algorithms",
   "Cloud Engineer",
-  "DevOps"
+  "Distributed Systems"
 ]
 
 const techIcons = [
@@ -246,7 +246,7 @@ const projects = [
         "Kafka",
         "secondary"
       ]
-    ],
+    ], 
     "siteLink": "",
     "siteLinkDesc": "",
     "githubLink": "https://github.com/Rahul-Baradol/remote-code-executor",
