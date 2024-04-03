@@ -46,9 +46,9 @@ const devQuotes = [
 const skillsDesc = [
   "Computer Science Student",
   "Full Stack Engineer",
-  "Algorithms",
   "Cloud Engineer",
-  "Distributed Systems"
+  "Distributed Systems",
+  "Algorithms",
 ]
 
 const techIcons = [
