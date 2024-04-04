@@ -8,7 +8,7 @@ const DockerIntro = ({ setIntro, quoteId }) => {
 
     useEffect(() => {
         mainControls.start("visible");
-    }, [])
+    }, [mainControls])
 
     return (
         <>

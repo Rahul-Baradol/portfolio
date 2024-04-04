@@ -184,8 +184,8 @@ const techIcons = [
 
 const servicesOffered = [
   {
-    "title": "Shunya's Code of Honour",
-    "description": "Hackathon website built for the club Shunya in collaboration with a senior!",
+    "title": "Shunya's Arithemania 3.0",
+    "description": "Hackathon website built for the club Shunya!",
     "technologies": [
       [
         "NextJS",
@@ -200,9 +200,9 @@ const servicesOffered = [
         "success"
       ]
     ],
-    "siteLink": "https://codeofhonour.vercel.app/",
-    "siteLinkDesc": "codeofhonour.vercel.app",
-    "githubLink": "https://github.com/Rahul-Baradol/Shunya-Code-Of-Honor",
+    "siteLink": "https://arithemania3.vercel.app/",
+    "siteLinkDesc": "arithemania3.vercel.app",
+    "githubLink": "https://github.com/Rahul-Baradol/arithemania-3.0",
     "personal": false
   },
   {
@@ -225,6 +225,28 @@ const servicesOffered = [
     "siteLink": "https://buildmyidea.vercel.app/",
     "siteLinkDesc": "buildmyidea.vercel.app/",
     "githubLink": "https://github.com/Rahul-Baradol/service-build-my-idea",
+    "personal": false
+  },
+  {
+    "title": "Shunya's Code of Honour",
+    "description": "Hackathon website built for the club Shunya in collaboration with a senior!",
+    "technologies": [
+      [
+        "NextJS",
+        "primary"
+      ],
+      [
+        "Tailwind CSS",
+        "secondary"
+      ],
+      [
+        "Firebase",
+        "success"
+      ]
+    ],
+    "siteLink": "https://codeofhonour.vercel.app/",
+    "siteLinkDesc": "codeofhonour.vercel.app",
+    "githubLink": "https://github.com/Rahul-Baradol/Shunya-Code-Of-Honor",
     "personal": false
   },
 ]

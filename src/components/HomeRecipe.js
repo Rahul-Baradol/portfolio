@@ -85,7 +85,7 @@ function HomeRecipe(props) {
       if (skillsDesc && skillNo !== undefined) {
          setLock(true);
       }
-   }, [])
+   }, [skillNo])
 
    return (
       <Suspense>
