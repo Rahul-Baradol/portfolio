@@ -9,8 +9,8 @@ import DockerIntro from "@/components/Intro";
 import { devQuotes } from "../../constants/constants";
 
 function generateRandomNumber(a, b) {
-    // Generate random number between a and b (inclusive)
-    return Math.floor(Math.random() * (b - a + 1)) + a;
+  // Generate random number between a and b (inclusive)
+  return Math.floor(Math.random() * (b - a + 1)) + a;
 }
 
 export default function App({ Component, pageProps }) {
@@ -32,9 +32,13 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <title>Rahul Baradol | Portfolio</title>
+        <title>Rahul Baradol | CSE Student</title>
+        <meta
+          name="description"
+          content="Corner of the internet where I proudly showcase my projects, achievements and ideas!"
+        />
       </Head>
-      
+
       <style jsx>
         {`
           .parent{
@@ -63,13 +67,13 @@ export default function App({ Component, pageProps }) {
         <div className="parent">
           <div className="child">
             <div className="relative z-0">
-              {intro ? <DockerIntro quoteId={generateRandomNumber(0, devQuotes.length-1)} setIntro={setIntro} />
+              {intro ? <DockerIntro quoteId={generateRandomNumber(0, devQuotes.length - 1)} setIntro={setIntro} />
                 : <>
-                    <Navbar />
-                    <Component {...pageProps} />
+                  <Navbar />
+                  <Component {...pageProps} />
                 </>
               }
-            </div>  
+            </div>
           </div>
         </div>
       </NextUIProvider>
