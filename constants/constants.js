@@ -315,22 +315,18 @@ const projects = [
     "personal": true
   },
   {
-    "title": "MonkeyTyper (Just for Fun)",
-    "description": "A python script which types faster than 300 words per minute :)",
+    "title": "MQTT Broker",
+    "description": "A MQTT broker and client, built in GO simulating Publisher/Subscriber Model",
     "technologies": [
       [
-        "Python",
+        "Go",
         "primary"
       ],
-      [
-        "Selenium",
-        "secondary"
-      ]
     ],
     "siteLink": "",
     "siteLinkDesc": "",
-    "githubLink": "https://github.com/Rahul-Baradol/monkeytyper",
-    "personal": true
+    "githubLink": "https://github.com/Rahul-Baradol/MQTT-Broker",
+    "personal": false
   }
 ]
 
