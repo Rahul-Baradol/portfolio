@@ -70,7 +70,7 @@ function Experience(props) {
                                  </p>
 
                                  {
-                                    value.certificate ? <Link className="mt-2" showAnchorIcon target="_blank" href={value.certificate} color="primary">
+                                    value.certificate ? <Link className="mt-2 w-fit" showAnchorIcon target="_blank" href={value.certificate} color="primary">
                                        Show Certificate
                                     </Link> : <></>
                                  }
