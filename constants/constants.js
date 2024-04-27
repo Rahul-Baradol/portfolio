@@ -334,8 +334,29 @@ const projects = [
   }
 ]
 
+const experience = [
+  {
+    "id": "1",
+    "title": "Software Development Intern",
+    "company": "CognitiveLab",
+    "date": "January 2024 - February 2024",
+    "description": `Implemented Authentication System using Auth.js by using
+                    HuggingFaceChatUI as the template, and also wrote a bunch of Web Scrapers
+                    using Selenium and Beautiful Soup to gather images in an attempt to train a
+                    vision model`,
+    "technologies": [
+      ["Python", "primary"],
+      ["SvelteKit", "primary"],
+      ["Selenium", "primary"],
+      ["Azure", "primary"],
+    ],
+    "certificate": "/assets/Certificates/CognitiveLab.png"
+  }
+]
+
 export {
   otherData,
+  experience,
   projects,
   servicesOffered,
   navLinks,
