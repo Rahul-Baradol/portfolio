@@ -185,7 +185,7 @@ const techIcons = [
 const servicesOffered = [
   {
     "title": "Shunya's Arithemania 3.0",
-    "description": "Hackathon website built for the club Shunya!",
+    "description": "Hackathon website built for a college club named Shunya!",
     "technologies": [
       [
         "NextJS",
@@ -207,7 +207,7 @@ const servicesOffered = [
   },
   {
     "title": "Build My Idea",
-    "description": "Single Page Built for the client using modern technologies",
+    "description": "Single page built for a client using modern technologies!",
     "technologies": [
       [
         "React",
@@ -229,7 +229,7 @@ const servicesOffered = [
   },
   {
     "title": "Shunya's Code of Honour",
-    "description": "Hackathon website built for the club Shunya in collaboration with a senior!",
+    "description": "Hackathon website built for a college club named Shunya, in collaboration with a senior!",
     "technologies": [
       [
         "NextJS",
@@ -253,25 +253,21 @@ const servicesOffered = [
 
 const projects = [
   {
-    "title": "Decise - Remote Code Executor",
-    "description": "A microservice based online judge, which evaluates the code in different languages. (Prototype Version)",
+    "title": "lsm-engine",
+    "description": "Towards building my very first storage engine....a key-value store!",
     "technologies": [
       [
-        "NextJS",
+        "C++",
         "primary"
       ],
       [
-        "GraphQL",
+        "database-engines",
         "primary"
       ],
-      [
-        "Kafka",
-        "secondary"
-      ]
     ], 
     "siteLink": "",
     "siteLinkDesc": "",
-    "githubLink": "https://github.com/Rahul-Baradol/remote-code-executor",
+    "githubLink": "https://github.com/Rahul-Baradol/lsm-engine",
     "personal": true
   },
   {

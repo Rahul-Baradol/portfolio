@@ -16,7 +16,7 @@ function Projects(props) {
          <div className={`${poppins.className} flex flex-col items-center justify-center text-3xl font-thin mt-1 mb-4 text-white`}>
             <TypeAnimation
                sequence={[
-                  'Projects'
+                  'Projects for FUN'
                ]}
                cursor={false}
                speed={10}
