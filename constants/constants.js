@@ -5,7 +5,7 @@ const navLinks = [
 ];
 
 const otherData = {
-  aboutme: "I am a 2nd year Computer Science student who loves building projects and have fun with existing web technologies! My core interests lie in understanding databases, load balancers, and also how different systems are built, and how one can build a cost-effective and performant system which meets the requirements. I also love solving problems on Leetcode. Yup.....you read it right I love Leetcode! I also regularly participate in short contests of algorithms. I got a second place in Alcoding Practice Placement Test series hosted by my university and I am top 4% on Leetcode!"
+  aboutme: "... curious about software engineering... But when it comes to nichy things...you will find me messing with database engines, trying to build proxy servers (can't miss the db proxy with connection-pooling, it is satisfying...), and trying to learn more about systems in general. Also curious about algorithms, because of which I participate in algorithmic contests \"regularly\", to keep myself sharp. If not any of this..then you will end up seeing me banging my keyboard on monkeytype(.com) :)"
 }
 
 const devQuotes = [
@@ -332,10 +332,21 @@ const projects = [
 
 const experience = [
   {
-    "id": "1",
+    "id": 1,
+    "title": "Full-stack Developer Intern",
+    "company": "CognitiveLab",
+    "date": "Apr 2024 - May 2024",
+    "description": `Built a ChatUI platform end-to-end. Frontend Web Application is built using NextJS, TailwindCSS, ShadCN and NextUI. And backend server is built using FastAPI. The application connects to a vector database, which could be queried to answer medical science questions.`,
+    "technologies": [
+      ["NextJS", "primary"],
+      ["FastAPI", "primary"]
+    ]
+  },
+  {
+    "id": 2,
     "title": "Software Development Intern",
     "company": "CognitiveLab",
-    "date": "January 2024 - February 2024",
+    "date": "Jan 2024 - Feb 2024",
     "description": `Implemented Authentication System using Auth.js by using
                     HuggingFaceChatUI as the template, and also wrote a bunch of Web Scrapers
                     using Selenium and Beautiful Soup to gather images in an attempt to train a
@@ -347,7 +358,7 @@ const experience = [
       ["Azure", "primary"],
     ],
     "certificate": "/assets/Certificates/CognitiveLab.png"
-  }
+  },
 ]
 
 export {

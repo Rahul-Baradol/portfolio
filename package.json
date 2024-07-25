@@ -22,7 +22,8 @@
     "react-text-transition": "^3.1.0",
     "react-top-loading-bar": "^2.3.1",
     "react-type-animation": "^3.2.0",
-    "react-vertical-timeline-component": "^3.6.0"
+    "react-vertical-timeline-component": "^3.6.0",
+    "yarn": "^1.22.22"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.16",
