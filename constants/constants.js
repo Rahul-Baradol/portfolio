@@ -5,7 +5,7 @@ const navLinks = [
 ];
 
 const otherData = {
-  aboutme: "... curious about software engineering... But when it comes to nichy things...you will find me messing with database engines, trying to build proxy servers (can't miss the db proxy with connection-pooling, it is satisfying...), and trying to learn more about systems in general. Also curious about algorithms, because of which I participate in algorithmic contests \"regularly\", to keep myself sharp. If not any of this..then you will end up seeing me banging my keyboard on monkeytype(.com) :)"
+  aboutme: "Curious about software engineering... but when it comes to nichy things...you will find me messing with database engines, trying to build proxy servers (can't miss the db proxy with connection-pooling, it is satisfying...), and trying to learn more about systems in general. Also curious about algorithms, because of which I participate in algorithmic contests \"regularly\", to keep myself sharp. If not any of this...then you will end up seeing me banging my keyboard on monkeytype :)"
 }
 
 const devQuotes = [
