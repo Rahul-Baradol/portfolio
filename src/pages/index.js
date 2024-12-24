@@ -15,10 +15,10 @@ export default function Home(props) {
          <Experience />
 
          <Divider className="my-2 w-[70%] bg-slate-800" />
-         <Services servicesOffered={props.servicesOffered} />
-         
-         <Divider className="my-2 w-[70%] bg-slate-800" />
          <Projects projects={props.projects} />
+
+         <Divider className="my-2 w-[70%] bg-slate-800" />
+         <Services servicesOffered={props.servicesOffered} />
 
          <Footer />
       </main>

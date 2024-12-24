@@ -334,7 +334,7 @@ function HomeRecipe(props) {
             >
                <Card className='dark w-[90vw]'>
                   <CardBody className='border-violet-800 border-t-2 border-l-2 p-8'>
-                     <div className={`${poppins300.className} text-2xl text-violet-600`}> What am i into?...</div>
+                     <div className={`${poppins300.className} text-2xl text-violet-600`}> What am i into?</div>
                      <div className='mt-6 md:mt-2 flex gap-10 flex-col-reverse md:flex-row justify-between items-center'>
                         <div className='spoiler2 text-xl text-white'>
                            {props.aboutme}
@@ -347,7 +347,7 @@ function HomeRecipe(props) {
             </motion.div>
          </div>
 
-         <div className="my-4 mb-12 flex font-mono sm:justify-around md:flex-row p-5 gap-8 h-fit flex-col items-center w-screen customStyle">
+         {/* <div className="my-4 mb-12 flex font-mono sm:justify-around md:flex-row p-5 gap-8 h-fit flex-col items-center w-screen customStyle">
             <motion.div
                initial={{
                   opacity: 0, x: 50
@@ -402,7 +402,7 @@ function HomeRecipe(props) {
                   </CardBody>
                </Card>
             </motion.div>
-         </div>
+         </div> */}
       </Suspense>
    );
 }

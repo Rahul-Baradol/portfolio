@@ -5,7 +5,7 @@ const navLinks = [
 ];
 
 const otherData = {
-  aboutme: "Curious about software engineering... but when it comes to nichy things...you will find me messing with database engines, trying to build proxy servers (can't miss the db proxy with connection-pooling, it is satisfying...), and trying to learn more about systems in general. Also curious about algorithms, because of which I participate in algorithmic contests \"regularly\", to keep myself sharp. If not any of this...then you will end up seeing me banging my keyboard on monkeytype :)"
+  aboutme: "Hello there! I am a third year Computer Science student. Curious about software engineering; but when it comes to nichy things...you will find me messing with database engines, trying to build load balancers, and trying to learn more about systems in general. Also curious about algorithms, because of which I participate in algorithmic contests quite often, to keep myself sharp. If not any of this...then you will end up seeing me banging my keyboard on monkeytype!"
 }
 
 const devQuotes = [
@@ -184,6 +184,28 @@ const techIcons = [
 
 const servicesOffered = [
   {
+    "title": "Kodikon 4.0",
+    "description": "Led a team for the development of national hackathon website - Kodikon 4.0!",
+    "technologies": [
+      [
+        "NextJS",
+        "primary"
+      ],
+      [
+        "Tailwind CSS",
+        "secondary"
+      ],
+      [
+        "Firebase",
+        "success"
+      ]
+    ],
+    "siteLink": "https://www.embrionepes.com/kodikon-4",
+    "siteLinkDesc": "embrionepes.com/kodikon-4",
+    "githubLink": "https://github.com/Rahul-Baradol/embrione-pes",
+    "personal": false
+  },
+  {
     "title": "Shunya's Arithemania 3.0",
     "description": "Hackathon website built for a college club named Shunya!",
     "technologies": [
@@ -203,28 +225,6 @@ const servicesOffered = [
     "siteLink": "https://arithemania3.vercel.app/",
     "siteLinkDesc": "arithemania3.vercel.app",
     "githubLink": "https://github.com/Rahul-Baradol/arithemania-3.0",
-    "personal": false
-  },
-  {
-    "title": "Build My Idea",
-    "description": "Single page built for a client using modern technologies!",
-    "technologies": [
-      [
-        "React",
-        "primary"
-      ],
-      [
-        "Tailwind CSS",
-        "secondary"
-      ],
-      [
-        "DaisyUI",
-        "success"
-      ]
-    ],
-    "siteLink": "https://buildmyidea.vercel.app/",
-    "siteLinkDesc": "buildmyidea.vercel.app/",
-    "githubLink": "https://github.com/Rahul-Baradol/service-build-my-idea",
     "personal": false
   },
   {
@@ -253,76 +253,64 @@ const servicesOffered = [
 
 const projects = [
   {
-    "title": "lsm-engine",
-    "description": "Towards building my very first storage engine....a key-value store!",
+    "title": "leones-arc",
+    "description": "Experimenting new GraalVM for native image compilation, along with writing a load balancer 🚀",
     "technologies": [
       [
-        "C++",
+        "Java",
         "primary"
       ],
       [
-        "database-engines",
-        "primary"
-      ],
+        "GraalVM",
+        "secondary"
+      ]
     ], 
     "siteLink": "",
     "siteLinkDesc": "",
-    "githubLink": "https://github.com/Rahul-Baradol/lsm-engine",
-    "personal": true
+    "githubLink": "https://github.com/Rahul-Baradol/leones-arc",
   },
   {
-    "title": "Flow Puzzle Solver",
-    "description": "You must have played the game Flow Free on Mobile! Well this app solves the puzzles from the game Flow Free!",
+    "title": "seireitei",
+    "description": "Trying out osdev!",
     "technologies": [
       [
-        "React",
+        "C",
+        "primary"
+      ]
+    ],
+    "siteLink": "",
+    "siteLinkDesc": "",
+    "githubLink": "https://github.com/Rahul-Baradol/seireitei",
+  },
+  {
+    "title": "remote-code-executor",
+    "description": "A micro-service based online judge, where users can solve coding problems primarily focused on algorithms and data structures",
+    "technologies": [
+      [
+        "NextJS",
         "primary"
       ],
       [
-        "Bootstrap",
+        "Microservice",
         "secondary"
       ]
     ],
-    "siteLink": "https://flowpuzzlesolver.vercel.app/",
-    "siteLinkDesc": "flowpuzzlesolver.vercel.app",
-    "githubLink": "https://github.com/Rahul-Baradol/Flow-Puzzle-Solver-React",
-    "personal": true
-  },
-  {
-    "title": "File Compressor/Decompressor",
-    "description": "A simple program which uses huffman tree to compress and decompress the file. File size is reduced to 50% of the size",
-    "technologies": [
-      [
-        "C++",
-        "primary"
-      ],
-      [
-        "Huffman Tree",
-        "primary"
-      ],
-      [
-        "Algorithms",
-        "primary"
-      ]
-    ],
     "siteLink": "",
     "siteLinkDesc": "",
-    "githubLink": "https://github.com/Rahul-Baradol/Encoders-And-Encryption-Algorithms",
-    "personal": true
+    "githubLink": "https://github.com/Rahul-Baradol/remote-code-executor",
   },
   {
-    "title": "MQTT Broker",
-    "description": "A MQTT broker and client, built in GO simulating Publisher/Subscriber Model",
+    "title": "http-server",
+    "description": "Simple HTTP Server built in C, which supports basic GET and POST methods",
     "technologies": [
       [
-        "Go",
+        "C",
         "primary"
       ],
     ],
     "siteLink": "",
     "siteLinkDesc": "",
-    "githubLink": "https://github.com/Rahul-Baradol/MQTT-Broker",
-    "personal": false
+    "githubLink": "https://github.com/Rahul-Baradol/http-server",
   }
 ]
 
