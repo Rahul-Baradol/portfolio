@@ -3,7 +3,7 @@ import { arduino, asm, aws, c, cpp, css, docker, express, firebase, go, javascri
 const navLinks = [
   {
     id: "blog",
-    title: "Blog!",
+    title: "explore diary!",
   }
 ];
 

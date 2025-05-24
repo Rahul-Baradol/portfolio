@@ -44,9 +44,7 @@ export default function Page(props) {
     return (
         <div className='mt-24 pb-5'>
             {
-                contentLoading ? <>
-                    Loading
-                </>
+                contentLoading ? <></>
                     :
                     <main className='h-fit w-screen flex flex-col'>
                         <div className={`${poppins.className} flex flex-col items-center justify-center text-3xl font-thin mt-1 mb-4 text-white`}>
