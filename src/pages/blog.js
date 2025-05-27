@@ -44,7 +44,7 @@ export default function Blog() {
                            scale: 1.015
                         }}
                         className='h-[full] w-fit'
-                     >
+                     >  
                         <BlogCard 
                            title={blog.title} 
                            description={blog.description} 
