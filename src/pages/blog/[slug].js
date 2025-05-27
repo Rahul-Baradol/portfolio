@@ -46,13 +46,23 @@ export default function Page(props) {
             {
                 contentLoading ? <></>
                     :
-                    <main className='h-fit w-screen flex flex-col'>
+                    <main className='h-fit w-screen flex flex-col px-5'>
                         <div className={`${poppins.className} flex flex-col items-center justify-center text-3xl font-thin mt-1 mb-4 text-white`}>
                             {blogMetadata.title}
                         </div>
 
                         <div className='p-2 pb-10 prose prose-invert'>
-                            <ReactMarkdown>
+                            <ReactMarkdown
+                                components={{
+                                    a: ({ node, ...props }) => (
+                                      <a
+                                        {...props}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                      />
+                                    ),
+                                }}
+                            >
                                 {content}
                             </ReactMarkdown>
                         </div>

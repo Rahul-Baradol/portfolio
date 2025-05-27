@@ -355,25 +355,9 @@ const experience = [
 const blogContent = [
   { 
     "id": 1,
-    "title": "start",
-    "description": "start!",
-    "contentPath": "/blogContent/1.md",
-    "next": 2,
-  },
-  { 
-    "id": 2,
-    "title": "middle",
-    "description": "middle!",
-    "contentPath": "/blogContent/2.md",
-    "next": 3,
-    "previous": 1
-  },
-  { 
-    "id": 3,
-    "title": "end",
-    "description": "end!",
-    "contentPath": "/blogContent/3.md",
-    "previous": 2
+    "title": "Kido",
+    "description": "story behind building a minimalistic compiler from scratch!",
+    "contentPath": "/blogContent/kido.md"
   }
 ]
 
