@@ -354,7 +354,7 @@ const experience = [
 
 const blogContent = [
   { 
-    "id": 1,
+    "id": "kido",
     "title": "Kido",
     "description": "story behind building a minimalistic compiler from scratch!",
     "contentPath": "/blogContent/kido.md"
