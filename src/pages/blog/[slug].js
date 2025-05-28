@@ -23,19 +23,33 @@ export default function Page(props) {
         const contentFetcher = async () => {
             const blog = blogContent.find(document => document.id == slug);
 
-            if (!blog) {
-                const responseContent = await fetch("/blogContent/notfound.md");
-                const content = await responseContent.text();
-                setContent(content);
-                setBlogMetadata(blogNotFound)
+            if (!blog) {                
+                fetch("/blogContent/notfound.md")
+                .then(res => {
+                    if (res.status == 200) {
+                        return res.text();
+                    } 
+                }).then(content => {
+                    setContent(content);
+                    setBlogMetadata(blogNotFound);
+                    setContentLoading(false);
+                }).catch(err => {
+                    console.log(err);
+                })
             } else {
-                const responseContent = await fetch(blog.contentPath);
-                const content = await responseContent.text();
-                setContent(content);
-                setBlogMetadata(blog)
+                fetch(blog.contentPath)
+                .then(res => {
+                    if (res.status == 200) {
+                        return res.text();
+                    }
+                }).then(content => {
+                    setContent(content);
+                    setBlogMetadata(blog);
+                    setContentLoading(false);
+                }).catch(err => {
+                    console.log(err)
+                })
             }
-
-            setContentLoading(false);
         }
 
         contentFetcher();
