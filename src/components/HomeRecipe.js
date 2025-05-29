@@ -93,7 +93,7 @@ function HomeRecipe(props) {
    }, [skillNo])
 
    return (
-      <Suspense>
+      <>
          <style jsx>
             {`                    
                     .animation {
@@ -403,7 +403,7 @@ function HomeRecipe(props) {
                </Card>
             </motion.div>
          </div> */}
-      </Suspense>
+      </>
    );
 }
 

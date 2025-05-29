@@ -55,6 +55,10 @@ export default function Page(props) {
         contentFetcher();
     }, [slug])
 
+    useEffect(() => {
+        props.setIntro()
+    }, [props.setIntro])
+
     return (
         <div className='mt-24 pb-5 flex flex-col items-center'>
             {
