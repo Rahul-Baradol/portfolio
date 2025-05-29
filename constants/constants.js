@@ -1,7 +1,10 @@
 import { arduino, asm, aws, c, cpp, css, docker, express, firebase, go, javascript, kafka, linux, mongodb, nextjs, nginx, nodejs, python, react, selenium, tailwindcss, typescript } from "../public/assets";
 
 const navLinks = [
-
+  {
+    id: "blog",
+    title: "explore diary!",
+  }
 ];
 
 const otherData = {
@@ -40,6 +43,10 @@ const devQuotes = [
   {
     "quote": "Programming isn't about what you know; it's about what you can figure out.",
     "author": "Chris Pine"
+  },
+  {
+    "quote": "Problem solving is about understanding my mind.",
+    "author": "ME"
   }
 ]
 
@@ -345,6 +352,19 @@ const experience = [
   },
 ]
 
+const blogContent = [
+  { 
+    "id": "kido",
+    "title": "Kido",
+    "description": "story behind building a minimalistic compiler from scratch!",
+    "contentPath": "/blogContent/kido.md"
+  }
+]
+
+const blogNotFound = {
+  "title": "404"
+}
+
 export {
   otherData,
   experience,
@@ -353,5 +373,7 @@ export {
   navLinks,
   skillsDesc,
   techIcons,
-  devQuotes
+  devQuotes,
+  blogContent,
+  blogNotFound
 };

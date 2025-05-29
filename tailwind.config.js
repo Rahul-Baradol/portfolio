@@ -16,8 +16,15 @@ module.exports = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            maxWidth: '100vw', 
+          }
+        }
+      }
     },
   },
   darkMode: "class",
-  plugins: [nextui()]
+  plugins: [nextui(), require('@tailwindcss/typography')]
 }
