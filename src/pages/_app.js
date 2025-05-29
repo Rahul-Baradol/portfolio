@@ -8,11 +8,6 @@ import LoadingBar from "react-top-loading-bar";
 import { useRouter } from "next/router";
 import { devQuotes } from "../../constants/constants";
 
-function generateRandomNumber(a, b) {
-  // Generate random number between a and b (inclusive)
-  return Math.floor(Math.random() * (b - a + 1)) + a;
-}
-
 export default function App({ Component, pageProps }) {
   const [intro, setIntro] = useState(true);
   const [progress, setProgress] = useState(0);
@@ -67,12 +62,21 @@ export default function App({ Component, pageProps }) {
         <div className="parent">
           <div className="child">
             <div className="relative z-0">
-              {intro ? <DockerIntro quoteId={generateRandomNumber(0, devQuotes.length - 1)} setIntro={setIntro} />
+              {/* {intro ? <DockerIntro quoteId={generateRandomNumber(0, devQuotes.length - 1)} setIntro={setIntro} />
                 : <>
                   <Navbar />
                   <Component {...pageProps} />
                 </>
-              }
+              } */}
+              <Navbar 
+                intro={intro}
+                setIntro={setIntro}
+              />
+              <Component 
+                {...pageProps} 
+                intro={intro}
+                setIntro={setIntro}
+              />
             </div>
           </div>
         </div>

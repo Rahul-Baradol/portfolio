@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
 import { Poppins } from 'next/font/google';
@@ -10,7 +10,11 @@ const poppins = Poppins({
    subsets: ['latin'],
 })
 
-export default function Blog() {
+export default function Blog({ setIntro }) {
+   useEffect(() => {
+      setIntro(false);
+   }, [setIntro])
+
    return (
       <main className='h-fit w-screen flex flex-col items-center'>
          <div className="flex flex-col items-center p-2 m-24">
@@ -47,8 +51,11 @@ export default function Blog() {
                      >  
                         <BlogCard 
                            title={blog.title} 
+                           subtitle={blog.subtitle}
                            description={blog.description} 
                            contentPath={`/blog/${blog.id}`} 
+                           publishDate={blog.publishDate}
+                           estimatedTimeToRead={blog.estimatedTimeToRead}
                         />
                      </motion.div>
                   })

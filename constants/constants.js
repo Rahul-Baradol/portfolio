@@ -260,6 +260,56 @@ const servicesOffered = [
 
 const projects = [
   {
+    "title": "Hogyoku",
+    "description": "Journey to understanding operating systems, by building one!",
+    "technologies": [
+      [
+        "C",
+        "primary"
+      ],
+      [
+        "Assembly",
+        "secondary"
+      ]
+    ],
+    "siteLink": "https://www.rahulbaradol.in/blog/segmentation_for_hogyoku",
+    "siteLinkDesc": "Read blog!",
+    "githubLink": "https://github.com/Rahul-Baradol/hogyoku",
+    "tabTarget": ""
+  },
+  {
+    "title": "resonance",
+    "description": "Saving my songs for life...",
+    "technologies": [
+      [
+        "Java",
+        "primary"
+      ],
+      [
+        "Spring Boot",
+        "secondary"
+      ]
+    ],
+    "siteLink": "https://resonating.vercel.app",
+    "siteLinkDesc": "resonating.vercel.app",
+    "githubLink": "https://github.com/Rahul-Baradol/resonance",
+    "tabTarget": "_blank"
+  },
+  {
+    "title": "Kido",
+    "description": "Minimalistic compiler built from scratch!",
+    "technologies": [
+      [
+        "C++",
+        "primary"
+      ]
+    ],
+    "siteLink": "https://www.rahulbaradol.in/blog/kido",
+    "siteLinkDesc": "Read blog!",
+    "githubLink": "https://github.com/Rahul-Baradol/kido",
+    "tabTarget": ""
+  },
+  {
     "title": "leones-arc",
     "description": "Experimenting new GraalVM for native image compilation, along with writing a load balancer 🚀",
     "technologies": [
@@ -275,50 +325,8 @@ const projects = [
     "siteLink": "",
     "siteLinkDesc": "",
     "githubLink": "https://github.com/Rahul-Baradol/leones-arc",
+    "tabTarget": "_blank"
   },
-  {
-    "title": "seireitei",
-    "description": "Trying out osdev!",
-    "technologies": [
-      [
-        "C",
-        "primary"
-      ]
-    ],
-    "siteLink": "",
-    "siteLinkDesc": "",
-    "githubLink": "https://github.com/Rahul-Baradol/seireitei",
-  },
-  {
-    "title": "remote-code-executor",
-    "description": "A micro-service based online judge, where users can solve coding problems primarily focused on algorithms and data structures",
-    "technologies": [
-      [
-        "NextJS",
-        "primary"
-      ],
-      [
-        "Microservice",
-        "secondary"
-      ]
-    ],
-    "siteLink": "",
-    "siteLinkDesc": "",
-    "githubLink": "https://github.com/Rahul-Baradol/remote-code-executor",
-  },
-  {
-    "title": "http-server",
-    "description": "Simple HTTP Server built in C, which supports basic GET and POST methods",
-    "technologies": [
-      [
-        "C",
-        "primary"
-      ],
-    ],
-    "siteLink": "",
-    "siteLinkDesc": "",
-    "githubLink": "https://github.com/Rahul-Baradol/http-server",
-  }
 ]
 
 const experience = [
@@ -353,11 +361,19 @@ const experience = [
 ]
 
 const blogContent = [
+  {
+    "id": "segmentation_for_hogyoku",
+    "title": "Hogyoku",
+    "description": "understanding segmentation in operating systems!",
+    "contentPath": "/blogContent/segmentation_for_hogyoku.md",
+    "publishDate": "30th May 2025"
+  },
   { 
     "id": "kido",
     "title": "Kido",
     "description": "story behind building a minimalistic compiler from scratch!",
-    "contentPath": "/blogContent/kido.md"
+    "contentPath": "/blogContent/kido.md",
+    "publishDate": "27th May 2025",
   }
 ]
 

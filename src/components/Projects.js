@@ -1,7 +1,7 @@
 import { Card, CardBody, CardFooter, CardHeader, Code, Divider } from '@nextui-org/react';
 import { motion } from 'framer-motion';
 import { Poppins } from 'next/font/google';
-import { Link } from "@nextui-org/react";
+import Link from "next/link";
 import React from 'react'
 import { TypeAnimation } from 'react-type-animation';
 
@@ -46,7 +46,13 @@ function Projects(props) {
                            <div className="flex flex-col">
                               <p className="text-md">{project.title}</p>
                               <div className='flex flex-row justify-between w-[83vw] md:w-[42vw]'>
-                                 <a href={`${project.siteLink}`} target='_blank' className="text-small text-default-500">{project.siteLinkDesc}</a>
+                                 <Link 
+                                    href={`${project.siteLink}`} 
+                                    target={project.tabTarget}
+                                    className="text-small text-default-500"
+                                 >
+                                    {project.siteLinkDesc}
+                                 </Link>
                                  {/* <Code className='customCode flex justify-center items-center w-fit' color="primary">{project.personal ? "Personal" : "Team"}</Code> */}
                               </div>
                            </div>
@@ -57,8 +63,9 @@ function Projects(props) {
                         </CardBody>
                         <CardFooter className='flex flex-row justify-between'>
                            <Link
-                              isExternal
                               href={`${project.githubLink}`}
+                              target='_blank'
+                              className='text-[#0070ef]'
                            >
                               Go to GitHub
                            </Link>

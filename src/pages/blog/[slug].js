@@ -12,7 +12,7 @@ const poppins = Poppins({
     subsets: ['latin'],
 })
 
-export default function Page(props) {
+export default function Page({ setIntro }) {
     const router = useRouter();
     const { slug } = router.query;
     const [contentLoading, setContentLoading] = useState(true);
@@ -54,6 +54,10 @@ export default function Page(props) {
 
         contentFetcher();
     }, [slug])
+
+    useEffect(() => {
+        setIntro()
+    }, [setIntro])
 
     return (
         <div className='mt-24 pb-5 flex flex-col items-center'>
