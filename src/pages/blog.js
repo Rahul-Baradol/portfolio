@@ -10,10 +10,10 @@ const poppins = Poppins({
    subsets: ['latin'],
 })
 
-export default function Blog(props) {
+export default function Blog({ setIntro }) {
    useEffect(() => {
-      props.setIntro(false);
-   }, [])
+      setIntro(false);
+   }, [setIntro])
 
    return (
       <main className='h-fit w-screen flex flex-col items-center'>
