@@ -56,11 +56,11 @@ export default function Page(props) {
     }, [slug])
 
     return (
-        <div className='mt-24 pb-5'>
+        <div className='mt-24 pb-5 flex flex-col items-center'>
             {
                 contentLoading ? <></>
                     :
-                    <main className='h-fit w-screen flex flex-col px-5'>
+                    <main className='h-fit w-[90vw] lg:w-[50vw] flex flex-col '>
                         <div className={`${poppins.className} flex flex-col items-center justify-center text-3xl font-thin mt-1 mb-4 text-white`}>
                             {blogMetadata.title}
                         </div>
