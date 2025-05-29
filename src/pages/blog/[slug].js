@@ -56,7 +56,7 @@ export default function Page({ setIntro }) {
     }, [slug])
 
     useEffect(() => {
-        setIntro()
+        setIntro(false)
     }, [setIntro])
 
     return (
