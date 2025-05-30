@@ -16,7 +16,7 @@ export default function Blog({ setIntro }) {
    }, [setIntro])
 
    return (
-      <main className='h-fit w-screen flex flex-col items-center'>
+      <main className='h-fit w-screen flex flex-col items-center overflow-hidden'>
          <div className="flex flex-col items-center p-2 m-24">
             <div className={`${poppins.className} flex flex-col items-center justify-center text-3xl font-thin mt-1 mb-4 text-white`}>
                <TypeAnimation

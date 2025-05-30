@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { NextUIProvider } from "@nextui-org/react";
 import Navbar from '@/components/Navbar'
 import '@/styles/globals.css'
-import Head from 'next/head';
 import LoadingBar from "react-top-loading-bar";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 export default function App({ Component, pageProps }) {
   const [intro, setIntro] = useState(true);
@@ -32,52 +32,29 @@ export default function App({ Component, pageProps }) {
         />
       </Head>
 
-      <style jsx>
-        {`
-          .parent{
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
-          }
-          .child{
-            height: 100vh;
-            margin-right: -20px; 
-            padding-right: 20px;
-            overflow-x: hidden;
-            overflow-y: scroll;
-          }
-        `}
-      </style>
-
       <NextUIProvider>
-        <LoadingBar 
+        <LoadingBar
           color="#2d2159"
           waitingTime={800}
           height={4}
-          progress={progress} 
-          onLoaderFinished={() => setProgress(0)} 
+          progress={progress}
+          onLoaderFinished={() => setProgress(0)}
         />
-        <div className="parent">
-          <div className="child">
-            <div className="relative z-0">
-              {/* {intro ? <DockerIntro quoteId={generateRandomNumber(0, devQuotes.length - 1)} setIntro={setIntro} />
+        {/* {intro ? <DockerIntro quoteId={generateRandomNumber(0, devQuotes.length - 1)} setIntro={setIntro} />
                 : <>
                   <Navbar />
                   <Component {...pageProps} />
                 </>
               } */}
-              <Navbar 
-                intro={intro}
-                setIntro={setIntro}
-              />
-              <Component 
-                {...pageProps} 
-                intro={intro}
-                setIntro={setIntro}
-              />
-            </div>
-          </div>
-        </div>
+
+        <Navbar 
+          intro={intro}
+        />
+        <Component
+          {...pageProps}
+          intro={intro}
+          setIntro={setIntro}
+        />
       </NextUIProvider>
     </>
   )

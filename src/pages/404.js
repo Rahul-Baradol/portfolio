@@ -24,8 +24,7 @@ export default function Custom404({ setIntro }) {
     }, [setIntro])
 
     return (
-        <div className='mt-24 pb-5 flex flex-col items-center'>
-
+        <div className='pt-24 pb-5 flex flex-col items-center'>
             <main className='h-fit w-[90vw] lg:w-[50vw] flex flex-col '>
                 <div className={`${poppins.className} flex flex-col items-center justify-center text-3xl font-thin mt-1 mb-4 text-white`}>
                     404

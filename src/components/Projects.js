@@ -12,7 +12,7 @@ const poppins = Poppins({
 
 function Projects(props) {
    return (
-      <div className="flex flex-col items-center p-2 m-2">
+      <div className="flex flex-col items-center p-2">
          <div className={`${poppins.className} flex flex-col items-center justify-center text-3xl font-thin mt-1 mb-4 text-white`}>
             <TypeAnimation
                sequence={[
@@ -47,6 +47,7 @@ function Projects(props) {
                               <p className="text-md">{project.title}</p>
                               <div className='flex flex-row justify-between w-[83vw] md:w-[42vw]'>
                                  <Link 
+                                    scroll={true}
                                     href={`${project.siteLink}`} 
                                     target={project.tabTarget}
                                     className="text-small text-default-500"
@@ -63,6 +64,7 @@ function Projects(props) {
                         </CardBody>
                         <CardFooter className='flex flex-row justify-between'>
                            <Link
+                              scroll={true}
                               href={`${project.githubLink}`}
                               target='_blank'
                               className='text-[#0070ef]'
