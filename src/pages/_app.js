@@ -3,10 +3,8 @@ import { NextUIProvider } from "@nextui-org/react";
 import Navbar from '@/components/Navbar'
 import '@/styles/globals.css'
 import Head from 'next/head';
-import DockerIntro from "@/components/Intro";
 import LoadingBar from "react-top-loading-bar";
 import { useRouter } from "next/router";
-import { devQuotes } from "../../constants/constants";
 
 export default function App({ Component, pageProps }) {
   const [intro, setIntro] = useState(true);

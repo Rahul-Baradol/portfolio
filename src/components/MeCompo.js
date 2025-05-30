@@ -1,11 +1,11 @@
 import Image from 'next/image';
-import { me, meBlur } from '../../public/assets'
+import { me } from '../../public/assets'
 
 function Me() {
     return (
         <>
             <Image  placeholder='blur'
-                    blurDataURL="https://www.rahulbaradol.in/assets/me/me.jpg"
+                    blurDataURL={`${process.env.VERCEL_URL}/assets/me/me.jpg`}
                     src={me}
                     alt=""
                     width={160}

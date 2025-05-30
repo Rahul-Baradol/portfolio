@@ -1,9 +1,8 @@
-import React, { Suspense, useEffect, useRef, useState } from 'react'
-import { Card, CardBody, Tooltip } from '@nextui-org/react';
+import React, { useEffect, useRef, useState } from 'react'
+import { Card, CardBody } from '@nextui-org/react';
 import { motion } from 'framer-motion'
 import { skillsDesc, techIcons } from '../../constants/constants';
 import styles from '../styles/background.module.css'
-import TextTransition, { presets } from 'react-text-transition';
 import { github, linkedin, leetcode } from '../../public/assets';
 import Image from 'next/image';
 import { Poppins } from 'next/font/google';

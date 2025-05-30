@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { servicesOffered, projects, otherData } from '../../constants/constants'
 import Footer from '@/components/Footer';
 import HomeRecipe from '../components/HomeRecipe';
