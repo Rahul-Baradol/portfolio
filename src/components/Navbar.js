@@ -1,8 +1,8 @@
-import React, { Suspense, useState } from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link';
 import Image from 'next/image'
 import { navLinks } from '../../constants/constants'
-import { menu, close, logoBlackR } from '../../public/assets'
+import { logoBlackR } from '../../public/assets'
 
 const Navbar = ({ intro }) => {
   const [showMenu, setShowMenu] = useState(true);
@@ -75,6 +75,10 @@ const Navbar = ({ intro }) => {
                     })
                   }
                 </ul>
+
+                {/* 
+                  leaving as is to use in the future
+                */}
 
                 {/* <div className="sm:hidden flex justify-end items-center">
               <Image

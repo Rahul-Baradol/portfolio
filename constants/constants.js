@@ -272,7 +272,7 @@ const projects = [
         "secondary"
       ]
     ],
-    "siteLink": "https://www.rahulbaradol.in/blog/segmentation_for_hogyoku",
+    "siteLink": "/blog/segmentation_for_hogyoku",
     "siteLinkDesc": "Read blog!",
     "githubLink": "https://github.com/Rahul-Baradol/hogyoku",
     "tabTarget": ""
@@ -304,7 +304,7 @@ const projects = [
         "primary"
       ]
     ],
-    "siteLink": "https://www.rahulbaradol.in/blog/kido",
+    "siteLink": "/blog/kido", 
     "siteLinkDesc": "Read blog!",
     "githubLink": "https://github.com/Rahul-Baradol/kido",
     "tabTarget": ""

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { servicesOffered, projects, otherData } from '../../constants/constants'
 import Footer from '@/components/Footer';
 import HomeRecipe from '../components/HomeRecipe';
@@ -16,7 +16,7 @@ function generateRandomNumber(a, b) {
 
 export default function Home(props) {
    return (
-      <main className='h-fit w-screen flex flex-col items-center'>
+      <main className='h-fit w-screen flex flex-col items-center bg-black overflow-hidden'>
          {
             props.intro ? <DockerIntro quoteId={generateRandomNumber(0, devQuotes.length - 1)} setIntro={props.setIntro} /> :
                <>

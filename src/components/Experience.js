@@ -20,8 +20,8 @@ const poppins200 = Poppins({
 function Experience(props) {
    return (
       <>
-         <main className='mb-10 flex flex-col items-center h-fit w-[100vw] '>
-            <div className='flex flex-col p-6 items-center m-2'>
+         <main className='mb-10 flex flex-col items-center h-fit w-screen '>
+            <div className='flex flex-col items-center '>
                <div className={`${poppins100.className} text-3xl font-thin mt-1 mb-4 text-white`}>
                   <TypeAnimation
                      sequence={[
@@ -31,7 +31,7 @@ function Experience(props) {
                      speed={10}
                   />
                </div>
-               <div className="w-[100vw] items-center md:justify-center h-fit flex md:flex-row flex-col gap-4 bg-[rgb(24 24 27)] text-white border-0">
+               <div className="w-screen items-center md:justify-center h-fit flex md:flex-row flex-col gap-4 bg-[rgb(24 24 27)] text-white border-0">
                   <VerticalTimeline lineColor="white">
                      {
                         experience.map(value => {
@@ -42,7 +42,7 @@ function Experience(props) {
                                     color: "#fff",
                                     border: "2px solid #2d2c34",
                                     borderRadius: "20px",
-                                    boxShadow: "0 0 18px 1px rgb(91 33 182)",
+                                    boxShadow: "0 0 18px 1px rgb(91 33 182)"
                                  }}
                                  contentArrowStyle={{ borderRight: "7px solid  #1d1836" }}
                                  date={value.date}
