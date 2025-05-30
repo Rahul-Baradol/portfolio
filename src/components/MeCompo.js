@@ -5,7 +5,7 @@ function Me() {
     return (
         <>
             <Image  placeholder='blur'
-                    blurDataURL={`${process.env.VERCEL_URL}/assets/me/me.jpg`}
+                    blurDataURL="/assets/me/me.jpg"
                     src={me}
                     alt=""
                     width={160}
