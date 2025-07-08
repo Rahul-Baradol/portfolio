@@ -180,142 +180,144 @@ function HomeRecipe(props) {
          </style>
 
          <div className={`z-0 h-full bg-cover bg-no-repeat ${styles.heroOuter}`}>
-            <div ref={hero} className='relative flex flex-col items-center justify-between w-screen h-screen'>
-               <div className={`relative flex flex-col items-center w-screen h-[40vh]`} style={blurEffect}>
+            <div ref={hero} className='relative flex flex-col items-center justify-center w-screen h-screen'>
+               <div className={`relative flex flex-col items-center justify-center w-screen h-[50vh]`} style={blurEffect}>
                   {/* <div className='w-fit h-fit flex flex-col justify-center items-center gap-2'>
                      <div className={`text-4xl text-violet-800 opacity-100`}>
                         <span className={`${poppins200.className} px-1 enableOpacity select-none spoiler`}>Rahul Baradol</span>
                      </div>
                   </div> */}
 
-                  <div className="hidden md:flex flex-col px-20 w-fit h-[40vh] gap-1">
+                  <div className="hidden md:flex flex-col px-20 w-fit h-[50vh] gap-2 justify-center">
                      <motion.div 
-                        className={`${poppins300.className} text-2xl`}
+                        className={`${poppins300.className} text-2xl text-gray-300`}
 
                         initial={{
-                           opacity: 0, x: -50
+                           opacity: 0, y: -30
                         }}
          
                         whileInView={{
-                           opacity: 1, x: -25
+                           opacity: 1, y: 0
                         }}
          
                         viewport={{ once: true }}
                         transition={{ duration: 1 }}
-                     > Hello there...</motion.div>
+                     > Hi, I&apos;m</motion.div>
 
-                     <div className="flex flex-col items-end">
+                     <div className="flex flex-col items-start">
                         <motion.div 
-                           className={``}
+                           className={`${poppins200.className} text-violet-600 text-5xl font-bold mb-2`}
 
                            initial={{
-                              opacity: 0, x: 50
+                              opacity: 0, y: 30
                            }}
             
                            whileInView={{
-                              opacity: 1, x: 20
-                           }}
-            
-                           viewport={{ once: true }}
-                           transition={{ duration: 1 }}
-                        > <span className={`${poppins300.className} text-3xl`}> ...i am </span> <span className={`${poppins200.className} text-violet-600 text-4xl`}> Rahul Baradol </span> </motion.div>
-
-                        <motion.div 
-                           className={`${poppins100.className} text-xl `}
-
-                           initial={{
-                              opacity: 0, x: 70
-                           }}
-            
-                           whileInView={{
-                              opacity: 1, x: 20
-                           }}
-            
-                           viewport={{ once: true }}
-                           transition={{ duration: 1 }}
-                        > Software Developer </motion.div>
-                        
-                        <motion.div 
-                           className={`${poppins100.className} text-lg text-gray-300 italic mt-2`}
-
-                           initial={{
-                              opacity: 0, x: 90
-                           }}
-            
-                           whileInView={{
-                              opacity: 1, x: 20
+                              opacity: 1, y: 0
                            }}
             
                            viewport={{ once: true }}
                            transition={{ duration: 1, delay: 0.2 }}
+                        >Rahul Baradol</motion.div>
+
+                        <motion.div 
+                           className={`${poppins100.className} text-xl text-gray-200 mb-3`}
+
+                           initial={{
+                              opacity: 0, y: 30
+                           }}
+            
+                           whileInView={{
+                              opacity: 1, y: 0
+                           }}
+            
+                           viewport={{ once: true }}
+                           transition={{ duration: 1, delay: 0.4 }}
+                        > Software Developer </motion.div>
+                        
+                        <motion.div 
+                           className={`${poppins100.className} text-lg text-gray-300 italic max-w-md`}
+
+                           initial={{
+                              opacity: 0, y: 30
+                           }}
+            
+                           whileInView={{
+                              opacity: 1, y: 0
+                           }}
+            
+                           viewport={{ once: true }}
+                           transition={{ duration: 1, delay: 0.6 }}
                         > {props.tagline} </motion.div>
                      </div>
                   </div>
 
-                  <div className="flex md:hidden flex-col px-20 w-fit h-[40vh] gap-1">
+                  <div className="flex md:hidden flex-col px-10 w-fit h-[50vh] gap-2 justify-center">
                      <motion.div 
-                        className={`${poppins300.className} text-[4vw]`}
+                        className={`${poppins300.className} text-[4vw] text-gray-300`}
 
                         initial={{
-                           opacity: 0, x: -50
+                           opacity: 0, y: -30
                         }}
          
                         whileInView={{
-                           opacity: 1, x: 0
+                           opacity: 1, y: 0
                         }}
          
                         viewport={{ once: true }}
                         transition={{ duration: 1 }}
-                     > Hello there...</motion.div>
+                     > Hi, I&apos;m</motion.div>
 
-                     <div className="flex flex-col items-end">
+                     <div className="flex flex-col items-start">
                         <motion.div 
+                           className={`${poppins200.className} text-violet-600 text-[6vw] font-bold mb-2`}
+
                            initial={{
-                              opacity: 0, x: 50
+                              opacity: 0, y: 30
                            }}
             
                            whileInView={{
-                              opacity: 1, x: 0
-                           }}
-            
-                           viewport={{ once: true }}
-                           transition={{ duration: 1 }}
-                        > <span className={`${poppins300.className} text-[4vw]`}> ...i am </span> <span className={`${poppins200.className} text-violet-600 text-[5.5vw]`}> Rahul Baradol </span> </motion.div>
-
-                        <motion.div 
-                           className={`${poppins100.className} text-[3.5vw] `}
-
-                           initial={{
-                              opacity: 0, x: 70
-                           }}
-            
-                           whileInView={{
-                              opacity: 1, x: 0
-                           }}
-            
-                           viewport={{ once: true }}
-                           transition={{ duration: 1 }}
-                        > Software Developer </motion.div>
-                        
-                        <motion.div 
-                           className={`${poppins100.className} text-[3vw] text-gray-300 italic mt-1`}
-
-                           initial={{
-                              opacity: 0, x: 90
-                           }}
-            
-                           whileInView={{
-                              opacity: 1, x: 0
+                              opacity: 1, y: 0
                            }}
             
                            viewport={{ once: true }}
                            transition={{ duration: 1, delay: 0.2 }}
+                        >Rahul Baradol</motion.div>
+
+                        <motion.div 
+                           className={`${poppins100.className} text-[3.5vw] text-gray-200 mb-2`}
+
+                           initial={{
+                              opacity: 0, y: 30
+                           }}
+            
+                           whileInView={{
+                              opacity: 1, y: 0
+                           }}
+            
+                           viewport={{ once: true }}
+                           transition={{ duration: 1, delay: 0.4 }}
+                        > Software Developer </motion.div>
+                        
+                        <motion.div 
+                           className={`${poppins100.className} text-[3vw] text-gray-300 italic max-w-[80vw]`}
+
+                           initial={{
+                              opacity: 0, y: 30
+                           }}
+            
+                           whileInView={{
+                              opacity: 1, y: 0
+                           }}
+            
+                           viewport={{ once: true }}
+                           transition={{ duration: 1, delay: 0.6 }}
                         > {props.tagline} </motion.div>
                      </div>
                   </div>
                </div>
 
-               <div className='relative bottom-5 flex flex-row justify-around items-center w-[70vw] sm:w-[20vw] h-[10vh]'>
+               <div className='absolute bottom-8 flex flex-row justify-center items-center w-[70vw] sm:w-[20vw] h-[10vh] gap-6'>
                   <a href="https://github.com/Rahul-Baradol" target='_blank' className={`border-2 border-violet-600 opacity-50 hover:opacity-100 transition-opacity w-fit h-fit rounded-full overflow-hidden`}>
                      <Image
                         width={35}
@@ -348,7 +350,7 @@ function HomeRecipe(props) {
             </div>
          </div>
 
-         <div className="mt-4 mb-12 flex font-mono sm:justify-around md:flex-row p-5 gap-8 h-fit flex-col items-center w-screen customStyle">
+         <div className="mt-8 mb-16 flex font-mono sm:justify-around md:flex-row p-5 gap-8 h-fit flex-col items-center w-screen customStyle">
             <motion.div
                initial={{
                   opacity: 0, x: -50

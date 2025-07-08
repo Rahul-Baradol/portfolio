@@ -23,16 +23,27 @@ export default function Home(props) {
                <>
                   <HomeRecipe aboutme={props.otherData.aboutme} tagline={props.otherData.tagline} />
 
-                  <Experience />
+                  <div className="py-8">
+                     <Experience />
+                  </div>
 
-                  <Divider className="my-2 w-[70%] bg-slate-800" />
-                  <OpenSourceOrganizations />
+                  <Divider className="my-8 w-[70%] bg-slate-800" />
+                  
+                  <div className="py-8">
+                     <OpenSourceOrganizations />
+                  </div>
 
-                  <Divider className="my-2 w-[70%] bg-slate-800" />
-                  <Projects projects={props.projects} />
+                  <Divider className="my-8 w-[70%] bg-slate-800" />
+                  
+                  <div className="py-8">
+                     <Projects projects={props.projects} />
+                  </div>
 
-                  <Divider className="my-2 w-[70%] bg-slate-800" />
-                  <Services servicesOffered={props.servicesOffered} />
+                  <Divider className="my-8 w-[70%] bg-slate-800" />
+                  
+                  <div className="py-8">
+                     <Services servicesOffered={props.servicesOffered} />
+                  </div>
 
                   <Footer />
                </>

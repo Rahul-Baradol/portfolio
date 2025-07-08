@@ -20,9 +20,9 @@ const poppins200 = Poppins({
 function OpenSourceOrganizations(props) {
    return (
       <>
-         <main className='mb-10 flex flex-col items-center h-fit w-screen '>
-            <div className='flex flex-col items-center '>
-               <div className={`${poppins100.className} text-3xl font-thin mt-1 mb-4 text-white`}>
+         <main className='flex flex-col items-center h-fit w-screen'>
+            <div className='flex flex-col items-center'>
+               <div className={`${poppins100.className} text-3xl font-thin mt-1 mb-8 text-white`}>
                   <TypeAnimation
                      sequence={[
                         'Open Source Contributions'
