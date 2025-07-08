@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image'
 import { navLinks } from '../../constants/constants'
 import { logoBlackR } from '../../public/assets'
+import ThemeToggle from './ThemeToggle';
 
 const Navbar = ({ intro }) => {
   const [showMenu, setShowMenu] = useState(true);
@@ -28,7 +29,12 @@ const Navbar = ({ intro }) => {
             animation-name: bringIn;
             animation-duration: 1s;
             animation-iteration-count: 1;
-            background-color: rgb(5 8 22 / var(--tw-bg-opacity));
+            background-color: rgba(255, 255, 255, 0.8);
+            transition: background-color 0.3s ease;
+          }
+          
+          .dark .navBar {
+            background-color: rgba(5, 8, 22, 0.8);
           }
 
           .navMenu {
@@ -63,17 +69,20 @@ const Navbar = ({ intro }) => {
                   />
                 </Link>
 
-                <ul className='list-none flex flex-row gap-10'>
+                <ul className='list-none flex flex-row gap-10 items-center'>
                   {
                     navLinks.map((link) => {
                       return <li key={link.id}
-                        className={`text-white font-medium cursor-pointer`}
+                        className={`text-gray-900 dark:text-white font-medium cursor-pointer`}
                       >
 
                         <Link href={`/${link.id}`}>{link.title}</Link>
                       </li>
                     })
                   }
+                  <li>
+                    <ThemeToggle />
+                  </li>
                 </ul>
 
                 {/* 

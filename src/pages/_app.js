@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { NextUIProvider } from "@nextui-org/react";
+import { ThemeProvider } from '@/contexts/ThemeContext';
 import Navbar from '@/components/Navbar'
 import '@/styles/globals.css'
 import LoadingBar from "react-top-loading-bar";
@@ -33,28 +34,30 @@ export default function App({ Component, pageProps }) {
       </Head>
 
       <NextUIProvider>
-        <LoadingBar
-          color="#2d2159"
-          waitingTime={800}
-          height={4}
-          progress={progress}
-          onLoaderFinished={() => setProgress(0)}
-        />
-        {/* {intro ? <DockerIntro quoteId={generateRandomNumber(0, devQuotes.length - 1)} setIntro={setIntro} />
-                : <>
-                  <Navbar />
-                  <Component {...pageProps} />
-                </>
-              } */}
+        <ThemeProvider>
+          <LoadingBar
+            color="#2d2159"
+            waitingTime={800}
+            height={4}
+            progress={progress}
+            onLoaderFinished={() => setProgress(0)}
+          />
+          {/* {intro ? <DockerIntro quoteId={generateRandomNumber(0, devQuotes.length - 1)} setIntro={setIntro} />
+                  : <>
+                    <Navbar />
+                    <Component {...pageProps} />
+                  </>
+                } */}
 
-        <Navbar 
-          intro={intro}
-        />
-        <Component
-          {...pageProps}
-          intro={intro}
-          setIntro={setIntro}
-        />
+          <Navbar 
+            intro={intro}
+          />
+          <Component
+            {...pageProps}
+            intro={intro}
+            setIntro={setIntro}
+          />
+        </ThemeProvider>
       </NextUIProvider>
     </>
   )
