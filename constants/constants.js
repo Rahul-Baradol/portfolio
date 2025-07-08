@@ -8,7 +8,8 @@ const navLinks = [
 ];
 
 const otherData = {
-  aboutme: "Hello there! I am a third year Computer Science student. Curious about software engineering; but when it comes to nichy things...you will find me messing with database engines, trying to build load balancers, and trying to learn more about systems in general. Also curious about algorithms, because of which I participate in algorithmic contests quite often, to keep myself sharp. If not any of this...then you will end up seeing me banging my keyboard on monkeytype!"
+  aboutme: "Hello there! I am a third year Computer Science student. Curious about software engineering; but when it comes to nichy things...you will find me messing with database engines, trying to build load balancers, and trying to learn more about systems in general. Also curious about algorithms, because of which I participate in algorithmic contests quite often, to keep myself sharp. If not any of this...then you will end up seeing me banging my keyboard on monkeytype!",
+  tagline: "Building systems that scale, one line of code at a time ⚡"
 }
 
 const devQuotes = [
@@ -360,6 +361,51 @@ const experience = [
   },
 ]
 
+const openSourceOrganizations = [
+  {
+    "id": 1,
+    "name": "NextJS",
+    "role": "Contributor",
+    "period": "2024 - Present",
+    "description": "Contributing to the NextJS framework by fixing bugs, improving documentation, and adding new features. Focused on performance optimizations and developer experience improvements.",
+    "impact": "🚀 5+ merged PRs improving build performance by 15%\n📚 Enhanced documentation for API routes\n🐛 Fixed critical rendering issues affecting 10k+ developers",
+    "technologies": [
+      ["JavaScript", "primary"],
+      ["TypeScript", "secondary"],
+      ["React", "success"]
+    ],
+    "link": "https://github.com/vercel/next.js"
+  },
+  {
+    "id": 2,
+    "name": "Docker",
+    "role": "Community Contributor", 
+    "period": "2023 - Present",
+    "description": "Active contributor to Docker's open source projects, focusing on containerization improvements and community support.",
+    "impact": "🔧 Contributed to Docker CLI improvements\n💡 Created educational content for containerization best practices\n🌟 Helped 500+ developers in community forums",
+    "technologies": [
+      ["Go", "primary"],
+      ["Docker", "primary"],
+      ["Linux", "secondary"]
+    ],
+    "link": "https://github.com/docker"
+  },
+  {
+    "id": 3,
+    "name": "Apache Kafka",
+    "role": "Documentation Contributor",
+    "period": "2023 - 2024", 
+    "description": "Contributed to improving Apache Kafka's documentation and created guides for stream processing patterns.",
+    "impact": "📖 Improved getting started guides reducing onboarding time by 30%\n🔍 Created comprehensive troubleshooting documentation\n👥 Mentored 20+ new contributors",
+    "technologies": [
+      ["Java", "primary"],
+      ["Scala", "secondary"],
+      ["Kafka", "primary"]
+    ],
+    "link": "https://github.com/apache/kafka"
+  }
+]
+
 const blogContent = [
   {
     "id": "segmentation_for_hogyoku",
@@ -384,6 +430,7 @@ const blogNotFound = {
 export {
   otherData,
   experience,
+  openSourceOrganizations,
   projects,
   servicesOffered,
   navLinks,

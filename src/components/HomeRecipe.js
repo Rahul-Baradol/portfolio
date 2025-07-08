@@ -234,6 +234,21 @@ function HomeRecipe(props) {
                            viewport={{ once: true }}
                            transition={{ duration: 1 }}
                         > Software Developer </motion.div>
+                        
+                        <motion.div 
+                           className={`${poppins100.className} text-lg text-gray-300 italic mt-2`}
+
+                           initial={{
+                              opacity: 0, x: 90
+                           }}
+            
+                           whileInView={{
+                              opacity: 1, x: 20
+                           }}
+            
+                           viewport={{ once: true }}
+                           transition={{ duration: 1, delay: 0.2 }}
+                        > {props.tagline} </motion.div>
                      </div>
                   </div>
 
@@ -281,6 +296,21 @@ function HomeRecipe(props) {
                            viewport={{ once: true }}
                            transition={{ duration: 1 }}
                         > Software Developer </motion.div>
+                        
+                        <motion.div 
+                           className={`${poppins100.className} text-[3vw] text-gray-300 italic mt-1`}
+
+                           initial={{
+                              opacity: 0, x: 90
+                           }}
+            
+                           whileInView={{
+                              opacity: 1, x: 0
+                           }}
+            
+                           viewport={{ once: true }}
+                           transition={{ duration: 1, delay: 0.2 }}
+                        > {props.tagline} </motion.div>
                      </div>
                   </div>
                </div>

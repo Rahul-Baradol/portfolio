@@ -3,6 +3,7 @@ import { servicesOffered, projects, otherData } from '../../constants/constants'
 import Footer from '@/components/Footer';
 import HomeRecipe from '../components/HomeRecipe';
 import Experience from '@/components/Experience';
+import OpenSourceOrganizations from '@/components/OpenSourceOrganizations';
 import Services from '@/components/Services';
 import Projects from '@/components/Projects';
 import { Divider } from '@nextui-org/react';
@@ -20,9 +21,12 @@ export default function Home(props) {
          {
             props.intro ? <DockerIntro quoteId={generateRandomNumber(0, devQuotes.length - 1)} setIntro={props.setIntro} /> :
                <>
-                  <HomeRecipe aboutme={props.otherData.aboutme} />
+                  <HomeRecipe aboutme={props.otherData.aboutme} tagline={props.otherData.tagline} />
 
                   <Experience />
+
+                  <Divider className="my-2 w-[70%] bg-slate-800" />
+                  <OpenSourceOrganizations />
 
                   <Divider className="my-2 w-[70%] bg-slate-800" />
                   <Projects projects={props.projects} />
