@@ -233,7 +233,7 @@ function HomeRecipe(props) {
             
                            viewport={{ once: true }}
                            transition={{ duration: 1 }}
-                        > Software Developer </motion.div>
+                        > an Engineer </motion.div>
                      </div>
                   </div>
 
@@ -280,7 +280,7 @@ function HomeRecipe(props) {
             
                            viewport={{ once: true }}
                            transition={{ duration: 1 }}
-                        > Software Developer </motion.div>
+                        > an Engineer </motion.div>
                      </div>
                   </div>
                </div>
