@@ -1,3 +1,35 @@
+export const sections = [
+    {
+        company: "Alaiy",
+        timeline: "July 2025 - present",
+        points: [
+            "Saved 95% client bandwidth with caching",
+            "Reduced page latency from 8-10s to <1s",
+            "Built wallet & credit system ensuring 99.9% transaction reliability",
+            "Built blockbuster movie campaigning site - 65k submissions with 8.3k peak users/min",
+            "Delivered a scalable Redux + RTK state layer for a complex product page with multi-version fields, cutting orchestration complexity and improving developer productivity",
+        ],
+    },
+    {
+        company: "CRED",
+        timeline: "July 2024 - June 2025",
+        points: [
+            "Reduced write IOPS by 87%",
+            "Cut CPU usage from 70% → 20%",
+            "Restored ingestion pipeline to 99.9% user coverage",
+            "Fixed extraction funnel affecting 300k workflows",
+        ],
+    },
+    {
+        company: "Cognitive Lab",
+        timeline: "April 2024 - May 2024",
+        points: [
+            "Owned full medical-query chat platform",
+            "FastAPI backend with real-time structured responses",
+        ],
+    },
+];
+
 export const SignatureCardDetails = {
     title: "Timesignature",
     description:
@@ -25,4 +57,19 @@ export const links = [
         label: "LinkedIn",
         href: "https://www.linkedin.com/in/rahul-baradol/",
     },
+];
+
+export const marqueeTexts = [
+    "JavaScript",
+    "TypeScript",
+    "CSS",
+    "TailwindCSS",
+    "React",
+    "NextJS",
+    "FastAPI",
+    "Framer",
+    "Redux",
+    "RTK",
+    "Performance",
+    "DX"
 ];

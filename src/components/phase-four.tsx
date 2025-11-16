@@ -4,7 +4,7 @@ import { links } from "../constants";
 
 export default function PhaseFour() {
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center px-6 select-none">
+    <div className="z-5 w-full h-full flex flex-col items-center justify-center px-6 select-none">
       {/* Title */}
       <motion.h2
         initial={{ opacity: 0, y: 25 }}
@@ -42,16 +42,15 @@ export default function PhaseFour() {
       </div>
 
       {/* Footer Text */}
-      <motion.p
+      {/* <motion.p
         initial={{ opacity: 0, y: 15 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.7, delay: 0.3 }}
         className="mt-10 text-muted-foreground text-sm text-center max-w-sm"
       >
-        Thanks for scrolling through my journey.  
-        If anything here resonates, I'd love to connect.
-      </motion.p>
+        Bounce!
+      </motion.p> */}
     </div>
   );
 }

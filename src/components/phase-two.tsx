@@ -1,41 +1,34 @@
 import { motion } from "framer-motion";
 import "../App.css"
 import { MoveRight } from "lucide-react";
+import { sections } from "../constants";
 
 export default function PhaseTwo() {
-    const sections = [
-        {
-            company: "Alaiy",
-            points: [
-                "Built wallet & credit system ensuring 99.9% transaction reliability",
-                "Handled 65k submissions with 8.3k peak users/min",
-                "Saved 95% bandwidth with caching",
-                "Delivered Kantara campaign frontend in 20 hours",
-                "Reduced page latency from 8-10s to <1s",
-            ],
-        },
-        {
-            company: "CRED",
-            points: [
-                "Reduced write IOPS by 87%",
-                "Cut CPU usage from 70% → 20%",
-                "Restored ingestion pipeline to 99.9% user coverage",
-                "Fixed extraction funnel affecting 300k workflows",
-            ],
-        },
-        {
-            company: "Cognitive Lab",
-            points: [
-                "Owned full medical-query chat platform",
-                "Next.js + Tailwind + ShadCN frontend",
-                "FastAPI backend with real-time structured responses",
-            ],
-        },
-    ];
+
+    const wrapText = (str: string, limit = 60) => {
+        let out = [];
+        let words = str.split(" ");
+        let curLine = "";
+
+        for (let word of words) {
+            if ((curLine + word).length > limit) {
+                out.push(curLine.trim());
+                curLine = word + " ";
+            } else {
+                curLine += word + " ";
+            }
+        }
+
+        if (curLine.trim()) {
+            out.push(curLine.trim());
+        }
+        return out.join("<br/>");
+    }
+
 
     return (
-        <div className="flex flex-col items-center">
-            <div className="flex flex-col items-center justify-center px-4 select-none relative">
+        <div className="z-5 flex flex-col items-center">
+            <div className=" flex flex-col items-center justify-center px-4 select-none relative">
                 <motion.h2
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -67,13 +60,31 @@ export default function PhaseTwo() {
               transition-all duration-300
             "
                         >
-                            <h3 className="text-xl sm:text-2xl font-semibold mb-3">
+                            <h3 className="text-xl sm:text-2xl font-semibold mb-2">
                                 {sec.company}
                             </h3>
+                            <p className="text-sm sm:text-base italic mb-4 text-muted-foreground">
+                                {sec.timeline}
+                            </p>
 
                             <ul className="text-sm sm:text-base text-muted-foreground space-y-2">
                                 {sec.points.map((p, i) => (
-                                    <li key={i}>• {p}</li>
+                                    <motion.li 
+                                        key={i}
+                                        initial={{ opacity: 0, x: -10 }}
+                                        whileInView={{ opacity: 1, x: 0 }}
+                                        viewport={{ once: true }}
+                                        transition={{ duration: 0.4, delay: i * 0.25 }}
+                                    >• {
+                                        wrapText(p)
+                                            .split("<br/>")
+                                            .map((line, idx) => (
+                                                <span key={idx}>
+                                                    {line}
+                                                    {idx < wrapText(p).split("<br/>").length - 1 ? <br /> : <></>}
+                                                </span>
+                                            ))
+                                    }</motion.li>
                                 ))}
                             </ul>
                         </motion.div>
@@ -81,7 +92,7 @@ export default function PhaseTwo() {
                 </div>
             </div>
 
-            <motion.div 
+            <motion.div
                 className="flex gap-4"
                 initial={{ opacity: 1 }}
                 animate={{ x: [0, 10, 0] }}

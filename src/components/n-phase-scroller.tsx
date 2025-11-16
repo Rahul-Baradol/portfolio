@@ -54,7 +54,7 @@ export const NPhaseScroller = ({ phases }: NPhaseScrollerProps) => {
   return (
     <div
       ref={containerRef}
-      className="h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth"
+      className="h-screen w-screen overflow-y-scroll overflow-x-hidden snap-y snap-mandatory scroll-smooth"
       style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
     >
       {phases.map((phase, i) => (

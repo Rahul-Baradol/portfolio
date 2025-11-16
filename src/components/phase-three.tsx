@@ -5,7 +5,7 @@ import { FlowPuzzleCardDetails, SignatureCardDetails } from "../constants";
 
 export default function PhaseThree() {
   return (
-    <div className="relative h-full w-full flex flex-col items-center justify-start overflow-hidden px-4 py-20">
+    <div className="z-5 relative h-full w-full flex flex-col items-center justify-start overflow-hidden px-4 py-20">
       {/* TITLE */}
       <motion.h1
         initial={{ opacity: 0, y: 40 }}

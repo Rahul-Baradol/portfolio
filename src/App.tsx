@@ -3,10 +3,14 @@ import PhaseOne from "./components/phase-one";
 import PhaseTwo from "./components/phase-two";
 import PhaseThree from "./components/phase-three";
 import PhaseFour from "./components/phase-four";
+import { TextMarquee } from "./components/text-marquee";
+import { GithubLink } from "./components/github-link";
 
 function App() {
   return (
-    <div className="w-screen h-screen bg-black text-white">
+    <div className="relative w-screen h-screen bg-black text-white">
+      <GithubLink />
+      <TextMarquee />
       <NPhaseScroller
         phases={[
           {
