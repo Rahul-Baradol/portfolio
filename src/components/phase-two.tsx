@@ -34,8 +34,8 @@ export default function PhaseTwo() {
     ];
 
     return (
-        <div className="bottom-left-corner-border flex flex-col items-center">
-            <div className="top-right-corner-border flex flex-col items-center justify-center px-4 select-none relative">
+        <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center justify-center px-4 select-none relative">
                 <motion.h2
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
