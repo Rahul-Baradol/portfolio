@@ -25,6 +25,7 @@ export default function DesktopCard({
             rounded-3xl overflow-hidden cursor-pointer
             bg-white/6 border border-white/10
             shadow-2xl p-10
+            group
           "
             >
                 <div className="absolute inset-0 pointer-events-none">
@@ -53,7 +54,7 @@ export default function DesktopCard({
                         />
                     </div>
 
-                    <div className="w-full flex justify-center">
+                    <div className="w-full flex justify-center group-hover:translate-x-4 transition-transform duration-500">
                         <ArrowRight />
                     </div>
                 </div>

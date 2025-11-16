@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 
 export default function PhaseOne({ scrollNext }: { scrollNext: () => void }) {
   return (
@@ -39,9 +40,10 @@ export default function PhaseOne({ scrollNext }: { scrollNext: () => void }) {
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 0.8 }}
         onClick={scrollNext}
-        className="mt-10 px-6 py-3 bg-primary text-primary-foreground rounded-xl shadow hover:shadow-lg transition-all"
+        className="group hover:cursor-pointer flex items-center gap-2 mt-10 px-6 py-3 bg-primary text-primary-foreground rounded-xl shadow hover:shadow-lg transition-all"
       >
-        Impact →
+        <span className="text-md group-hover:-translate-x-0.5 transition-transform duration-500">Impact</span>
+        <ArrowRight size={18} className="group-hover:translate-x-0.5 transition-transform duration-500" />
       </motion.button>
     </div>
   );

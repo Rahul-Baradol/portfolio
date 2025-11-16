@@ -15,3 +15,14 @@ export const FlowPuzzleCardDetails = {
     posterSrc: "/flow-poster.jpg",
     redirectUrl: "https://flowpuzzlesolver.vercel.app/"
 }
+
+export const links = [
+    {
+        label: "X (Twitter)",
+        href: "https://x.com/rahulbaradol",
+    },
+    {
+        label: "LinkedIn",
+        href: "https://www.linkedin.com/in/rahul-baradol/",
+    },
+];

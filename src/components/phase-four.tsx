@@ -1,25 +1,10 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+import { links } from "../constants";
 
 export default function PhaseFour() {
-  const links = [
-    {
-      label: "X (Twitter)",
-      href: "https://x.com/rahul", // put your actual link
-    },
-    {
-      label: "LinkedIn",
-      href: "https://linkedin.com/in/rahul", // put your actual link
-    },
-    {
-      label: "UI Labs",
-      href: "/labs", // or external link
-    },
-  ];
-
   return (
     <div className="w-full h-full flex flex-col items-center justify-center px-6 select-none">
-
       {/* Title */}
       <motion.h2
         initial={{ opacity: 0, y: 25 }}
