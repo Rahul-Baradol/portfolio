@@ -15,7 +15,7 @@ function App() {
           },
           {
             id: "two",
-            content: ({ scrollNext }) => <PhaseTwo scrollNext={scrollNext} />,
+            content: () => <PhaseTwo />,
           },
           {
             id: "three",

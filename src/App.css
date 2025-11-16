@@ -1,0 +1,53 @@
+.top-right-corner-border {
+  position: relative;
+}
+
+.top-right-corner-border::before,
+.top-right-corner-border::after {
+  content: "";
+  position: absolute;
+  background: white;     /* border color */
+}
+
+/* top border (a few px long) */
+.top-right-corner-border::before {
+  top: -15px;
+  right: 0;
+  height: 2px;          /* thickness */
+  width: 40px;          /* how far it spreads */
+}
+
+/* right border (a few px tall) */
+.top-right-corner-border::after {
+  top: -15px;
+  right: 0;
+  width: 2px;           /* thickness */
+  height: 40px;         /* how far it spreads */
+}
+
+.bottom-left-corner-border {
+  position: relative;
+}
+
+.bottom-left-corner-border::before,
+.bottom-left-corner-border::after {
+  content: "";
+  position: absolute;
+  background: white;   /* border color */
+}
+
+/* bottom border */
+.bottom-left-corner-border::before {
+  bottom: 0px;
+  left: 0;
+  height: 2px;         /* thickness */
+  width: 40px;         /* spread */
+}
+
+/* left border */
+.bottom-left-corner-border::after {
+  bottom: 0px;
+  left: 0;
+  width: 2px;          /* thickness */
+  height: 40px;        /* spread */
+}

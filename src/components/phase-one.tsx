@@ -41,7 +41,7 @@ export default function PhaseOne({ scrollNext }: { scrollNext: () => void }) {
         onClick={scrollNext}
         className="mt-10 px-6 py-3 bg-primary text-primary-foreground rounded-xl shadow hover:shadow-lg transition-all"
       >
-        Explore →
+        Impact →
       </motion.button>
     </div>
   );
