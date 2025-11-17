@@ -1,6 +1,5 @@
 import { NPhaseScroller } from "./components/n-phase-scroller";
 import PhaseOne from "./components/phase-one";
-import { TextMarquee } from "./components/text-marquee";
 
 function App() {
   return (
