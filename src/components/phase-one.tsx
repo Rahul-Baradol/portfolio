@@ -1,8 +1,7 @@
 import "../App.css"
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
 
-export default function PhaseOne({ scrollNext }: { scrollNext: () => void }) {
+export default function PhaseOne() {
   return (
     <>
       <div className="z-5 flex flex-col gap-10 items-center justify-center h-full text-center 
@@ -36,7 +35,7 @@ export default function PhaseOne({ scrollNext }: { scrollNext: () => void }) {
             transition={{ delay: 0.6, duration: 0.7 }}
             className="text-lg md:text-xl text-muted-foreground mt-2"
           >
-            I go deep into frontend systems — scaling, performance, and DX.
+            I go deep into client (web) systems — scaling, performance, and DX.
           </motion.p>
         </div>
 
