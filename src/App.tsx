@@ -6,7 +6,7 @@ function App() {
   return (
     <div className="relative w-screen h-screen bg-black text-white">
       {/* <GithubLink /> */}
-      <TextMarquee />
+      {/* <TextMarquee /> */}
       <NPhaseScroller
         phases={[
           {

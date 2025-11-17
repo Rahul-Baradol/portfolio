@@ -35,7 +35,7 @@ export default function PhaseOne() {
             transition={{ delay: 0.6, duration: 0.7 }}
             className="text-lg md:text-xl text-muted-foreground mt-2"
           >
-            I go deep into client (web) systems — scaling, performance, and DX.
+            I go deep into client-based systems (web) <br /> <span className="italic"> (scaling, performance, and developer experience) </span>          
           </motion.p>
         </div>
 
