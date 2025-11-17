@@ -9,7 +9,7 @@ import { GithubLink } from "./components/github-link";
 function App() {
   return (
     <div className="relative w-screen h-screen bg-black text-white">
-      <GithubLink />
+      {/* <GithubLink /> */}
       <TextMarquee />
       <NPhaseScroller
         phases={[
@@ -17,18 +17,18 @@ function App() {
             id: "one",
             content: ({ scrollNext }) => <PhaseOne scrollNext={scrollNext} />,
           },
-          {
-            id: "two",
-            content: () => <PhaseTwo />,
-          },
-          {
-            id: "three",
-            content: () => <PhaseThree />,
-          },
-          {
-            id: "four",
-            content: () => <PhaseFour />
-          },
+          // {
+          //   id: "two",
+          //   content: () => <PhaseTwo />,
+          // },
+          // {
+          //   id: "three",
+          //   content: () => <PhaseThree />,
+          // },
+          // {
+          //   id: "four",
+          //   content: () => <PhaseFour />
+          // },
         ]}
       />
     </div>
