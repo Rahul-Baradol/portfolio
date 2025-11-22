@@ -1,32 +1,26 @@
-import { NPhaseScroller } from "./components/n-phase-scroller";
-import PhaseOne from "./components/phase-one";
+import { useEffect } from "react";
+import Lenis from "lenis";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Home } from "./pages/home";
 
 function App() {
+  useEffect(() => {
+    const lenis = new Lenis({ lerp: 0.1 });
+
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+  }, []);
+
   return (
-    <div className="relative w-screen h-screen bg-black text-white">
-      {/* <GithubLink /> */}
-      {/* <TextMarquee /> */}
-      <NPhaseScroller
-        phases={[
-          {
-            id: "one",
-            content: () => <PhaseOne />,
-          },
-          // {
-          //   id: "two",
-          //   content: () => <PhaseTwo />,
-          // },
-          // {
-          //   id: "three",
-          //   content: () => <PhaseThree />,
-          // },
-          // {
-          //   id: "four",
-          //   content: () => <PhaseFour />
-          // },
-        ]}
-      />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
