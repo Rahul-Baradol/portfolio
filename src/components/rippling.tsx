@@ -88,5 +88,5 @@ export default function RippleCanvas() {
         };
     }, []);
 
-    return <canvas ref={canvasRef} className="w-screen h-screen absolute top-0 left-0" />;
+    return <canvas ref={canvasRef} className="fixed w-screen h-screen top-0 left-0" />;
 }
