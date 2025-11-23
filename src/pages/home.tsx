@@ -123,6 +123,13 @@ export function Home() {
                         websiteUrl: "https://flowpuzzlesolver.vercel.app/",
                         story: "Have you played flow-free mobile before? They offer a set of interesting puzzles to solve... But for me? It felt tedious... So I built a solver for me :)",
                         githubUrl: "https://github.com/Rahul-Baradol/Flow-Puzzle-Solver-React",
+                    },
+                    {
+                        title: "Resonance",
+                        videoDemoUrl: "/resonance.mov",
+                        websiteUrl: "https://resonating.vercel.app/",
+                        story: "What if I lose all my spotify songs? Need a backup system for it, which periodically saves my songs and playlists.",
+                        githubUrl: "https://github.com/Rahul-Baradol/resonance"
                     }
                 ]}
             />
