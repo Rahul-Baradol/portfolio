@@ -76,7 +76,7 @@ export default function ProjectCard({ title, videoDemoUrl, story, websiteUrl, gi
                     <div className="text-sm w-full">
                         {story}
                     </div>
-                    <div className="relative w-full h-[300px] overflow-hidden group">
+                    <a href={websiteUrl} target="_blank" className="relative w-full h-[300px] overflow-hidden group">
                         <div className="absolute top-0 left-0 w-full h-full z-10 bg-cyan-500/10 transition-all duration-500 group-hover:bg-cyan-500/20 backdrop-blur-sm group-hover:backdrop-blur-none"></div>
                         <video
                             className="absolute bottom-0 right-0 w-full h-full object-cover scale-[1.5] sm:scale-[1.1] -rotate-10 transition-transform duration-700 ease-in-out group-hover:scale-120 group-hover:rotate-0"
@@ -87,7 +87,7 @@ export default function ProjectCard({ title, videoDemoUrl, story, websiteUrl, gi
                             <source src={videoDemoUrl} type="video/mp4" />
                             Your browser does not support the video tag.
                         </video>
-                    </div>
+                    </a>
 
                 </div>
             </div>
