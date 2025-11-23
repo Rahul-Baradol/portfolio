@@ -1,4 +1,5 @@
 import { SnipSnapContainer } from "@/components/snip-snap";
+import { SpotifyCard } from "@/components/spotify-card";
 import { motion } from "motion/react";
 
 export function Home() {
@@ -24,6 +25,8 @@ export function Home() {
                 "crafting fast, reliable, and scalable web apps"
                 {/* </blockquote> */}
             </motion.div>
+
+            <SpotifyCard />
 
             <SnipSnapContainer 
                 snaps={[

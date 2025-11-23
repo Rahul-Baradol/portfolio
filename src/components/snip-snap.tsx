@@ -18,14 +18,14 @@ export default function SnipSnapCard({ title, description, href }: SnipSnapCardP
                 show: { opacity: 1, y: 0 },
             }}
             transition={{ duration: 0.5 }}
-            className="group overflow-hidden cursor-pointer p-3 border border-white/10 rounded-xl bg-black"
+            className="group overflow-hidden cursor-pointer p-3 border border-white/10 rounded-xl bg-black hover:bg-cyan-600/10 hover:border-cyan-500/5"
         >
             <Link to={href} className="relative">
-                <div className="absolute group-hover:-translate-y-[150px] transition-all duration-500">
+                <div className="text-sm italic absolute group-hover:-translate-y-[150px] transition-all duration-500">
                     {title.length > 50 ? `${title.slice(0, 50)}...` : title}
                 </div>
 
-                <div className="relative translate-y-[150px] group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
+                <div className="text-sm relative translate-y-[150px] group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
                     {description.length > 125 ? `${description.slice(0, 125)}...` : description}
                 </div>
             </Link>
@@ -53,7 +53,7 @@ export function SnipSnapContainer({ snaps }: SnipSnapContainerProps) {
             }}
             initial="hidden"
             animate="show"
-            className="pt-1 pl-1 pr-0 pb-0 text-gray-400 w-[90vw] lg:w-[50vw] h-fit border border-white/10 rounded-xl relative bg-white/10"
+            className="pt-1 pl-1 pr-0 pb-0 text-gray-400 w-[90vw] lg:w-[50vw] h-fit border border-white/10 rounded-xl relative bg-cyan-500/10"
         >
             <div className="pt-3 pl-3 pr-4 pb-4 relative z-10 bg-black rounded-xl h-full flex flex-col gap-5">
                 <div className="flex flex-row items-center italic">
