@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowDownUp, Github, Globe, Linkedin } from "lucide-react";
+import { ArrowDownUp, Github, Globe, Linkedin } from "lucide-react";
 import { motion } from "motion/react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import * as AccordionPrimitive from "@radix-ui/react-accordion"
@@ -35,7 +35,7 @@ export default function ExperienceCard({ companyName, companyLogo, websiteUrl, g
                 <AccordionPrimitive.Header className="flex">
                     <AccordionPrimitive.Trigger
                         data-slot="accordion-trigger"
-                        className="focus-visible:border-ring focus-visible:ring-ring/50 flex-1 gap-4 p-4 text-left text-sm font-medium transition-all outline-none hover:underline focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&[data-state=open]>svg]:rotate-180 group w-full cursor-pointer border border-white/10 rounded-xl bg-black hover:bg-cyan-600/10 hover:border-cyan-500/5"
+                        className="focus-visible:border-ring focus-visible:ring-ring/50 flex-1 gap-4 p-4 text-left text-sm font-medium transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&[data-state=open]>svg]:rotate-180 group w-full cursor-pointer border border-white/10 rounded-xl bg-black hover:bg-cyan-600/10 hover:border-cyan-500/5"
                     >
                         <div className="flex flex-col items-center w-full">
                             <motion.div
