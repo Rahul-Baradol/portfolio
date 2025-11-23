@@ -1,8 +1,6 @@
-import { TechCard } from "@/components/tech-card";
 import { SnipSnapContainer } from "@/components/snip-snap";
 import { SpotifyCard } from "@/components/spotify-card";
 import { motion } from "motion/react";
-import { Badge } from "@/components/ui/badge";
 import { TechBadge } from "@/components/tech-badges";
 
 export function Home() {
@@ -24,20 +22,16 @@ export function Home() {
                 transition={{ delay: 0.6, duration: 0.7 }}
                 className=" w-[90vw] lg:w-[50vw] text-lg md:text-xl text-muted-foreground flex flex-col gap-1 items-center"
             >
-                <blockquote className="text-sm md:text-base italic text-gray-400 flex flex-row flex-wrap items-center sm:justify-center gap-2">
-                    <div>
-                        "crafting fast, reliable, and scalable web apps - using
-                    </div>
+                <blockquote className="text-sm md:text-base italic text-gray-400 flex flex-row flex-wrap items-center justify-center gap-2">
+                    <div className="text-xs sm:text-sm">" crafting fast, reliable, and scalable web apps - using</div>
 
-                    <TechBadge redirect_url="https://www.typescriptlang.org/" image_url="/ts.png" tech="Typescript" />  
-                    <TechBadge redirect_url="https://reactjs.org/" image_url="/react.png" tech="React" />  
-                    <TechBadge redirect_url="https://nextjs.org/" image_url="/nextjs.jpeg" tech="Next.js" />  
-                    <TechBadge redirect_url="https://fastapi.tiangolo.com/" image_url="/fastapi.png" tech="FastAPI" />  
+                    <TechBadge redirect_url="https://www.typescriptlang.org/" image_url="/ts.png" tech="Typescript" />
+                    <TechBadge redirect_url="https://reactjs.org/" image_url="/react.png" tech="React" />
+                    <TechBadge redirect_url="https://nextjs.org/" image_url="/nextjs.jpeg" tech="Next.js" />
+                    <TechBadge redirect_url="https://fastapi.tiangolo.com/" image_url="/fastapi.png" tech="FastAPI" />
                     <TechBadge redirect_url="https://golang.org/" image_url="/go.png" tech="Go" size={16} /> <div>and</div>
-                    <TechBadge redirect_url="https://nodejs.org/" image_url="/node.png" tech="Node.js" size={20} /> 
-                    <div>
-                        "
-                    </div>
+                    <TechBadge redirect_url="https://nodejs.org/" image_url="/node.png" tech="Node.js" size={20} />
+                    <div className="text-xs sm:text-sm">"</div>
                 </blockquote>
             </motion.div>
 
