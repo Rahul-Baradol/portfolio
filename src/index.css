@@ -118,3 +118,15 @@
     @apply bg-background text-foreground;
   }
 }
+
+.perspective-500 {
+  perspective: 1000px;
+}
+
+.rotate-x-12 {
+  transform: rotateX(20deg);
+}
+
+.rotate-y-6 {
+  transform: rotateY(6deg);
+}

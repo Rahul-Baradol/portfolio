@@ -2,7 +2,8 @@ import { SnipSnapContainer } from "@/components/snip-snap";
 import { SpotifyCard } from "@/components/spotify-card";
 import { motion } from "motion/react";
 import { TechBadge } from "@/components/tech-badges";
-import { ExperienceContainer } from "@/components/experience-card";
+import { ExperienceContainer } from "@/components/experience";
+import { ProjectsContainer } from "@/components/projects";
 
 export function Home() {
     return (
@@ -58,7 +59,7 @@ export function Home() {
                             "Improved UX by reducing page load from 8-10s to under 1s",
                             "Built a high-traffic campaigning site for a leading Indian movie-production house, handling peaks of 8,300 users/min for a blockbuster movie launch",
                         ],
-                        role: "Full stack",
+                        role: "full stack / intern",
                         active: true,
                         expanded: true
                     },
@@ -80,7 +81,7 @@ export function Home() {
                             "Restored a key bank data pipeline, ensuring 99.9% of users were served reliably.",
                             "Fixed a critical bug in a bank's data extraction funnel, restoring 300K workflows."
                         ],
-                        role: "Backend Developer Intern",
+                        role: "backend developer / intern",
                         active: false
                     },
                     {
@@ -101,8 +102,28 @@ export function Home() {
                             "Led the development of user-facing web application, ensuring responsive and accessible UI",
                             "Developed a FastAPI backend that supports structured queries and delivers real-time responses."
                         ],
-                        role: "Full stack",
+                        role: "full stack / intern",
                         active: false
+                    }
+                ]}
+            />
+
+            <ProjectsContainer 
+                projects={[
+                    {
+                        title: "Timesignature",
+                        videoDemoUrl: "/signature.mp4",
+                        story: "A realtime music visualiser that reacts to beat signatures and tempo.",
+                        websiteUrl: "https://timesignature.in",
+                        githubUrl: "https://github.com/Rahul-Baradol/signature",
+                        linkedinUrl: "https://www.linkedin.com/posts/rahul-baradol_so-i-listen-to-songs-a-lot-and-thought-activity-7376004232765722624-hx_M?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEX65n8BwCmiX146yfLfYwDy_g61M6mYJ8I"
+                    },
+                    {
+                        title: "Flow Puzzle Solver",
+                        videoDemoUrl: "/flow-puzzle-solver.mov",
+                        websiteUrl: "https://flowpuzzlesolver.vercel.app/",
+                        story: "Have you played flow-free mobile before? They offer a set of interesting puzzles to solve... But for me? It felt tedious... So I built a solver for me :)",
+                        githubUrl: "https://github.com/Rahul-Baradol/Flow-Puzzle-Solver-React",
                     }
                 ]}
             />
