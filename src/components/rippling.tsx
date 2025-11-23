@@ -44,7 +44,7 @@ export default function RippleCanvas() {
                 Math.random() * canvas.width,
                 Math.random() * canvas.height
             );
-        }, 600);
+        }, 750);
 
         // Mouse-triggered ripples
         let rippleId = 0;
