@@ -179,7 +179,7 @@ export function ExperienceContainer({ snaps }: ExperienceContainerProps) {
             }}
             initial="hidden"
             animate="show"
-            className="pb-0 text-gray-400 w-[90vw] lg:w-[50vw] h-full rounded-xl relative flex flex-col gap-5 bg-black"
+            className="p-0 text-gray-400 w-[90vw] lg:w-[50vw] h-full rounded-xl relative flex flex-col gap-5 bg-black/30"
         >
             <div className="flex flex-row items-center italic">
                 Experience

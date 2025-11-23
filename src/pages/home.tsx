@@ -14,7 +14,7 @@ export function Home() {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.7, ease: "easeOut" }}
-                    className="text-3xl md:text-4xl font-bold"
+                    className="text-3xl md:text-4xl font-bold select-none"
                 >
                     Rahul Baradol
                 </motion.div>
@@ -26,7 +26,7 @@ export function Home() {
                     transition={{ delay: 0.6, duration: 0.7 }}
                     className=" w-[90vw] lg:w-[50vw] text-lg md:text-xl text-muted-foreground flex flex-col gap-1 items-center"
                 >
-                    <blockquote className="text-sm md:text-base italic text-gray-400 flex flex-row flex-wrap items-center justify-center gap-2">
+                    <blockquote className="bg-black/30 text-sm md:text-base italic text-gray-400 flex flex-row flex-wrap items-center justify-center gap-2 p-2 rounded-xl">
                         <div className="text-xs sm:text-sm">building fast, reliable, and scalable web apps — using</div>
 
                         <TechBadge redirect_url="https://www.typescriptlang.org/" image_url="/ts.png" tech="Typescript" />

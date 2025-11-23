@@ -23,10 +23,10 @@ export default function ProjectCard({ title, videoDemoUrl, story, websiteUrl, gi
                 show: { opacity: 1, y: 0 },
             }}
             transition={{ duration: 0.5 }}
-            className="pt-1 pl-1 pr-0 pb-0 group text-gray-400 w-[90vw] lg:w-[50vw] h-fit border border-white/10 rounded-xl relative bg-cyan-500/10 hover:bg-cyan-500/15 transition-all duration-500"
+            className="pt-1 pl-1 pr-0 pb-0 group text-gray-400 w-[90vw] lg:w-[50vw] h-fit border-l-4 border-t-4 border-r-[1.5px] border-b-[1.5px] border-cyan-500/20 hover:border-cyan-600/10 rounded-xl relative bg-black-500/10 transition-all duration-500"
         >
-            <div className="w-full pt-4 pl-4 pr-4 pb-4 relative z-10 bg-black rounded-xl h-full flex flex-col gap-5">
-                <div className="w-full flex flex-row items-center justify-between">
+            <div className="w-full pt-4 pl-4 pr-4 pb-4 relative z-10 bg-black/20 rounded-xl h-full flex flex-col gap-5">
+                <div className="w-full flex flex-row items-center justify-between rounded-xl">
                     <span className="text-md">{title}</span>
 
                     <div className="flex flex-row items-center gap-2">
@@ -111,7 +111,7 @@ export function ProjectsContainer({ projects }: ProjectContainerProps) {
             }}
             initial="hidden"
             animate="show"
-            className="text-gray-400 w-[90vw] lg:w-[50vw] h-full rounded-xl relative flex flex-col gap-5 bg-black"
+            className="p-0 text-gray-400 w-[90vw] lg:w-[50vw] h-full rounded-xl relative flex flex-col gap-5 bg-black/30"
         >
             <div className="flex flex-row items-center italic">
                 Built for fun
