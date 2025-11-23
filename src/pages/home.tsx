@@ -1,4 +1,3 @@
-import { SnipSnapContainer } from "@/components/snip-snap";
 import { SpotifyCard } from "@/components/spotify-card";
 import { motion } from "motion/react";
 import { TechBadge } from "@/components/tech-badges";
@@ -128,7 +127,7 @@ export function Home() {
                 ]}
             />
 
-            <SnipSnapContainer
+            {/* <SnipSnapContainer
                 snaps={[
                     {
                         title: "Building a High-Performance E-Commerce Platform: A Deep Dive into Scalability and Speed",
@@ -146,7 +145,7 @@ export function Home() {
                         href: "/snips/progressive-web-apps"
                     }
                 ]}
-            />
+            /> */}
         </div>
     )
 }
