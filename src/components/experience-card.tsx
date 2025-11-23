@@ -1,4 +1,4 @@
-import { ArrowDown, Github, Globe, Linkedin } from "lucide-react";
+import { ArrowDown, ArrowDownUp, Github, Globe, Linkedin } from "lucide-react";
 import { motion } from "motion/react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import * as AccordionPrimitive from "@radix-ui/react-accordion"
@@ -20,14 +20,16 @@ interface ExperienceCardProps {
     bulletPoints?: string[];
     timeline: string;
     active?: boolean;
+    expanded?: boolean;
 }
 
-export default function ExperienceCard({ companyName, companyLogo, websiteUrl, githubUrl, role, linkedinUrl, timeline, active, techBadges, bulletPoints }: ExperienceCardProps) {
+export default function ExperienceCard({ companyName, companyLogo, websiteUrl, githubUrl, role, linkedinUrl, timeline, active, techBadges, bulletPoints, expanded }: ExperienceCardProps) {
     return (
         <AccordionPrimitive.Root
             data-slot="accordion"
             type="single"
             collapsible
+            defaultValue={(expanded === true) ? "item-1" : undefined}
         >
             <AccordionPrimitive.Item data-slot="accordion-item" value="item-1" className="flex flex-col gap-2">
                 <AccordionPrimitive.Header className="flex">
@@ -98,7 +100,16 @@ export default function ExperienceCard({ companyName, companyLogo, websiteUrl, g
                                                     ) : <></>
                                                 }
 
-                                                {(active === true) ? <span className="w-2 h-2 bg-green-600/80 rounded-xl"></span> : <></>}
+                                                {
+                                                    (active === true) ? <Tooltip>
+                                                        <TooltipTrigger asChild>
+                                                            <span className="w-2 h-2 bg-green-600/80 rounded-xl"></span>
+                                                        </TooltipTrigger>
+                                                        <TooltipContent className="bg-black text-gray-400 border-t border-l border-green-600/80">
+                                                            Working
+                                                        </TooltipContent>
+                                                    </Tooltip> : <></>
+                                                }
                                             </div>
                                         </div>
 
@@ -109,7 +120,7 @@ export default function ExperienceCard({ companyName, companyLogo, websiteUrl, g
                                 </div>
 
                                 <div className="text-xs italic text-gray-400 flex flex-row items-center gap-1 sm:gap-2">
-                                    <div>{timeline}</div> <ArrowDown className="w-4 sm:w-3" />
+                                    <div>{timeline}</div> <ArrowDownUp className="w-4 sm:w-3" />
                                 </div>
                             </motion.div>
                         </div>
@@ -136,7 +147,7 @@ export default function ExperienceCard({ companyName, companyLogo, websiteUrl, g
                             bulletPoints && bulletPoints.length > 0 ? (
                                 <ul className="list-disc list-inside mt-2 space-y-1 text-gray-300">
                                     {bulletPoints.map((point, index) => (
-                                        <li key={index}>{point}</li>
+                                        <li className="text-sm" key={index}>{point}</li>
                                     ))}
                                 </ul>
                             ) : null
@@ -189,6 +200,7 @@ export function ExperienceContainer({ snaps }: ExperienceContainerProps) {
                             role={snap.role}
                             timeline={snap.timeline}
                             active={snap.active}
+                            expanded={snap.expanded}
                         />
                     ))
                 }

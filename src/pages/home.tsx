@@ -24,7 +24,7 @@ export function Home() {
                 className=" w-[90vw] lg:w-[50vw] text-lg md:text-xl text-muted-foreground flex flex-col gap-1 items-center"
             >
                 <blockquote className="text-sm md:text-base italic text-gray-400 flex flex-row flex-wrap items-center justify-center gap-2">
-                    <div className="text-xs sm:text-sm">crafting fast, reliable, and scalable web apps — using</div>
+                    <div className="text-xs sm:text-sm">building fast, reliable, and scalable web apps — using</div>
 
                     <TechBadge redirect_url="https://www.typescriptlang.org/" image_url="/ts.png" tech="Typescript" />
                     <TechBadge redirect_url="https://reactjs.org/" image_url="/react.png" tech="React" />
@@ -38,7 +38,7 @@ export function Home() {
 
             <SpotifyCard />
 
-            <ExperienceContainer 
+            <ExperienceContainer
                 snaps={[
                     {
                         companyName: "Alaiy",
@@ -49,15 +49,17 @@ export function Home() {
                         techBadges: [
                             { redirect_url: "https://www.typescriptlang.org/", image_url: "/ts.png", tech: "Typescript" },
                             { redirect_url: "https://reactjs.org/", image_url: "/react.png", tech: "React" },
+                            { redirect_url: "https://www.python.org/", image_url: "/python.png", tech: "Python" },
                             { redirect_url: "https://fastapi.tiangolo.com/", image_url: "/fastapi.png", tech: "FastAPI" }
                         ],
                         bulletPoints: [
-                            "Developed and maintained scalable web applications using TypeScript, React, and FastAPI, enhancing user experience and performance.",
-                            "Collaborated with cross-functional teams to design and implement new features, resulting in a 20% increase in user engagement.",
-                            "Optimized backend services for improved response times, reducing latency by 30% through efficient database queries and caching strategies."
+                            "Enhanced accessibility and reduced client bandwidth usage by 95%.",
+                            "Improved UX by reducing page load from 8-10s to under 1s",
+                            "Built a high-traffic campaigning site for a leading Indian movie-production house, handling peaks of 8,300 users/min for a blockbuster movie launch",
                         ],
                         role: "Full stack",
-                        active: true
+                        active: true,
+                        expanded: true
                     },
                     {
                         companyName: "CRED",
@@ -73,9 +75,9 @@ export function Home() {
                             { redirect_url: "https://www.mysql.com/", image_url: "/mysql.png", tech: "MySQL" },
                         ],
                         bulletPoints: [
-                            "Improved performance by identifying and eliminating redundant database writes, reducing write IOPS by 87% (from 1600 to 200 ops/sec) and lowering CPU utilization from 70% to 20%.",
-                            "Revived a critical data ingestion pipeline for a major bank, achieving 99.9% user coverage",
-                            "Diagnosed a bug and restored a bank's data extraction funnel, fixing 300K workflows."
+                            "Optimized database performance, reducing system load by eliminating redundant writes and cutting CPU usage from 70% to 20%",
+                            "Restored a key bank data pipeline, ensuring 99.9% of users were served reliably.",
+                            "Fixed a critical bug in a bank's data extraction funnel, restoring 300K workflows."
                         ],
                         role: "Backend Developer Intern",
                         active: false
@@ -89,12 +91,14 @@ export function Home() {
                         techBadges: [
                             { redirect_url: "https://www.typescriptlang.org/", image_url: "/ts.png", tech: "Typescript" },
                             { redirect_url: "https://reactjs.org/", image_url: "/react.png", tech: "React" },
+                            { redirect_url: "https://nextjs.org/", image_url: "/nextjs.jpeg", tech: "Next.js" },
+                            { redirect_url: "https://www.python.org/", image_url: "/python.png", tech: "Python" },
                             { redirect_url: "https://fastapi.tiangolo.com/", image_url: "/fastapi.png", tech: "FastAPI" }
                         ],
                         bulletPoints: [
                             "Owned end-to-end development of the chat platform, designed to handle medical science queries",
-                            "Led the development of user-facing web application using Nextjs, Tailwind CSS and ShadCN, ensuring responsive and accessible UI",
-                            "Built the FastAPI-based backend, enabling structured query handling and real-time responses."
+                            "Led the development of user-facing web application, ensuring responsive and accessible UI",
+                            "Developed a FastAPI backend that supports structured queries and delivers real-time responses."
                         ],
                         role: "Full stack",
                         active: false
