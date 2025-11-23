@@ -73,3 +73,13 @@ export const marqueeTexts = [
     "Performance",
     "DX"
 ];
+
+export const FALLBACK_SONG = {
+    "songName": "Ninna Kanda",
+    "artists": [
+        "Joshua Sridhar",
+        "Kunal Ganjawala",
+        "Ram Narayan"
+    ],
+    "imageUrl": "https://i.scdn.co/image/ab67616d0000b2732c6f3af3a14baab913988592"
+};

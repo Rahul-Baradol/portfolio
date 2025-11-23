@@ -179,32 +179,30 @@ export function ExperienceContainer({ snaps }: ExperienceContainerProps) {
             }}
             initial="hidden"
             animate="show"
-            className="pt-1 pb-0 text-gray-400 w-[90vw] lg:w-[50vw] h-fit rounded-xl relative"
+            className="pb-0 text-gray-400 w-[90vw] lg:w-[50vw] h-full rounded-xl relative flex flex-col gap-5 bg-black"
         >
-            <div className="pt-3  pb-4 relative z-10 bg-black rounded-xl h-full flex flex-col gap-5">
-                <div className="flex flex-row items-center italic">
-                    Experience
-                </div>
-
-                {
-                    snaps.map((snap: ExperienceCardProps, index: number) => (
-                        <ExperienceCard
-                            key={index}
-                            companyName={snap.companyName}
-                            companyLogo={snap.companyLogo}
-                            websiteUrl={snap.websiteUrl}
-                            githubUrl={snap.githubUrl}
-                            linkedinUrl={snap.linkedinUrl}
-                            techBadges={snap.techBadges}
-                            bulletPoints={snap.bulletPoints}
-                            role={snap.role}
-                            timeline={snap.timeline}
-                            active={snap.active}
-                            expanded={snap.expanded}
-                        />
-                    ))
-                }
+            <div className="flex flex-row items-center italic">
+                Experience
             </div>
+
+            {
+                snaps.map((snap: ExperienceCardProps, index: number) => (
+                    <ExperienceCard
+                        key={index}
+                        companyName={snap.companyName}
+                        companyLogo={snap.companyLogo}
+                        websiteUrl={snap.websiteUrl}
+                        githubUrl={snap.githubUrl}
+                        linkedinUrl={snap.linkedinUrl}
+                        techBadges={snap.techBadges}
+                        bulletPoints={snap.bulletPoints}
+                        role={snap.role}
+                        timeline={snap.timeline}
+                        active={snap.active}
+                        expanded={snap.expanded}
+                    />
+                ))
+            }
         </motion.div>
     );
 }

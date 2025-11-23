@@ -6,35 +6,36 @@ import { ExperienceContainer } from "@/components/experience-card";
 
 export function Home() {
     return (
-        <div className="p-10 relative w-screen min-h-screen flex flex-col gap-5 items-center bg-black text-white">
-            <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, ease: "easeOut" }}
-                className="text-3xl md:text-4xl font-bold"
-            >
-                Rahul Baradol
-            </motion.div>
+        <div className="p-10 relative w-screen min-h-screen flex flex-col gap-10 items-center bg-black text-white">
+            <div className="w-screen flex flex-col items-center gap-4">
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.7, ease: "easeOut" }}
+                    className="text-3xl md:text-4xl font-bold"
+                >
+                    Rahul Baradol
+                </motion.div>
 
-            {/* Tagline */}
-            <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.7 }}
-                className=" w-[90vw] lg:w-[50vw] text-lg md:text-xl text-muted-foreground flex flex-col gap-1 items-center"
-            >
-                <blockquote className="text-sm md:text-base italic text-gray-400 flex flex-row flex-wrap items-center justify-center gap-2">
-                    <div className="text-xs sm:text-sm">building fast, reliable, and scalable web apps — using</div>
+                {/* Tagline */}
+                <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6, duration: 0.7 }}
+                    className=" w-[90vw] lg:w-[50vw] text-lg md:text-xl text-muted-foreground flex flex-col gap-1 items-center"
+                >
+                    <blockquote className="text-sm md:text-base italic text-gray-400 flex flex-row flex-wrap items-center justify-center gap-2">
+                        <div className="text-xs sm:text-sm">building fast, reliable, and scalable web apps — using</div>
 
-                    <TechBadge redirect_url="https://www.typescriptlang.org/" image_url="/ts.png" tech="Typescript" />
-                    <TechBadge redirect_url="https://reactjs.org/" image_url="/react.png" tech="React" />
-                    <TechBadge redirect_url="https://nextjs.org/" image_url="/nextjs.jpeg" tech="Next.js" />
-                    <TechBadge redirect_url="https://fastapi.tiangolo.com/" image_url="/fastapi.png" tech="FastAPI" />
-                    <TechBadge redirect_url="https://golang.org/" image_url="/go.png" tech="Go" size={16} /> <div>and</div>
-                    <TechBadge redirect_url="https://nodejs.org/" image_url="/node.png" tech="Node.js" size={20} />
-                    {/* <div className="text-xs sm:text-sm">"</div> */}
-                </blockquote>
-            </motion.div>
+                        <TechBadge redirect_url="https://www.typescriptlang.org/" image_url="/ts.png" tech="Typescript" />
+                        <TechBadge redirect_url="https://reactjs.org/" image_url="/react.png" tech="React" />
+                        <TechBadge redirect_url="https://nextjs.org/" image_url="/nextjs.jpeg" tech="Next.js" />
+                        <TechBadge redirect_url="https://fastapi.tiangolo.com/" image_url="/fastapi.png" tech="FastAPI" />
+                        <TechBadge redirect_url="https://golang.org/" image_url="/go.png" tech="Go" size={16} /> <div>and</div>
+                        <TechBadge redirect_url="https://nodejs.org/" image_url="/node.png" tech="Node.js" size={20} />
+                    </blockquote>
+                </motion.div>
+            </div>
 
             <SpotifyCard />
 
