@@ -47,11 +47,16 @@ export default function RippleCanvas() {
         }, 600);
 
         // Mouse-triggered ripples
+        let rippleId = 0;
+
         function handleMouse(e: MouseEvent) {
-            const rect = canvas.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            addRipple(x, y);
+            rippleId = (rippleId + 1) % 100;
+            if (rippleId % 20 == 0) {
+                const rect = canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                addRipple(x, y);
+            }
         }
 
         canvas.addEventListener("mousemove", handleMouse);
