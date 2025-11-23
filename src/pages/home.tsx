@@ -3,11 +3,13 @@ import { motion } from "motion/react";
 import { TechBadge } from "@/components/tech-badges";
 import { ExperienceContainer } from "@/components/experience";
 import { ProjectsContainer } from "@/components/projects";
+import RippleCanvas from "@/components/rippling";
 
 export function Home() {
     return (
         <div className="p-10 relative w-screen min-h-screen flex flex-col gap-10 items-center bg-black text-white">
-            <div className="w-screen flex flex-col items-center gap-4">
+            <RippleCanvas />
+            <div className="z-10 w-screen flex flex-col items-center gap-4">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -107,7 +109,7 @@ export function Home() {
                 ]}
             />
 
-            <ProjectsContainer 
+            <ProjectsContainer
                 projects={[
                     {
                         title: "Timesignature",

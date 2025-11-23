@@ -45,7 +45,7 @@ export function SpotifyCard() {
             }}
             initial="hidden"
             animate="show"
-            className="p-4 flex flex-col gap-3 items-start text-gray-400 w-[90vw] lg:w-[50vw] h-fit border border-white/10 rounded-xl relative bg-cyan-500/10"
+            className="z-10 p-4 flex flex-col gap-3 items-start text-gray-400 w-[90vw] lg:w-[50vw] h-fit border border-white/10 rounded-xl relative bg-cyan-500/10"
         >
             <div className="text-sm flex flex-row items-center gap-2">
                 Recently played on <img src="/spotify-no-bg.png" width={20} />
