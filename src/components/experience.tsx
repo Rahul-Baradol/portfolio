@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowDownUp, Github, Globe, Linkedin } from "lucide-react";
+import { ArrowDown, Github, Globe, Linkedin } from "lucide-react";
 import { motion } from "motion/react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import * as AccordionPrimitive from "@radix-ui/react-accordion"
