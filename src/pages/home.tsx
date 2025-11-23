@@ -9,6 +9,20 @@ export function Home() {
     return (
         <div className="p-10 relative w-screen min-h-screen flex flex-col gap-10 items-center bg-black text-white">
             <RippleCanvas />
+            {/* <SocialContainer socials={[
+                {
+                    image_url: "/linkedin.png",
+                    website_url: "https://www.linkedin.com/in/rahul-baradol/"
+                },
+                {
+                    image_url: "/linkedin.png",
+                    website_url: "https://www.linkedin.com/in/rahul-baradol/"
+                },
+                {
+                    image_url: "/linkedin.png",
+                    website_url: "https://www.linkedin.com/in/rahul-baradol/"
+                }
+            ]} /> */}
             <div className="z-10 w-screen flex flex-col items-center gap-4">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -33,7 +47,7 @@ export function Home() {
                         <TechBadge redirect_url="https://reactjs.org/" image_url="/react.png" tech="React" />
                         <TechBadge redirect_url="https://nextjs.org/" image_url="/nextjs.jpeg" tech="Next.js" />
                         <TechBadge redirect_url="https://fastapi.tiangolo.com/" image_url="/fastapi.png" tech="FastAPI" />
-                        <TechBadge redirect_url="https://golang.org/" image_url="/go.png" tech="Go" size={16} /> <div>and</div>
+                        <TechBadge redirect_url="https://motion.dev/" image_url="/framer.avif" tech="Framer motion" size={16} /> <div>and</div>
                         <TechBadge redirect_url="https://nodejs.org/" image_url="/node.png" tech="Node.js" size={20} />
                     </blockquote>
                 </motion.div>
