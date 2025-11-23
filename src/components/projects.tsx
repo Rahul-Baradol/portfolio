@@ -111,7 +111,7 @@ export function ProjectsContainer({ projects }: ProjectContainerProps) {
             }}
             initial="hidden"
             animate="show"
-            className="p-0 text-gray-400 w-[90vw] lg:w-[50vw] h-full rounded-xl relative flex flex-col gap-5 bg-black/30"
+            className="p-0 text-gray-400 w-[90vw] lg:w-[50vw] h-full rounded-xl relative flex flex-col gap-5 bg-transparent"
         >
             <div className="flex flex-row items-center italic">
                 Built for fun
