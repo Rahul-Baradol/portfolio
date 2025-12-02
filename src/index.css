@@ -140,3 +140,24 @@ html::-webkit-scrollbar,
 body::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Edge */
 }
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(0, 155, 155) transparent;
+}
+
+/* Chrome, Safari, Edge */
+*::-webkit-scrollbar {
+  width: 1px;
+  height: 1px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: cyan;
+  border-radius: 999px;
+}

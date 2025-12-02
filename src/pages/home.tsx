@@ -3,26 +3,16 @@ import { motion } from "motion/react";
 import { TechBadge } from "@/components/tech-badges";
 import { ExperienceContainer } from "@/components/experience";
 import { ProjectsContainer } from "@/components/projects";
-import RippleCanvas from "@/components/rippling";
+import { StoriesAndLabContainer } from "@/components/stories-and-lab";
+import { useEffect } from "react";
 
 export function Home() {
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [])
+
     return (
-        <div className="p-10 relative w-screen min-h-screen flex flex-col gap-10 items-center bg-black text-white">
-            <RippleCanvas />
-            {/* <SocialContainer socials={[
-                {
-                    image_url: "/linkedin.png",
-                    website_url: "https://www.linkedin.com/in/rahul-baradol/"
-                },
-                {
-                    image_url: "/linkedin.png",
-                    website_url: "https://www.linkedin.com/in/rahul-baradol/"
-                },
-                {
-                    image_url: "/linkedin.png",
-                    website_url: "https://www.linkedin.com/in/rahul-baradol/"
-                }
-            ]} /> */}
+        <>
             <div className="z-10 w-screen flex flex-col items-center gap-4">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -38,7 +28,7 @@ export function Home() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.6, duration: 0.7 }}
-                    className=" w-[90vw] lg:w-[50vw] text-lg md:text-xl text-muted-foreground flex flex-col gap-1 items-center"
+                    className="w-[90vw] lg:w-[50vw] text-lg md:text-xl text-muted-foreground flex flex-col gap-1 items-center"
                 >
                     <blockquote className="bg-black/30 text-sm md:text-base italic text-gray-400 flex flex-row flex-wrap items-center justify-center gap-2 p-2 rounded-xl">
                         <div className="text-xs sm:text-sm">building fast, reliable, and scalable web apps — using</div>
@@ -54,6 +44,14 @@ export function Home() {
             </div>
 
             <SpotifyCard />
+
+            <StoriesAndLabContainer
+                title="Scaling our web-app — managing data better"
+                description="A web app is only simple, until you break the abstraction"
+                date="1st December 2025"
+                tags={["Scalability"]}
+                mediumUrl="https://medium.com/@mail_99211/scaling-our-web-app-managing-data-better-1ad980b75a2a"
+            />
 
             <ExperienceContainer
                 snaps={[
@@ -76,7 +74,7 @@ export function Home() {
                         ],
                         role: "full stack / intern",
                         active: true,
-                        expanded: true
+                        expanded: true,
                     },
                     {
                         companyName: "CRED",
@@ -97,7 +95,7 @@ export function Home() {
                             "Fixed a critical bug in a bank's data extraction funnel, restoring 300K workflows."
                         ],
                         role: "backend developer / intern",
-                        active: false
+                        active: false,
                     },
                     {
                         companyName: "CognitiveLab",
@@ -149,26 +147,6 @@ export function Home() {
                     }
                 ]}
             />
-
-            {/* <SnipSnapContainer
-                snaps={[
-                    {
-                        title: "Building a High-Performance E-Commerce Platform: A Deep Dive into Scalability and Speed",
-                        description: "Explore the journey of developing a high-performance e-commerce platform, focusing on scalability, speed optimization, and enhancing user experience through cutting-edge web technologies.",
-                        href: "/snips/high-performance-ecommerce"
-                    },
-                    {
-                        title: "Implementing Real-Time Features in Web Applications",
-                        description: "Learn how to integrate real-time functionalities into your web applications using WebSockets and other modern technologies.",
-                        href: "/snips/real-time-features"
-                    },
-                    {
-                        title: "A Comprehensive Guide to Progressive Web Apps",
-                        description: "Discover the key principles of Progressive Web Apps (PWAs) and how to implement them in your projects.",
-                        href: "/snips/progressive-web-apps"
-                    }
-                ]}
-            /> */}
-        </div>
+        </>
     )
 }
