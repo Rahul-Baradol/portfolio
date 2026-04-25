@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { ExternalLink, GitPullRequest } from "lucide-react";
+import { useTheme } from "@/lib/theme";
 
 interface PR {
     id: number;
@@ -11,6 +12,8 @@ interface PR {
 }
 
 function PRCard({ pr }: { pr: PR }) {
+    const { theme } = useTheme();
+
     const repoName = pr.repo.split("/")[1];
     const date = new Date(pr.openedAt).toLocaleDateString("en-US", {
         month: "short",
@@ -18,8 +21,6 @@ function PRCard({ pr }: { pr: PR }) {
         year: "numeric",
     });
 
-    // Branch names like "feat/url-query-support-for-http-server-span"
-    // → strip prefix and humanise the slug
     const humanTitle = pr.branch
         .replace(/^(feat|fix|chore|refactor|docs|test|ci)\//i, "")
         .replace(/-/g, " ");
@@ -30,22 +31,25 @@ function PRCard({ pr }: { pr: PR }) {
             target="_blank"
             rel="noopener noreferrer"
             variants={{ hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0 } }}
-            whileHover={{ scale: 1.01, borderColor: "rgba(34,211,238,0.3)" }}
+            whileHover={{
+                scale: 1.01,
+                borderColor: theme === "dark" ? "rgba(34,211,238,0.3)" : "rgba(0,0,0,0.2)",
+            }}
             whileTap={{ scale: 0.98 }}
             transition={{ duration: 0.2 }}
-            className="z-10 flex flex-row justify-between items-start p-4 rounded-xl border border-white/10 bg-black/10 hover:bg-cyan-600/5 cursor-pointer group"
+            className="z-10 flex flex-row justify-between items-start p-4 rounded-xl border border-border bg-black/3 dark:bg-black/10 hover:bg-foreground/5 dark:hover:bg-cyan-600/5 cursor-pointer group"
         >
             <div className="flex flex-col gap-1.5 w-[85%]">
-                <div className="text-sm italic text-gray-200 group-hover:text-cyan-300 transition-colors line-clamp-2 capitalize">
+                <div className="text-sm italic text-foreground group-hover:text-foreground dark:group-hover:text-cyan-300 transition-colors line-clamp-2 capitalize">
                     {humanTitle}
                 </div>
-                <div className="text-xs text-gray-500">{repoName}</div>
-                <div className="text-[10px] text-gray-600 italic">{date}</div>
+                <div className="text-xs text-muted-foreground">{repoName}</div>
+                <div className="text-[10px] text-muted-foreground/70 italic">{date}</div>
             </div>
 
             <div className="flex flex-col items-end gap-2">
-                <ExternalLink className="h-4 w-4 text-gray-400 group-hover:text-cyan-300 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                <span className="text-[10px] px-2 py-0.5 rounded-md bg-green-600/10 text-green-300 border border-green-600/20">
+                <ExternalLink className="h-4 w-4 text-muted-foreground group-hover:text-foreground dark:group-hover:text-cyan-300 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                <span className="text-[10px] px-2 py-0.5 rounded-md border border-foreground/15 dark:border-green-600/20 dark:bg-green-600/10 text-foreground/60 dark:text-green-300">
                     open
                 </span>
             </div>
@@ -101,10 +105,10 @@ export function OpenPRsContainer() {
             }}
             initial="hidden"
             animate="show"
-            className="p-0 text-gray-400 w-[90vw] lg:w-[50vw] flex flex-col gap-5 bg-transparent"
+            className="p-0 text-muted-foreground w-[90vw] lg:w-[50vw] flex flex-col gap-5 bg-transparent"
         >
             <div className="flex flex-row items-center gap-2 italic">
-                <GitPullRequest className="h-4 w-4 text-gray-500" />
+                <GitPullRequest className="h-4 w-4 text-muted-foreground" />
                 Open Source & Contributions
             </div>
 

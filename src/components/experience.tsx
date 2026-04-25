@@ -35,7 +35,7 @@ export default function ExperienceCard({ companyName, companyLogo, websiteUrl, g
                 <AccordionPrimitive.Header className="flex">
                     <AccordionPrimitive.Trigger
                         data-slot="accordion-trigger"
-                        className="flex flex-row items-center gap-3 focus-visible:border-ring focus-visible:ring-ring/50 p-4 text-left text-sm font-medium transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&[data-state=open]>svg]:rotate-180 group w-full cursor-pointer border border-white/10 rounded-xl bg-black hover:bg-cyan-600/10 hover:border-cyan-500/5"
+                        className="flex flex-row items-center gap-3 focus-visible:border-ring focus-visible:ring-ring/50 p-4 text-left text-sm font-medium transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&[data-state=open]>svg]:rotate-180 group w-full cursor-pointer border border-border rounded-xl bg-background hover:bg-foreground/5 dark:hover:bg-cyan-600/10 hover:border-foreground/15 dark:hover:border-cyan-500/5"
                     >
                         <div className="flex flex-col items-center w-full">
                             <motion.div
@@ -60,12 +60,12 @@ export default function ExperienceCard({ companyName, companyLogo, websiteUrl, g
 
                                             <div className="flex flex-row gap-2 items-center">
                                                 <Tooltip>
-                                                    <TooltipTrigger asChild className="bg-black">
+                                                    <TooltipTrigger asChild className="bg-background">
                                                         <a href={websiteUrl} target="_blank" rel="noopener noreferrer">
-                                                            <Globe className="h-3 w-3 text-gray-400" />
+                                                            <Globe className="h-3 w-3 text-muted-foreground" />
                                                         </a>
                                                     </TooltipTrigger>
-                                                    <TooltipContent className="bg-black text-gray-400">
+                                                    <TooltipContent className="bg-background text-muted-foreground border-border">
                                                         Go to website
                                                     </TooltipContent>
                                                 </Tooltip>
@@ -73,12 +73,12 @@ export default function ExperienceCard({ companyName, companyLogo, websiteUrl, g
                                                 {
                                                     githubUrl ? (
                                                         <Tooltip>
-                                                            <TooltipTrigger asChild className="bg-black">
-                                                                <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="text-gray-400 bg-transparent text-xs">
+                                                            <TooltipTrigger asChild className="bg-background">
+                                                                <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="text-muted-foreground bg-transparent text-xs">
                                                                     Github
                                                                 </a>
                                                             </TooltipTrigger>
-                                                            <TooltipContent className="bg-black text-gray-400">
+                                                            <TooltipContent className="bg-background text-muted-foreground border-border">
                                                                 Go to GitHub
                                                             </TooltipContent>
                                                         </Tooltip>
@@ -88,12 +88,12 @@ export default function ExperienceCard({ companyName, companyLogo, websiteUrl, g
                                                 {
                                                     linkedinUrl ? (
                                                         <Tooltip>
-                                                            <TooltipTrigger asChild className="bg-black">
-                                                                <a href={linkedinUrl} target="_blank" rel="noopener noreferrer" className="text-gray-400 bg-transparent">
+                                                            <TooltipTrigger asChild className="bg-background">
+                                                                <a href={linkedinUrl} target="_blank" rel="noopener noreferrer" className="text-muted-foreground bg-transparent">
                                                                     in
                                                                 </a>
                                                             </TooltipTrigger>
-                                                            <TooltipContent className="bg-black text-gray-400">
+                                                            <TooltipContent className="bg-background text-muted-foreground border-border">
                                                                 Go to LinkedIn
                                                             </TooltipContent>
                                                         </Tooltip>
@@ -105,7 +105,7 @@ export default function ExperienceCard({ companyName, companyLogo, websiteUrl, g
                                                         <TooltipTrigger asChild>
                                                             <span className="w-2 h-2 bg-green-600/80 rounded-xl"></span>
                                                         </TooltipTrigger>
-                                                        <TooltipContent className="bg-black text-gray-400 border-t border-l border-green-600/80">
+                                                        <TooltipContent className="bg-background text-muted-foreground border-t border-l border-green-600/80">
                                                             Working
                                                         </TooltipContent>
                                                     </Tooltip> : <></>
@@ -119,19 +119,19 @@ export default function ExperienceCard({ companyName, companyLogo, websiteUrl, g
                                     </div>
                                 </div>
 
-                                <div className="text-xs italic text-gray-400 flex flex-row items-center gap-1 sm:gap-2">
+                                <div className="text-xs italic text-muted-foreground flex flex-row items-center gap-1 sm:gap-2">
                                     <div>{timeline}</div>
                                 </div>
                             </motion.div>
                         </div>
-                        <ArrowDown className="w-4 sm:w-3  transition-transform " />
+                        <ArrowDown className="w-4 sm:w-3 transition-transform" />
                     </AccordionPrimitive.Trigger>
                 </AccordionPrimitive.Header>
                 <AccordionPrimitive.Content
                     data-slot="accordion-content"
-                    className={`data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden text-sm `}
+                    className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden text-sm"
                 >
-                    <div className="p-4 border border-white/10 bg-black/5 rounded-xl flex flex-row items-center gap-1 flex-wrap">
+                    <div className="p-4 border border-border bg-black/2 dark:bg-black/5 rounded-xl flex flex-row items-center gap-1 flex-wrap">
                         {
                             techBadges.map((badge, index) => (
                                 <TechBadge
@@ -146,7 +146,7 @@ export default function ExperienceCard({ companyName, companyLogo, websiteUrl, g
 
                         {
                             bulletPoints && bulletPoints.length > 0 ? (
-                                <ul className="list-disc list-inside mt-2 space-y-1 text-gray-300">
+                                <ul className="list-disc list-inside mt-2 space-y-1 text-muted-foreground">
                                     {bulletPoints.map((point, index) => (
                                         <li className="text-sm" key={index}>{point}</li>
                                     ))}
@@ -180,10 +180,10 @@ export function ExperienceContainer({ snaps }: ExperienceContainerProps) {
             }}
             initial="hidden"
             animate="show"
-            className="p-0 text-gray-400 w-[90vw] lg:w-[50vw] h-full rounded-xl relative flex flex-col gap-5 bg-transparent"
+            className="p-0 text-muted-foreground w-[90vw] lg:w-[50vw] h-full rounded-xl relative flex flex-col gap-5 bg-transparent"
         >
             <div className="flex flex-row gap-2 items-center italic">
-                <Road className="h-4 w-4 text-gray-500" />
+                <Road className="h-4 w-4 text-muted-foreground" />
                 Experience
             </div>
 

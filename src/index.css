@@ -144,7 +144,11 @@ body::-webkit-scrollbar {
 /* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgb(0, 155, 155) transparent;
+  scrollbar-color: oklch(0.6 0.15 200) transparent;
+}
+
+.dark * {
+  scrollbar-color: cyan transparent;
 }
 
 /* Chrome, Safari, Edge */
@@ -158,6 +162,10 @@ body::-webkit-scrollbar {
 }
 
 *::-webkit-scrollbar-thumb {
-  background: cyan;
+  background: oklch(0.6 0.15 200);
   border-radius: 999px;
+}
+
+.dark *::-webkit-scrollbar-thumb {
+  background: cyan;
 }

@@ -31,7 +31,7 @@ export function Home() {
                     transition={{ delay: 0.6, duration: 0.7 }}
                     className="w-[90vw] lg:w-[50vw] text-lg md:text-xl text-muted-foreground flex flex-col gap-1 items-center"
                 >
-                    <blockquote className="bg-black/30 text-sm md:text-base italic text-gray-400 flex flex-row flex-wrap items-center justify-center gap-2 p-2 rounded-xl">
+                    <blockquote className="dark:bg-black/30 text-sm md:text-base italic text-foreground/65 dark:text-muted-foreground flex flex-row flex-wrap items-center justify-center gap-2 p-2 rounded-xl">
                         <div className="text-xs sm:text-sm">building fast, reliable, and scalable web apps — using</div>
 
                         <TechBadge redirect_url="https://www.typescriptlang.org/" image_url="/ts.png" tech="Typescript" />
@@ -81,7 +81,7 @@ export function Home() {
                     },
                     {
                         companyName: "CRED",
-                        companyLogo: "/cred.png",
+                        companyLogo: "/cred.jpg",
                         websiteUrl: "https://cred.club",
                         timeline: "July 2024 - June 2025",
                         linkedinUrl: "https://www.linkedin.com/company/credapp/",

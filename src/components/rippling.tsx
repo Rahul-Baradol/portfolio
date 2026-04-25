@@ -1,9 +1,16 @@
 import { useEffect, useRef } from "react";
+import { useTheme } from "@/lib/theme";
 
 export default function RippleCanvas() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const ripplesRef = useRef<any[]>([]);
     const sizeRef = useRef({ width: window.innerWidth, height: window.innerHeight });
+    const { theme } = useTheme();
+    const themeRef = useRef(theme);
+
+    useEffect(() => {
+        themeRef.current = theme;
+    }, [theme]);
 
     useEffect(() => {
         const canvas = canvasRef.current!;
@@ -30,15 +37,9 @@ export default function RippleCanvas() {
         const ripples = ripplesRef.current;
 
         function addRipple(x: number, y: number) {
-            ripples.push({
-                x,
-                y,
-                radius: 0,
-                alpha: 1,
-            });
+            ripples.push({ x, y, radius: 0, alpha: 1 });
         }
 
-        // Random ripple spawn
         const spawn = setInterval(() => {
             addRipple(
                 Math.random() * canvas.width,
@@ -46,16 +47,13 @@ export default function RippleCanvas() {
             );
         }, 750);
 
-        // Mouse-triggered ripples
         let rippleId = 0;
 
         function handleMouse(e: MouseEvent) {
             rippleId = (rippleId + 1) % 100;
-            if (rippleId % 20 == 0) {
+            if (rippleId % 20 === 0) {
                 const rect = canvas.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                addRipple(x, y);
+                addRipple(e.clientX - rect.left, e.clientY - rect.top);
             }
         }
 
@@ -63,6 +61,8 @@ export default function RippleCanvas() {
 
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const isDark = themeRef.current === "dark";
 
             for (let i = ripples.length - 1; i >= 0; i--) {
                 const r = ripples[i];
@@ -76,7 +76,9 @@ export default function RippleCanvas() {
 
                 ctx.beginPath();
                 ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
-                ctx.strokeStyle = `rgba(0, 200, 255, ${r.alpha})`;
+                ctx.strokeStyle = isDark
+                    ? `rgba(0, 200, 255, ${r.alpha})`
+                    : `rgba(0, 140, 180, ${r.alpha * 0.55})`;
                 ctx.lineWidth = 2;
                 ctx.stroke();
             }

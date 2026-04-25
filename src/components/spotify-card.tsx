@@ -45,7 +45,7 @@ export function SpotifyCard() {
             }}
             initial="hidden"
             animate="show"
-            className="z-10 p-4 flex flex-col gap-3 items-start text-gray-400 w-[90vw] lg:w-[50vw] h-fit border border-white/10 rounded-xl relative bg-cyan-500/10"
+        className="z-10 p-4 flex flex-col gap-3 items-start text-muted-foreground w-[90vw] lg:w-[50vw] h-fit border border-border rounded-xl relative bg-[#1E3A8A]/10 dark:bg-cyan-500/5"
         >
             <div className="text-sm flex flex-row items-center gap-2">
                 Recently played on <img src="/spotify-no-bg.png" width={20} />
@@ -74,7 +74,7 @@ export function SpotifyCard() {
                         </div>
                     )}
                 </div>
-                <a href="https://resonating.vercel.app/" target="_blank" className="w-full sm:w-auto text-center text-xs border border-cyan-500/20 hover:border-cyan-500/75 px-4 py-2 rounded-xl transition-all duration-500">
+                <a href="https://resonating.vercel.app/" target="_blank" className="w-full sm:w-auto text-center text-xs border border-black/50 dark:border-cyan-500/20 hover:border-foreground/30 dark:hover:border-cyan-500/75 px-4 py-2 rounded-xl transition-all duration-500">
                     Checkout my playlists
                 </a>
             </div>

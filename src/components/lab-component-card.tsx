@@ -20,8 +20,8 @@ export function UiLabComponentCard({ key, title, description, href, DELAY_PER_IT
                 delay: DELAY_PER_ITEM * (key + 1)
             }}
             onClick={() => navigate(href)}
-            className="group w-full bg-white/5 flex flex-row justify-between cursor-pointer relative overflow-hidden 
-                 hover:bg-cyan-600/10 transition-all duration-500"
+            className="group w-full bg-foreground/5 flex flex-row justify-between cursor-pointer relative overflow-hidden
+                 hover:bg-foreground/5 dark:hover:bg-cyan-600/10 transition-all duration-500"
         >
             <div className="h-full w-px bg-cyan-400 transition-all duration-500 group-hover:h-0"></div>
             <div className="flex flex-col w-full overflow-hidden">
@@ -48,10 +48,10 @@ export function UiLabComponentCard({ key, title, description, href, DELAY_PER_IT
 
                     <motion.div
                         variants={{
-                            hover: { x: 8, color: "rgba(255, 255, 255, 0.9)" }
+                            hover: { x: 8 }
                         }}
                         transition={{ type: "spring", stiffness: 300, damping: 20, delay: 0.05 }}
-                        className="text-sm text-white/60 max-w-[90%]"
+                        className="text-sm text-muted-foreground max-w-[90%]"
                     >
                         {description}
                     </motion.div>
