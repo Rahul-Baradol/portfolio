@@ -5,6 +5,7 @@ import { ProjectsContainer } from "@/components/projects";
 import { StoriesContainer } from "@/components/stories";
 import { OpenPRsContainer } from "@/components/open-prs";
 import { useEffect } from "react";
+import { WobbleText } from "@/components/wobble-text";
 
 export function Home() {
     useEffect(() => {
@@ -23,14 +24,14 @@ export function Home() {
                     Rahul Baradol
                 </motion.div>
 
-                {/* Tagline */}
                 <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.6, duration: 0.7 }}
                     className="text-sm md:text-base px-4 text-center text-muted-foreground flex flex-row flex-wrap items-center justify-center gap-2"
                 >
-                    I am a software engineer, open source contributor, and a fingerstyle guitarist
+                    I am a software <WobbleText>engineer</WobbleText>,
+                    open source contributor, and a fingerstyle <WobbleText>guitarist</WobbleText>
                 </motion.div>
             </div>
 

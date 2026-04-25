@@ -74,6 +74,9 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --wobble-c1: #0f172a;
+  --wobble-c2: #0f172a;
+  --wobble-glow: rgba(0, 0, 0, 0);
 }
 
 .dark {
@@ -108,6 +111,9 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+  --wobble-c1: #22d3ee;
+  --wobble-c2: #a5f3fc;
+  --wobble-glow: rgba(6, 182, 212, 0.45);
 }
 
 @layer base {
@@ -168,4 +174,50 @@ body::-webkit-scrollbar {
 
 .dark *::-webkit-scrollbar-thumb {
   background: cyan;
+}
+
+.wobble-underline {
+  position: relative;
+  display: inline-block;
+  cursor: default;
+}
+
+.wobble-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 8px;
+  background: linear-gradient(90deg, var(--wobble-c1) 0%, var(--wobble-c2) 50%, var(--wobble-c1) 100%);
+  background-size: 200% 100%;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg width='28' height='8' viewBox='0 0 28 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 4 Q7 0 14 4 T28 4' stroke='black' fill='transparent' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg width='28' height='8' viewBox='0 0 28 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 4 Q7 0 14 4 T28 4' stroke='black' fill='transparent' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  -webkit-mask-size: 28px 8px;
+  mask-size: 28px 8px;
+  -webkit-mask-repeat: repeat-x;
+  mask-repeat: repeat-x;
+  opacity: 0.85;
+  filter: drop-shadow(0 1px 4px var(--wobble-glow));
+  pointer-events: none;
+  transition: opacity 0.3s ease, filter 0.3s ease;
+  animation: wobble-wave 7s linear 1.3s infinite, wobble-gradient 5s linear 1.3s infinite;
+}
+
+.wobble-underline:hover::after {
+  opacity: 1;
+  filter: drop-shadow(0 1px 8px var(--wobble-glow));
+}
+
+@keyframes wobble-wave {
+  0%   { -webkit-mask-position: 0px 0; mask-position: 0px 0; animation-timing-function: ease-out; }
+  10%  { -webkit-mask-position: 22px 0; mask-position: 22px 0; animation-timing-function: ease-in; }
+  50%  { -webkit-mask-position: 28px 0; mask-position: 28px 0; animation-timing-function: ease-out; }
+  60%  { -webkit-mask-position: 50px 0; mask-position: 50px 0; animation-timing-function: ease-in; }
+  100% { -webkit-mask-position: 56px 0; mask-position: 56px 0; }
+}
+
+@keyframes wobble-gradient {
+  from { background-position: 0% 0%; }
+  to { background-position: 100% 0%; }
 }
