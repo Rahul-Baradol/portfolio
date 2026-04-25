@@ -3,7 +3,7 @@ import { motion } from "motion/react";
 import { ExternalLink, GitPullRequest } from "lucide-react";
 import { useTheme } from "@/lib/theme";
 import { FALLBACK_MERGED_PRS, GITHUB_USERNAME } from "@/constants";
-import type { PR } from "@/types";
+import type { PR } from "@/types/types";
 
 function PRSkeleton() {
     return (
@@ -116,10 +116,6 @@ export function OpenPRsContainer() {
             cancelled = true;
         }
     }, []);
-
-    useEffect(() => {
-        console.log(mergedPRs)
-    }, [mergedPRs, openPRs])
 
     if (!loading && openPRs.length === 0 && mergedPRs.length === 0) {
         return null;
