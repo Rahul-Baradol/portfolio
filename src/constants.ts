@@ -83,3 +83,29 @@ export const FALLBACK_SONG = {
     ],
     "imageUrl": "https://i.scdn.co/image/ab67616d0000b2732c6f3af3a14baab913988592"
 };
+
+export const FALLBACK_MERGED_PRS = [
+    {
+        id: 1,
+        title: "feat: allowing null/missing defaultValue",
+        repo: "openfeature/flagd",
+        url: "https://github.com/open-feature/flagd/pull/1659",
+        createdAt: "2025-06-29T08:38:44Z",
+    },
+    {
+        id: 2,
+        title: "feat: making default values optional",
+        repo: "open-feature/flagd-schemas",
+        url: "https://github.com/open-feature/flagd-schemas/pull/187",
+        createdAt: "2025-06-29T08:46:29Z",
+    },
+    {
+        id: 3,
+        title: "feat: updating context using headers",
+        repo: "open-feature/flagd",
+        url: "https://github.com/open-feature/flagd/pull/1641",
+        createdAt: "2025-06-10T17:38:13Z",
+    },
+]
+
+export const GITHUB_USERNAME = "Rahul-Baradol"
