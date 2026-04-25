@@ -30,9 +30,15 @@ export default function RippleCanvas() {
         window.addEventListener("resize", resize);
 
         const ripples = ripplesRef.current;
+        const notes: { x: number; y: number; vy: number; alpha: number; char: string; size: number }[] = [];
+        const NOTE_CHARS = ["♪", "♫", "♩"];
 
-        function addRipple(x: number, y: number) {
-            ripples.push({ x, y, radius: 0, alpha: 1 });
+        function addRipple(x: number, y: number, withPluck = false) {
+            ripples.push({
+                x, y, radius: 0, alpha: 1,
+                pluckAge: withPluck ? 2 : undefined,
+                pluckLen: withPluck ? 50 + Math.random() * 20 : undefined,
+            });
         }
 
         const handleVisibilityChange = () => {
@@ -49,12 +55,11 @@ export default function RippleCanvas() {
 
         function startSpawnInterval() {
             spawnInterval = setInterval(() => {
-                if (!isVisibleRef.current) {
-                    return;
-                }
+                if (!isVisibleRef.current) return;
                 addRipple(
                     Math.random() * canvas.width,
-                    Math.random() * canvas.height
+                    Math.random() * canvas.height,
+                    Math.random() < 0.4
                 );
             }, 750);
         }
@@ -83,6 +88,41 @@ export default function RippleCanvas() {
 
             for (let i = ripples.length - 1; i >= 0; i--) {
                 const r = ripples[i];
+
+                if (r.pluckAge !== undefined) {
+                    // vibrating string phase: damped sine wave, then releases into a ripple
+                    const PLUCK_FRAMES = 30;
+                    const t = r.pluckAge / PLUCK_FRAMES;
+                    const amp = 7 * (1 - t);
+                    const len = r.pluckLen!;
+
+                    ctx.beginPath();
+                    ctx.moveTo(r.x - len / 2, r.y);
+                    for (let px = -len / 2; px <= len / 2; px += 2) {
+                        const wave = Math.sin((px / len) * Math.PI * 4 + r.pluckAge * 0.85) * amp;
+                        ctx.lineTo(r.x + px, r.y + wave);
+                    }
+                    ctx.strokeStyle = isDark
+                        ? `rgba(0, 200, 255, 0.55)`
+                        : `rgba(0, 0, 0, 0.22)`;
+                    ctx.lineWidth = 1.5;
+                    ctx.stroke();
+
+                    r.pluckAge++;
+                    if (r.pluckAge >= PLUCK_FRAMES) {
+                        r.pluckAge = undefined;
+                        notes.push({
+                            x: r.x + (Math.random() - 0.5) * 10,
+                            y: r.y,
+                            vy: -0.6 - Math.random() * 0.4,
+                            alpha: 0.65,
+                            char: NOTE_CHARS[Math.floor(Math.random() * NOTE_CHARS.length)],
+                            size: 24 + Math.floor(Math.random() * 4),
+                        });
+                    }
+                    continue;
+                }
+
                 r.radius += 1.6;
                 r.alpha -= 0.009;
 
@@ -98,6 +138,23 @@ export default function RippleCanvas() {
                     : `rgba(0, 0, 0, ${r.alpha * 0.55})`;
                 ctx.lineWidth = 2;
                 ctx.stroke();
+            }
+
+            for (let i = notes.length - 1; i >= 0; i--) {
+                const n = notes[i];
+                n.y += n.vy;
+                n.alpha -= 0.005;
+                if (n.alpha <= 0) {
+                    notes.splice(i, 1);
+                    continue;
+                }
+
+                ctx.font = `${n.size}px serif`;
+                ctx.fillStyle = isDark
+                    ? `rgba(0, 200, 255, ${n.alpha})`
+                    : `rgba(0, 0, 0, ${n.alpha * 0.6})`;
+                    
+                ctx.fillText(n.char, n.x, n.y);
             }
 
             animationFrameId = requestAnimationFrame(animate);
