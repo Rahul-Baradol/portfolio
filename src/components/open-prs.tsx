@@ -11,6 +11,23 @@ interface PR {
     openedAt: string;
 }
 
+// 1. New Skeleton Component
+function PRSkeleton() {
+    return (
+        <div className="flex flex-row justify-between items-start p-4 rounded-xl border border-border bg-black/5 dark:bg-black/10 animate-pulse w-full">
+            <div className="flex flex-col gap-2 w-[85%]">
+                <div className="h-4 w-3/4 rounded bg-foreground/10" />
+                <div className="h-3 w-1/4 rounded bg-muted-foreground/10" />
+                <div className="h-2 w-1/6 rounded bg-muted-foreground/10" />
+            </div>
+            <div className="flex flex-col items-end gap-2">
+                <div className="h-4 w-4 rounded bg-foreground/10" />
+                <div className="h-5 w-12 rounded-md bg-foreground/10" />
+            </div>
+        </div>
+    );
+}
+
 function PRCard({ pr }: { pr: PR }) {
     const { theme } = useTheme();
 
@@ -91,7 +108,10 @@ export function OpenPRsContainer() {
             .finally(() => setLoading(false));
     }, []);
 
-    if (loading || prs.length === 0) return null;
+    // Return nothing if empty state, but render loading skeletons otherwise
+    if (!loading && prs.length === 0) {
+        return null;
+    }
 
     return (
         <motion.div
@@ -113,9 +133,11 @@ export function OpenPRsContainer() {
             </div>
 
             <div className="flex flex-col gap-2">
-                {prs.map((pr) => (
-                    <PRCard key={pr.id} pr={pr} />
-                ))}
+                {loading ? (
+                    [...Array(2)].map((_, i) => <PRSkeleton key={i} />)
+                ) : (
+                    prs.map((pr) => <PRCard key={pr.id} pr={pr} />)
+                )}
             </div>
         </motion.div>
     );
