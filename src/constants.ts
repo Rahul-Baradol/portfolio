@@ -1,3 +1,5 @@
+import type { PR } from "./types";
+
 export const sections = [
     {
         company: "Alaiy",
@@ -84,13 +86,14 @@ export const FALLBACK_SONG = {
     "imageUrl": "https://i.scdn.co/image/ab67616d0000b2732c6f3af3a14baab913988592"
 };
 
-export const FALLBACK_MERGED_PRS = [
+export const FALLBACK_MERGED_PRS: PR[] = [
     {
         id: 1,
         title: "feat: allowing null/missing defaultValue",
         repo: "openfeature/flagd",
         url: "https://github.com/open-feature/flagd/pull/1659",
         createdAt: "2025-06-29T08:38:44Z",
+        state: "closed"
     },
     {
         id: 2,
@@ -98,6 +101,7 @@ export const FALLBACK_MERGED_PRS = [
         repo: "open-feature/flagd-schemas",
         url: "https://github.com/open-feature/flagd-schemas/pull/187",
         createdAt: "2025-06-29T08:46:29Z",
+        state: "closed"
     },
     {
         id: 3,
@@ -105,6 +109,7 @@ export const FALLBACK_MERGED_PRS = [
         repo: "open-feature/flagd",
         url: "https://github.com/open-feature/flagd/pull/1641",
         createdAt: "2025-06-10T17:38:13Z",
+        state: "closed"
     },
 ]
 
