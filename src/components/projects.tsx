@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
-import { Github, Globe, Linkedin } from "lucide-react";
+import { Balloon, Globe, Smile } from "lucide-react";
 
 interface ProjectCardProps {
     title: string;
@@ -42,30 +42,30 @@ export default function ProjectCard({ title, videoDemoUrl, story, websiteUrl, gi
                         </Tooltip>
 
                         {
-                            githubUrl ? (
+                            linkedinUrl ? (
                                 <Tooltip>
                                     <TooltipTrigger asChild className="bg-black">
-                                        <a href={githubUrl} target="_blank" rel="noopener noreferrer">
-                                            <Github className="h-4 w-4 text-gray-400" />
+                                        <a href={linkedinUrl} target="_blank" rel="noopener noreferrer" className="text-gray-400 bg-transparent">
+                                            in
                                         </a>
                                     </TooltipTrigger>
                                     <TooltipContent className="bg-black text-gray-400">
-                                        Go to GitHub
+                                        Go to LinkedIn
                                     </TooltipContent>
                                 </Tooltip>
                             ) : <></>
                         }
 
                         {
-                            linkedinUrl ? (
+                            githubUrl ? (
                                 <Tooltip>
                                     <TooltipTrigger asChild className="bg-black">
-                                        <a href={linkedinUrl} target="_blank" rel="noopener noreferrer">
-                                            <Linkedin className="h-4 w-4 text-gray-400" />
+                                        <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="text-gray-400 bg-transparent text-xs">
+                                            GitHub
                                         </a>
                                     </TooltipTrigger>
                                     <TooltipContent className="bg-black text-gray-400">
-                                        Go to LinkedIn
+                                        Go to GitHub
                                     </TooltipContent>
                                 </Tooltip>
                             ) : <></>
@@ -113,7 +113,8 @@ export function ProjectsContainer({ projects }: ProjectContainerProps) {
             animate="show"
             className="p-0 text-gray-400 w-[90vw] lg:w-[50vw] h-full rounded-xl relative flex flex-col gap-5 bg-transparent"
         >
-            <div className="flex flex-row items-center italic">
+            <div className="flex flex-row gap-2 items-center italic">
+                <Balloon className="h-4 w-4 text-gray-400" />
                 Built for fun
             </div>
 

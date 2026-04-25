@@ -1,4 +1,4 @@
-import { ArrowDown, Github, Globe, Linkedin } from "lucide-react";
+import { ArrowDown, Globe, Road } from "lucide-react";
 import { motion } from "motion/react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import * as AccordionPrimitive from "@radix-ui/react-accordion"
@@ -74,8 +74,8 @@ export default function ExperienceCard({ companyName, companyLogo, websiteUrl, g
                                                     githubUrl ? (
                                                         <Tooltip>
                                                             <TooltipTrigger asChild className="bg-black">
-                                                                <a href={githubUrl} target="_blank" rel="noopener noreferrer">
-                                                                    <Github className="h-3 w-3 text-gray-400" />
+                                                                <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="text-gray-400 bg-transparent text-xs">
+                                                                    Github
                                                                 </a>
                                                             </TooltipTrigger>
                                                             <TooltipContent className="bg-black text-gray-400">
@@ -89,8 +89,8 @@ export default function ExperienceCard({ companyName, companyLogo, websiteUrl, g
                                                     linkedinUrl ? (
                                                         <Tooltip>
                                                             <TooltipTrigger asChild className="bg-black">
-                                                                <a href={linkedinUrl} target="_blank" rel="noopener noreferrer">
-                                                                    <Linkedin className="h-3 w-3 text-gray-400" />
+                                                                <a href={linkedinUrl} target="_blank" rel="noopener noreferrer" className="text-gray-400 bg-transparent">
+                                                                    in
                                                                 </a>
                                                             </TooltipTrigger>
                                                             <TooltipContent className="bg-black text-gray-400">
@@ -182,7 +182,8 @@ export function ExperienceContainer({ snaps }: ExperienceContainerProps) {
             animate="show"
             className="p-0 text-gray-400 w-[90vw] lg:w-[50vw] h-full rounded-xl relative flex flex-col gap-5 bg-transparent"
         >
-            <div className="flex flex-row items-center italic">
+            <div className="flex flex-row gap-2 items-center italic">
+                <Road className="h-4 w-4 text-gray-500" />
                 Experience
             </div>
 

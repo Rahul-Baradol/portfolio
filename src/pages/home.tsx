@@ -3,7 +3,8 @@ import { motion } from "motion/react";
 import { TechBadge } from "@/components/tech-badges";
 import { ExperienceContainer } from "@/components/experience";
 import { ProjectsContainer } from "@/components/projects";
-import { StoriesAndLabContainer } from "@/components/stories-and-lab";
+import { StoriesContainer } from "@/components/stories";
+import { OpenPRsContainer } from "@/components/open-prs";
 import { useEffect } from "react";
 
 export function Home() {
@@ -45,13 +46,15 @@ export function Home() {
 
             <SpotifyCard />
 
-            <StoriesAndLabContainer
+            <StoriesContainer
                 title="Scaling our web-app — managing data better"
                 description="A web app is only simple, until you break the abstraction"
                 date="1st December 2025"
                 tags={["Scalability"]}
                 mediumUrl="https://medium.com/@mail_99211/scaling-our-web-app-managing-data-better-1ad980b75a2a"
             />
+
+            <OpenPRsContainer />
 
             <ExperienceContainer
                 snaps={[

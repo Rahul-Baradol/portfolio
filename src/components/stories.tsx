@@ -1,7 +1,6 @@
 import { motion } from "motion/react";
-import { ArrowUpRight, Beaker } from "lucide-react";
+import { ArrowUpRight, Lightbulb } from "lucide-react";
 import { Tooltip, TooltipTrigger, TooltipContent } from "./ui/tooltip";
-import { Link } from "react-router-dom";
 
 interface BlogCardProps {
     title: string;
@@ -12,43 +11,6 @@ interface BlogCardProps {
     className?: string;
 }
 
-export function UILabCard({ className }: { className?: string }) {
-    return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            whileHover={{ scale: 1.02, borderColor: "rgba(34,211,238,0.3)" }}
-            whileTap={{ scale: 0.97 }}
-            transition={{ duration: 0.25 }}
-            className={`flex flex-col gap-3 p-4 rounded-xl border border-white/10 bg-black/10 hover:bg-cyan-600/5 cursor-pointer group w-3/12 relative overflow-hidden ${className}`}
-        >
-            {/* subtle ripple */}
-            <motion.span
-                initial={{ scale: 0, opacity: 0 }}
-                whileHover={{ scale: 4, opacity: 0.12 }}
-                transition={{ duration: 0.6 }}
-                className="absolute inset-0 rounded-xl bg-cyan-400/20 pointer-events-none"
-            />
-
-            <Link to="/lab" className="flex flex-row justify-between items-start z-10">
-                <div className="flex flex-col gap-2 w-[90%]">
-                    <div className="text-sm italic text-gray-200 group-hover:text-cyan-300 transition-colors">
-                        Lab
-                    </div>
-                    <div className="text-xs text-gray-400 line-clamp-2">
-                        Interactive animations, micro-interactions & experiments.
-                    </div>
-                </div>
-
-                <Beaker className="h-4 w-4 text-gray-400 group-hover:text-cyan-300 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-            </Link>
-
-            <div className="text-[10px] text-gray-500 italic z-10">
-                Experiments
-            </div>
-        </motion.div>
-    );
-}
 
 export function BlogCard({ title, description, mediumUrl, tags, date, className }: BlogCardProps) {
     return (
@@ -101,7 +63,7 @@ export function BlogCard({ title, description, mediumUrl, tags, date, className 
     );
 }
 
-export function StoriesAndLabContainer({ title, description, mediumUrl, tags, date }: BlogCardProps) {
+export function StoriesContainer({ title, description, mediumUrl, tags, date }: BlogCardProps) {
     return (
         <motion.div
             variants={{
@@ -112,22 +74,20 @@ export function StoriesAndLabContainer({ title, description, mediumUrl, tags, da
             animate="show"
             className="p-0 text-gray-400 w-[90vw] lg:w-[50vw] h-full rounded-xl relative flex flex-col gap-5 bg-transparent"
         >
-            <div className="flex flex-row items-center italic">
-                Stories & Lab
+            <div className="flex flex-row gap-2 items-center italic">
+                <Lightbulb className="h-4 w-4 text-gray-500" />
+                Stories
             </div>
 
-
-            <div className="flex flex-col xl:flex-row gap-2">
+            <div className="flex flex-col gap-2">
                 <BlogCard
                     title={title}
                     description={description}
                     mediumUrl={mediumUrl}
                     tags={tags}
                     date={date}
-                    className="xl:w-8/12 w-full"
+                    className="w-full"
                 />
-
-                <UILabCard className="xl:w-4/12 w-full" />
             </div>
 
 
