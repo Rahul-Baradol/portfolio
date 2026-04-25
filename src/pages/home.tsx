@@ -1,6 +1,5 @@
 import { SpotifyCard } from "@/components/spotify-card";
 import { motion } from "motion/react";
-import { TechBadge } from "@/components/tech-badges";
 import { ExperienceContainer } from "@/components/experience";
 import { ProjectsContainer } from "@/components/projects";
 import { StoriesContainer } from "@/components/stories";
@@ -29,18 +28,9 @@ export function Home() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.6, duration: 0.7 }}
-                    className="w-[90vw] lg:w-[50vw] text-lg md:text-xl text-muted-foreground flex flex-col gap-1 items-center"
+                    className="text-sm md:text-base px-4 text-center text-muted-foreground flex flex-row flex-wrap items-center justify-center gap-2"
                 >
-                    <blockquote className="dark:bg-black/30 text-sm md:text-base italic text-foreground/65 dark:text-muted-foreground flex flex-row flex-wrap items-center justify-center gap-2 p-2 rounded-xl">
-                        <div className="text-xs sm:text-sm">building fast, reliable, and scalable web apps — using</div>
-
-                        <TechBadge redirect_url="https://www.typescriptlang.org/" image_url="/ts.png" tech="Typescript" />
-                        <TechBadge redirect_url="https://reactjs.org/" image_url="/react.png" tech="React" />
-                        <TechBadge redirect_url="https://nextjs.org/" image_url="/nextjs.jpeg" tech="Next.js" />
-                        <TechBadge redirect_url="https://fastapi.tiangolo.com/" image_url="/fastapi.png" tech="FastAPI" />
-                        <TechBadge redirect_url="https://motion.dev/" image_url="/framer.avif" tech="Framer motion" size={16} /> <div>and</div>
-                        <TechBadge redirect_url="https://nodejs.org/" image_url="/node.png" tech="Node.js" size={20} />
-                    </blockquote>
+                    I am a software engineer, open source contributor, and a fingerstyle guitarist
                 </motion.div>
             </div>
 
@@ -75,7 +65,7 @@ export function Home() {
                             "Improved UX by reducing page load from 8-10s to under 1s",
                             "Built a high-traffic campaigning site for a leading Indian movie-production house, handling peaks of 8,300 users/min for a blockbuster movie launch",
                         ],
-                        role: "full stack / intern",
+                        role: "full stack / sde",
                         active: true,
                         expanded: true,
                     },
