@@ -28,10 +28,10 @@ export function Home() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.6, duration: 0.7 }}
-                    className="text-sm md:text-base px-4 text-center text-muted-foreground flex flex-row flex-wrap items-center justify-center gap-2"
+                    className="text-sm md:text-base px-4 text-center text-muted-foreground flex flex-row flex-wrap items-center justify-center gap-1"
                 >
-                    I am a software <WobbleText>engineer</WobbleText>,
-                    open source contributor, and a fingerstyle <WobbleText>guitarist</WobbleText>
+                    <span>I am a software</span> <WobbleText>engineer</WobbleText>,
+                    <span>open source contributor, and a fingerstyle</span> <WobbleText>guitarist</WobbleText>
                 </motion.div>
             </div>
 

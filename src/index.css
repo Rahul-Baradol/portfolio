@@ -186,7 +186,7 @@ body::-webkit-scrollbar {
   content: "";
   position: absolute;
   left: 0;
-  bottom: -4px;
+  bottom: -5px;
   width: 100%;
   height: 8px;
   background: linear-gradient(90deg, var(--wobble-c1) 0%, var(--wobble-c2) 50%, var(--wobble-c1) 100%);
