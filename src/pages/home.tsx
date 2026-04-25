@@ -65,7 +65,7 @@ export function Home() {
                             "Improved UX by reducing page load from 8-10s to under 1s",
                             "Built a high-traffic campaigning site for a leading Indian movie-production house, handling peaks of 8,300 users/min for a blockbuster movie launch",
                         ],
-                        role: "full stack / sde",
+                        role: "full stack / intern",
                         active: true,
                         expanded: true,
                     },
