@@ -34,7 +34,10 @@ function PRCard({ pr }: { pr: PR }) {
             href={pr.url}
             target="_blank"
             rel="noopener noreferrer"
-            variants={{ hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0 } }}
+            variants={{
+                hidden: { opacity: 0, y: 10 },
+                show: { opacity: 1, y: 0, borderColor: theme === "dark" ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.09)" },
+            }}
             whileHover={{
                 scale: 1.01,
                 borderColor: theme === "dark" ? "rgba(34,211,238,0.3)" : "rgba(0,0,0,0.2)",
