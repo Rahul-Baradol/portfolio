@@ -78,7 +78,7 @@ export default function RippleCanvas() {
                 ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
                 ctx.strokeStyle = isDark
                     ? `rgba(0, 200, 255, ${r.alpha})`
-                    : `rgba(0, 140, 180, ${r.alpha * 0.55})`;
+                    : `rgba(0, 0, 0, ${r.alpha * 0.55})`;
                 ctx.lineWidth = 2;
                 ctx.stroke();
             }
