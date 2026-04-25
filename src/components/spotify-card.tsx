@@ -59,7 +59,7 @@ export function SpotifyCard() {
                             className="rounded"
                         />
                     ) : (
-                        <div className="w-12 aspect-square bg-gray-300/20 animate-pulse rounded"></div>
+                        <div className="w-12 aspect-square bg-gray-400/50 dark:bg-gray-300/20 animate-pulse rounded"></div>
                     )}
 
                     {(songName && artists) ? (
@@ -69,8 +69,8 @@ export function SpotifyCard() {
                         </div>
                     ) : (
                         <div className="flex flex-col gap-1.5">
-                            <div className="w-32 h-4 bg-gray-300/20 animate-pulse rounded"></div>
-                            <div className="w-32 h-3 bg-gray-300/20 animate-pulse rounded"></div>
+                            <div className="w-32 h-4 bg-gray-400/50 dark:bg-gray-300/20 animate-pulse rounded"></div>
+                            <div className="w-32 h-3 bg-gray-400/50 dark:bg-gray-300/20 animate-pulse rounded"></div>
                         </div>
                     )}
                 </div>
