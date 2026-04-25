@@ -8,6 +8,8 @@ export default function RippleCanvas() {
     const { theme } = useTheme();
     const themeRef = useRef(theme);
 
+    const isVisibleRef = useRef(true);
+
     useEffect(() => {
         themeRef.current = theme;
     }, [theme]);
@@ -15,24 +17,17 @@ export default function RippleCanvas() {
     useEffect(() => {
         const canvas = canvasRef.current!;
         const ctx = canvas.getContext("2d")!;
+        let animationFrameId: number;
+        let spawnInterval: ReturnType<typeof setInterval>;
 
         function resize() {
-            sizeRef.current = {
-                width: window.innerWidth,
-                height: window.innerHeight,
-            };
-
-            const { width, height } = sizeRef.current;
-
-            canvas.width = width;
-            canvas.height = height;
+            sizeRef.current = { width: window.innerWidth, height: window.innerHeight };
+            canvas.width = sizeRef.current.width;
+            canvas.height = sizeRef.current.height;
         }
 
         resize();
         window.addEventListener("resize", resize);
-
-        canvas.width = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight;
 
         const ripples = ripplesRef.current;
 
@@ -40,15 +35,33 @@ export default function RippleCanvas() {
             ripples.push({ x, y, radius: 0, alpha: 1 });
         }
 
-        const spawn = setInterval(() => {
-            addRipple(
-                Math.random() * canvas.width,
-                Math.random() * canvas.height
-            );
-        }, 750);
+        const handleVisibilityChange = () => {
+            isVisibleRef.current = !document.hidden;
+            
+            if (document.hidden) {
+                clearInterval(spawnInterval);
+            } else {
+                startSpawnInterval();
+            }
+        };
+
+        document.addEventListener("visibilitychange", handleVisibilityChange);
+
+        function startSpawnInterval() {
+            spawnInterval = setInterval(() => {
+                if (!isVisibleRef.current) {
+                    return;
+                }
+                addRipple(
+                    Math.random() * canvas.width,
+                    Math.random() * canvas.height
+                );
+            }, 750);
+        }
+
+        startSpawnInterval();
 
         let rippleId = 0;
-
         function handleMouse(e: MouseEvent) {
             rippleId = (rippleId + 1) % 100;
             if (rippleId % 20 === 0) {
@@ -60,8 +73,12 @@ export default function RippleCanvas() {
         canvas.addEventListener("mousemove", handleMouse);
 
         function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (!isVisibleRef.current) {
+                animationFrameId = requestAnimationFrame(animate);
+                return;
+            }
 
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
             const isDark = themeRef.current === "dark";
 
             for (let i = ripples.length - 1; i >= 0; i--) {
@@ -83,14 +100,16 @@ export default function RippleCanvas() {
                 ctx.stroke();
             }
 
-            requestAnimationFrame(animate);
+            animationFrameId = requestAnimationFrame(animate);
         }
 
         animate();
 
         return () => {
-            clearInterval(spawn);
+            cancelAnimationFrame(animationFrameId);
+            clearInterval(spawnInterval);
             window.removeEventListener("resize", resize);
+            document.removeEventListener("visibilitychange", handleVisibilityChange);
             canvas.removeEventListener("mousemove", handleMouse);
         };
     }, []);
