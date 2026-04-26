@@ -8,7 +8,7 @@ import { EducationContainer } from "@/components/education";
 import { useEffect } from "react";
 import { WobbleText } from "@/components/wobble-text";
 import EmailContact from "@/components/email-contact";
-import { Download } from "lucide-react";
+import { Dot, Download } from "lucide-react";
 
 export function Home() {
     useEffect(() => {
@@ -40,7 +40,7 @@ export function Home() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.9, duration: 0.5 }}
-                    className="flex px-4 flex-row flex-wrap items-center justify-center gap-3"
+                    className="flex px-4 flex-row flex-wrap items-center justify-center gap-1"
                 >
                     <a
                         href="https://www.linkedin.com/in/rahul-baradol/"
@@ -51,7 +51,7 @@ export function Home() {
                         <img src="/linkedin.png" alt="LinkedIn" className="h-3.5 w-3.5 object-contain" />
                         LinkedIn
                     </a>
-                    <span className="text-muted-foreground/40 text-xs">·</span>
+                    <Dot className="opacity-25 w-5 h-5" />
                     <a
                         href="https://github.com/Rahul-Baradol"
                         target="_blank"
@@ -61,7 +61,17 @@ export function Home() {
                         <img src="/github.webp" alt="GitHub" className="h-3.5 w-3.5 object-contain rounded-full" />
                         GitHub
                     </a>
-                    <span className="text-muted-foreground/40 text-xs">·</span>
+                    <Dot className="opacity-25 w-5 h-5" />
+                    <a
+                        href="https://x.com/rahulbaradol"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                        <img src="/x.png" alt="X" className="h-3.5 w-3.5 object-contain rounded-full" />
+                        Twitter
+                    </a>
+                    <Dot className="opacity-25 w-5 h-5" />
                     <a
                         href="/Rahul-Baradol.pdf"
                         download
@@ -70,7 +80,7 @@ export function Home() {
                         <Download className="h-3.5 w-3.5" />
                         Resume
                     </a>
-                    <span className="text-muted-foreground/40 text-xs">·</span>
+                    <Dot className="opacity-25 w-5 h-5" />
                     <EmailContact />
                 </motion.div>
             </div>

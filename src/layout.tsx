@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import RippleCanvas from "./components/rippling";
 import { ThemeToggle } from "./components/theme-toggle";
+import Footer from "./components/footer";
 
 export function Layout() {
     return (
@@ -8,6 +9,7 @@ export function Layout() {
             <RippleCanvas />
             <ThemeToggle />
             <Outlet />
+            <Footer />
         </div>
     )
 }
