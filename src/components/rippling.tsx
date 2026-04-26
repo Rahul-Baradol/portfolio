@@ -70,12 +70,11 @@ export default function RippleCanvas() {
         function handleMouse(e: MouseEvent) {
             rippleId = (rippleId + 1) % 100;
             if (rippleId % 20 === 0) {
-                const rect = canvas.getBoundingClientRect();
-                addRipple(e.clientX - rect.left, e.clientY - rect.top);
+                addRipple(e.clientX, e.clientY);
             }
         }
 
-        canvas.addEventListener("mousemove", handleMouse);
+        window.addEventListener("mousemove", handleMouse);
 
         function animate() {
             if (!isVisibleRef.current) {
@@ -167,9 +166,9 @@ export default function RippleCanvas() {
             clearInterval(spawnInterval);
             window.removeEventListener("resize", resize);
             document.removeEventListener("visibilitychange", handleVisibilityChange);
-            canvas.removeEventListener("mousemove", handleMouse);
+            window.removeEventListener("mousemove", handleMouse);
         };
     }, []);
 
-    return <canvas ref={canvasRef} className="fixed w-screen h-screen top-0 left-0" />;
+    return <canvas ref={canvasRef} className="fixed w-screen h-screen top-0 left-0 -z-10 pointer-events-none" />;
 }
