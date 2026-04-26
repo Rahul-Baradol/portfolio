@@ -7,7 +7,6 @@ import { OpenPRsContainer } from "@/components/open-prs";
 import { EducationContainer } from "@/components/education";
 import { useEffect } from "react";
 import { WobbleText } from "@/components/wobble-text";
-import { Mail, Download } from "lucide-react";
 import EmailContact from "@/components/email-contact";
 
 export function Home() {
