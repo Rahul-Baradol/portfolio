@@ -5,6 +5,7 @@ import { Balloon, Globe } from "lucide-react";
 interface ProjectCardProps {
     title: string;
     videoDemoUrl: string;
+    posterUrl?: string;
     story: string;
     websiteUrl: string;
     githubUrl?: string;
@@ -15,7 +16,7 @@ interface ProjectContainerProps {
     projects: ProjectCardProps[];
 }
 
-export default function ProjectCard({ title, videoDemoUrl, story, websiteUrl, githubUrl, linkedinUrl }: ProjectCardProps) {
+export default function ProjectCard({ title, videoDemoUrl, posterUrl, story, websiteUrl, githubUrl, linkedinUrl }: ProjectCardProps) {
     return (
         <motion.div
             variants={{
@@ -83,8 +84,9 @@ export default function ProjectCard({ title, videoDemoUrl, story, websiteUrl, gi
                             loop
                             autoPlay
                             muted
+                            poster={posterUrl}
                         >
-                            <source src={videoDemoUrl} type="video/mp4" />
+                            <source src={videoDemoUrl} />
                             Your browser does not support the video tag.
                         </video>
                     </a>
@@ -127,6 +129,7 @@ export function ProjectsContainer({ projects }: ProjectContainerProps) {
                         githubUrl={project.githubUrl}
                         linkedinUrl={project.linkedinUrl}
                         videoDemoUrl={project.videoDemoUrl}
+                        posterUrl={project.posterUrl}
                         story={project.story}
                     />
                 ))
