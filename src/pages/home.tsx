@@ -8,6 +8,7 @@ import { EducationContainer } from "@/components/education";
 import { useEffect } from "react";
 import { WobbleText } from "@/components/wobble-text";
 import EmailContact from "@/components/email-contact";
+import { Download } from "lucide-react";
 
 export function Home() {
     useEffect(() => {
@@ -32,8 +33,7 @@ export function Home() {
                     transition={{ delay: 0.6, duration: 0.7 }}
                     className="text-sm md:text-base px-4 text-center text-muted-foreground flex flex-row flex-wrap items-center justify-center gap-1 select-none"
                 >
-                    <span>I am a software</span> <WobbleText>engineer</WobbleText>,
-                    <span>open source contributor, and a fingerstyle</span> <WobbleText>guitarist</WobbleText>
+                    <span>I&apos;m a software</span> <WobbleText>engineer</WobbleText> <span>— frontend, backend, open source, and a fingerstyle</span> <WobbleText>guitarist</WobbleText>
                 </motion.div>
 
                 <motion.div
@@ -61,7 +61,7 @@ export function Home() {
                         <img src="/github.webp" alt="GitHub" className="h-3.5 w-3.5 object-contain rounded-full" />
                         GitHub
                     </a>
-                    {/* <span className="text-muted-foreground/40 text-xs">·</span>
+                    <span className="text-muted-foreground/40 text-xs">·</span>
                     <a
                         href="/Rahul-Baradol.pdf"
                         download
@@ -69,7 +69,7 @@ export function Home() {
                     >
                         <Download className="h-3.5 w-3.5" />
                         Resume
-                    </a> */}
+                    </a>
                     <span className="text-muted-foreground/40 text-xs">·</span>
                     <EmailContact />
                 </motion.div>
