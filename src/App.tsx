@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import Lenis from "lenis";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Home } from "./pages/home";
+import { PRsPage } from "./pages/prs";
 import NotFound from "./components/not-found";
 import { Layout } from "./layout";
 import { ThemeProvider } from "./lib/theme";
@@ -24,6 +25,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
+            <Route path="/prs" element={<PRsPage />} />
             <Route path="/*" element={<NotFound />} />
           </Route>
         </Routes>
