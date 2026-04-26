@@ -4,8 +4,11 @@ import { ExperienceContainer } from "@/components/experience";
 import { ProjectsContainer } from "@/components/projects";
 import { StoriesContainer } from "@/components/stories";
 import { OpenPRsContainer } from "@/components/open-prs";
+import { EducationContainer } from "@/components/education";
 import { useEffect } from "react";
 import { WobbleText } from "@/components/wobble-text";
+import { Mail, Download } from "lucide-react";
+import EmailContact from "@/components/email-contact";
 
 export function Home() {
     useEffect(() => {
@@ -33,6 +36,44 @@ export function Home() {
                     <span>I am a software</span> <WobbleText>engineer</WobbleText>,
                     <span>open source contributor, and a fingerstyle</span> <WobbleText>guitarist</WobbleText>
                 </motion.div>
+
+                <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.9, duration: 0.5 }}
+                    className="flex px-4 flex-row flex-wrap items-center justify-center gap-3"
+                >
+                    <a
+                        href="https://www.linkedin.com/in/rahul-baradol/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                        <img src="/linkedin.png" alt="LinkedIn" className="h-3.5 w-3.5 object-contain" />
+                        LinkedIn
+                    </a>
+                    <span className="text-muted-foreground/40 text-xs">·</span>
+                    <a
+                        href="https://github.com/Rahul-Baradol"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                        <img src="/github.webp" alt="GitHub" className="h-3.5 w-3.5 object-contain rounded-full" />
+                        GitHub
+                    </a>
+                    {/* <span className="text-muted-foreground/40 text-xs">·</span>
+                    <a
+                        href="/Rahul-Baradol.pdf"
+                        download
+                        className="inline-flex items-center gap-1.5 text-xs rounded-md text-muted-foreground hover:text-foreground hover:border-foreground/30 transition-colors"
+                    >
+                        <Download className="h-3.5 w-3.5" />
+                        Resume
+                    </a> */}
+                    <span className="text-muted-foreground/40 text-xs">·</span>
+                    <EmailContact />
+                </motion.div>
             </div>
 
             <SpotifyCard />
@@ -44,8 +85,6 @@ export function Home() {
                 tags={["Scalability"]}
                 mediumUrl="https://medium.com/@mail_99211/scaling-our-web-app-managing-data-better-1ad980b75a2a"
             />
-
-            <OpenPRsContainer />
 
             <ExperienceContainer
                 snaps={[
@@ -90,6 +129,7 @@ export function Home() {
                         ],
                         role: "backend developer / intern",
                         active: false,
+                        expanded: true,
                     },
                     {
                         companyName: "CognitiveLab",
@@ -110,9 +150,18 @@ export function Home() {
                             "Developed a FastAPI backend that supports structured queries and delivers real-time responses."
                         ],
                         role: "full stack / intern",
-                        active: false
+                        active: false,
+                        expanded: true,
                     }
                 ]}
+            />
+
+            <OpenPRsContainer />
+
+            <EducationContainer
+                institution="PES University"
+                degree="B.Tech in Computer Science"
+                timeline="2022 - 2026"
             />
 
             <ProjectsContainer
