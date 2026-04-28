@@ -1,17 +1,35 @@
 import { Dot } from "lucide-react";
 import { useState, useEffect } from "react";
+import { FALLBACK_SONG } from "@/constants";
 
 const TAGLINES = [
     "built to the sound of fingerpicking",
-    "code by day, chords by night",
     "powered by minor chords",
     "shipped at 2am, debugged at 3am",
     "handcrafted, pixel by pixel",
 ];
 
+function useRecentSong() {
+    const [song, setSong] = useState<{ songName: string; artists: string[]; imageUrl: string } | null>(null);
+
+    useEffect(() => {
+        const controller = new AbortController();
+
+        fetch(`${import.meta.env.VITE_RESONANCE_API}/api/recent-song-played`, { signal: controller.signal })
+            .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+            .then(setSong)
+            .catch(() => setSong(FALLBACK_SONG));
+
+        return () => controller.abort();
+    }, []);
+
+    return song;
+}
+
 export default function Footer() {
     const [idx, setIdx] = useState(0);
     const [visible, setVisible] = useState(true);
+    const song = useRecentSong();
 
     useEffect(() => {
         const id = setInterval(() => {
@@ -32,6 +50,26 @@ export default function Footer() {
             >
                 {TAGLINES[idx]}
             </span>
+
+            {song ? (
+                <a
+                    href="https://resonating.vercel.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-[11px] text-muted-foreground/50 hover:text-muted-foreground/80 transition-colors"
+                >
+                    <span className="italic opacity-60">(</span>
+                    <span className="opacity-60 italic">while listening to</span>
+                    <img src={song.imageUrl} className="w-4 h-4 rounded-sm object-cover" />
+                    <span>{song.songName}</span>
+                    <span className="opacity-60">—</span>
+                    <span className="opacity-60">{song.artists[0]}</span>
+                    <img src="/spotify-no-bg.png" className="w-3 h-3 opacity-60" />
+                    <span className="italic opacity-60">)</span>
+                </a>
+            ) : (
+                <div className="h-4 w-48 rounded bg-muted-foreground/10 animate-pulse" />
+            )}
 
             <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-xs text-muted-foreground/60 px-4">
                 <span className="font-medium text-foreground/70">Rahul Baradol</span>

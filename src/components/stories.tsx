@@ -2,6 +2,7 @@ import { motion } from "motion/react";
 import { ArrowUpRight, Lightbulb } from "lucide-react";
 import { Tooltip, TooltipTrigger, TooltipContent } from "./ui/tooltip";
 import { useTheme } from "@/lib/theme";
+import { stories } from "@/constants";
 
 interface BlogCardProps {
     title: string;
@@ -11,7 +12,6 @@ interface BlogCardProps {
     date: string;
     className?: string;
 }
-
 
 export function BlogCard({ title, description, mediumUrl, tags, date, className }: BlogCardProps) {
     const { theme } = useTheme();
@@ -73,7 +73,7 @@ export function BlogCard({ title, description, mediumUrl, tags, date, className 
     );
 }
 
-export function StoriesContainer({ title, description, mediumUrl, tags, date }: BlogCardProps) {
+export function StoriesContainer() {
     return (
         <motion.div
             variants={{
@@ -90,14 +90,17 @@ export function StoriesContainer({ title, description, mediumUrl, tags, date }: 
             </div>
 
             <div className="flex flex-col gap-2">
-                <BlogCard
-                    title={title}
-                    description={description}
-                    mediumUrl={mediumUrl}
-                    tags={tags}
-                    date={date}
-                    className="w-full"
-                />
+                {stories.map((story, idx) => (
+                    <BlogCard
+                        key={idx}
+                        title={story.title}
+                        description={story.description}
+                        mediumUrl={story.mediumUrl}
+                        tags={story.tags}
+                        date={story.date}
+                        className="w-full"
+                    />
+                ))}
             </div>
 
 

@@ -1,4 +1,4 @@
-import { SpotifyCard } from "@/components/spotify-card";
+import { DevTipsCard } from "@/components/dev-tips-card";
 import { motion } from "motion/react";
 import { ExperienceContainer } from "@/components/experience";
 import { ProjectsContainer } from "@/components/projects";
@@ -6,6 +6,7 @@ import { StoriesContainer } from "@/components/stories";
 import { OpenPRsContainer } from "@/components/open-prs";
 import { EducationContainer } from "@/components/education";
 import { useEffect } from "react";
+import { BioCard } from "@/components/bio-card";
 import { WobbleText } from "@/components/wobble-text";
 import EmailContact from "@/components/email-contact";
 import { Dot, Download } from "lucide-react";
@@ -85,15 +86,11 @@ export function Home() {
                 </motion.div>
             </div>
 
-            <SpotifyCard />
+            <BioCard />
 
-            <StoriesContainer
-                title="Scaling our web-app — managing data better"
-                description="A web app is only simple, until you break the abstraction"
-                date="1st December 2025"
-                tags={["Scalability"]}
-                mediumUrl="https://medium.com/@mail_99211/scaling-our-web-app-managing-data-better-1ad980b75a2a"
-            />
+            <StoriesContainer />
+
+            <DevTipsCard />
 
             <ExperienceContainer
                 snaps={[
@@ -202,6 +199,7 @@ export function Home() {
                     }
                 ]}
             />
+
         </>
     )
 }
