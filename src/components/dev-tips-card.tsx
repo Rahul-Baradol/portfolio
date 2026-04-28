@@ -89,10 +89,11 @@ export function DevTipsCard() {
                     </div>
                     <button
                         onClick={() => setModalOpen(true)}
-                        className="text-muted-foreground hover:text-foreground transition-colors"
+                        className="flex items-center gap-1.5 text-xs text-muted-foreground border border-border rounded-lg px-2.5 py-1 hover:text-foreground hover:border-foreground/30 transition-all duration-200"
                         aria-label="Learn more about this tip"
                     >
-                        <Info className="w-4 h-4" />
+                        <Info className="w-3.5 h-3.5" />
+                        explain
                     </button>
                 </div>
 

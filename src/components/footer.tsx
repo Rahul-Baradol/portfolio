@@ -56,16 +56,16 @@ export default function Footer() {
                     href="https://resonating.vercel.app/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-[11px] text-muted-foreground/50 hover:text-muted-foreground/80 transition-colors"
+                    className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-[11px] text-muted-foreground/50 hover:text-muted-foreground/80 transition-colors px-6 text-center"
                 >
-                    <span className="italic opacity-60">(</span>
                     <span className="opacity-60 italic">while listening to</span>
-                    <img src={song.imageUrl} className="w-4 h-4 rounded-sm object-cover" />
-                    <span>{song.songName}</span>
-                    <span className="opacity-60">—</span>
-                    <span className="opacity-60">{song.artists[0]}</span>
-                    <img src="/spotify-no-bg.png" className="w-3 h-3 opacity-60" />
-                    <span className="italic opacity-60">)</span>
+                    <span className="flex items-center gap-1.5">
+                        <img src={song.imageUrl} className="w-4 h-4 rounded-sm object-cover shrink-0" />
+                        <span>{song.songName}</span>
+                        <span className="opacity-60">—</span>
+                        <span className="opacity-60">{song.artists[0]}</span>
+                        <img src="/spotify-no-bg.png" className="w-3 h-3 opacity-60 shrink-0" />
+                    </span>
                 </a>
             ) : (
                 <div className="h-4 w-48 rounded bg-muted-foreground/10 animate-pulse" />
