@@ -237,13 +237,13 @@ function UserList({ ids }) {
 ]
 
 export const stories = [
-    // {
-    //     title: "Scaling our web-app — managing data better",
-    //     description: "A web app is only simple, until you break the abstraction",
-    //     date: "1st December 2025",
-    //     tags: ["Scalability"],
-    //     mediumUrl: "https://medium.com/@mail_99211/scaling-our-web-app-managing-data-better-1ad980b75a2a"
-    // },
+    {
+        title: "How We Cut Store Page Data Transfer by 73%",
+        description: "It so happens that we get so involved in shipping features for web apps, that we miss out on the tech debt creeping up.",
+        date: "3rd May 2026",
+        tags: ["Web Performance"],
+        mediumUrl: "https://medium.com/@mail_99211/how-we-cut-store-page-data-transfer-by-73-9733af2dee20"
+    },
     {
         title: "Scaling our web-app — managing data better",
         description: "A web app is only simple, until you break the abstraction",
