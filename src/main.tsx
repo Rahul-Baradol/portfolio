@@ -1,5 +1,5 @@
 import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { createRoot, hydrateRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
 import { PostHogProvider } from 'posthog-js/react'
@@ -9,10 +9,17 @@ const options = {
   defaults: '2025-05-24',
 } as const
 
-createRoot(document.getElementById('root')!).render(
+const rootEl = document.getElementById('root')!
+const app = (
   <StrictMode>
     <PostHogProvider apiKey={import.meta.env.VITE_PUBLIC_POSTHOG_KEY} options={options}>
       <App />
     </PostHogProvider>
-  </StrictMode>,
+  </StrictMode>
 )
+
+if (rootEl.innerHTML) {
+  hydrateRoot(rootEl, app)
+} else {
+  createRoot(rootEl).render(app)
+}

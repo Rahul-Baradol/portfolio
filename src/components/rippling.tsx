@@ -4,7 +4,7 @@ import { useTheme } from "@/lib/theme";
 export default function RippleCanvas() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const ripplesRef = useRef<any[]>([]);
-    const sizeRef = useRef({ width: window.innerWidth, height: window.innerHeight });
+    const sizeRef = useRef({ width: 0, height: 0 });
     const { theme } = useTheme();
     const themeRef = useRef(theme);
 

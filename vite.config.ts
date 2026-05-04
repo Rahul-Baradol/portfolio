@@ -5,6 +5,8 @@ import path from 'path'
 import { visualizer } from "rollup-plugin-visualizer";
 import critters from "critters";
 
+let _isSsrBuild = false
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
@@ -22,7 +24,12 @@ export default defineConfig({
     {
       name: "critters",
       apply: () => true,
+      configResolved(config) {
+        _isSsrBuild = !!config.build.ssr
+      },
       closeBundle: async () => {
+        if (_isSsrBuild) return
+
         const fs = await import("fs");
         const path = await import("path");
 
