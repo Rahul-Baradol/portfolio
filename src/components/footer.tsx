@@ -59,7 +59,7 @@ export default function Footer() {
                     className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-[11px] text-muted-foreground/50 hover:text-muted-foreground/80 transition-colors px-6 text-center"
                 >
                     <span className="opacity-60 italic">while listening to</span>
-                    <span className="flex items-center gap-1.5">
+                    <span className="flex items-center gap-1.5 flex-wrap justify-center">
                         <img src={song.imageUrl} className="w-4 h-4 rounded-sm object-cover shrink-0" />
                         <span>{song.songName}</span>
                         <span className="opacity-60">—</span>
