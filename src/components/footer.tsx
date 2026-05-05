@@ -56,14 +56,14 @@ export default function Footer() {
                     href={`https://open.spotify.com/search/${encodeURIComponent(song.songName)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-[11px] text-muted-foreground/50 hover:text-muted-foreground/80 transition-colors px-6 text-center"
+                    className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-[11px] text-foreground/75 hover:text-foreground transition-colors px-6 text-center"
                 >
                     <span className="opacity-60 italic">while listening to</span>
                     <span className="flex items-center gap-1.5 flex-wrap justify-center">
                         <img src={song.imageUrl} className="w-4 h-4 rounded-sm object-cover shrink-0" />
                         <span>{song.songName}</span>
-                        <span className="opacity-60">—</span>
-                        <span className="opacity-60">{song.artists[0]}</span>
+                        <span>—</span>
+                        <span>{song.artists[0]}</span>
                         <img src="/spotify-no-bg.png" className="w-3 h-3 opacity-60 shrink-0" />
                     </span>
                 </a>
