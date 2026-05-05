@@ -53,7 +53,7 @@ export default function Footer() {
 
             {song ? (
                 <a
-                    href="https://resonating.vercel.app/"
+                    href={`https://open.spotify.com/search/${encodeURIComponent(song.songName)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-[11px] text-muted-foreground/50 hover:text-muted-foreground/80 transition-colors px-6 text-center"
