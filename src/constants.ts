@@ -28,7 +28,7 @@ export const sections = [
       "Partnered closely with design teams",
       "    - Built pixel-perfect, responsive UIs across all device breakpoints",
     ],
-    role: "full stack / intern",
+    role: "full stack / software engineer",
     active: true,
     expanded: true,
   },
