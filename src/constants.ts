@@ -15,15 +15,15 @@ export const sections = [
     ],
     bulletPoints: [
       "Owned the end-to-end B2B procurement platform — spanning frontend systems, infrastructure, order processing, and checkout — enabling purchases from a managed network of global suppliers.",
-      "Drove org-wide performance improvements:",
+      "Drove org-wide performance improvements",
       "    - Reduced deployment costs by 70% by introducing and enforcing efficient CI practices",
       "    - Improving page load times by 1.5 seconds (ex. by reducing bundle size by 50%)",
       "    - Achieved 10x faster API latencies (ex. by database query optimization)",
-      "Mentored engineers through structured 1:1s and growth plans:",
+      "Mentored engineers through structured 1:1s and growth plans",
       "    - Scaled team output without proportional headcount increase",
-      "Collaborated with stakeholders, cross-border suppliers, and dropshippers:",
+      "Collaborated with stakeholders, cross-border suppliers, and dropshippers",
       "    - Delivered features with high design fidelity and zero-regression standards",
-      "Partnered closely with design teams:",
+      "Partnered closely with design teams",
       "    - Built pixel-perfect, responsive UIs across all device breakpoints",
     ],
     role: "full stack / intern",
@@ -67,7 +67,7 @@ export const sections = [
         { redirect_url: "https://fastapi.tiangolo.com/", image_url: "/fastapi.png", tech: "FastAPI" }
     ],
     bulletPoints: [
-      "Built a medical query platformm, owning frontend and backend, with RAG-based retrieval and secure authentication, enabling real-time, context-aware responses.",
+      "Built a medical query platform, owning frontend and backend, with RAG-based retrieval and secure authentication, enabling real-time, context-aware responses.",
       "Engineered FastAPI backend for low-latency, structured outputs and scalable API design."
     ],
     role: "full stack / intern",
