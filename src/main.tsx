@@ -18,7 +18,7 @@ const app = (
   </StrictMode>
 )
 
-if (rootEl.innerHTML) {
+if (rootEl.children.length > 0) {
   hydrateRoot(rootEl, app)
 } else {
   createRoot(rootEl).render(app)
