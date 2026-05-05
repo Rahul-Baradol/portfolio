@@ -10,6 +10,7 @@ import { BioCard } from "@/components/bio-card";
 import { WobbleText } from "@/components/wobble-text";
 import EmailContact from "@/components/email-contact";
 import { Dot, Download } from "lucide-react";
+import { sections } from "@/constants";
 
 export function Home() {
     useEffect(() => {
@@ -93,73 +94,7 @@ export function Home() {
             <DevTipsCard />
 
             <ExperienceContainer
-                snaps={[
-                    {
-                        companyName: "Alaiy",
-                        companyLogo: "/alaiy.png",
-                        websiteUrl: "https://alaiy.com",
-                        timeline: "July 2025 - Present",
-                        linkedinUrl: "https://www.linkedin.com/company/alaiy/posts/?feedView=all",
-                        techBadges: [
-                            { redirect_url: "https://www.typescriptlang.org/", image_url: "/ts.png", tech: "Typescript" },
-                            { redirect_url: "https://reactjs.org/", image_url: "/react.png", tech: "React" },
-                            { redirect_url: "https://www.python.org/", image_url: "/python.png", tech: "Python" },
-                            { redirect_url: "https://fastapi.tiangolo.com/", image_url: "/fastapi.png", tech: "FastAPI" }
-                        ],
-                        bulletPoints: [
-                            "Enhanced accessibility and reduced client bandwidth usage by 95%.",
-                            "Improved UX by reducing page load from 8-10s to under 1s",
-                            "Built a high-traffic campaigning site for a leading Indian movie-production house, handling peaks of 8,300 users/min for a blockbuster movie launch",
-                        ],
-                        role: "full stack / intern",
-                        active: true,
-                        expanded: true,
-                    },
-                    {
-                        companyName: "CRED",
-                        companyLogo: "/cred.jpg",
-                        websiteUrl: "https://cred.club",
-                        timeline: "July 2024 - June 2025",
-                        linkedinUrl: "https://www.linkedin.com/company/credapp/",
-                        techBadges: [
-                            { redirect_url: "https://www.java.com/en/", image_url: "/java.png", tech: "Java" },
-                            { redirect_url: "https://spring.io/projects/spring-boot/", image_url: "/springboot.png", tech: "Spring Boot" },
-                            { redirect_url: "https://www.python.org/", image_url: "/python.png", tech: "Python" },
-                            { redirect_url: "https://golang.org/", image_url: "/go.png", tech: "Go", size: 17 },
-                            { redirect_url: "https://www.mysql.com/", image_url: "/mysql.png", tech: "MySQL" },
-                        ],
-                        bulletPoints: [
-                            "Optimized database performance, reducing system load by eliminating redundant writes and cutting CPU usage from 70% to 20%",
-                            "Restored a key bank data pipeline, ensuring 99.9% of users were served reliably.",
-                            "Fixed a critical bug in a bank's data extraction funnel, restoring 300K workflows."
-                        ],
-                        role: "backend developer / intern",
-                        active: false,
-                        expanded: true,
-                    },
-                    {
-                        companyName: "CognitiveLab",
-                        companyLogo: "/cognitivelab.png",
-                        websiteUrl: "https://www.cognitivelab.in/",
-                        timeline: "April 2024 - May 2024",
-                        linkedinUrl: "https://www.linkedin.com/company/cognitivelabai/",
-                        techBadges: [
-                            { redirect_url: "https://www.typescriptlang.org/", image_url: "/ts.png", tech: "Typescript" },
-                            { redirect_url: "https://reactjs.org/", image_url: "/react.png", tech: "React" },
-                            { redirect_url: "https://nextjs.org/", image_url: "/nextjs.jpeg", tech: "Next.js" },
-                            { redirect_url: "https://www.python.org/", image_url: "/python.png", tech: "Python" },
-                            { redirect_url: "https://fastapi.tiangolo.com/", image_url: "/fastapi.png", tech: "FastAPI" }
-                        ],
-                        bulletPoints: [
-                            "Owned end-to-end development of the chat platform, designed to handle medical science queries",
-                            "Led the development of user-facing web application, ensuring responsive and accessible UI",
-                            "Developed a FastAPI backend that supports structured queries and delivers real-time responses."
-                        ],
-                        role: "full stack / intern",
-                        active: false,
-                        expanded: true,
-                    }
-                ]}
+                snaps={sections}
             />
 
             <OpenPRsContainer />

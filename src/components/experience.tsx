@@ -145,13 +145,32 @@ export default function ExperienceCard({ companyName, companyLogo, websiteUrl, g
                         }
 
                         {
-                            bulletPoints && bulletPoints.length > 0 ? (
-                                <ul className="list-disc list-inside mt-2 space-y-1 text-muted-foreground">
-                                    {bulletPoints.map((point, index) => (
-                                        <li className="text-sm" key={index}>{point}</li>
-                                    ))}
-                                </ul>
-                            ) : null
+                            bulletPoints && bulletPoints.length > 0 ? (() => {
+                                const parsed: { text: string; children: string[] }[] = [];
+                                for (const point of bulletPoints) {
+                                    if (point.startsWith("    - ")) {
+                                        if (parsed.length > 0) parsed[parsed.length - 1].children.push(point.slice(6));
+                                    } else {
+                                        parsed.push({ text: point, children: [] });
+                                    }
+                                }
+                                return (
+                                    <ul className="list-disc list-inside mt-2 space-y-1.5 text-muted-foreground w-full">
+                                        {parsed.map((item, i) => (
+                                            <li key={i} className="text-sm">
+                                                {item.text}
+                                                {item.children.length > 0 && (
+                                                    <ul className="list-[circle] list-inside ml-4 mt-1 space-y-1">
+                                                        {item.children.map((child, j) => (
+                                                            <li key={j} className="text-sm text-muted-foreground/75">{child}</li>
+                                                        ))}
+                                                    </ul>
+                                                )}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                );
+                            })() : null
                         }
                     </div>
                 </AccordionPrimitive.Content>

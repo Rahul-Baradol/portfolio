@@ -1,35 +1,79 @@
 import type { PR } from "./types/types";
 
 export const sections = [
-    {
-        company: "Alaiy",
-        timeline: "July 2025 - present",
-        points: [
-            "Saved 95% client bandwidth with caching",
-            "Reduced page latency from 8-10s to <1s",
-            "Built wallet & credit system ensuring 99.9% transaction reliability",
-            "Built blockbuster movie campaigning site - 65k submissions with 8.3k peak users/min",
-            "Delivered a scalable Redux + RTK state layer for a complex product page with multi-version fields, cutting orchestration complexity and improving developer productivity",
-        ],
-    },
-    {
-        company: "CRED",
-        timeline: "July 2024 - June 2025",
-        points: [
-            "Reduced write IOPS by 87%",
-            "Cut CPU usage from 70% → 20%",
-            "Restored ingestion pipeline to 99.9% user coverage",
-            "Fixed extraction funnel affecting 300k workflows",
-        ],
-    },
-    {
-        company: "Cognitive Lab",
-        timeline: "April 2024 - May 2024",
-        points: [
-            "Owned full medical-query chat platform",
-            "FastAPI backend with real-time structured responses",
-        ],
-    },
+  {
+    companyName: "Alaiy",
+    companyLogo: "/alaiy.png",
+    websiteUrl: "https://alaiy.com",
+    timeline: "July 2025 - Present",
+    linkedinUrl: "https://www.linkedin.com/company/alaiy/posts/?feedView=all",
+    techBadges: [
+        { redirect_url: "https://www.typescriptlang.org/", image_url: "/ts.png", tech: "Typescript" },
+        { redirect_url: "https://reactjs.org/", image_url: "/react.png", tech: "React" },
+        { redirect_url: "https://www.python.org/", image_url: "/python.png", tech: "Python" },
+        { redirect_url: "https://fastapi.tiangolo.com/", image_url: "/fastapi.png", tech: "FastAPI" }
+    ],
+    bulletPoints: [
+      "Owned the end-to-end B2B procurement platform — spanning frontend systems, infrastructure, order processing, and checkout — enabling purchases from a managed network of global suppliers.",
+      "Drove org-wide performance improvements:",
+      "    - Reduced deployment costs by 70% by introducing and enforcing efficient CI practices",
+      "    - Improving page load times by 1.5 seconds (ex. by reducing bundle size by 50%)",
+      "    - Achieved 10x faster API latencies (ex. by database query optimization)",
+      "Mentored engineers through structured 1:1s and growth plans:",
+      "    - Scaled team output without proportional headcount increase",
+      "Collaborated with stakeholders, cross-border suppliers, and dropshippers:",
+      "    - Delivered features with high design fidelity and zero-regression standards",
+      "Partnered closely with design teams:",
+      "    - Built pixel-perfect, responsive UIs across all device breakpoints",
+    ],
+    role: "full stack / intern",
+    active: true,
+    expanded: true,
+  },
+  {
+    companyName: "CRED",
+    companyLogo: "/cred.jpg",
+    websiteUrl: "https://cred.club",
+    timeline: "July 2024 - June 2025",
+    linkedinUrl: "https://www.linkedin.com/company/credapp/",
+    techBadges: [
+        { redirect_url: "https://www.java.com/en/", image_url: "/java.png", tech: "Java" },
+        { redirect_url: "https://spring.io/projects/spring-boot/", image_url: "/springboot.png", tech: "Spring Boot" },
+        { redirect_url: "https://www.python.org/", image_url: "/python.png", tech: "Python" },
+        { redirect_url: "https://golang.org/", image_url: "/go.png", tech: "Go", size: 17 },
+        { redirect_url: "https://www.mysql.com/", image_url: "/mysql.png", tech: "MySQL" },
+    ],
+    bulletPoints: [
+      "Ensured reliable data processing for 100K+ users by owning bank ETL funnels across multiple integrations and introducing backend + configuration improvements, supporting core financial features",
+      "Reduced infrastructure costs by 87% by optimizing backend API logic and lowering CPU usage from 70% → 20%",
+      "Restored data ingestion reliability to 99.9% user coverage, improving product experience",
+      "Resolved critical extraction funnel issues impacting 300K workflows, unblocking business operations"
+    ],
+    role: "backend developer / intern",
+    active: false,
+    expanded: true,
+  },
+  {
+    companyName: "CognitiveLab",
+    companyLogo: "/cognitivelab.png",
+    websiteUrl: "https://www.cognitivelab.in/",
+    timeline: "April 2024 - May 2024",
+    linkedinUrl: "https://www.linkedin.com/company/cognitivelabai/",
+    techBadges: [
+        { redirect_url: "https://www.typescriptlang.org/", image_url: "/ts.png", tech: "Typescript" },
+        { redirect_url: "https://reactjs.org/", image_url: "/react.png", tech: "React" },
+        { redirect_url: "https://nextjs.org/", image_url: "/nextjs.jpeg", tech: "Next.js" },
+        { redirect_url: "https://www.python.org/", image_url: "/python.png", tech: "Python" },
+        { redirect_url: "https://fastapi.tiangolo.com/", image_url: "/fastapi.png", tech: "FastAPI" }
+    ],
+    bulletPoints: [
+      "Built a medical query platformm, owning frontend and backend, with RAG-based retrieval and secure authentication, enabling real-time, context-aware responses.",
+      "Engineered FastAPI backend for low-latency, structured outputs and scalable API design."
+    ],
+    role: "full stack / intern",
+    active: false,
+    expanded: true,
+  },
 ];
 
 export const SignatureCardDetails = {
