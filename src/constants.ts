@@ -19,6 +19,8 @@ export const sections = [
       "    - Reduced deployment costs by 70% by introducing and enforcing efficient CI practices",
       "    - Improving page load times by 1.5 seconds (ex. by reducing bundle size by 50%)",
       "    - Achieved 10x faster API latencies (ex. by database query optimization)",
+      "Led development of a high-traffic campaign platform for a leading Indian movie production house",
+      "    - Handled peak traffic of 8,300 users/min during a blockbuster launch",
       "Mentored engineers through structured 1:1s and growth plans",
       "    - Scaled team output without proportional headcount increase",
       "Collaborated with stakeholders, cross-border suppliers, and dropshippers",

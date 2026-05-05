@@ -162,7 +162,7 @@ export default function ExperienceCard({ companyName, companyLogo, websiteUrl, g
                                                 {item.children.length > 0 && (
                                                     <ul className="list-[circle] list-inside ml-4 mt-1 space-y-1">
                                                         {item.children.map((child, j) => (
-                                                            <li key={j} className="text-sm text-muted-foreground/75">{child}</li>
+                                                            <li key={j} className="text-sm text-muted-foreground/90">{child}</li>
                                                         ))}
                                                     </ul>
                                                 )}
