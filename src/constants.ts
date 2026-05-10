@@ -79,12 +79,12 @@ export const sections = [
 ];
 
 export const SignatureCardDetails = {
-    title: "Timesignature",
+    title: "Signature",
     description:
-        "A realtime music visualiser that reacts to beat signatures and tempo.",
+        "A platform to visualize and create music.",
     videoSrc: "/signature.mp4",
     posterSrc: "/signature-poster.jpg",
-    redirectUrl: "https://timesignature.in",
+    redirectUrl: "http://signature.rahulbaradol.in",
 }
 
 export const FlowPuzzleCardDetails = {
