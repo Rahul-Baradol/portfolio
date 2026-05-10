@@ -47,10 +47,9 @@ export const sections = [
         { redirect_url: "https://www.mysql.com/", image_url: "/mysql.png", tech: "MySQL" },
     ],
     bulletPoints: [
-      "Ensured reliable data processing for 100K+ users by owning bank ETL funnels across multiple integrations and introducing backend + configuration improvements, supporting core financial features",
-      "Reduced infrastructure costs by 87% by optimizing backend API logic and lowering CPU usage from 70% → 20%",
-      "Restored data ingestion reliability to 99.9% user coverage, improving product experience",
-      "Resolved critical extraction funnel issues impacting 300K workflows, unblocking business operations"
+      "Reduced DB costs by 87% and CPU usage from 70% to 20% by eliminating redundant DB writes and optimizing backend logic for a service",
+      "Restored ingestion reliability to 99.9% user coverage for a critical banking integration",
+      "Resolved extraction funnel failures impacting 300K workflows, 100K+ users; through debugging and pipeline fixes"
     ],
     role: "backend developer / intern",
     active: false,
