@@ -1,4 +1,4 @@
-import { DevTipsCard } from "@/components/dev-tips-card";
+// import { DevTipsCard } from "@/components/dev-tips-card";
 import { motion } from "motion/react";
 import { ExperienceContainer } from "@/components/experience";
 import { ProjectsContainer } from "@/components/projects";
@@ -91,7 +91,7 @@ export function Home() {
 
             <StoriesContainer />
 
-            <DevTipsCard />
+            {/* <DevTipsCard /> */}
 
             <ExperienceContainer
                 snaps={sections}
