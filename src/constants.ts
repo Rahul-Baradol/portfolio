@@ -15,6 +15,7 @@ export const sections = [
     ],
     bulletPoints: [
       "Owned the end-to-end B2B procurement platform — spanning frontend systems, infrastructure, order processing, and checkout — enabling purchases from a managed network of global suppliers.",
+      "Owned the Amazon seller listing platform — spanning frontend architecture, state management, and credit system — enabling sellers to manage and optimize product listings across categories and marketplaces",
       "Drove org-wide performance improvements",
       "    - Reduced deployment costs by 70% by introducing and enforcing efficient CI practices",
       "    - Improving page load times by 1.5 seconds (ex. by reducing bundle size by 50%)",
