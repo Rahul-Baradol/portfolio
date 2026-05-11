@@ -108,11 +108,11 @@ export function Home() {
             <ProjectsContainer
                 projects={[
                     {
-                        title: "Timesignature",
+                        title: "Signature",
                         videoDemoUrl: "/signature.mp4",
                         posterUrl: "/signature-poster.jpg",
-                        story: "A realtime music visualiser that reacts to beat signatures and tempo.",
-                        websiteUrl: "https://timesignature.in",
+                        story: "A platform to visualize and create music.",
+                        websiteUrl: "https://signature.rahulbaradol.in/",
                         githubUrl: "https://github.com/Rahul-Baradol/signature",
                         linkedinUrl: "https://www.linkedin.com/posts/rahul-baradol_so-i-listen-to-songs-a-lot-and-thought-activity-7376004232765722624-hx_M?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEX65n8BwCmiX146yfLfYwDy_g61M6mYJ8I"
                     },
