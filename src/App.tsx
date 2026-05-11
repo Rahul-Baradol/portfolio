@@ -1,12 +1,11 @@
-import { lazy, Suspense, useEffect } from "react";
+import { useEffect } from "react";
 import Lenis from "lenis";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Layout } from "./layout";
 import { ThemeProvider } from "./lib/theme";
-
-const Home = lazy(() => import("./pages/home").then((m) => ({ default: m.Home })));
-const PRsPage = lazy(() => import("./pages/prs").then((m) => ({ default: m.PRsPage })));
-const NotFound = lazy(() => import("./components/not-found"));
+import { Home } from "./pages/home";
+import { PRsPage } from "./pages/prs";
+import NotFound from "./components/not-found";
 
 function App() {
   useEffect(() => {
@@ -23,15 +22,13 @@ function App() {
   return (
     <ThemeProvider>
       <BrowserRouter>
-        <Suspense>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Home />} />
-              <Route path="/prs" element={<PRsPage />} />
-              <Route path="/*" element={<NotFound />} />
-            </Route>
-          </Routes>
-        </Suspense>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="/prs" element={<PRsPage />} />
+            <Route path="/*" element={<NotFound />} />
+          </Route>
+        </Routes>
       </BrowserRouter>
     </ThemeProvider>
   );
