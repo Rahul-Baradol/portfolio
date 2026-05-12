@@ -1,5 +1,4 @@
 import { FALLBACK_SONG } from "@/constants";
-import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 
 export function SpotifyCard() {
@@ -31,22 +30,7 @@ export function SpotifyCard() {
     }, [])
 
     return (
-        <motion.div
-            variants={{
-                hidden: { opacity: 0, y: 20 },
-                show: {
-                    opacity: 1,
-                    y: 0,
-                    transition: {
-                        duration: 0.7,
-                        staggerChildren: 0.5,
-                    },
-                },
-            }}
-            initial="hidden"
-            animate="show"
-        className="z-10 p-4 flex flex-col gap-3 items-start text-muted-foreground w-[90vw] lg:w-[50vw] h-fit border border-border rounded-xl relative bg-[#1E3A8A]/10 dark:bg-cyan-500/5"
-        >
+        <div className="animate-fade-up z-10 p-4 flex flex-col gap-3 items-start text-muted-foreground w-[90vw] lg:w-[50vw] h-fit border border-border rounded-xl relative bg-[#1E3A8A]/10 dark:bg-cyan-500/5">
             <div className="text-sm flex flex-row items-center gap-2">
                 Recently played on <img src="/spotify-no-bg.webp" width={20} />
             </div>
@@ -78,6 +62,6 @@ export function SpotifyCard() {
                     Checkout my playlists
                 </a>
             </div>
-        </motion.div>
+        </div>
     )
 }

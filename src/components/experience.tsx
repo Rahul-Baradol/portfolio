@@ -1,5 +1,4 @@
 import { ArrowDown, Globe, Road } from "lucide-react";
-import { m } from "motion/react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import * as AccordionPrimitive from "@radix-ui/react-accordion"
 import { TechBadge } from "./tech-badges";
@@ -38,14 +37,7 @@ export default function ExperienceCard({ companyName, companyLogo, websiteUrl, g
                         className="flex flex-row items-center gap-3 focus-visible:border-ring focus-visible:ring-ring/50 p-4 text-left text-sm font-medium transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&[data-state=open]>svg]:rotate-180 group w-full cursor-pointer border border-border rounded-xl bg-background hover:bg-foreground/5 dark:hover:bg-cyan-600/10 hover:border-foreground/15 dark:hover:border-cyan-500/5"
                     >
                         <div className="flex flex-col items-center w-full">
-                            <m.div
-                                variants={{
-                                    hidden: { opacity: 0, y: 30 },
-                                    show: { opacity: 1, y: 0 },
-                                }}
-                                transition={{ duration: 0.5 }}
-                                className="flex flex-row justify-between items-center overflow-hidden w-full"
-                            >
+                            <div className="animate-fade-up flex flex-row justify-between items-center overflow-hidden w-full">
                                 <div className="w-full sm:w-fit flex flex-row items-center gap-3">
                                     <img
                                         src={companyLogo}
@@ -122,7 +114,7 @@ export default function ExperienceCard({ companyName, companyLogo, websiteUrl, g
                                 <div className="text-xs italic text-muted-foreground flex flex-row items-center gap-1 sm:gap-2">
                                     <div>{timeline}</div>
                                 </div>
-                            </m.div>
+                            </div>
                         </div>
                         <ArrowDown className="w-4 sm:w-3 transition-transform" />
                     </AccordionPrimitive.Trigger>
@@ -185,22 +177,7 @@ interface ExperienceContainerProps {
 
 export function ExperienceContainer({ snaps }: ExperienceContainerProps) {
     return (
-        <m.div
-            variants={{
-                hidden: { opacity: 0, y: 20 },
-                show: {
-                    opacity: 1,
-                    y: 0,
-                    transition: {
-                        duration: 0.7,
-                        staggerChildren: 0.5,
-                    },
-                },
-            }}
-            initial="hidden"
-            animate="show"
-            className="p-0 text-muted-foreground w-[90vw] lg:w-[50vw] h-full rounded-xl relative flex flex-col gap-5 bg-transparent"
-        >
+        <div className="animate-fade-up p-0 text-muted-foreground w-[90vw] lg:w-[50vw] h-full rounded-xl relative flex flex-col gap-5 bg-transparent">
             <div className="flex flex-row gap-2 items-center italic">
                 <Road className="h-4 w-4 text-muted-foreground" />
                 Experience
@@ -224,6 +201,6 @@ export function ExperienceContainer({ snaps }: ExperienceContainerProps) {
                     />
                 ))
             }
-        </m.div>
+        </div>
     );
 }

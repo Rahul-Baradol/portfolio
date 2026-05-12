@@ -1,4 +1,3 @@
-import { m } from "motion/react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { Balloon, Globe } from "lucide-react";
 
@@ -18,14 +17,7 @@ interface ProjectContainerProps {
 
 export default function ProjectCard({ title, videoDemoUrl, posterUrl, story, websiteUrl, githubUrl, linkedinUrl }: ProjectCardProps) {
     return (
-        <m.div
-            variants={{
-                hidden: { opacity: 0, y: 30 },
-                show: { opacity: 1, y: 0 },
-            }}
-            transition={{ duration: 0.5 }}
-            className="pt-1 pl-1 pr-0 pb-0 group text-muted-foreground w-[90vw] lg:w-[50vw] h-fit border-l-4 border-t-4 border-r-[1.5px] border-b-[1.5px] border-foreground/10 dark:border-cyan-500/20 hover:border-foreground/20 dark:hover:border-cyan-600/10 rounded-xl relative transition-all duration-500"
-        >
+        <div className="animate-fade-up pt-1 pl-1 pr-0 pb-0 group text-muted-foreground w-[90vw] lg:w-[50vw] h-fit border-l-4 border-t-4 border-r-[1.5px] border-b-[1.5px] border-foreground/10 dark:border-cyan-500/20 hover:border-foreground/20 dark:hover:border-cyan-600/10 rounded-xl relative transition-all duration-500">
             <div className="w-full pt-4 pl-4 pr-4 pb-4 relative z-10 dark:bg-black/20 rounded-xl h-full flex flex-col gap-5">
                 <div className="w-full flex flex-row items-center justify-between rounded-xl">
                     <span className="text-md text-foreground">{title}</span>
@@ -92,31 +84,15 @@ export default function ProjectCard({ title, videoDemoUrl, posterUrl, story, web
                             Your browser does not support the video tag.
                         </video>
                     </a>
-
                 </div>
             </div>
-        </m.div>
+        </div>
     );
 }
 
 export function ProjectsContainer({ projects }: ProjectContainerProps) {
     return (
-        <m.div
-            variants={{
-                hidden: { opacity: 0, y: 20 },
-                show: {
-                    opacity: 1,
-                    y: 0,
-                    transition: {
-                        duration: 0.7,
-                        staggerChildren: 0.5,
-                    },
-                },
-            }}
-            initial="hidden"
-            animate="show"
-            className="p-0 text-muted-foreground w-[90vw] lg:w-[50vw] h-full rounded-xl relative flex flex-col gap-5 bg-transparent"
-        >
+        <div className="animate-fade-up p-0 text-muted-foreground w-[90vw] lg:w-[50vw] h-full rounded-xl relative flex flex-col gap-5 bg-transparent">
             <div className="flex flex-row gap-2 items-center italic">
                 <Balloon className="h-4 w-4 text-muted-foreground" />
                 Built for fun
@@ -136,7 +112,6 @@ export function ProjectsContainer({ projects }: ProjectContainerProps) {
                     />
                 ))
             }
-
-        </m.div>
+        </div>
     );
 }

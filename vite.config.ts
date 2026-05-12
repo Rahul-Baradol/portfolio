@@ -71,9 +71,6 @@ export default defineConfig({
           if (id.includes('node_modules/react-dom') || id.includes('node_modules/react/') || id.includes('node_modules/react-router')) {
             return 'react-vendor';
           }
-          if (id.includes('node_modules/motion')) {
-            return 'motion';
-          }
           if (id.includes('node_modules/posthog-js')) {
             return 'posthog';
           }

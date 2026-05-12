@@ -1,7 +1,5 @@
-import { m } from "motion/react";
 import { ArrowUpRight, Lightbulb } from "lucide-react";
 import { Tooltip, TooltipTrigger, TooltipContent } from "./ui/tooltip";
-import { useTheme } from "@/lib/theme";
 import { stories } from "@/constants";
 
 interface BlogCardProps {
@@ -11,29 +9,17 @@ interface BlogCardProps {
     tags?: string[];
     date: string;
     className?: string;
+    animationDelay?: string;
 }
 
-export function BlogCard({ title, description, mediumUrl, tags, date, className }: BlogCardProps) {
-    const { theme } = useTheme();
-
+export function BlogCard({ title, description, mediumUrl, tags, date, className, animationDelay }: BlogCardProps) {
     return (
-        <m.a
+        <a
             href={mediumUrl}
             target="_blank"
             rel="noopener noreferrer"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{
-                opacity: 1,
-                y: 0,
-                borderColor: theme === "dark" ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.09)",
-            }}
-            whileHover={{
-                scale: 1.02,
-                borderColor: theme === "dark" ? "rgba(34,211,238,0.3)" : "rgba(0,0,0,0.2)",
-            }}
-            whileTap={{ scale: 0.97 }}
-            transition={{ duration: 0.25 }}
-            className={`flex flex-col gap-3 p-4 rounded-xl border border-border bg-black/3 dark:bg-black/10 hover:bg-foreground/5 dark:hover:bg-cyan-600/5 cursor-pointer group ${className}`}
+            style={animationDelay ? { animationDelay } : undefined}
+            className={`animate-fade-up flex flex-col gap-3 p-4 rounded-xl border border-border bg-black/3 dark:bg-black/10 hover:bg-foreground/5 dark:hover:bg-cyan-600/5 hover:border-foreground/20 dark:hover:border-cyan-400/30 hover:scale-[1.02] active:scale-[0.97] transition-all duration-200 cursor-pointer group ${className}`}
         >
             <div className="flex flex-row justify-between items-start">
                 <div className="flex flex-col gap-2 w-[90%]">
@@ -69,21 +55,13 @@ export function BlogCard({ title, description, mediumUrl, tags, date, className 
                     ))}
                 </div>
             </div>
-        </m.a>
+        </a>
     );
 }
 
 export function StoriesContainer() {
     return (
-        <m.div
-            variants={{
-                hidden: { opacity: 0, y: 20 },
-                show: { opacity: 1, y: 0, transition: { duration: 0.7, staggerChildren: 0.3 } },
-            }}
-            initial="hidden"
-            animate="show"
-            className="p-0 text-muted-foreground w-[90vw] lg:w-[50vw] h-full rounded-xl relative flex flex-col gap-5 bg-transparent"
-        >
+        <div className="animate-fade-up p-0 text-muted-foreground w-[90vw] lg:w-[50vw] h-full rounded-xl relative flex flex-col gap-5 bg-transparent">
             <div className="flex flex-row gap-2 items-center italic">
                 <Lightbulb className="h-4 w-4 text-muted-foreground" />
                 Stories
@@ -98,12 +76,11 @@ export function StoriesContainer() {
                         mediumUrl={story.mediumUrl}
                         tags={story.tags}
                         date={story.date}
+                        animationDelay={`${idx * 0.1}s`}
                         className="w-full"
                     />
                 ))}
             </div>
-
-
-        </m.div>
+        </div>
     );
 }

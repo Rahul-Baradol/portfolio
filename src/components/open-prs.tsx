@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import { m } from "motion/react";
 import { ArrowRight, ExternalLink, GitPullRequest } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useTheme } from "@/lib/theme";
 import { FALLBACK_MERGED_PRS, GITHUB_USERNAME } from "@/constants";
 import { fetchHomePRs, RateLimitedError } from "@/lib/github";
 import type { PR } from "@/types/types";
@@ -23,8 +21,7 @@ export function PRSkeleton() {
     );
 }
 
-export function PRCard({ pr }: { pr: PR }) {
-    const { theme } = useTheme();
+export function PRCard({ pr, animationDelay }: { pr: PR; animationDelay?: string }) {
     const isMerged = pr.state === "closed";
 
     const date = new Date(pr.createdAt).toLocaleDateString("en-US", {
@@ -32,21 +29,12 @@ export function PRCard({ pr }: { pr: PR }) {
     });
 
     return (
-        <m.a
+        <a
             href={pr.url}
             target="_blank"
             rel="noopener noreferrer"
-            variants={{
-                hidden: { opacity: 0, y: 10 },
-                show: { opacity: 1, y: 0, borderColor: theme === "dark" ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.09)" },
-            }}
-            whileHover={{
-                scale: 1.01,
-                borderColor: theme === "dark" ? "rgba(34,211,238,0.3)" : "rgba(0,0,0,0.2)",
-            }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ duration: 0.2 }}
-            className="z-10 flex flex-row justify-between items-start p-4 rounded-xl border border-border bg-black/3 dark:bg-black/10 hover:bg-foreground/5 dark:hover:bg-cyan-600/5 cursor-pointer group"
+            style={animationDelay ? { animationDelay } : undefined}
+            className="animate-fade-up z-10 flex flex-row justify-between items-start p-4 rounded-xl border border-border bg-black/3 dark:bg-black/10 hover:bg-foreground/5 dark:hover:bg-cyan-600/5 hover:border-foreground/20 dark:hover:border-cyan-400/30 hover:scale-[1.01] active:scale-[0.98] transition-all duration-200 cursor-pointer group"
         >
             <div className="flex flex-col gap-1.5 w-[85%]">
                 <div className="text-sm italic text-foreground group-hover:text-foreground dark:group-hover:text-cyan-300 transition-colors line-clamp-2">
@@ -64,7 +52,7 @@ export function PRCard({ pr }: { pr: PR }) {
                     {isMerged ? "merged" : "open"}
                 </span>
             </div>
-        </m.a>
+        </a>
     );
 }
 
@@ -102,19 +90,11 @@ export function OpenPRsContainer() {
     }
 
     const errorMessage = errorKind === "rate-limited"
-        ? "lot of people visiting — github rate limited us. Showing some older contributions so you don't leave empty-handed:"
-        : "unable to reach github — showing some older contributions in the meantime:";
+        ? "lot of people visiting - github rate limited us. Showing some older contributions so you don't leave empty-handed:"
+        : "unable to reach github - showing some older contributions in the meantime:";
 
     return (
-        <m.div
-            variants={{
-                hidden: { opacity: 0, y: 20 },
-                show: { opacity: 1, y: 0, transition: { duration: 0.7, staggerChildren: 0.1 } },
-            }}
-            initial="hidden"
-            animate="show"
-            className="z-10 p-0 text-muted-foreground w-[90vw] lg:w-[50vw] flex flex-col gap-5 bg-transparent"
-        >
+        <div className="animate-fade-up z-10 p-0 text-muted-foreground w-[90vw] lg:w-[50vw] flex flex-col gap-5 bg-transparent">
             <div className="flex flex-row items-center gap-2 italic">
                 <GitPullRequest className="h-4 w-4 text-muted-foreground" />
                 Open Source & Contributions
@@ -130,7 +110,7 @@ export function OpenPRsContainer() {
                         </div>
                         <div className="flex flex-col gap-2">
                             <h4 className="text-xs font-semibold uppercase tracking-wider">Merged PRs</h4>
-                            {FALLBACK_MERGED_PRS.map((pr) => <PRCard key={pr.id} pr={pr} />)}
+                            {FALLBACK_MERGED_PRS.map((pr, i) => <PRCard key={pr.id} pr={pr} animationDelay={`${i * 0.05}s`} />)}
                         </div>
                         <div className="flex flex-row gap-3 justify-end">
                             <span className="text-xs text-muted-foreground hover:text-foreground transition-colors">View all</span>
@@ -159,7 +139,7 @@ export function OpenPRsContainer() {
                         {openPRs.length > 0 && (
                             <div className="z-10 flex flex-col gap-2">
                                 <h4 className="text-xs font-semibold uppercase tracking-wider">Open PRs</h4>
-                                {openPRs.map((pr) => <PRCard key={pr.id} pr={pr} />)}
+                                {openPRs.map((pr, i) => <PRCard key={pr.id} pr={pr} animationDelay={`${i * 0.05}s`} />)}
                                 <Link
                                     to="/prs?tab=open"
                                     className="text-xs text-muted-foreground hover:text-foreground transition-colors self-end"
@@ -171,7 +151,7 @@ export function OpenPRsContainer() {
                         {mergedPRs.length > 0 && (
                             <div className="z-10 flex flex-col gap-2">
                                 <h4 className="text-xs font-semibold uppercase tracking-wider">Merged PRs</h4>
-                                {mergedPRs.map((pr) => <PRCard key={pr.id} pr={pr} />)}
+                                {mergedPRs.map((pr, i) => <PRCard key={pr.id} pr={pr} animationDelay={`${i * 0.05}s`} />)}
                                 <Link
                                     to="/prs?tab=merged"
                                     className="text-xs text-muted-foreground hover:text-foreground transition-colors self-end"
@@ -183,6 +163,6 @@ export function OpenPRsContainer() {
                     </>
                 )}
             </div>
-        </m.div>
+        </div>
     );
 }

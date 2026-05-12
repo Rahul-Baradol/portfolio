@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { m } from "motion/react";
 import { GitPullRequest, ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
 import { PRCard, PRSkeleton } from "@/components/open-prs";
@@ -56,12 +55,7 @@ export function PRsPage() {
     };
 
     return (
-        <m.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="z-10 w-[90vw] lg:w-[50vw] flex flex-col gap-6"
-        >
+        <div className="animate-fade-up z-10 w-[90vw] lg:w-[50vw] flex flex-col gap-6">
             <Link
                 to="/"
                 className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors self-start"
@@ -123,27 +117,18 @@ export function PRsPage() {
                 </div>
             ) : (
                 <>
-                    <m.div
-                        key={`${tab}-${page}`}
-                        variants={{
-                            hidden: { opacity: 0 },
-                            show: { opacity: 1, transition: { staggerChildren: 0.05 } },
-                        }}
-                        initial="hidden"
-                        animate="show"
-                        className="flex flex-col gap-3"
-                    >
+                    <div key={`${tab}-${page}`} className="flex flex-col gap-3">
                         {loading
                             ? [...Array(5)].map((_, i) => <PRSkeleton key={i} />)
                             : prs.length > 0
-                            ? prs.map((pr) => <PRCard key={pr.id} pr={pr} />)
+                            ? prs.map((pr, i) => <PRCard key={pr.id} pr={pr} animationDelay={`${i * 0.04}s`} />)
                             : (
                                 <div className="text-sm text-muted-foreground italic text-center py-12">
                                     No {tab} PRs found.
                                 </div>
                             )
                         }
-                    </m.div>
+                    </div>
 
                     {!loading && totalPages > 1 && (
                         <div className="flex flex-row items-center justify-between pt-2">
@@ -170,6 +155,6 @@ export function PRsPage() {
                     )}
                 </>
             )}
-        </m.div>
+        </div>
     );
 }

@@ -1,5 +1,4 @@
 // import { DevTipsCard } from "@/components/dev-tips-card";
-import { m } from "motion/react";
 import { ExperienceContainer } from "@/components/experience";
 import { ProjectsContainer } from "@/components/projects";
 import { StoriesContainer } from "@/components/stories";
@@ -20,27 +19,15 @@ export function Home() {
     return (
         <>
             <div className="z-10 w-screen flex flex-col items-center gap-4">
-                <m.div
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.7, ease: "easeOut" }}
-                    className="text-3xl md:text-4xl font-bold select-none"
-                >
+                <div className="text-3xl md:text-4xl font-bold select-none">
                     Rahul Baradol
-                </m.div>
+                </div>
 
-                <m.div
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.6, duration: 0.7 }}
-                    className="text-sm md:text-base px-4 text-center text-muted-foreground flex flex-row flex-wrap items-center justify-center gap-1 select-none"
-                >
+                <div className="text-sm md:text-base px-4 text-center text-muted-foreground flex flex-row flex-wrap items-center justify-center gap-1 select-none">
                     <span>I&apos;m a software</span> <WobbleText>engineer</WobbleText> <span>— frontend, backend, open source, and a fingerstyle</span> <WobbleText>guitarist</WobbleText>
-                </m.div>
+                </div>
 
-                <m.div
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.9, duration: 0.5 }}
-                    className="flex px-4 flex-row flex-wrap items-center justify-center gap-1"
-                >
+                <div className="flex px-4 flex-row flex-wrap items-center justify-center gap-1">
                     <a
                         href="https://www.linkedin.com/in/rahul-baradol/"
                         target="_blank"
@@ -81,7 +68,7 @@ export function Home() {
                     </a>
                     <Dot className="opacity-25 w-5 h-5" />
                     <EmailContact />
-                </m.div>
+                </div>
             </div>
 
             <BioCard />

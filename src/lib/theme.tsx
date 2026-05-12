@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 
 type Theme = "light" | "dark";
 
@@ -13,19 +13,26 @@ const ThemeContext = createContext<ThemeContextValue>({
 });
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  // Always "light" on first render so SSR HTML and client hydration match.
   const [theme, setTheme] = useState<Theme>("light");
+  const isMounted = useRef(false);
 
   useEffect(() => {
-    const stored = localStorage.getItem("theme") as Theme | null;
-    if (stored) setTheme(stored);
-  }, []);
+    if (!isMounted.current) {
+      // First run after hydration: read stored preference.
+      // The inline <script> in index.html already applied the dark class to <html>,
+      // so we only need to sync React state — no DOM write, no localStorage overwrite.
+      isMounted.current = true;
+      const stored = (localStorage.getItem("theme") as Theme) || "light";
+      if (stored !== "light") setTheme(stored);
+      return;
+    }
 
-  useEffect(() => {
-    const root = document.documentElement;
+    // Every subsequent run is a user-initiated toggle.
     if (theme === "dark") {
-      root.classList.add("dark");
+      document.documentElement.classList.add("dark");
     } else {
-      root.classList.remove("dark");
+      document.documentElement.classList.remove("dark");
     }
     localStorage.setItem("theme", theme);
   }, [theme]);
