@@ -53,7 +53,9 @@ export default function ExperienceCard({ companyName, companyLogo, websiteUrl, g
                                             <div className="flex flex-row gap-2 items-center">
                                                 <Tooltip>
                                                     <TooltipTrigger asChild className="bg-background">
-                                                        <a href={websiteUrl} target="_blank" rel="noopener noreferrer">
+                                                        <a onClick={(e) => {
+                                                            e.stopPropagation();
+                                                        }} href={websiteUrl} target="_blank" rel="noopener noreferrer">
                                                             <Globe className="h-3 w-3 text-muted-foreground" />
                                                         </a>
                                                     </TooltipTrigger>
@@ -66,7 +68,9 @@ export default function ExperienceCard({ companyName, companyLogo, websiteUrl, g
                                                     githubUrl ? (
                                                         <Tooltip>
                                                             <TooltipTrigger asChild className="bg-background">
-                                                                <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="text-muted-foreground bg-transparent text-xs">
+                                                                <a onClick={(e) => {
+                                                                    e.stopPropagation();
+                                                                }} href={githubUrl} target="_blank" rel="noopener noreferrer" className="text-muted-foreground bg-transparent text-xs">
                                                                     Github
                                                                 </a>
                                                             </TooltipTrigger>
@@ -81,7 +85,9 @@ export default function ExperienceCard({ companyName, companyLogo, websiteUrl, g
                                                     linkedinUrl ? (
                                                         <Tooltip>
                                                             <TooltipTrigger asChild className="bg-background">
-                                                                <a href={linkedinUrl} target="_blank" rel="noopener noreferrer" className="text-muted-foreground bg-transparent">
+                                                                <a onClick={(e) => {
+                                                                    e.stopPropagation();
+                                                                }} href={linkedinUrl} target="_blank" rel="noopener noreferrer" className="text-muted-foreground bg-transparent">
                                                                     in
                                                                 </a>
                                                             </TooltipTrigger>
