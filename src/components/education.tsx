@@ -1,5 +1,5 @@
 import { GraduationCap } from "lucide-react";
-import { motion } from "motion/react";
+import { m } from "motion/react";
 
 interface EducationContainerProps {
     institution: string;
@@ -9,7 +9,7 @@ interface EducationContainerProps {
 
 export function EducationContainer({ institution, degree, timeline }: EducationContainerProps) {
     return (
-        <motion.div
+        <m.div
             variants={{
                 hidden: { opacity: 0, y: 20 },
                 show: {
@@ -34,6 +34,6 @@ export function EducationContainer({ institution, degree, timeline }: EducationC
                 </div>
                 <div className="text-xs italic text-muted-foreground">{timeline}</div>
             </div>
-        </motion.div>
+        </m.div>
     );
 }

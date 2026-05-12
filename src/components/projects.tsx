@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { Balloon, Globe } from "lucide-react";
 
@@ -18,7 +18,7 @@ interface ProjectContainerProps {
 
 export default function ProjectCard({ title, videoDemoUrl, posterUrl, story, websiteUrl, githubUrl, linkedinUrl }: ProjectCardProps) {
     return (
-        <motion.div
+        <m.div
             variants={{
                 hidden: { opacity: 0, y: 30 },
                 show: { opacity: 1, y: 0 },
@@ -84,6 +84,8 @@ export default function ProjectCard({ title, videoDemoUrl, posterUrl, story, web
                             loop
                             autoPlay
                             muted
+                            playsInline
+                            preload="none"
                             poster={posterUrl}
                         >
                             <source src={videoDemoUrl} />
@@ -93,13 +95,13 @@ export default function ProjectCard({ title, videoDemoUrl, posterUrl, story, web
 
                 </div>
             </div>
-        </motion.div>
+        </m.div>
     );
 }
 
 export function ProjectsContainer({ projects }: ProjectContainerProps) {
     return (
-        <motion.div
+        <m.div
             variants={{
                 hidden: { opacity: 0, y: 20 },
                 show: {
@@ -135,6 +137,6 @@ export function ProjectsContainer({ projects }: ProjectContainerProps) {
                 ))
             }
 
-        </motion.div>
+        </m.div>
     );
 }

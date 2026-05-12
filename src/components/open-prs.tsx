@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import { ArrowRight, ExternalLink, GitPullRequest } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTheme } from "@/lib/theme";
@@ -32,7 +32,7 @@ export function PRCard({ pr }: { pr: PR }) {
     });
 
     return (
-        <motion.a
+        <m.a
             href={pr.url}
             target="_blank"
             rel="noopener noreferrer"
@@ -64,7 +64,7 @@ export function PRCard({ pr }: { pr: PR }) {
                     {isMerged ? "merged" : "open"}
                 </span>
             </div>
-        </motion.a>
+        </m.a>
     );
 }
 
@@ -106,7 +106,7 @@ export function OpenPRsContainer() {
         : "unable to reach github — showing some older contributions in the meantime:";
 
     return (
-        <motion.div
+        <m.div
             variants={{
                 hidden: { opacity: 0, y: 20 },
                 show: { opacity: 1, y: 0, transition: { duration: 0.7, staggerChildren: 0.1 } },
@@ -183,6 +183,6 @@ export function OpenPRsContainer() {
                     </>
                 )}
             </div>
-        </motion.div>
+        </m.div>
     );
 }

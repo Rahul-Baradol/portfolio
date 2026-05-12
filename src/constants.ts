@@ -3,15 +3,15 @@ import type { PR } from "./types/types";
 export const sections = [
   {
     companyName: "Alaiy",
-    companyLogo: "/alaiy.png",
+    companyLogo: "/alaiy.webp",
     websiteUrl: "https://alaiy.com",
     timeline: "July 2025 - Present",
     linkedinUrl: "https://www.linkedin.com/company/alaiy/posts/?feedView=all",
     techBadges: [
-        { redirect_url: "https://www.typescriptlang.org/", image_url: "/ts.png", tech: "Typescript" },
-        { redirect_url: "https://reactjs.org/", image_url: "/react.png", tech: "React" },
-        { redirect_url: "https://www.python.org/", image_url: "/python.png", tech: "Python" },
-        { redirect_url: "https://fastapi.tiangolo.com/", image_url: "/fastapi.png", tech: "FastAPI" }
+        { redirect_url: "https://www.typescriptlang.org/", image_url: "/ts.webp", tech: "Typescript" },
+        { redirect_url: "https://reactjs.org/", image_url: "/react.webp", tech: "React" },
+        { redirect_url: "https://www.python.org/", image_url: "/python.webp", tech: "Python" },
+        { redirect_url: "https://fastapi.tiangolo.com/", image_url: "/fastapi.webp", tech: "FastAPI" }
     ],
     bulletPoints: [
       "Owned the end-to-end B2B procurement platform — spanning frontend systems, infrastructure, order processing, and checkout — enabling purchases from a managed network of global suppliers.",
@@ -35,16 +35,16 @@ export const sections = [
   },
   {
     companyName: "CRED",
-    companyLogo: "/cred.jpg",
+    companyLogo: "/cred.webp",
     websiteUrl: "https://cred.club",
     timeline: "July 2024 - June 2025",
     linkedinUrl: "https://www.linkedin.com/company/credapp/",
     techBadges: [
-        { redirect_url: "https://www.java.com/en/", image_url: "/java.png", tech: "Java" },
-        { redirect_url: "https://spring.io/projects/spring-boot/", image_url: "/springboot.png", tech: "Spring Boot" },
-        { redirect_url: "https://www.python.org/", image_url: "/python.png", tech: "Python" },
-        { redirect_url: "https://golang.org/", image_url: "/go.png", tech: "Go", size: 17 },
-        { redirect_url: "https://www.mysql.com/", image_url: "/mysql.png", tech: "MySQL" },
+        { redirect_url: "https://www.java.com/en/", image_url: "/java.webp", tech: "Java" },
+        { redirect_url: "https://spring.io/projects/spring-boot/", image_url: "/springboot.webp", tech: "Spring Boot" },
+        { redirect_url: "https://www.python.org/", image_url: "/python.webp", tech: "Python" },
+        { redirect_url: "https://golang.org/", image_url: "/go.webp", tech: "Go", size: 17 },
+        { redirect_url: "https://www.mysql.com/", image_url: "/mysql.webp", tech: "MySQL" },
     ],
     bulletPoints: [
       "Reduced DB costs by 87% and CPU usage from 70% to 20% by eliminating redundant DB writes and optimizing backend logic for a service",
@@ -57,16 +57,16 @@ export const sections = [
   },
   {
     companyName: "CognitiveLab",
-    companyLogo: "/cognitivelab.png",
+    companyLogo: "/cognitivelab.webp",
     websiteUrl: "https://www.cognitivelab.in/",
     timeline: "April 2024 - May 2024",
     linkedinUrl: "https://www.linkedin.com/company/cognitivelabai/",
     techBadges: [
-        { redirect_url: "https://www.typescriptlang.org/", image_url: "/ts.png", tech: "Typescript" },
-        { redirect_url: "https://reactjs.org/", image_url: "/react.png", tech: "React" },
-        { redirect_url: "https://nextjs.org/", image_url: "/nextjs.jpeg", tech: "Next.js" },
-        { redirect_url: "https://www.python.org/", image_url: "/python.png", tech: "Python" },
-        { redirect_url: "https://fastapi.tiangolo.com/", image_url: "/fastapi.png", tech: "FastAPI" }
+        { redirect_url: "https://www.typescriptlang.org/", image_url: "/ts.webp", tech: "Typescript" },
+        { redirect_url: "https://reactjs.org/", image_url: "/react.webp", tech: "React" },
+        { redirect_url: "https://nextjs.org/", image_url: "/nextjs.webp", tech: "Next.js" },
+        { redirect_url: "https://www.python.org/", image_url: "/python.webp", tech: "Python" },
+        { redirect_url: "https://fastapi.tiangolo.com/", image_url: "/fastapi.webp", tech: "FastAPI" }
     ],
     bulletPoints: [
       "Built a medical query platform, owning frontend and backend, with RAG-based retrieval and secure authentication, enabling real-time, context-aware responses.",
@@ -83,7 +83,7 @@ export const SignatureCardDetails = {
     description:
         "A platform to visualize and create music.",
     videoSrc: "/signature.mp4",
-    posterSrc: "/signature-poster.jpg",
+    posterSrc: "/signature-poster.webp",
     redirectUrl: "http://signature.rahulbaradol.in",
 }
 
@@ -92,7 +92,7 @@ export const FlowPuzzleCardDetails = {
     description:
         "An automated solver for FlowFree puzzles using pathfinding algorithms.",
     videoSrc: "/flow-puzzle-solver.mov",
-    posterSrc: "/flow-poster.jpg",
+    posterSrc: "/flow-poster.webp",
     redirectUrl: "https://flowpuzzlesolver.vercel.app/"
 }
 

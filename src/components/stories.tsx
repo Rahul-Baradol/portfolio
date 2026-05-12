@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import { ArrowUpRight, Lightbulb } from "lucide-react";
 import { Tooltip, TooltipTrigger, TooltipContent } from "./ui/tooltip";
 import { useTheme } from "@/lib/theme";
@@ -17,7 +17,7 @@ export function BlogCard({ title, description, mediumUrl, tags, date, className 
     const { theme } = useTheme();
 
     return (
-        <motion.a
+        <m.a
             href={mediumUrl}
             target="_blank"
             rel="noopener noreferrer"
@@ -69,13 +69,13 @@ export function BlogCard({ title, description, mediumUrl, tags, date, className 
                     ))}
                 </div>
             </div>
-        </motion.a>
+        </m.a>
     );
 }
 
 export function StoriesContainer() {
     return (
-        <motion.div
+        <m.div
             variants={{
                 hidden: { opacity: 0, y: 20 },
                 show: { opacity: 1, y: 0, transition: { duration: 0.7, staggerChildren: 0.3 } },
@@ -104,6 +104,6 @@ export function StoriesContainer() {
             </div>
 
 
-        </motion.div>
+        </m.div>
     );
 }

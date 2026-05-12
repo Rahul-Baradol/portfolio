@@ -1,5 +1,5 @@
 // import { DevTipsCard } from "@/components/dev-tips-card";
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import { ExperienceContainer } from "@/components/experience";
 import { ProjectsContainer } from "@/components/projects";
 import { StoriesContainer } from "@/components/stories";
@@ -20,26 +20,23 @@ export function Home() {
     return (
         <>
             <div className="z-10 w-screen flex flex-col items-center gap-4">
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
+                <m.div
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.7, ease: "easeOut" }}
                     className="text-3xl md:text-4xl font-bold select-none"
                 >
                     Rahul Baradol
-                </motion.div>
+                </m.div>
 
-                <motion.div
-                    initial={{ opacity: 0, y: 10 }}
+                <m.div
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.6, duration: 0.7 }}
                     className="text-sm md:text-base px-4 text-center text-muted-foreground flex flex-row flex-wrap items-center justify-center gap-1 select-none"
                 >
                     <span>I&apos;m a software</span> <WobbleText>engineer</WobbleText> <span>— frontend, backend, open source, and a fingerstyle</span> <WobbleText>guitarist</WobbleText>
-                </motion.div>
+                </m.div>
 
-                <motion.div
-                    initial={{ opacity: 0, y: 10 }}
+                <m.div
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.9, duration: 0.5 }}
                     className="flex px-4 flex-row flex-wrap items-center justify-center gap-1"
@@ -50,7 +47,7 @@ export function Home() {
                         rel="noopener noreferrer"
                         className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
                     >
-                        <img src="/linkedin.png" alt="LinkedIn" className="h-3.5 w-3.5 object-contain" />
+                        <img src="/linkedin.webp" alt="LinkedIn" className="h-3.5 w-3.5 object-contain" />
                         LinkedIn
                     </a>
                     <Dot className="opacity-25 w-5 h-5" />
@@ -70,7 +67,7 @@ export function Home() {
                         rel="noopener noreferrer"
                         className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
                     >
-                        <img src="/x.png" alt="X" className="h-3.5 w-3.5 object-contain rounded-full" />
+                        <img src="/x.webp" alt="X" className="h-3.5 w-3.5 object-contain rounded-full" />
                         Twitter
                     </a>
                     <Dot className="opacity-25 w-5 h-5" />
@@ -84,18 +81,18 @@ export function Home() {
                     </a>
                     <Dot className="opacity-25 w-5 h-5" />
                     <EmailContact />
-                </motion.div>
+                </m.div>
             </div>
 
             <BioCard />
 
-            <StoriesContainer />
-
-            {/* <DevTipsCard /> */}
-
             <ExperienceContainer
                 snaps={sections}
             />
+
+            <StoriesContainer />
+
+            {/* <DevTipsCard /> */}
 
             <OpenPRsContainer />
 
@@ -110,7 +107,7 @@ export function Home() {
                     {
                         title: "Signature",
                         videoDemoUrl: "/signature.mp4",
-                        posterUrl: "/signature-poster.jpg",
+                        posterUrl: "/signature-poster.webp",
                         story: "A platform to visualize and create music.",
                         websiteUrl: "https://signature.rahulbaradol.in/",
                         githubUrl: "https://github.com/Rahul-Baradol/signature",
@@ -119,7 +116,7 @@ export function Home() {
                     {
                         title: "Flow Puzzle Solver",
                         videoDemoUrl: "/flow-puzzle-solver.mov",
-                        posterUrl: "/flow-poster.jpg",
+                        posterUrl: "/flow-poster.webp",
                         websiteUrl: "https://flowpuzzlesolver.vercel.app/",
                         story: "Have you played flow-free mobile before? They offer a set of interesting puzzles to solve... But for me? It felt tedious... So I built a solver for me :)",
                         githubUrl: "https://github.com/Rahul-Baradol/Flow-Puzzle-Solver-React",
@@ -127,7 +124,7 @@ export function Home() {
                     {
                         title: "Resonance",
                         videoDemoUrl: "/resonance.mov",
-                        posterUrl: "/resonance-poster.jpg",
+                        posterUrl: "/resonance-poster.webp",
                         websiteUrl: "https://resonating.vercel.app/",
                         story: "What if I lose all my spotify songs? Need a backup system for it, which periodically saves my songs and playlists.",
                         githubUrl: "https://github.com/Rahul-Baradol/resonance"

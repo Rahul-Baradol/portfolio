@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import { GitPullRequest, ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
 import { PRCard, PRSkeleton } from "@/components/open-prs";
@@ -56,7 +56,7 @@ export function PRsPage() {
     };
 
     return (
-        <motion.div
+        <m.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
@@ -123,7 +123,7 @@ export function PRsPage() {
                 </div>
             ) : (
                 <>
-                    <motion.div
+                    <m.div
                         key={`${tab}-${page}`}
                         variants={{
                             hidden: { opacity: 0 },
@@ -143,7 +143,7 @@ export function PRsPage() {
                                 </div>
                             )
                         }
-                    </motion.div>
+                    </m.div>
 
                     {!loading && totalPages > 1 && (
                         <div className="flex flex-row items-center justify-between pt-2">
@@ -170,6 +170,6 @@ export function PRsPage() {
                     )}
                 </>
             )}
-        </motion.div>
+        </m.div>
     );
 }

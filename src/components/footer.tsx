@@ -64,7 +64,7 @@ export default function Footer() {
                         <span>{song.songName}</span>
                         <span>—</span>
                         <span>{song.artists[0]}</span>
-                        <img src="/spotify-no-bg.png" className="w-3 h-3 opacity-60 shrink-0" />
+                        <img src="/spotify-no-bg.webp" className="w-3 h-3 opacity-60 shrink-0" />
                     </span>
                 </a>
             ) : (

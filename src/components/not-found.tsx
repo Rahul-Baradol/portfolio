@@ -1,19 +1,19 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Link } from "react-router-dom";
 
 export default function NotFound() {
   return (
     <div className="w-full h-[90vh] bg-transparent text-foreground flex flex-col items-center justify-center overflow-hidden">
-      <motion.h1
+      <m.h1
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         className="text-[80px] md:text-[120px] font-bold tracking-tight"
       >
         404
-      </motion.h1>
+      </m.h1>
 
-      <motion.p
+      <m.p
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
@@ -22,9 +22,9 @@ export default function NotFound() {
         <blockquote className="italic text-sm">
             Not all those who wander are lost.
         </blockquote>
-      </motion.p>
+      </m.p>
 
-      <motion.div
+      <m.div
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.97 }}
         className="mt-8 z-10"
@@ -35,7 +35,7 @@ export default function NotFound() {
         >
           Go Home
         </Link>
-      </motion.div>
+      </m.div>
     </div>
   );
 }

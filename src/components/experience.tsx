@@ -1,5 +1,5 @@
 import { ArrowDown, Globe, Road } from "lucide-react";
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import * as AccordionPrimitive from "@radix-ui/react-accordion"
 import { TechBadge } from "./tech-badges";
@@ -38,7 +38,7 @@ export default function ExperienceCard({ companyName, companyLogo, websiteUrl, g
                         className="flex flex-row items-center gap-3 focus-visible:border-ring focus-visible:ring-ring/50 p-4 text-left text-sm font-medium transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&[data-state=open]>svg]:rotate-180 group w-full cursor-pointer border border-border rounded-xl bg-background hover:bg-foreground/5 dark:hover:bg-cyan-600/10 hover:border-foreground/15 dark:hover:border-cyan-500/5"
                     >
                         <div className="flex flex-col items-center w-full">
-                            <motion.div
+                            <m.div
                                 variants={{
                                     hidden: { opacity: 0, y: 30 },
                                     show: { opacity: 1, y: 0 },
@@ -122,7 +122,7 @@ export default function ExperienceCard({ companyName, companyLogo, websiteUrl, g
                                 <div className="text-xs italic text-muted-foreground flex flex-row items-center gap-1 sm:gap-2">
                                     <div>{timeline}</div>
                                 </div>
-                            </motion.div>
+                            </m.div>
                         </div>
                         <ArrowDown className="w-4 sm:w-3 transition-transform" />
                     </AccordionPrimitive.Trigger>
@@ -185,7 +185,7 @@ interface ExperienceContainerProps {
 
 export function ExperienceContainer({ snaps }: ExperienceContainerProps) {
     return (
-        <motion.div
+        <m.div
             variants={{
                 hidden: { opacity: 0, y: 20 },
                 show: {
@@ -224,6 +224,6 @@ export function ExperienceContainer({ snaps }: ExperienceContainerProps) {
                     />
                 ))
             }
-        </motion.div>
+        </m.div>
     );
 }

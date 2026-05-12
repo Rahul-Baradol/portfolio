@@ -48,7 +48,7 @@ export function SpotifyCard() {
         className="z-10 p-4 flex flex-col gap-3 items-start text-muted-foreground w-[90vw] lg:w-[50vw] h-fit border border-border rounded-xl relative bg-[#1E3A8A]/10 dark:bg-cyan-500/5"
         >
             <div className="text-sm flex flex-row items-center gap-2">
-                Recently played on <img src="/spotify-no-bg.png" width={20} />
+                Recently played on <img src="/spotify-no-bg.webp" width={20} />
             </div>
             <div className="flex flex-col gap-3 sm:flex-row sm:gap-0 justify-between w-full items-center">
                 <div className="flex flex-row gap-3 items-center w-full sm:w-auto">
