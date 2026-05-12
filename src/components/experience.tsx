@@ -41,6 +41,7 @@ export default function ExperienceCard({ companyName, companyLogo, websiteUrl, g
                                 <div className="w-full sm:w-fit flex flex-row items-center gap-3">
                                     <img
                                         src={companyLogo}
+                                        alt={companyName}
                                         width={45}
                                     />
 
@@ -55,7 +56,7 @@ export default function ExperienceCard({ companyName, companyLogo, websiteUrl, g
                                                     <TooltipTrigger asChild className="bg-background">
                                                         <a onClick={(e) => {
                                                             e.stopPropagation();
-                                                        }} href={websiteUrl} target="_blank" rel="noopener noreferrer">
+                                                        }} href={websiteUrl} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${companyName} website`}>
                                                             <Globe className="h-3 w-3 text-muted-foreground" />
                                                         </a>
                                                     </TooltipTrigger>

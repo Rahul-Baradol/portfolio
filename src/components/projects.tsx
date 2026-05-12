@@ -25,7 +25,7 @@ export default function ProjectCard({ title, videoDemoUrl, posterUrl, story, web
                     <div className="flex flex-row items-center gap-2">
                         <Tooltip>
                             <TooltipTrigger asChild className="bg-background">
-                                <a href={websiteUrl} target="_blank" rel="noopener noreferrer">
+                                <a href={websiteUrl} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${title} website`}>
                                     <Globe className="h-4 w-4 text-muted-foreground" />
                                 </a>
                             </TooltipTrigger>
@@ -69,7 +69,7 @@ export default function ProjectCard({ title, videoDemoUrl, posterUrl, story, web
                     <div className="text-sm w-full">
                         {story}
                     </div>
-                    <a href={websiteUrl} target="_blank" className="relative w-full h-[300px] overflow-hidden group">
+                    <a href={websiteUrl} target="_blank" aria-label={`Preview ${title}`} className="relative w-full h-[300px] overflow-hidden group">
                         <div className="absolute top-0 left-0 w-full h-full z-10 bg-foreground/8 dark:bg-cyan-500/10 transition-all duration-500 group-hover:bg-foreground/3 dark:group-hover:bg-cyan-500/20 backdrop-blur-sm group-hover:backdrop-blur-none"></div>
                         <video
                             className="absolute bottom-0 right-0 w-full h-full object-cover scale-[1.5] sm:scale-[1.1] -rotate-10 transition-transform duration-700 ease-in-out group-hover:scale-120 group-hover:rotate-0"

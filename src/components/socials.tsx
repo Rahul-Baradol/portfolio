@@ -1,11 +1,12 @@
 interface SocialCardProps {
     image_url: string;
     website_url: string;
+    label: string;
 }
 
-export function SocialCard({ image_url, website_url }: SocialCardProps) {
+export function SocialCard({ image_url, website_url, label }: SocialCardProps) {
     return (
-        <a href={website_url} target='_blank' className={`
+        <a href={website_url} target='_blank' aria-label={label} className={`
                   border-2 border-violet-600 opacity-50 hover:opacity-100 transition-opacity w-fit h-fit rounded-full overflow-hidden`}>
             <img
                 width={35}

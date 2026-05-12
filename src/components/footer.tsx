@@ -60,11 +60,11 @@ export default function Footer() {
                 >
                     <span className="opacity-60 italic">while listening to</span>
                     <span className="flex items-center gap-1.5 flex-wrap justify-center">
-                        <img src={song.imageUrl} className="w-4 h-4 rounded-sm object-cover shrink-0" />
+                        <img src={song.imageUrl} alt={`${song.songName} album art`} className="w-4 h-4 rounded-sm object-cover shrink-0" />
                         <span>{song.songName}</span>
                         <span>—</span>
                         <span>{song.artists[0]}</span>
-                        <img src="/spotify-no-bg.webp" className="w-3 h-3 opacity-60 shrink-0" />
+                        <img src="/spotify-no-bg.webp" alt="Spotify" className="w-3 h-3 opacity-60 shrink-0" />
                     </span>
                 </a>
             ) : (
