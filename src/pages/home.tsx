@@ -102,6 +102,14 @@ export function Home() {
                         blogUrl: "https://medium.com/@rahul.baradol.14/breaking-down-signature-28e9b0d2904e"
                     },
                     {
+                        title: "Resonance",
+                        videoDemoUrl: "/resonance.mov",
+                        posterUrl: "/resonance-poster.webp",
+                        websiteUrl: "https://resonating.vercel.app/",
+                        story: "What if I lose all my spotify songs? Need a backup system for it, which periodically saves my songs and playlists.",
+                        githubUrl: "https://github.com/Rahul-Baradol/resonance"
+                    },
+                    {
                         title: "Flow Puzzle Solver",
                         videoDemoUrl: "/flow-puzzle-solver.mov",
                         posterUrl: "/flow-poster.webp",
@@ -109,14 +117,6 @@ export function Home() {
                         story: "Have you played flow-free mobile before? They offer a set of interesting puzzles to solve... But for me? It felt tedious... So I built a solver for me :)",
                         githubUrl: "https://github.com/Rahul-Baradol/Flow-Puzzle-Solver-React",
                     },
-                    {
-                        title: "Resonance",
-                        videoDemoUrl: "/resonance.mov",
-                        posterUrl: "/resonance-poster.webp",
-                        websiteUrl: "https://resonating.vercel.app/",
-                        story: "What if I lose all my spotify songs? Need a backup system for it, which periodically saves my songs and playlists.",
-                        githubUrl: "https://github.com/Rahul-Baradol/resonance"
-                    }
                 ]}
             />
 
