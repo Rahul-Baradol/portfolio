@@ -83,12 +83,6 @@ export function Home() {
 
             <OpenPRsContainer />
 
-            <EducationContainer
-                institution="PES University"
-                degree="B.Tech in Computer Science"
-                timeline="2022 - 2026"
-            />
-
             <ProjectsContainer
                 projects={[
                     {
@@ -118,6 +112,12 @@ export function Home() {
                         githubUrl: "https://github.com/Rahul-Baradol/Flow-Puzzle-Solver-React",
                     },
                 ]}
+            />
+
+            <EducationContainer
+                institution="PES University"
+                degree="B.Tech in Computer Science"
+                timeline="2022 - 2026"
             />
 
         </>
