@@ -98,7 +98,8 @@ export function Home() {
                         story: "A platform to visualize and create music.",
                         websiteUrl: "https://signature.rahulbaradol.in/",
                         githubUrl: "https://github.com/Rahul-Baradol/signature",
-                        linkedinUrl: "https://www.linkedin.com/posts/rahul-baradol_so-i-listen-to-songs-a-lot-and-thought-activity-7376004232765722624-hx_M?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEX65n8BwCmiX146yfLfYwDy_g61M6mYJ8I"
+                        linkedinUrl: "https://www.linkedin.com/posts/rahul-baradol_so-i-listen-to-songs-a-lot-and-thought-activity-7376004232765722624-hx_M?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEX65n8BwCmiX146yfLfYwDy_g61M6mYJ8I",
+                        blogUrl: "https://medium.com/@rahul.baradol.14/breaking-down-signature-28e9b0d2904e"
                     },
                     {
                         title: "Flow Puzzle Solver",

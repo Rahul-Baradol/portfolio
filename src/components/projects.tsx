@@ -9,13 +9,14 @@ interface ProjectCardProps {
     websiteUrl: string;
     githubUrl?: string;
     linkedinUrl?: string;
+    blogUrl?: string;
 };
 
 interface ProjectContainerProps {
     projects: ProjectCardProps[];
 }
 
-export default function ProjectCard({ title, videoDemoUrl, posterUrl, story, websiteUrl, githubUrl, linkedinUrl }: ProjectCardProps) {
+export default function ProjectCard({ title, videoDemoUrl, posterUrl, story, websiteUrl, githubUrl, linkedinUrl, blogUrl }: ProjectCardProps) {
     return (
         <div className="animate-fade-up pt-1 pl-1 pr-0 pb-0 group text-muted-foreground w-[90vw] lg:w-[50vw] h-fit border-l-4 border-t-4 border-r-[1.5px] border-b-[1.5px] border-foreground/10 dark:border-cyan-500/20 hover:border-foreground/20 dark:hover:border-cyan-600/10 rounded-xl relative transition-all duration-500">
             <div className="w-full pt-4 pl-4 pr-4 pb-4 relative z-10 dark:bg-black/20 rounded-xl h-full flex flex-col gap-5">
@@ -63,6 +64,21 @@ export default function ProjectCard({ title, videoDemoUrl, posterUrl, story, web
                                 </Tooltip>
                             ) : <></>
                         }
+
+                        {
+                            blogUrl ? (
+                                <Tooltip>
+                                    <TooltipTrigger asChild className="bg-background">
+                                        <a href={blogUrl} target="_blank" rel="noopener noreferrer" className="text-muted-foreground bg-transparent text-xs">
+                                            Blog
+                                        </a>
+                                    </TooltipTrigger>
+                                    <TooltipContent className="bg-background text-muted-foreground border-border">
+                                        Read the blog
+                                    </TooltipContent>
+                                </Tooltip>
+                            ) : <></>
+                        }
                     </div>
                 </div>
                 <div className="w-full flex flex-col items-center gap-5">
@@ -70,9 +86,9 @@ export default function ProjectCard({ title, videoDemoUrl, posterUrl, story, web
                         {story}
                     </div>
                     <a href={websiteUrl} target="_blank" aria-label={`Preview ${title}`} className="relative w-full h-[300px] overflow-hidden group">
-                        <div className="absolute top-0 left-0 w-full h-full z-10 bg-foreground/8 dark:bg-cyan-500/10 transition-all duration-500 group-hover:bg-foreground/3 dark:group-hover:bg-cyan-500/20 backdrop-blur-sm group-hover:backdrop-blur-none"></div>
+                        <div className="absolute top-0 left-0 w-full h-full z-10 bg-foreground/8 dark:bg-cyan-500/10 transition-all duration-500 group-hover:bg-foreground/3 dark:group-hover:bg-cyan-500/20"></div>
                         <video
-                            className="absolute bottom-0 right-0 w-full h-full object-cover scale-[1.5] sm:scale-[1.1] -rotate-10 transition-transform duration-700 ease-in-out group-hover:scale-120 group-hover:rotate-0"
+                            className="absolute bottom-0 right-0 w-full h-full object-cover scale-[1.1] transition-transform duration-700 ease-in-out group-hover:scale-120 group-hover:rotate-0"
                             loop
                             autoPlay
                             muted
@@ -109,6 +125,7 @@ export function ProjectsContainer({ projects }: ProjectContainerProps) {
                         videoDemoUrl={project.videoDemoUrl}
                         posterUrl={project.posterUrl}
                         story={project.story}
+                        blogUrl={project.blogUrl}
                     />
                 ))
             }
