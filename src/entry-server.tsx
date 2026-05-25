@@ -4,6 +4,7 @@ import { ThemeProvider } from './lib/theme'
 import { Layout } from './layout'
 import { Home } from './pages/home'
 import { PRsPage } from './pages/prs'
+import { BlogPage } from './pages/blog'
 import NotFound from './components/not-found'
 
 export function render(url: string) {
@@ -14,6 +15,7 @@ export function render(url: string) {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="/prs" element={<PRsPage />} />
+            <Route path="/blog/:slug" element={<BlogPage />} />
             <Route path="/*" element={<NotFound />} />
           </Route>
         </Routes>

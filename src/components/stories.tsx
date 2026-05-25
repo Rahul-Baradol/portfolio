@@ -1,23 +1,22 @@
 import { ArrowUpRight, Lightbulb } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Tooltip, TooltipTrigger, TooltipContent } from "./ui/tooltip";
 import { stories } from "@/constants";
 
 interface BlogCardProps {
     title: string;
     description: string;
-    mediumUrl: string;
+    slug: string;
     tags?: string[];
     date: string;
     className?: string;
     animationDelay?: string;
 }
 
-export function BlogCard({ title, description, mediumUrl, tags, date, className, animationDelay }: BlogCardProps) {
+export function BlogCard({ title, description, slug, tags, date, className, animationDelay }: BlogCardProps) {
     return (
-        <a
-            href={mediumUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+        <Link
+            to={`/blog/${slug}`}
             style={animationDelay ? { animationDelay } : undefined}
             className={`animate-fade-up flex flex-col gap-3 p-4 rounded-xl border border-border bg-black/3 dark:bg-black/10 hover:bg-foreground/5 dark:hover:bg-cyan-600/5 hover:border-foreground/20 dark:hover:border-cyan-400/30 hover:scale-[1.02] active:scale-[0.97] transition-all duration-200 cursor-pointer group ${className}`}
         >
@@ -36,7 +35,7 @@ export function BlogCard({ title, description, mediumUrl, tags, date, className,
                         <ArrowUpRight className="h-4 w-4 text-muted-foreground group-hover:text-foreground dark:group-hover:text-cyan-300 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                     </TooltipTrigger>
                     <TooltipContent className="bg-background text-muted-foreground border-border">
-                        Read on Medium
+                        Read story
                     </TooltipContent>
                 </Tooltip>
             </div>
@@ -55,7 +54,7 @@ export function BlogCard({ title, description, mediumUrl, tags, date, className,
                     ))}
                 </div>
             </div>
-        </a>
+        </Link>
     );
 }
 
@@ -70,10 +69,10 @@ export function StoriesContainer() {
             <div className="flex flex-col gap-2">
                 {stories.map((story, idx) => (
                     <BlogCard
-                        key={idx}
+                        key={story.slug}
                         title={story.title}
                         description={story.description}
-                        mediumUrl={story.mediumUrl}
+                        slug={story.slug}
                         tags={story.tags}
                         date={story.date}
                         animationDelay={`${idx * 0.1}s`}
