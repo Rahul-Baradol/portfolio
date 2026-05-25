@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-import Lenis from "lenis";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Layout } from "./layout";
 import { ThemeProvider } from "./lib/theme";
@@ -9,17 +7,6 @@ import { BlogPage } from "./pages/blog";
 import NotFound from "./components/not-found";
 
 function App() {
-  useEffect(() => {
-    const lenis = new Lenis({ lerp: 0.1 });
-
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-
-    requestAnimationFrame(raf);
-  }, []);
-
   return (
     <ThemeProvider>
       <BrowserRouter>

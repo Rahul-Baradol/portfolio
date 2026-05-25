@@ -32,10 +32,6 @@ export function BlogPage() {
     const articleRef = useRef<HTMLElement | null>(null);
 
     useEffect(() => {
-        window.scrollTo(0, 0);
-    }, [slug]);
-
-    useEffect(() => {
         if (!post || !articleRef.current) return;
         highlightCodeBlocks(articleRef.current).catch(() => {});
     }, [post]);
