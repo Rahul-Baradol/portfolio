@@ -64,7 +64,7 @@ export function Home() {
                         className="inline-flex items-center gap-1.5 text-xs rounded-md text-muted-foreground hover:text-foreground hover:border-foreground/30 transition-colors"
                     >
                         <Download className="h-3.5 w-3.5" />
-                        Resume
+                        CV
                     </a>
                     <Dot className="opacity-25 w-5 h-5" />
                     <EmailContact />
