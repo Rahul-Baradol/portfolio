@@ -1,3 +1,4 @@
+import { aboutMe } from "@/constants";
 import { Info } from "lucide-react";
 
 export function BioCard() {
@@ -8,7 +9,7 @@ export function BioCard() {
                 About me
             </div>
             <p className="text-sm leading-relaxed">
-                I like owning things end-to-end — from data pipelines to high-traffic UIs — especially where latency and throughput actually matter. Most comfortable in fast-moving product teams where the scope isn&apos;t fully defined yet.
+                {aboutMe}
             </p>
         </div>
     );

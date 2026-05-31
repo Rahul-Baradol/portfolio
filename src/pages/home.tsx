@@ -6,7 +6,6 @@ import { OpenPRsContainer } from "@/components/open-prs";
 import { EducationContainer } from "@/components/education";
 import { useEffect } from "react";
 import { BioCard } from "@/components/bio-card";
-import { WobbleText } from "@/components/wobble-text";
 import EmailContact from "@/components/email-contact";
 import { Dot, Download } from "lucide-react";
 import { sections } from "@/constants";
@@ -23,9 +22,9 @@ export function Home() {
                     Rahul Baradol
                 </div>
 
-                <div className="text-sm md:text-base px-4 text-center text-muted-foreground flex flex-row flex-wrap items-center justify-center gap-1 select-none">
+                {/* <div className="text-sm md:text-base px-4 text-center text-muted-foreground flex flex-row flex-wrap items-center justify-center gap-1 select-none">
                     <span>I&apos;m a software</span> <WobbleText>engineer</WobbleText> <span>— frontend, backend, open source, and a fingerstyle</span> <WobbleText>guitarist</WobbleText>
-                </div>
+                </div> */}
 
                 <div className="flex px-4 flex-row flex-wrap items-center justify-center gap-1">
                     <a

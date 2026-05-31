@@ -1,5 +1,7 @@
 import type { PR } from "./types/types";
 
+export const aboutMe = "A software engineer building scalable web products and helping businesses scale their systems, from frontend architecture to backend services.";
+
 export const sections = [
   {
     companyName: "Alaiy",
