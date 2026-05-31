@@ -1,6 +1,7 @@
 // import { DevTipsCard } from "@/components/dev-tips-card";
 import { ExperienceContainer } from "@/components/experience";
 import { ProjectsContainer } from "@/components/projects";
+import { SkillsContainer } from "@/components/skills";
 import { StoriesContainer } from "@/components/stories";
 import { OpenPRsContainer } from "@/components/open-prs";
 import { EducationContainer } from "@/components/education";
@@ -75,6 +76,8 @@ export function Home() {
             <ExperienceContainer
                 snaps={sections}
             />
+
+            <SkillsContainer />
 
             <StoriesContainer />
 

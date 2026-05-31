@@ -2,6 +2,19 @@ import type { PR } from "./types/types";
 
 export const aboutMe = "A software engineer building scalable web products and helping businesses scale their systems, from frontend architecture to backend services.";
 
+export const skills = [
+  { redirect_url: "https://www.typescriptlang.org/", image_url: "/ts.webp", tech: "Typescript" },
+  { redirect_url: "https://reactjs.org/", image_url: "/react.webp", tech: "React" },
+  { redirect_url: "https://www.python.org/", image_url: "/python.webp", tech: "Python" },
+  { redirect_url: "https://fastapi.tiangolo.com/", image_url: "/fastapi.webp", tech: "FastAPI" },
+  { redirect_url: "https://www.java.com/en/", image_url: "/java.webp", tech: "Java" },
+  { redirect_url: "https://spring.io/projects/spring-boot/", image_url: "/springboot.webp", tech: "Spring Boot" },
+  { redirect_url: "https://golang.org/", image_url: "/go.webp", tech: "Go", size: 17 },
+  { redirect_url: "https://www.mysql.com/", image_url: "/mysql.webp", tech: "MySQL" },
+  { redirect_url: "https://nextjs.org/", image_url: "/nextjs.webp", tech: "Next.js" },
+  { redirect_url: "https://aws.amazon.com/", image_url: "/aws.webp", tech: "AWS" },
+];
+
 export const sections = [
   {
     companyName: "Alaiy",
