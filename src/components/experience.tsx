@@ -34,7 +34,7 @@ export default function ExperienceCard({ companyName, companyLogo, websiteUrl, g
                 <AccordionPrimitive.Header className="flex">
                     <AccordionPrimitive.Trigger
                         data-slot="accordion-trigger"
-                        className="flex flex-row items-center gap-3 focus-visible:border-ring focus-visible:ring-ring/50 p-4 text-left text-sm font-medium transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&[data-state=open]>svg]:rotate-180 group w-full cursor-pointer border border-border rounded-xl bg-background hover:bg-foreground/5 dark:hover:bg-cyan-600/10 hover:border-foreground/15 dark:hover:border-cyan-500/5"
+                        className="flex flex-row items-center gap-3 focus-visible:border-ring focus-visible:ring-ring/50 p-4 text-left text-sm font-medium outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&[data-state=open]>svg]:rotate-180 group w-full cursor-pointer border border-border rounded-xl bg-background hover:bg-foreground/5 dark:hover:bg-cyan-600/10 hover:border-foreground/15 dark:hover:border-cyan-500/5"
                     >
                         <div className="flex flex-col items-center w-full">
                             <div className="animate-fade-up flex flex-row justify-between items-center overflow-hidden w-full">

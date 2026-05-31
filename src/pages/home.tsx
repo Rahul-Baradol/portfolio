@@ -92,7 +92,7 @@ export function Home() {
                         websiteUrl: "https://signature.rahulbaradol.in/",
                         githubUrl: "https://github.com/Rahul-Baradol/signature",
                         linkedinUrl: "https://www.linkedin.com/posts/rahul-baradol_so-i-listen-to-songs-a-lot-and-thought-activity-7376004232765722624-hx_M?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEX65n8BwCmiX146yfLfYwDy_g61M6mYJ8I",
-                        blogUrl: "https://medium.com/@rahul.baradol.14/breaking-down-signature-28e9b0d2904e"
+                        blogUrl: "/blog/breaking-down-signature-28e9b0d2904e"
                     },
                     {
                         title: "Resonance",
@@ -102,14 +102,14 @@ export function Home() {
                         story: "What if I lose all my spotify songs? Need a backup system for it, which periodically saves my songs and playlists.",
                         githubUrl: "https://github.com/Rahul-Baradol/resonance"
                     },
-                    {
-                        title: "Flow Puzzle Solver",
-                        videoDemoUrl: "/flow-puzzle-solver.mov",
-                        posterUrl: "/flow-poster.webp",
-                        websiteUrl: "https://flowpuzzlesolver.vercel.app/",
-                        story: "Have you played flow-free mobile before? They offer a set of interesting puzzles to solve... But for me? It felt tedious... So I built a solver for me :)",
-                        githubUrl: "https://github.com/Rahul-Baradol/Flow-Puzzle-Solver-React",
-                    },
+                    // {
+                    //     title: "Flow Puzzle Solver",
+                    //     videoDemoUrl: "/flow-puzzle-solver.mov",
+                    //     posterUrl: "/flow-poster.webp",
+                    //     websiteUrl: "https://flowpuzzlesolver.vercel.app/",
+                    //     story: "Have you played flow-free mobile before? They offer a set of interesting puzzles to solve... But for me? It felt tedious... So I built a solver for me :)",
+                    //     githubUrl: "https://github.com/Rahul-Baradol/Flow-Puzzle-Solver-React",
+                    // },
                 ]}
             />
 
