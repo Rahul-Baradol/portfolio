@@ -57,42 +57,42 @@ export function CanvasWithFrameRateIndependentMouseTrail() {
 
     const renderLoop = useCallback(() => {
         const now = performance.now();
-        const deltaTime = lastFrameTime.current ? (now - lastFrameTime.current) / 16.666 : 1;
+        const frameFactor = lastFrameTime.current ? (now - lastFrameTime.current) / 16.666 : 1;
         lastFrameTime.current = now;
 
         let updatedImages = images.current.map(image => {
             let newImage = { ...image };
 
             if (newImage.stage === 'initial-bounce-up') {
-                newImage.y -= newImage.dy * deltaTime;
-                newImage.x += newImage.dx * deltaTime;
+                newImage.y -= newImage.dy * frameFactor;
+                newImage.x += newImage.dx * frameFactor;
 
-                newImage.dx *= Math.pow(0.98, deltaTime);
-                newImage.dy -= 1 * deltaTime;
+                newImage.dx *= Math.pow(0.98, frameFactor);
+                newImage.dy -= 1 * frameFactor;
 
                 if (newImage.dy <= 0) {
                     newImage.stage = 'free-fall';
                     newImage.dy = 5;
                 }
             } else if (newImage.stage === 'free-fall') {
-                newImage.y += newImage.dy * deltaTime;
-                newImage.dy += 1 * deltaTime;
+                newImage.y += newImage.dy * frameFactor;
+                newImage.dy += 1 * frameFactor;
 
                 if (newImage.y >= (window.innerHeight - 100)) {
                     newImage.stage = 'bounce-up';
                     newImage.dy = 10;
                 }
             } else if (newImage.stage === 'bounce-up') {
-                newImage.y -= newImage.dy * deltaTime;
-                newImage.dy -= 1 * deltaTime;
+                newImage.y -= newImage.dy * frameFactor;
+                newImage.dy -= 1 * frameFactor;
 
                 if (newImage.dy <= 0) {
                     newImage.stage = 'bounce-down';
                     newImage.dy = 5;
                 }
             } else if (newImage.stage === 'bounce-down') {
-                newImage.y += newImage.dy * deltaTime;
-                newImage.dy += 1 * deltaTime;
+                newImage.y += newImage.dy * frameFactor;
+                newImage.dy += 1 * frameFactor;
             }
 
             return newImage;

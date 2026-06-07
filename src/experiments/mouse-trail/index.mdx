@@ -168,7 +168,7 @@ Well, open devtools, throttle CPU to low-end mobile device via Devtools, you wil
 
 I ran a profile which looked like this
 
-![Naive Profile](/public/experiments/outcomes/naive.png)
+![Naive Profile](/experiments/outcomes/naive.png)
 
 Look at those yellow bars in "Frames"... those are partially-presented frames which means the frame had started rendering, but couldn't complete which leads to "janky" behaviour
 
@@ -516,6 +516,85 @@ would run 60 times on a Mac and 120 times on a Dell laptop, in a second...
 If `newImage.dy` is 1 let's say, then it `newImage.y` would be increased by 60px on a Mac, and 120px on a Dell laptop, in one second, where ideally we would need them to be the same.
 
 We need to fix this!
+
+We start with the following line 
+```jsx
+const lastFrameTime = useRef<number | null>(null);
+```
+
+And the render loop would be 
+```jsx
+const renderLoop = useCallback(() => {
+    const now = performance.now();
+    const frameFactor = lastFrameTime.current ? (now - lastFrameTime.current) / 16.666 : 1;
+    lastFrameTime.current = now;
+
+    let updatedImages = images.current.map(image => {
+        let newImage = { ...image };
+
+        if (newImage.stage === 'initial-bounce-up') {
+            newImage.y -= newImage.dy * frameFactor;
+            newImage.x += newImage.dx * frameFactor;
+
+            newImage.dx *= Math.pow(0.98, frameFactor);
+            newImage.dy -= 1 * frameFactor;
+
+            if (newImage.dy <= 0) {
+                newImage.stage = 'free-fall';
+                newImage.dy = 5;
+            }
+        } else if (newImage.stage === 'free-fall') {
+            newImage.y += newImage.dy * frameFactor;
+            newImage.dy += 1 * frameFactor;
+
+            if (newImage.y >= (window.innerHeight - 100)) {
+                newImage.stage = 'bounce-up';
+                newImage.dy = 10;
+            }
+        } else if (newImage.stage === 'bounce-up') {
+            newImage.y -= newImage.dy * frameFactor;
+            newImage.dy -= 1 * frameFactor;
+
+            if (newImage.dy <= 0) {
+                newImage.stage = 'bounce-down';
+                newImage.dy = 5;
+            }
+        } else if (newImage.stage === 'bounce-down') {
+            newImage.y += newImage.dy * frameFactor;
+            newImage.dy += 1 * frameFactor;
+        }
+
+        return newImage;
+    });
+
+    updatedImages = updatedImages.filter(image => image.y < window.innerHeight);
+
+    images.current = updatedImages;
+
+    const canvas = canvasRef.current;
+    if (!canvas) {
+        return;
+    }
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) {
+        return;
+    }
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    updatedImages.forEach(image => {
+        const img = imageCache.current.get(image.src);
+        if (img) {
+            ctx.drawImage(img, image.x, image.y, 100, 100);
+        }
+    });
+
+    animationFrameRef.current = requestAnimationFrame(renderLoop);
+}, [images])
+```
+
+where we enforce 60Hz by adding this `frameFactor` 
 
 <div className="relative overflow-hidden rounded-xl border border-border">
   <CanvasWithFrameRateIndependentMouseTrail />
