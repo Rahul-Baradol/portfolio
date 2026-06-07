@@ -332,6 +332,10 @@ And here we have it.
 If you are on a powerful machine (like Mac), you won't feel the difference. 
 But if you open it on a mid-tier machine, or even throttle CPU via DevTools, you will notice the improvement.
 
+Again profiled with CPU throttled to low-end mobile phone on a Mac
+
+![Uncontrolled Profile](/experiments/outcomes/uncontrolled.png)
+
 Can we make it even better?
 
 Yes!
@@ -499,6 +503,10 @@ useEffect(() => {
 
 Looks good!
 
+Again profiled with CPU throttled to low-end mobile phone on a Mac
+
+![Canvas Profile with frame rate dependence](/experiments/outcomes/frame-rate-dependent-canvas.png)
+
 One small problem i noticed when opened on my Dell laptop, the images are falling twice as much as they should be.
 To the point, where it is not visually appealing anymore.
 
@@ -599,3 +607,7 @@ where we enforce 60Hz by adding this `frameFactor`
 <div className="relative overflow-hidden rounded-xl border border-border">
   <CanvasWithFrameRateIndependentMouseTrail />
 </div>
+
+Again profiled with CPU throttled to low-end mobile phone on a Mac
+
+![Canvas Profile with frame rate dependence](/experiments/outcomes/frame-rate-independent-canvas.png)
