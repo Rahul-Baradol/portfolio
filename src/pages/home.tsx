@@ -3,6 +3,7 @@ import { ExperienceContainer } from "@/components/experience";
 import { ProjectsContainer } from "@/components/projects";
 import { SkillsContainer } from "@/components/skills";
 import { StoriesContainer } from "@/components/stories";
+import { ExperimentsContainer } from "@/components/experiments";
 import { OpenPRsContainer } from "@/components/open-prs";
 import { EducationContainer } from "@/components/education";
 import { useEffect } from "react";
@@ -80,6 +81,8 @@ export function Home() {
             <SkillsContainer />
 
             <StoriesContainer />
+
+            <ExperimentsContainer />
 
             {/* <DevTipsCard /> */}
 

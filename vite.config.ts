@@ -1,5 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import mdx from '@mdx-js/rollup'
+import remarkGfm from 'remark-gfm'
 import tailwindcss from '@tailwindcss/vite'
 import path from 'path'
 import { visualizer } from "rollup-plugin-visualizer";
@@ -10,10 +12,14 @@ let _isSsrBuild = false
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
+    // MDX must run before the React plugin so its compiled output is picked up.
+    { enforce: 'pre', ...mdx({ remarkPlugins: [remarkGfm] }) },
     react({
       babel: {
         plugins: [['babel-plugin-react-compiler']],
       },
+      // let Fast Refresh + the React compiler also process .mdx output
+      include: [/\.mdx?$/, /\.[jt]sx?$/],
     }),
     tailwindcss(),
     visualizer({

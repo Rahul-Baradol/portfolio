@@ -5,6 +5,7 @@ import { Layout } from './layout'
 import { Home } from './pages/home'
 import { PRsPage } from './pages/prs'
 import { BlogPage } from './pages/blog'
+import { ExperimentPage } from './pages/experiment'
 import NotFound from './components/not-found'
 
 export function render(url: string) {
@@ -16,6 +17,7 @@ export function render(url: string) {
             <Route index element={<Home />} />
             <Route path="/prs" element={<PRsPage />} />
             <Route path="/blog/:slug" element={<BlogPage />} />
+            <Route path="/experiments/:slug" element={<ExperimentPage />} />
             <Route path="/*" element={<NotFound />} />
           </Route>
         </Routes>
