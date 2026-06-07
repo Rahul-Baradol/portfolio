@@ -11,12 +11,13 @@ interface FallingImage {
     stage: 'initial-bounce-up' | 'free-fall' | 'bounce-up' | 'bounce-down';
 }
 
-export function CanvasMouseTrail() {
+export function CanvasWithFrameRateIndependentMouseTrail() {
     const imageCache = useRef<Map<string, HTMLImageElement>>(new Map());
     const containerRef = useRef<HTMLDivElement | null>(null);
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const images = useRef<FallingImage[]>([]);
     const animationFrameRef = useRef<number | null>(null);
+    const lastFrameTime = useRef<number | null>(null);
 
     const handleMouseMove = (event: React.MouseEvent) => {
         if (!containerRef.current) {
@@ -55,39 +56,43 @@ export function CanvasMouseTrail() {
     }
 
     const renderLoop = useCallback(() => {
+        const now = performance.now();
+        const deltaTime = lastFrameTime.current ? (now - lastFrameTime.current) / 16.666 : 1;
+        lastFrameTime.current = now;
+
         let updatedImages = images.current.map(image => {
             let newImage = { ...image };
 
             if (newImage.stage === 'initial-bounce-up') {
-                newImage.y -= newImage.dy;
-                newImage.x += newImage.dx;
+                newImage.y -= newImage.dy * deltaTime;
+                newImage.x += newImage.dx * deltaTime;
 
-                newImage.dx *= 0.98;
-                newImage.dy -= 1;
+                newImage.dx *= Math.pow(0.98, deltaTime);
+                newImage.dy -= 1 * deltaTime;
 
                 if (newImage.dy <= 0) {
                     newImage.stage = 'free-fall';
                     newImage.dy = 5;
                 }
             } else if (newImage.stage === 'free-fall') {
-                newImage.y += newImage.dy;
-                newImage.dy += 1;
+                newImage.y += newImage.dy * deltaTime;
+                newImage.dy += 1 * deltaTime;
 
                 if (newImage.y >= (window.innerHeight - 100)) {
                     newImage.stage = 'bounce-up';
                     newImage.dy = 10;
                 }
             } else if (newImage.stage === 'bounce-up') {
-                newImage.y -= newImage.dy;
-                newImage.dy -= 1;
+                newImage.y -= newImage.dy * deltaTime;
+                newImage.dy -= 1 * deltaTime;
 
                 if (newImage.dy <= 0) {
                     newImage.stage = 'bounce-down';
                     newImage.dy = 5;
                 }
             } else if (newImage.stage === 'bounce-down') {
-                newImage.y += newImage.dy;
-                newImage.dy += 1;
+                newImage.y += newImage.dy * deltaTime;
+                newImage.dy += 1 * deltaTime;
             }
 
             return newImage;

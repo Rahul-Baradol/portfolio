@@ -1,6 +1,7 @@
 import { NaiveMouseTrail } from "./naive-mouse-trail";
 import { UncontrolledMouseTrail } from "./uncontrolled-mouse-trail";
 import { CanvasMouseTrail } from "./canvas-mouse-trail";
+import { CanvasWithFrameRateIndependentMouseTrail } from "./canvas-fr-independent-mouse-trail";
 
 This is inspired from an <a href="https://tympanus.net/codrops/2026/05/20/made-with-gsap-building-a-fun-gravity-based-mouse-trail/" target="_blank" rel="noopener noreferrer"> experiment on Codrops </a>
 
@@ -216,7 +217,7 @@ const handleMouseMove = (event: React.MouseEvent) => {
         }
     }
 
-    const randomImageIndex = Math.floor(Math.random() * imageLinks.length); // Assuming you have 10 images
+    const randomImageIndex = Math.floor(Math.random() * imageLinks.length); 
 
     const newImage: Image = {
         x: curX - 50,
@@ -495,3 +496,27 @@ useEffect(() => {
     }
 }, []);
 ```
+
+Looks good!
+
+One small problem i noticed when opened on my Dell laptop, the images are falling twice as much as they should be.
+To the point, where it is not visually appealing anymore.
+
+Then I realised it is the frame-rate!
+
+Mac's refresh rate is 60Hz, and the Dell laptop's refresh rate is 120Hz, and our logic of updating the image position is frame-rate dependent, and not time dependent!
+
+For example, the following line 
+```jsx
+newImage.y += newImage.dy;
+```
+
+would run 60 times on a Mac and 120 times on a Dell laptop, in a second...
+
+If `newImage.dy` is 1 let's say, then it `newImage.y` would be increased by 60px on a Mac, and 120px on a Dell laptop, in one second, where ideally we would need them to be the same.
+
+We need to fix this!
+
+<div className="relative overflow-hidden rounded-xl border border-border">
+  <CanvasWithFrameRateIndependentMouseTrail />
+</div>

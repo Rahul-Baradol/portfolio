@@ -35,7 +35,7 @@ export function NaiveMouseTrail() {
             }
         }
 
-        const randomImageIndex = Math.floor(Math.random() * imageLinks.length); // Assuming you have 10 images
+        const randomImageIndex = Math.floor(Math.random() * imageLinks.length); 
 
         const newImage: Image = {
             x: curX - 50,
