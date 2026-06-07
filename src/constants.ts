@@ -331,8 +331,8 @@ export const experiments = [
     {
       slug: "mouse-trail",
       title: "Controlled vs Uncontrolled vs Canvas Components",
-      description: "Exploring a gravity-based mouse trail in React — from a naive state-driven approach to canvas.",
-      date: "20th May 2026",
+      description: "Exploring a gravity-based mouse trail in React; from a naive state-driven approach to canvas.",
+      date: "7th June 2026",
       tags: ["React", "Animation"]
     }
 ]
