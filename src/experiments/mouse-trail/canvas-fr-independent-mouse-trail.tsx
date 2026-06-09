@@ -140,17 +140,37 @@ export function CanvasWithFrameRateIndependentMouseTrail() {
 
         const handleWindowResize = () => {
             const canvas = canvasRef.current;
-            if (!canvas || !containerRef.current) {
+            const container = containerRef.current;
+
+            if (!canvas || !container) {
                 return;
             }
 
-            canvas.width = containerRef.current.clientWidth;
-            canvas.height = containerRef.current.clientHeight;
-            console.log("resize detected. adjusting canvas size.")
+            const dpr = window.devicePixelRatio || 1;
+
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            canvas.style.width = `${width}px`;
+            canvas.style.height = `${height}px`;
+
+            canvas.width = width * dpr;
+            canvas.height = height * dpr;
+
+            const ctx = canvas.getContext("2d");
+            if (!ctx) {
+                console.error("Failed to get canvas context");
+                return;
+            }
+
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.scale(dpr, dpr);
+
+            console.log("adjusted canvas size.")
         }
 
-        canvas.width = containerRef.current.clientWidth;
-        canvas.height = containerRef.current.clientHeight;
+        handleWindowResize();
+
         animationFrameRef.current = requestAnimationFrame(renderLoop);
 
         window.addEventListener("resize", handleWindowResize);
