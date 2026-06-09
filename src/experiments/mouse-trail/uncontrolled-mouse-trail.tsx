@@ -15,6 +15,7 @@ interface Image {
 }
 
 export function UncontrolledMouseTrail() {
+    const imageCache = useRef<Map<number, HTMLImageElement>>(new Map());
     const paintElement = useRef<HTMLDivElement>(null);
     const images = useRef<Image[]>([]);
 
@@ -101,17 +102,21 @@ export function UncontrolledMouseTrail() {
                         domImage.style.left = `${image.x}px`;
                         domImage.style.top = `${image.y}px`;
                         paintElement.current!.appendChild(domImage);
+
+                        imageCache.current.set(image.domId, domImage);
+
                         image.insertedInDom = true;
                     } else if (image.y < window.innerHeight) {
-                        const domImage = paintElement.current!.querySelector(`img[id="image-${image.domId}"]`) as HTMLImageElement;
+                        const domImage = imageCache.current.get(image.domId);
                         if (domImage) {
                             domImage.style.left = `${image.x}px`;
                             domImage.style.top = `${image.y}px`;
                         }
                     } else {
-                        const domImage = paintElement.current!.querySelector(`img[id="image-${image.domId}"]`) as HTMLImageElement;
+                        const domImage = imageCache.current.get(image.domId);
                         if (domImage) {
                             paintElement.current!.removeChild(domImage);
+                            imageCache.current.delete(image.domId);
                             image.shouldBeDeleted = true;
                         }
                     }
