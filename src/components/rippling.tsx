@@ -1,12 +1,34 @@
 import { useEffect, useRef } from "react";
 import { useTheme } from "@/lib/theme";
 
+function isLowEndDevice() {
+    if (typeof window === "undefined" || typeof navigator === "undefined") return false;
+
+    // Respect users who ask for reduced motion.
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return true;
+
+    // Coarse pointer + narrow viewport is a decent proxy for low-end phones.
+    const smallScreen = window.innerWidth < 640;    
+
+    // Few logical cores → likely a weak CPU.
+    const lowCores =
+        typeof navigator.hardwareConcurrency === "number" &&
+        navigator.hardwareConcurrency <= 4;
+
+    // Low RAM (Chromium-only API; undefined elsewhere).
+    const deviceMemory = (navigator as { deviceMemory?: number }).deviceMemory;
+    const lowMemory = typeof deviceMemory === "number" && deviceMemory <= 4;
+
+    return lowMemory || (lowCores && smallScreen);
+}
+
 export default function RippleCanvas() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const ripplesRef = useRef<any[]>([]);
     const sizeRef = useRef({ width: 0, height: 0 });
     const { theme } = useTheme();
     const themeRef = useRef(theme);
+    const disabledRef = useRef(isLowEndDevice());
 
     const isVisibleRef = useRef(true);
 
@@ -15,6 +37,11 @@ export default function RippleCanvas() {
     }, [theme]);
 
     useEffect(() => {
+        console.log(disabledRef.current)
+        if (disabledRef.current) {
+            return;
+        }
+
         const canvas = canvasRef.current!;
         const ctx = canvas.getContext("2d")!;
         let animationFrameId: number;
@@ -169,6 +196,10 @@ export default function RippleCanvas() {
             window.removeEventListener("mousemove", handleMouse);
         };
     }, []);
+
+    if (disabledRef.current) {
+        return null;
+    }
 
     return <canvas ref={canvasRef} className="fixed w-screen h-screen top-0 left-0 -z-10 pointer-events-none" />;
 }
