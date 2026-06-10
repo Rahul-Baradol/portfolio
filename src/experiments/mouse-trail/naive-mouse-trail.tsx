@@ -14,6 +14,7 @@ interface Image {
 export function NaiveMouseTrail() {
     const [images, setImages] = useState<Image[]>([]);
     const containerRef = useRef<HTMLDivElement | null>(null);
+    const lastSpawnTime = useRef<number>(0);
 
     const handleMouseMove = (event: React.MouseEvent) => {
         const container = containerRef.current;
@@ -23,17 +24,12 @@ export function NaiveMouseTrail() {
         const curX = event.clientX - rect.left;
         const curY = event.clientY - rect.top;
 
-        for (let i = 0; i < images.length; i++) {
-            const startX = images[i].x;
-            const startY = images[i].y;
-
-            const endX = images[i].x + 100;
-            const endY = images[i].y + 100;
-
-            if (curX >= startX && curX <= endX && curY >= startY && curY <= endY) {
-                return;
-            }
+        const now = performance.now();
+        if (now - lastSpawnTime.current < 100) {
+            return;
         }
+
+        lastSpawnTime.current = now;
 
         const randomImageIndex = Math.floor(Math.random() * imageLinks.length); 
 

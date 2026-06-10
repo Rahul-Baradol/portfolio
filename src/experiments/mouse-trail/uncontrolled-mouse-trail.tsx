@@ -18,6 +18,7 @@ export function UncontrolledMouseTrail() {
     const imageCache = useRef<Map<number, HTMLImageElement>>(new Map());
     const paintElement = useRef<HTMLDivElement>(null);
     const images = useRef<Image[]>([]);
+    const lastSpawnTime = useRef<number>(0);
 
     const handleMouseMove = (event: React.MouseEvent) => {
         if (!paintElement.current) {
@@ -27,17 +28,12 @@ export function UncontrolledMouseTrail() {
         const curX = event.clientX - rect.left;
         const curY = event.clientY - rect.top;
 
-        for (let i = 0; i < images.current.length; i++) {
-            const startX = images.current[i].x;
-            const startY = images.current[i].y;
-
-            const endX = images.current[i].x + 100;
-            const endY = images.current[i].y + 100;
-
-            if (curX >= startX && curX <= endX && curY >= startY && curY <= endY) {
-                return;
-            }
+        const now = performance.now();
+        if (now - lastSpawnTime.current < 100) {
+            return;
         }
+
+        lastSpawnTime.current = now;
 
         const randomImageIndex = Math.floor(Math.random() * imageLinks.length); 
 

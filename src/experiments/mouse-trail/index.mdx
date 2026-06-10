@@ -39,20 +39,19 @@ And then for each mouse event, we would do the following
 
 ```jsx
 const handleMouseMove = (event: React.MouseEvent) => {
-    const curX = event.clientX;
-    const curY = event.clientY;
+    const container = containerRef.current;
+    if (!container) return;
 
-    for (let i = 0; i < images.length; i++) {
-        const startX = images[i].x;
-        const startY = images[i].y;
+    const rect = container.getBoundingClientRect();
+    const curX = event.clientX - rect.left;
+    const curY = event.clientY - rect.top;
 
-        const endX = images[i].x + 100;
-        const endY = images[i].y + 100;
-
-        if (curX >= startX && curX <= endX && curY >= startY && curY <= endY) {
-            return;
-        }
+    const now = performance.now();
+    if (now - lastSpawnTime.current < 100) {
+        return;
     }
+
+    lastSpawnTime.current = now;
 
     const randomImageIndex = Math.floor(Math.random() * imageLinks.length); 
 
@@ -205,17 +204,12 @@ const handleMouseMove = (event: React.MouseEvent) => {
     const curX = event.clientX - rect.left;
     const curY = event.clientY - rect.top;
 
-    for (let i = 0; i < images.current.length; i++) {
-        const startX = images.current[i].x;
-        const startY = images.current[i].y;
-
-        const endX = images.current[i].x + 100;
-        const endY = images.current[i].y + 100;
-
-        if (curX >= startX && curX <= endX && curY >= startY && curY <= endY) {
-            return;
-        }
+    const now = performance.now();
+    if (now - lastSpawnTime.current < 100) {
+        return;
     }
+
+    lastSpawnTime.current = now;
 
     const randomImageIndex = Math.floor(Math.random() * imageLinks.length); 
 
@@ -352,7 +346,7 @@ In canvas approach, we would still store images as a React ref, handle the mouse
 
 The render loops changes to the following
 ```jsx
-const renderLoop = useCallback(() => {
+const renderLoop = () => {
     let updatedImages = images.current.map(image => {
         let newImage = { ...image };
 
@@ -415,7 +409,7 @@ const renderLoop = useCallback(() => {
     });
 
     animationFrameRef.current = requestAnimationFrame(renderLoop);
-}, [images])
+}
 ```
 
 And we would render the canvas as follows
@@ -535,9 +529,10 @@ const lastFrameTime = useRef<number | null>(null);
 
 And the render loop would be 
 ```jsx
-const renderLoop = useCallback(() => {
+const renderLoop = () => {
     const now = performance.now();
-    const frameFactor = lastFrameTime.current ? (now - lastFrameTime.current) / 16.666 : 1;
+    let frameFactor = lastFrameTime.current ? (now - lastFrameTime.current) / 16.666 : 1;
+    frameFactor = Math.min(frameFactor, 2);
     lastFrameTime.current = now;
 
     let updatedImages = images.current.map(image => {
@@ -602,7 +597,7 @@ const renderLoop = useCallback(() => {
     });
 
     animationFrameRef.current = requestAnimationFrame(renderLoop);
-}, [images])
+};
 ```
 
 where we enforce 60Hz by adding this `frameFactor` 
