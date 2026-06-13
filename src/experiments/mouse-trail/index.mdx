@@ -461,8 +461,70 @@ const renderLoop = () => {
 }
 ```
 
-And we would render the canvas as follows
+And we have separated this from the useEffect, and we trigger it here 
+```jsx
+useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas || !containerRef.current) {
+        return;
+    }
 
+    imageLinks.forEach(link => {
+        if (!imageCache.current.has(link.src)) {
+            const img = new Image();
+            img.src = link.src;
+            imageCache.current.set(link.src, img);
+        }
+    });
+
+    const handleWindowResize = () => {
+        const canvas = canvasRef.current;
+        const container = containerRef.current;
+
+        if (!canvas || !container) {
+            return;
+        }
+
+        const dpr = window.devicePixelRatio || 1;
+
+        const width = container.clientWidth;
+        const height = container.clientHeight;
+
+        canvas.style.width = `${width}px`;
+        canvas.style.height = `${height}px`;
+
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+
+        const ctx = canvas.getContext("2d");
+        if (!ctx) {
+            console.error("Failed to get canvas context");
+            return;
+        }
+
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.scale(dpr, dpr);
+
+        console.log("adjusted canvas size.")
+    }
+
+    handleWindowResize();
+
+    animationFrameRef.current = requestAnimationFrame(renderLoop);
+
+    window.addEventListener("resize", handleWindowResize);
+
+    return () => {
+        if (animationFrameRef.current) {
+            cancelAnimationFrame(animationFrameRef.current);
+        }
+
+        window.removeEventListener("resize", handleWindowResize);
+    }
+}, []);
+```
+
+And we would render the canvas as follows
 ```jsx
  <div ref={containerRef} className="relative flex justify-center items-center w-full h-125 overflow-hidden bg-black">
     <canvas
@@ -527,14 +589,7 @@ useEffect(() => {
         }
     });
 
-    const handleWindowResize = () => {
-        ...
-    }
-
-    handleWindowResize();
-    animationFrameRef.current = requestAnimationFrame(renderLoop);
-
-    window.addEventListener("resize", handleWindowResize);
+    ...
 
     return () => {
         if (animationFrameRef.current) {
