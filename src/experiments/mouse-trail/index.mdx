@@ -188,7 +188,7 @@ Because you might know, that `transforms` only trigger composition which is much
   <NaiveMouseTrailWithTransforms />
 </div>
 
-Better than before, but frame drops still happen whem `images` count is high.
+Better than before, but frame drops still happen when `images` count is high.
 
 So the next phase would be where we optimize the way we store and manage the images in the state.
 Let's not use React "state" at all, and modify the DOM directly, bypassing React's reconciliation.
@@ -241,7 +241,7 @@ const handleMouseMove = (event: React.MouseEvent) => {
 }
 ```
 
-And the render loop slighly changes as follows
+And the render loop slightly changes as follows
 ```jsx
 useEffect(() => {
     if (paintElement.current) {
@@ -613,6 +613,12 @@ const renderLoop = () => {
 ```
 
 where we enforce 60Hz by adding this `frameFactor` 
+
+Also we do 
+```jsx
+frameFactor = Math.min(frameFactor, 2);
+```
+to prevent overshooting of the frameFactor. Which could happen when the user switches tabs, or moves away from the window, leading to a high frameFactor ( because we compare the lastFrameTime and currentFrameTime )
 
 <div className="relative overflow-hidden rounded-xl border border-border">
   <CanvasWithFrameRateIndependentMouseTrail />
