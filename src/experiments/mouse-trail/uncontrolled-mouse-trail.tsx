@@ -56,7 +56,7 @@ export function UncontrolledMouseTrail() {
     useEffect(() => {
         if (paintElement.current) {
             let animationFrameId: number;
-            const renderLoop = () => {    
+            const renderLoop = () => {
                 images.current.forEach((image) => {    
                     if (image.stage === 'initial-bounce-up') {
                         image.y -= image.dy;
@@ -95,8 +95,9 @@ export function UncontrolledMouseTrail() {
                         domImage.style.position = 'absolute';
                         domImage.style.width = '100px';
                         domImage.style.height = '100px';
-                        domImage.style.left = `${image.x}px`;
-                        domImage.style.top = `${image.y}px`;
+                        domImage.style.left = `0px`;
+                        domImage.style.top = `0px`;
+                        domImage.style.transform = `translate(${image.x}px, ${image.y}px)`;
                         paintElement.current!.appendChild(domImage);
 
                         imageCache.current.set(image.domId, domImage);
@@ -105,8 +106,7 @@ export function UncontrolledMouseTrail() {
                     } else if (image.y < window.innerHeight) {
                         const domImage = imageCache.current.get(image.domId);
                         if (domImage) {
-                            domImage.style.left = `${image.x}px`;
-                            domImage.style.top = `${image.y}px`;
+                            domImage.style.transform = `translate(${image.x}px, ${image.y}px)`;
                         }
                     } else {
                         const domImage = imageCache.current.get(image.domId);

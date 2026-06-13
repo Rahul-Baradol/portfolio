@@ -1,4 +1,5 @@
 import { NaiveMouseTrail } from "./naive-mouse-trail";
+import { NaiveMouseTrailWithTransforms } from "./naive-mouse-trail-with-transforms";
 import { UncontrolledMouseTrail } from "./uncontrolled-mouse-trail";
 import { CanvasMouseTrail } from "./canvas-mouse-trail";
 import { CanvasWithFrameRateIndependentMouseTrail } from "./canvas-fr-independent-mouse-trail";
@@ -35,7 +36,7 @@ And maintain a state of these **images**
 const [images, setImages] = useState<Image[]>([]);
 ```
 
-And then for each mouse event, we would do the following
+And then for each mouse event, we would "spawn" images by populating `images` state
 
 ```jsx
 const handleMouseMove = (event: React.MouseEvent) => {
@@ -179,6 +180,16 @@ Now before we get into optimizations, let's take a look at the current implement
 
 3. **Rendering Pipeline**: The naive approach goes through the entire rendering pipeline (DOM > Style Calculation > Layout > Paint > Composite) for each frame, leading to potential performance issues.
 
+To address repeated-layout-recalculation, let's use `transforms` instead of `top` or `left`. 
+
+Because you might know, that `transforms` only trigger composition which is much cheaper as compared to full layout recalculation, and this I am talking about every frame!
+
+<div className="relative overflow-hidden rounded-xl border border-border">
+  <NaiveMouseTrailWithTransforms />
+</div>
+
+Better than before, but frame drops still happen whem `images` count is high.
+
 So the next phase would be where we optimize the way we store and manage the images in the state.
 Let's not use React "state" at all, and modify the DOM directly, bypassing React's reconciliation.
 
@@ -194,7 +205,7 @@ We maintain the images as a React ref, which doesn't trigger a React re-render o
 const images = useRef<Image[]>([]);
 ```
 
-And for each mouse move, we do the following 
+And for each mouse move, we update the ref, which doesn't trigger a re-render 
 ```jsx
 const handleMouseMove = (event: React.MouseEvent) => {
     if (!paintElement.current) {
@@ -342,6 +353,8 @@ Moving to canvas.
 
 The reason is because, in canvas approach we would handle the rendering ourselves, giving us more control over the performance.
 
+That also means, we have to be careful in memory handling, making sure we don't create GC pressure.
+
 In canvas approach, we would still store images as a React ref, handle the mouse event the same way as before, but the way we handle rendering would change significantly. Instead of relying on the DOM and React's reconciliation, we would draw the images directly onto the canvas.
 
 The render loops changes to the following
@@ -458,7 +471,6 @@ updatedImages.forEach(image => {
 The above approach is bad for performance.
 We are creating a new image every frame, right?
 The older images are not being cleared from the tab memory, which increases memory usage.
-And! each image node is treated as a DOM node by the browser.
 
 When a GC is triggered, rendering is stopped for a brief moment, until the garbage collection completes.
 If the stale image nodes are "too many", like 10K which is easily possible, the GC would take a significant amount of time to clean up, leading to noticeable frame drops and a poor user experience.

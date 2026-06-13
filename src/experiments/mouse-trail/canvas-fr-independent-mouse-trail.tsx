@@ -19,6 +19,7 @@ export function CanvasWithFrameRateIndependentMouseTrail() {
     const animationFrameRef = useRef<number | null>(null);
     const lastFrameTime = useRef<number | null>(null);
     const lastSpawnTime = useRef<number>(0);
+    const FRAME_DURATION = 1000/60;
 
     const handleMouseMove = (event: React.MouseEvent) => {
         if (!containerRef.current) {
@@ -53,7 +54,7 @@ export function CanvasWithFrameRateIndependentMouseTrail() {
 
     const renderLoop = () => {
         const now = performance.now();
-        let frameFactor = lastFrameTime.current ? (now - lastFrameTime.current) / 16.666 : 1;
+        let frameFactor = lastFrameTime.current ? (now - lastFrameTime.current) / FRAME_DURATION : 1;
         frameFactor = Math.min(frameFactor, 2);
         lastFrameTime.current = now;
 
