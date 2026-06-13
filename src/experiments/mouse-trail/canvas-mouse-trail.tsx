@@ -52,41 +52,39 @@ export function CanvasMouseTrail() {
 
     const renderLoop = () => {
         let updatedImages = images.current.map(image => {
-            let newImage = { ...image };
+            if (image.stage === 'initial-bounce-up') {
+                image.y -= image.dy;
+                image.x += image.dx;
 
-            if (newImage.stage === 'initial-bounce-up') {
-                newImage.y -= newImage.dy;
-                newImage.x += newImage.dx;
+                image.dx *= HORIZONTAL_FRICTION;
+                image.dy -= GRAVITY;
 
-                newImage.dx *= HORIZONTAL_FRICTION;
-                newImage.dy -= GRAVITY;
-
-                if (newImage.dy <= 0) {
-                    newImage.stage = 'free-fall';
-                    newImage.dy = INITIAL_FALL_SPEED;
+                if (image.dy <= 0) {
+                    image.stage = 'free-fall';
+                    image.dy = INITIAL_FALL_SPEED;
                 }
-            } else if (newImage.stage === 'free-fall') {
-                newImage.y += newImage.dy;
-                newImage.dy += GRAVITY;
+            } else if (image.stage === 'free-fall') {
+                image.y += image.dy;
+                image.dy += GRAVITY;
 
-                if (newImage.y >= (window.innerHeight - 100)) {
-                    newImage.stage = 'bounce-up';
-                    newImage.dy = INITIAL_BOUNCE_UP_SPEED;
+                if (image.y >= (window.innerHeight - 100)) {
+                    image.stage = 'bounce-up';
+                    image.dy = INITIAL_BOUNCE_UP_SPEED;
                 }
-            } else if (newImage.stage === 'bounce-up') {
-                newImage.y -= newImage.dy;
-                newImage.dy -= GRAVITY;
+            } else if (image.stage === 'bounce-up') {
+                image.y -= image.dy;
+                image.dy -= GRAVITY;
 
-                if (newImage.dy <= 0) {
-                    newImage.stage = 'bounce-down';
-                    newImage.dy = INITIAL_FALL_SPEED;
+                if (image.dy <= 0) {
+                    image.stage = 'bounce-down';
+                    image.dy = INITIAL_FALL_SPEED;
                 }
-            } else if (newImage.stage === 'bounce-down') {
-                newImage.y += newImage.dy;
-                newImage.dy += GRAVITY;
+            } else if (image.stage === 'bounce-down') {
+                image.y += image.dy;
+                image.dy += GRAVITY;
             }
 
-            return newImage;
+            return image;
         });
 
         updatedImages = updatedImages.filter(image => image.y < window.innerHeight);

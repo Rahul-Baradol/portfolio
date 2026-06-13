@@ -59,41 +59,39 @@ export function CanvasWithFrameRateIndependentMouseTrail() {
         lastFrameTime.current = now;
 
         let updatedImages = images.current.map(image => {
-            let newImage = { ...image };
+            if (image.stage === 'initial-bounce-up') {
+                image.y -= image.dy * frameFactor;
+                image.x += image.dx * frameFactor;
 
-            if (newImage.stage === 'initial-bounce-up') {
-                newImage.y -= newImage.dy * frameFactor;
-                newImage.x += newImage.dx * frameFactor;
+                image.dx *= Math.pow(HORIZONTAL_FRICTION, frameFactor);
+                image.dy -= GRAVITY * frameFactor;
 
-                newImage.dx *= Math.pow(HORIZONTAL_FRICTION, frameFactor);
-                newImage.dy -= GRAVITY * frameFactor;
-
-                if (newImage.dy <= 0) {
-                    newImage.stage = 'free-fall';
-                    newImage.dy = INITIAL_FALL_SPEED;
+                if (image.dy <= 0) {
+                    image.stage = 'free-fall';
+                    image.dy = INITIAL_FALL_SPEED;
                 }
-            } else if (newImage.stage === 'free-fall') {
-                newImage.y += newImage.dy * frameFactor;
-                newImage.dy += GRAVITY * frameFactor;
+            } else if (image.stage === 'free-fall') {
+                image.y += image.dy * frameFactor;
+                image.dy += GRAVITY * frameFactor;
 
-                if (newImage.y >= (window.innerHeight - 100)) {
-                    newImage.stage = 'bounce-up';
-                    newImage.dy = INITIAL_BOUNCE_UP_SPEED;
+                if (image.y >= (window.innerHeight - 100)) {
+                    image.stage = 'bounce-up';
+                    image.dy = INITIAL_BOUNCE_UP_SPEED;
                 }
-            } else if (newImage.stage === 'bounce-up') {
-                newImage.y -= newImage.dy * frameFactor;
-                newImage.dy -= GRAVITY * frameFactor;
+            } else if (image.stage === 'bounce-up') {
+                image.y -= image.dy * frameFactor;
+                image.dy -= GRAVITY * frameFactor;
 
-                if (newImage.dy <= 0) {
-                    newImage.stage = 'bounce-down';
-                    newImage.dy = INITIAL_FALL_SPEED;
+                if (image.dy <= 0) {
+                    image.stage = 'bounce-down';
+                    image.dy = INITIAL_FALL_SPEED;
                 }
-            } else if (newImage.stage === 'bounce-down') {
-                newImage.y += newImage.dy * frameFactor;
-                newImage.dy += GRAVITY * frameFactor;
+            } else if (image.stage === 'bounce-down') {
+                image.y += image.dy * frameFactor;
+                image.dy += GRAVITY * frameFactor;
             }
 
-            return newImage;
+            return image;
         });
 
         updatedImages = updatedImages.filter(image => image.y < window.innerHeight);
