@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react"
-import { imageLinks } from "./constants";
+import { GRAVITY, HORIZONTAL_FRICTION, HORIZONTAL_SPREAD, IMAGE_SIZE_PIXELS, imageLinks, INITIAL_BOUNCE_UP_SPEED, INITIAL_FALL_SPEED, SPAWN_THROTTLE_MS } from "./constants";
 
 interface FallingImage {
     x: number,
@@ -19,7 +19,7 @@ export function CanvasWithFrameRateIndependentMouseTrail() {
     const animationFrameRef = useRef<number | null>(null);
     const lastFrameTime = useRef<number | null>(null);
     const lastSpawnTime = useRef<number>(0);
-    const FRAME_DURATION = 1000/60;
+    const FRAME_DURATION = 1000 / 60;
 
     const handleMouseMove = (event: React.MouseEvent) => {
         if (!containerRef.current) {
@@ -31,7 +31,7 @@ export function CanvasWithFrameRateIndependentMouseTrail() {
         const curY = event.clientY - rect.top;
 
         const now = performance.now();
-        if (now - lastSpawnTime.current < 100) {
+        if (now - lastSpawnTime.current < SPAWN_THROTTLE_MS) {
             return;
         }
 
@@ -40,12 +40,12 @@ export function CanvasWithFrameRateIndependentMouseTrail() {
         const randomImageIndex = Math.floor(Math.random() * imageLinks.length);
 
         const newImage: FallingImage = {
-            x: curX - 50,
-            y: curY - 50,
+            x: curX - (IMAGE_SIZE_PIXELS / 2),
+            y: curY - (IMAGE_SIZE_PIXELS / 2),
             id: imageLinks[randomImageIndex].id,
             src: imageLinks[randomImageIndex].src,
-            dx: (Math.random() * 10) - 5,
-            dy: 10,
+            dx: (Math.random() * HORIZONTAL_SPREAD * 2) - HORIZONTAL_SPREAD,
+            dy: INITIAL_BOUNCE_UP_SPEED,
             stage: 'initial-bounce-up'
         };
 
@@ -65,32 +65,32 @@ export function CanvasWithFrameRateIndependentMouseTrail() {
                 newImage.y -= newImage.dy * frameFactor;
                 newImage.x += newImage.dx * frameFactor;
 
-                newImage.dx *= Math.pow(0.98, frameFactor);
-                newImage.dy -= 1 * frameFactor;
+                newImage.dx *= Math.pow(HORIZONTAL_FRICTION, frameFactor);
+                newImage.dy -= GRAVITY * frameFactor;
 
                 if (newImage.dy <= 0) {
                     newImage.stage = 'free-fall';
-                    newImage.dy = 5;
+                    newImage.dy = INITIAL_FALL_SPEED;
                 }
             } else if (newImage.stage === 'free-fall') {
                 newImage.y += newImage.dy * frameFactor;
-                newImage.dy += 1 * frameFactor;
+                newImage.dy += GRAVITY * frameFactor;
 
                 if (newImage.y >= (window.innerHeight - 100)) {
                     newImage.stage = 'bounce-up';
-                    newImage.dy = 10;
+                    newImage.dy = INITIAL_BOUNCE_UP_SPEED;
                 }
             } else if (newImage.stage === 'bounce-up') {
                 newImage.y -= newImage.dy * frameFactor;
-                newImage.dy -= 1 * frameFactor;
+                newImage.dy -= GRAVITY * frameFactor;
 
                 if (newImage.dy <= 0) {
                     newImage.stage = 'bounce-down';
-                    newImage.dy = 5;
+                    newImage.dy = INITIAL_FALL_SPEED;
                 }
             } else if (newImage.stage === 'bounce-down') {
                 newImage.y += newImage.dy * frameFactor;
-                newImage.dy += 1 * frameFactor;
+                newImage.dy += GRAVITY * frameFactor;
             }
 
             return newImage;
@@ -115,7 +115,7 @@ export function CanvasWithFrameRateIndependentMouseTrail() {
         updatedImages.forEach(image => {
             const img = imageCache.current.get(image.src);
             if (img) {
-                ctx.drawImage(img, image.x, image.y, 100, 100);
+                ctx.drawImage(img, image.x, image.y, IMAGE_SIZE_PIXELS, IMAGE_SIZE_PIXELS);
             }
         });
 

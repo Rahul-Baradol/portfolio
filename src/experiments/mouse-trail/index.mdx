@@ -30,6 +30,19 @@ interface Image {
 } 
 ```
 
+And let the constants be 
+```jsx
+export const HORIZONTAL_SPREAD = 5;
+
+export const INITIAL_FALL_SPEED = 5;
+export const INITIAL_BOUNCE_UP_SPEED = 10;
+
+export const GRAVITY = 1;         
+export const HORIZONTAL_FRICTION = 0.98;
+export const SPAWN_THROTTLE_MS = 100;   
+export const IMAGE_SIZE_PIXELS = 100;   
+```    
+
 And maintain a state of these **images**
 
 ```jsx
@@ -41,14 +54,16 @@ And then for each mouse event, we would "spawn" images by populating `images` st
 ```jsx
 const handleMouseMove = (event: React.MouseEvent) => {
     const container = containerRef.current;
-    if (!container) return;
+    if (!container) {
+        return;
+    }
 
     const rect = container.getBoundingClientRect();
     const curX = event.clientX - rect.left;
     const curY = event.clientY - rect.top;
 
     const now = performance.now();
-    if (now - lastSpawnTime.current < 100) {
+    if (now - lastSpawnTime.current < SPAWN_THROTTLE_MS) {
         return;
     }
 
@@ -57,13 +72,13 @@ const handleMouseMove = (event: React.MouseEvent) => {
     const randomImageIndex = Math.floor(Math.random() * imageLinks.length); 
 
     const newImage: Image = {
-        x: curX - 50,
-        y: curY - 50,
+        x: curX - (IMAGE_SIZE_PIXELS / 2),
+        y: curY - (IMAGE_SIZE_PIXELS / 2),
         id: imageLinks[randomImageIndex].id,
         src: imageLinks[randomImageIndex].src,
         stage: 'initial-bounce-up',
-        dx: (Math.random() * 10) - 5,
-        dy: 10
+        dx: (Math.random() * HORIZONTAL_SPREAD * 2) - HORIZONTAL_SPREAD,
+        dy: INITIAL_BOUNCE_UP_SPEED
     };
 
     setImages(prevImages => {
@@ -78,6 +93,8 @@ And we start a render loop like this
 useEffect(() => {
     let animationFrameId: number;
     const renderLoop = () => {
+        const floor = containerRef.current?.clientHeight ?? 0;
+
         setImages(prevImages => {
             if (prevImages.length === 0) {
                 return [];
@@ -92,36 +109,36 @@ useEffect(() => {
                     newImage.y -= newImage.dy;
                     newImage.x += newImage.dx;
 
-                    newImage.dy -= 1;
-                    newImage.dx *= 0.98;
+                    newImage.dy -= GRAVITY;
+                    newImage.dx *= HORIZONTAL_FRICTION;
                     if (newImage.dy <= 0) {
                         newImage.stage = 'free-fall';
-                        newImage.dy = 5;
+                        newImage.dy = INITIAL_FALL_SPEED;
                     }
                 } else if (image.stage === 'free-fall') {
                     newImage.y += newImage.dy;
-                    newImage.dy += 1;
+                    newImage.dy += GRAVITY;
 
-                    if (newImage.y >= (window.innerHeight - 100)) {
+                    if (newImage.y >= (floor - 100)) {
                         newImage.stage = 'bounce-up';
-                        newImage.dy = 10;
+                        newImage.dy = INITIAL_BOUNCE_UP_SPEED;
                     }
                 } else if (image.stage === 'bounce-up') {
                     newImage.y -= newImage.dy;
-                    newImage.dy -= 1;
+                    newImage.dy -= GRAVITY;
                     if (newImage.dy <= 0) {
                         newImage.stage = 'bounce-down';
-                        newImage.dy = 5;
+                        newImage.dy = INITIAL_FALL_SPEED;
                     }
                 } else if (image.stage === 'bounce-down') {
                     newImage.y += newImage.dy;
-                    newImage.dy += 1;
+                    newImage.dy += GRAVITY;
                 }
 
                 return newImage;
             });
 
-            updatedImages = updatedImages.filter(image => image.y < window.innerHeight);
+            updatedImages = updatedImages.filter(image => image.y < floor);
 
             return updatedImages;
         });
@@ -149,8 +166,8 @@ And we render these as follows
         style={{
             top: `${image.y}px`,
             left: `${image.x}px`,
-            width: '100px',
-            height: '100px',
+            width: `${IMAGE_SIZE_PIXELS}px`,
+            height: `${IMAGE_SIZE_PIXELS}px`,
         }}
     />
 ))}
@@ -184,6 +201,27 @@ To address repeated-layout-recalculation, let's use `transforms` instead of `top
 
 Because you might know, that `transforms` only trigger composition which is much cheaper as compared to full layout recalculation, and this I am talking about every frame!
 
+With the following changes, 
+```jsx
+{images.map((image, index) => (
+    <img
+        key={index}
+        src={image.src}
+        alt={`Falling image ${index}`}
+        className="absolute pointer-events-none"
+        style={{
+            top: '0px',
+            left: '0px',
+            transform: `translate(${image.x}px, ${image.y}px)`,
+            willChange: 'transform',
+            width: `${IMAGE_SIZE_PIXELS}px`,
+            height: `${IMAGE_SIZE_PIXELS}px`,
+        }}
+    />
+))}
+```
+
+We get the following,
 <div className="relative overflow-hidden rounded-xl border border-border">
   <NaiveMouseTrailWithTransforms />
 </div>
@@ -216,7 +254,7 @@ const handleMouseMove = (event: React.MouseEvent) => {
     const curY = event.clientY - rect.top;
 
     const now = performance.now();
-    if (now - lastSpawnTime.current < 100) {
+    if (now - lastSpawnTime.current < SPAWN_THROTTLE_MS) {
         return;
     }
 
@@ -225,14 +263,14 @@ const handleMouseMove = (event: React.MouseEvent) => {
     const randomImageIndex = Math.floor(Math.random() * imageLinks.length); 
 
     const newImage: Image = {
-        x: curX - 50,
-        y: curY - 50,
+        x: curX - (IMAGE_SIZE_PIXELS / 2),
+        y: curY - (IMAGE_SIZE_PIXELS / 2),
         id: imageLinks[randomImageIndex].id,
         domId: Math.floor(Math.random() * 10000), 
         src: imageLinks[randomImageIndex].src,
         stage: 'initial-bounce-up',
-        dx: (Math.random() * 10) - 5,
-        dy: 10,
+        dx: (Math.random() * HORIZONTAL_SPREAD * 2) - HORIZONTAL_SPREAD,
+        dy: INITIAL_BOUNCE_UP_SPEED,
         insertedInDom: false,
         shouldBeDeleted: false,
     };
@@ -246,36 +284,36 @@ And the render loop slightly changes as follows
 useEffect(() => {
     if (paintElement.current) {
         let animationFrameId: number;
-        const renderLoop = () => {    
+        const renderLoop = () => {
             images.current.forEach((image) => {    
                 if (image.stage === 'initial-bounce-up') {
                     image.y -= image.dy;
                     image.x += image.dx;
 
-                    image.dy -= 1;
-                    image.dx *= 0.98;
+                    image.dy -= GRAVITY;
+                    image.dx *= HORIZONTAL_FRICTION;
                     if (image.dy <= 0) {
                         image.stage = 'free-fall';
-                        image.dy = 5;
+                        image.dy = INITIAL_FALL_SPEED;
                     }
                 } else if (image.stage === 'free-fall') {
                     image.y += image.dy;
-                    image.dy += 1;
+                    image.dy += GRAVITY;
 
                     if (image.y >= (window.innerHeight - 100)) {
                         image.stage = 'bounce-up';
-                        image.dy = 10;
+                        image.dy = INITIAL_BOUNCE_UP_SPEED;
                     }
                 } else if (image.stage === 'bounce-up') {
                     image.y -= image.dy;
-                    image.dy -= 1;
+                    image.dy -= GRAVITY;
                     if (image.dy <= 0) {
                         image.stage = 'bounce-down';
-                        image.dy = 5;
+                        image.dy = INITIAL_FALL_SPEED;
                     }
                 } else if (image.stage === 'bounce-down') {
                     image.y += image.dy;
-                    image.dy += 1;
+                    image.dy += GRAVITY;
                 }
 
                 if (image.insertedInDom === false) {
@@ -283,10 +321,11 @@ useEffect(() => {
                     domImage.id = `image-${image.domId}`;
                     domImage.src = image.src;
                     domImage.style.position = 'absolute';
-                    domImage.style.width = '100px';
-                    domImage.style.height = '100px';
-                    domImage.style.left = `${image.x}px`;
-                    domImage.style.top = `${image.y}px`;
+                    domImage.style.width = `${IMAGE_SIZE_PIXELS}px`;
+                    domImage.style.height = `${IMAGE_SIZE_PIXELS}px`;
+                    domImage.style.left = `0px`;
+                    domImage.style.top = `0px`;
+                    domImage.style.transform = `translate(${image.x}px, ${image.y}px)`;
                     paintElement.current!.appendChild(domImage);
 
                     imageCache.current.set(image.domId, domImage);
@@ -295,8 +334,7 @@ useEffect(() => {
                 } else if (image.y < window.innerHeight) {
                     const domImage = imageCache.current.get(image.domId);
                     if (domImage) {
-                        domImage.style.left = `${image.x}px`;
-                        domImage.style.top = `${image.y}px`;
+                        domImage.style.transform = `translate(${image.x}px, ${image.y}px)`;
                     }
                 } else {
                     const domImage = imageCache.current.get(image.domId);
@@ -367,32 +405,32 @@ const renderLoop = () => {
             newImage.y -= newImage.dy;
             newImage.x += newImage.dx;
 
-            newImage.dx *= 0.98;
-            newImage.dy -= 1;
+            newImage.dx *= HORIZONTAL_FRICTION;
+            newImage.dy -= GRAVITY;
 
             if (newImage.dy <= 0) {
                 newImage.stage = 'free-fall';
-                newImage.dy = 5;
+                newImage.dy = INITIAL_FALL_SPEED;
             }
         } else if (newImage.stage === 'free-fall') {
             newImage.y += newImage.dy;
-            newImage.dy += 1;
+            newImage.dy += GRAVITY;
 
             if (newImage.y >= (window.innerHeight - 100)) {
                 newImage.stage = 'bounce-up';
-                newImage.dy = 10;
+                newImage.dy = INITIAL_BOUNCE_UP_SPEED;
             }
         } else if (newImage.stage === 'bounce-up') {
             newImage.y -= newImage.dy;
-            newImage.dy -= 1;
+            newImage.dy -= GRAVITY;
 
             if (newImage.dy <= 0) {
                 newImage.stage = 'bounce-down';
-                newImage.dy = 5;
+                newImage.dy = INITIAL_FALL_SPEED;
             }
         } else if (newImage.stage === 'bounce-down') {
             newImage.y += newImage.dy;
-            newImage.dy += 1;
+            newImage.dy += GRAVITY;
         }
 
         return newImage;
@@ -417,7 +455,7 @@ const renderLoop = () => {
     updatedImages.forEach(image => {
         const img = imageCache.current.get(image.src);
         if (img) {
-            ctx.drawImage(img, image.x, image.y, 100, 100);
+            ctx.drawImage(img, image.x, image.y, IMAGE_SIZE_PIXELS, IMAGE_SIZE_PIXELS);
         }
     });
 
@@ -450,7 +488,7 @@ And we would render the canvas as follows
 Few interesting lines worth mentioning are 
 ```jsx
 updatedImages.forEach(image => {
-    const img = imageCache.current.get(image.src); // what this !?
+    const img = imageCache.current.get(image.src); // what is this !?
     if (img) {
         ctx.drawImage(img, image.x, image.y, 100, 100);
     }
@@ -543,7 +581,7 @@ And the render loop would be
 ```jsx
 const renderLoop = () => {
     const now = performance.now();
-    let frameFactor = lastFrameTime.current ? (now - lastFrameTime.current) / 16.666 : 1;
+    let frameFactor = lastFrameTime.current ? (now - lastFrameTime.current) / FRAME_DURATION : 1;
     frameFactor = Math.min(frameFactor, 2);
     lastFrameTime.current = now;
 
@@ -554,32 +592,32 @@ const renderLoop = () => {
             newImage.y -= newImage.dy * frameFactor;
             newImage.x += newImage.dx * frameFactor;
 
-            newImage.dx *= Math.pow(0.98, frameFactor);
-            newImage.dy -= 1 * frameFactor;
+            newImage.dx *= Math.pow(HORIZONTAL_FRICTION, frameFactor);
+            newImage.dy -= GRAVITY * frameFactor;
 
             if (newImage.dy <= 0) {
                 newImage.stage = 'free-fall';
-                newImage.dy = 5;
+                newImage.dy = INITIAL_FALL_SPEED;
             }
         } else if (newImage.stage === 'free-fall') {
             newImage.y += newImage.dy * frameFactor;
-            newImage.dy += 1 * frameFactor;
+            newImage.dy += GRAVITY * frameFactor;
 
             if (newImage.y >= (window.innerHeight - 100)) {
                 newImage.stage = 'bounce-up';
-                newImage.dy = 10;
+                newImage.dy = INITIAL_BOUNCE_UP_SPEED;
             }
         } else if (newImage.stage === 'bounce-up') {
             newImage.y -= newImage.dy * frameFactor;
-            newImage.dy -= 1 * frameFactor;
+            newImage.dy -= GRAVITY * frameFactor;
 
             if (newImage.dy <= 0) {
                 newImage.stage = 'bounce-down';
-                newImage.dy = 5;
+                newImage.dy = INITIAL_FALL_SPEED;
             }
         } else if (newImage.stage === 'bounce-down') {
             newImage.y += newImage.dy * frameFactor;
-            newImage.dy += 1 * frameFactor;
+            newImage.dy += GRAVITY * frameFactor;
         }
 
         return newImage;
@@ -604,7 +642,7 @@ const renderLoop = () => {
     updatedImages.forEach(image => {
         const img = imageCache.current.get(image.src);
         if (img) {
-            ctx.drawImage(img, image.x, image.y, 100, 100);
+            ctx.drawImage(img, image.x, image.y, IMAGE_SIZE_PIXELS, IMAGE_SIZE_PIXELS);
         }
     });
 

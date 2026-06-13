@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import { imageLinks } from "./constants";
+import { GRAVITY, HORIZONTAL_FRICTION, HORIZONTAL_SPREAD, IMAGE_SIZE_PIXELS, imageLinks, INITIAL_BOUNCE_UP_SPEED, INITIAL_FALL_SPEED, SPAWN_THROTTLE_MS } from "./constants";
 
 interface Image {
     x: number,
@@ -18,14 +18,16 @@ export function NaiveMouseTrail() {
 
     const handleMouseMove = (event: React.MouseEvent) => {
         const container = containerRef.current;
-        if (!container) return;
+        if (!container) {
+            return;
+        }
 
         const rect = container.getBoundingClientRect();
         const curX = event.clientX - rect.left;
         const curY = event.clientY - rect.top;
 
         const now = performance.now();
-        if (now - lastSpawnTime.current < 100) {
+        if (now - lastSpawnTime.current < SPAWN_THROTTLE_MS) {
             return;
         }
 
@@ -34,13 +36,13 @@ export function NaiveMouseTrail() {
         const randomImageIndex = Math.floor(Math.random() * imageLinks.length); 
 
         const newImage: Image = {
-            x: curX - 50,
-            y: curY - 50,
+            x: curX - (IMAGE_SIZE_PIXELS / 2),
+            y: curY - (IMAGE_SIZE_PIXELS / 2),
             id: imageLinks[randomImageIndex].id,
             src: imageLinks[randomImageIndex].src,
             stage: 'initial-bounce-up',
-            dx: (Math.random() * 10) - 5,
-            dy: 10
+            dx: (Math.random() * HORIZONTAL_SPREAD * 2) - HORIZONTAL_SPREAD,
+            dy: INITIAL_BOUNCE_UP_SPEED
         };
 
         setImages(prevImages => {
@@ -67,30 +69,30 @@ export function NaiveMouseTrail() {
                         newImage.y -= newImage.dy;
                         newImage.x += newImage.dx;
 
-                        newImage.dy -= 1;
-                        newImage.dx *= 0.98;
+                        newImage.dy -= GRAVITY;
+                        newImage.dx *= HORIZONTAL_FRICTION;
                         if (newImage.dy <= 0) {
                             newImage.stage = 'free-fall';
-                            newImage.dy = 5;
+                            newImage.dy = INITIAL_FALL_SPEED;
                         }
                     } else if (image.stage === 'free-fall') {
                         newImage.y += newImage.dy;
-                        newImage.dy += 1;
+                        newImage.dy += GRAVITY;
 
                         if (newImage.y >= (floor - 100)) {
                             newImage.stage = 'bounce-up';
-                            newImage.dy = 10;
+                            newImage.dy = INITIAL_BOUNCE_UP_SPEED;
                         }
                     } else if (image.stage === 'bounce-up') {
                         newImage.y -= newImage.dy;
-                        newImage.dy -= 1;
+                        newImage.dy -= GRAVITY;
                         if (newImage.dy <= 0) {
                             newImage.stage = 'bounce-down';
-                            newImage.dy = 5;
+                            newImage.dy = INITIAL_FALL_SPEED;
                         }
                     } else if (image.stage === 'bounce-down') {
                         newImage.y += newImage.dy;
-                        newImage.dy += 1;
+                        newImage.dy += GRAVITY;
                     }
 
                     return newImage;
@@ -125,8 +127,8 @@ export function NaiveMouseTrail() {
                 style={{
                     top: `${image.y}px`,
                     left: `${image.x}px`,
-                    width: '100px',
-                    height: '100px',
+                    width: `${IMAGE_SIZE_PIXELS}px`,
+                    height: `${IMAGE_SIZE_PIXELS}px`,
                 }}
             />
         ))}

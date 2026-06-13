@@ -39,3 +39,13 @@ export const imageLinks = [
         src: '/experiments/mouse-trail/10.png'
     }
 ]
+
+export const HORIZONTAL_SPREAD = 5;
+
+export const INITIAL_FALL_SPEED = 5;
+export const INITIAL_BOUNCE_UP_SPEED = 10;
+
+export const GRAVITY = 1;         
+export const HORIZONTAL_FRICTION = 0.98;
+export const SPAWN_THROTTLE_MS = 100;   
+export const IMAGE_SIZE_PIXELS = 100;          

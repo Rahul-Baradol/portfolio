@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react"
-import { imageLinks } from "./constants";
+import { GRAVITY, HORIZONTAL_FRICTION, HORIZONTAL_SPREAD, IMAGE_SIZE_PIXELS, imageLinks, INITIAL_BOUNCE_UP_SPEED, INITIAL_FALL_SPEED, SPAWN_THROTTLE_MS } from "./constants";
 
 interface Image {
     x: number,
@@ -29,7 +29,7 @@ export function UncontrolledMouseTrail() {
         const curY = event.clientY - rect.top;
 
         const now = performance.now();
-        if (now - lastSpawnTime.current < 100) {
+        if (now - lastSpawnTime.current < SPAWN_THROTTLE_MS) {
             return;
         }
 
@@ -38,14 +38,14 @@ export function UncontrolledMouseTrail() {
         const randomImageIndex = Math.floor(Math.random() * imageLinks.length); 
 
         const newImage: Image = {
-            x: curX - 50,
-            y: curY - 50,
+            x: curX - (IMAGE_SIZE_PIXELS / 2),
+            y: curY - (IMAGE_SIZE_PIXELS / 2),
             id: imageLinks[randomImageIndex].id,
             domId: Math.floor(Math.random() * 10000), 
             src: imageLinks[randomImageIndex].src,
             stage: 'initial-bounce-up',
-            dx: (Math.random() * 10) - 5,
-            dy: 10,
+            dx: (Math.random() * HORIZONTAL_SPREAD * 2) - HORIZONTAL_SPREAD,
+            dy: INITIAL_BOUNCE_UP_SPEED,
             insertedInDom: false,
             shouldBeDeleted: false,
         };
@@ -62,30 +62,30 @@ export function UncontrolledMouseTrail() {
                         image.y -= image.dy;
                         image.x += image.dx;
 
-                        image.dy -= 1;
-                        image.dx *= 0.98;
+                        image.dy -= GRAVITY;
+                        image.dx *= HORIZONTAL_FRICTION;
                         if (image.dy <= 0) {
                             image.stage = 'free-fall';
-                            image.dy = 5;
+                            image.dy = INITIAL_FALL_SPEED;
                         }
                     } else if (image.stage === 'free-fall') {
                         image.y += image.dy;
-                        image.dy += 1;
+                        image.dy += GRAVITY;
 
                         if (image.y >= (window.innerHeight - 100)) {
                             image.stage = 'bounce-up';
-                            image.dy = 10;
+                            image.dy = INITIAL_BOUNCE_UP_SPEED;
                         }
                     } else if (image.stage === 'bounce-up') {
                         image.y -= image.dy;
-                        image.dy -= 1;
+                        image.dy -= GRAVITY;
                         if (image.dy <= 0) {
                             image.stage = 'bounce-down';
-                            image.dy = 5;
+                            image.dy = INITIAL_FALL_SPEED;
                         }
                     } else if (image.stage === 'bounce-down') {
                         image.y += image.dy;
-                        image.dy += 1;
+                        image.dy += GRAVITY;
                     }
     
                     if (image.insertedInDom === false) {
@@ -93,8 +93,8 @@ export function UncontrolledMouseTrail() {
                         domImage.id = `image-${image.domId}`;
                         domImage.src = image.src;
                         domImage.style.position = 'absolute';
-                        domImage.style.width = '100px';
-                        domImage.style.height = '100px';
+                        domImage.style.width = `${IMAGE_SIZE_PIXELS}px`;
+                        domImage.style.height = `${IMAGE_SIZE_PIXELS}px`;
                         domImage.style.left = `0px`;
                         domImage.style.top = `0px`;
                         domImage.style.transform = `translate(${image.x}px, ${image.y}px)`;
