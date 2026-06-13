@@ -364,7 +364,10 @@ And we have the elements in DOM as follows
 ```jsx
 <div ref={paintElement} onMouseMove={handleMouseMove} className="relative flex justify-center items-center w-full h-125 overflow-hidden bg-black">
     <div className="flex flex-col items-center z-10 text-center">
-        <span className="text-white text-2xl md:text-3xl select-none opacity-90">Move your cursor to spawn</span>
+        {
+            isTouch ? <span className="text-white text-2xl md:text-3xl select-none opacity-90">Move your finger to spawn</span> :
+            <span className="text-white text-2xl md:text-3xl select-none opacity-90">Move your cursor to spawn</span>
+        }
         <span className="text-white text-2xl md:text-3xl select-none opacity-75">bouncy images!</span>
     </div>
 </div>
@@ -535,7 +538,10 @@ And we would render the canvas as follows
     </canvas>
 
     <div className="absolute flex flex-col items-center">
-        <span className="text-white text-2xl md:text-3xl select-none opacity-90">Move your cursor to spawn</span>
+        {
+            isTouch ? <span className="text-white text-2xl md:text-3xl select-none opacity-90">Move your finger to spawn</span> :
+            <span className="text-white text-2xl md:text-3xl select-none opacity-90">Move your cursor to spawn</span>
+        }
         <span className="text-white text-2xl md:text-3xl select-none opacity-75">bouncy images!</span>
     </div>
 </div>

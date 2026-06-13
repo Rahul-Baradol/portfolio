@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { GRAVITY, HORIZONTAL_FRICTION, HORIZONTAL_SPREAD, IMAGE_SIZE_PIXELS, imageLinks, INITIAL_BOUNCE_UP_SPEED, INITIAL_FALL_SPEED, SPAWN_THROTTLE_MS } from "./constants";
 
 interface Image {
@@ -19,6 +19,8 @@ export function UncontrolledMouseTrail() {
     const paintElement = useRef<HTMLDivElement>(null);
     const images = useRef<Image[]>([]);
     const lastSpawnTime = useRef<number>(0);
+
+    const [isTouch, setIsTouch] = useState(false);
 
     const handleMouseMove = (event: React.MouseEvent) => {
         if (!paintElement.current) {
@@ -54,6 +56,8 @@ export function UncontrolledMouseTrail() {
     }
 
     useEffect(() => {
+        setIsTouch(window.matchMedia("(pointer: coarse)").matches);
+
         if (paintElement.current) {
             let animationFrameId: number;
             const renderLoop = () => {
@@ -131,9 +135,12 @@ export function UncontrolledMouseTrail() {
         }
     }, [paintElement]);
 
-    return <div ref={paintElement} onMouseMove={handleMouseMove} className="relative flex justify-center items-center w-full h-125 overflow-hidden bg-black">
+    return <div ref={paintElement} onPointerMove={handleMouseMove} className="touch-none relative flex justify-center items-center w-full h-125 overflow-hidden bg-black">
         <div className="flex flex-col items-center z-10 text-center">
-            <span className="text-white text-2xl md:text-3xl select-none opacity-90">Move your cursor to spawn</span>
+            {
+                isTouch ? <span className="text-white text-2xl md:text-3xl select-none opacity-90">Move your finger to spawn</span> :
+                <span className="text-white text-2xl md:text-3xl select-none opacity-90">Move your cursor to spawn</span>
+            }
             <span className="text-white text-2xl md:text-3xl select-none opacity-75">bouncy images!</span>
         </div>
     </div>;

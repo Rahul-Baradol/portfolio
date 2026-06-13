@@ -16,6 +16,8 @@ export function NaiveMouseTrailWithTransforms() {
     const containerRef = useRef<HTMLDivElement | null>(null);
     const lastSpawnTime = useRef<number>(0);
 
+    const [isTouch, setIsTouch] = useState(false);
+
     const handleMouseMove = (event: React.MouseEvent) => {
         const container = containerRef.current;
         if (!container) return;
@@ -49,6 +51,8 @@ export function NaiveMouseTrailWithTransforms() {
     }
 
     useEffect(() => {
+        setIsTouch(window.matchMedia("(pointer: coarse)").matches);
+
         let animationFrameId: number;
         const renderLoop = () => {
             const floor = containerRef.current?.clientHeight ?? 0;
@@ -111,9 +115,12 @@ export function NaiveMouseTrailWithTransforms() {
         }
     }, []);
 
-    return <div ref={containerRef} onMouseMove={handleMouseMove} className="relative flex justify-center items-center w-full h-125 overflow-hidden bg-black">
+    return <div ref={containerRef} onPointerMove={handleMouseMove} className="touch-none relative flex justify-center items-center w-full h-125 overflow-hidden bg-black">
         <div className="flex flex-col items-center z-10 text-center px-4">
-            <span className="text-white text-2xl md:text-3xl select-none opacity-90">Move your cursor to spawn</span>
+            {
+                isTouch ? <span className="text-white text-2xl md:text-3xl select-none opacity-90">Move your finger to spawn</span> :
+                <span className="text-white text-2xl md:text-3xl select-none opacity-90">Move your cursor to spawn</span>
+            }
             <span className="text-white text-2xl md:text-3xl select-none opacity-75">bouncy images!</span>
         </div>
         {images.map((image, index) => (

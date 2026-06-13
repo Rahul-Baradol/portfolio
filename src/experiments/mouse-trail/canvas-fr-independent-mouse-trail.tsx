@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { GRAVITY, HORIZONTAL_FRICTION, HORIZONTAL_SPREAD, IMAGE_SIZE_PIXELS, imageLinks, INITIAL_BOUNCE_UP_SPEED, INITIAL_FALL_SPEED, SPAWN_THROTTLE_MS } from "./constants";
 
 interface FallingImage {
@@ -20,6 +20,8 @@ export function CanvasWithFrameRateIndependentMouseTrail() {
     const lastFrameTime = useRef<number | null>(null);
     const lastSpawnTime = useRef<number>(0);
     const FRAME_DURATION = 1000 / 60;
+
+    const [isTouch, setIsTouch] = useState(false);
 
     const handleMouseMove = (event: React.MouseEvent) => {
         if (!containerRef.current) {
@@ -121,6 +123,8 @@ export function CanvasWithFrameRateIndependentMouseTrail() {
     };
 
     useEffect(() => {
+        setIsTouch(window.matchMedia("(pointer: coarse)").matches);
+
         const canvas = canvasRef.current;
         if (!canvas || !containerRef.current) {
             return;
@@ -184,13 +188,16 @@ export function CanvasWithFrameRateIndependentMouseTrail() {
         <div ref={containerRef} className="relative flex justify-center items-center w-full h-125 overflow-hidden bg-black">
             <canvas
                 ref={canvasRef}
-                onMouseMove={handleMouseMove}
-                className="absolute top-0 left-0 h-125 w-full bg-black"
+                onPointerMove={handleMouseMove}
+                className="touch-none absolute top-0 left-0 h-125 w-full bg-black"
             >
             </canvas>
 
             <div className="absolute flex flex-col items-center">
-                <span className="text-white text-2xl md:text-3xl select-none opacity-90">Move your cursor to spawn</span>
+                {
+                    isTouch ? <span className="text-white text-2xl md:text-3xl select-none opacity-90">Move your finger to spawn</span> :
+                    <span className="text-white text-2xl md:text-3xl select-none opacity-90">Move your cursor to spawn</span>
+                }
                 <span className="text-white text-2xl md:text-3xl select-none opacity-75">bouncy images!</span>
             </div>
         </div>
