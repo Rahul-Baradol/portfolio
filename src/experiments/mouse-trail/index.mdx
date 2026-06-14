@@ -757,15 +757,23 @@ It does that by recording the frame times, by taking the difference between the 
   <strong>Note:</strong> A janked frame is one which takes longer than 16.67ms to render.
 </div>
 
-When instrumented on *Mac M4 13-inch, 60Hz*; no CPU-throttling, we get the following stats
+<div className="my-4 rounded-lg border-l-4 border-border bg-muted px-4 py-3 text-sm text-muted-foreground">
+  <strong>Note:</strong> Instrumentation is performed for 1000 frames, since first interaction.
+</div>
 
-![Frame Stats on Mac M4 13-inch without CPU throttling](/experiments/outcomes/stats-grid-mac-no-throttling-full-resolution.png)
+When instrumented on *Mac M4 Air 13-inch, 60Hz*; no CPU-throttling, we get the following stats
+
+![Frame Stats on Mac M4 Air 13-inch without CPU throttling](/experiments/outcomes/stats-grid-mac-no-throttling-full-resolution.png)
+
+On an *unthrottled M4 Air*, none of the approaches stress the 16.67ms budget! 
+
+The machine is simply fast enough for all of them...
 
 No wonder, why *Mac* is a beast!
 
-However if I throttle the CPU to *mid-end mobile device*, we get the following stats
+However if I throttle the CPU to *mid-end mobile device* on the same *M4 Air*, we get the following stats
 
-![Frame Stats on Mac M4 13-inch with CPU throttling](/experiments/outcomes/stats-grid-mac-mid-tier-throttling-4.5x-down-full-resolution.png)
+![Frame Stats on Mac M4 Air 13-inch with CPU throttling](/experiments/outcomes/stats-grid-mac-mid-tier-throttling-4.5x-down-full-resolution.png)
 
 Interesting!
 
