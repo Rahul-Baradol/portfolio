@@ -28,7 +28,7 @@ export function Home() {
                     <span>I&apos;m a software</span> <WobbleText>engineer</WobbleText> <span>— frontend, backend, open source, and a fingerstyle</span> <WobbleText>guitarist</WobbleText>
                 </div> */}
 
-                <div className="flex px-4 flex-row flex-wrap items-center justify-center gap-1">
+                <div className="flex mt-2 md:mt-0 px-4.5 flex-row flex-wrap items-center justify-center gap-1">
                     <a
                         href="https://www.linkedin.com/in/rahul-baradol/"
                         target="_blank"
