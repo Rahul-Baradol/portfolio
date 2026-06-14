@@ -243,6 +243,11 @@ We maintain the images as a React ref, which doesn't trigger a React re-render o
 const images = useRef<Image[]>([]);
 ```
 
+And also a incrementing counter for assigning images unique ids
+```jsx
+const nextDomId = useRef<number>(0);
+```
+
 And for each mouse move, we update the ref, which doesn't trigger a re-render 
 ```jsx
 const handleMouseMove = (event: React.MouseEvent) => {
@@ -266,7 +271,7 @@ const handleMouseMove = (event: React.MouseEvent) => {
         x: curX - (IMAGE_SIZE_PIXELS / 2),
         y: curY - (IMAGE_SIZE_PIXELS / 2),
         id: imageLinks[randomImageIndex].id,
-        domId: Math.floor(Math.random() * 10000), 
+        domId: nextDomId.current++,
         src: imageLinks[randomImageIndex].src,
         stage: 'initial-bounce-up',
         dx: (Math.random() * HORIZONTAL_SPREAD * 2) - HORIZONTAL_SPREAD,
@@ -357,7 +362,7 @@ useEffect(() => {
             cancelAnimationFrame(animationFrameId);
         }
     }
-}, [paintElement]);
+}, []);
 ```
 
 And we have the elements in DOM as follows

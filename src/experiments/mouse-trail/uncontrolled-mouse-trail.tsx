@@ -18,6 +18,7 @@ export function UncontrolledMouseTrail() {
     const imageCache = useRef<Map<number, HTMLImageElement>>(new Map());
     const paintElement = useRef<HTMLDivElement>(null);
     const images = useRef<Image[]>([]);
+    const nextDomId = useRef<number>(0);
     const lastSpawnTime = useRef<number>(0);
 
     const [isTouch, setIsTouch] = useState(false);
@@ -44,7 +45,7 @@ export function UncontrolledMouseTrail() {
             x: curX - (IMAGE_SIZE_PIXELS / 2),
             y: curY - (IMAGE_SIZE_PIXELS / 2),
             id: imageLinks[randomImageIndex].id,
-            domId: Math.floor(Math.random() * 10000),
+            domId: nextDomId.current++,
             src: imageLinks[randomImageIndex].src,
             stage: 'initial-bounce-up',
             dx: (Math.random() * HORIZONTAL_SPREAD * 2) - HORIZONTAL_SPREAD,
@@ -141,7 +142,7 @@ export function UncontrolledMouseTrail() {
                 }
             }
         }
-    }, [paintElement]);
+    }, []);
 
     return <div ref={paintElement} onPointerMove={handleMouseMove} className="touch-none relative flex justify-center items-center w-full h-125 overflow-hidden bg-black">
         {
