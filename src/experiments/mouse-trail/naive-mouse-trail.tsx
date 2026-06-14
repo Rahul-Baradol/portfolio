@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from "react"
-import { GRAVITY, HORIZONTAL_FRICTION, HORIZONTAL_SPREAD, IMAGE_SIZE_PIXELS, imageLinks, INITIAL_BOUNCE_UP_SPEED, INITIAL_FALL_SPEED, SPAWN_THROTTLE_MS } from "./constants";
+import { FRAME_DURATION, GRAVITY, HORIZONTAL_FRICTION, HORIZONTAL_SPREAD, IMAGE_SIZE_PIXELS, imageLinks, INITIAL_BOUNCE_UP_SPEED, INITIAL_FALL_SPEED, INSTRUMENTED_FRAME_COUNT, SPAWN_THROTTLE_MS } from "./constants";
+import { calculatePerFrameMetrics } from "./utils";
+import { useInstrumentorContext } from "../../lib/use-instrumentor";
+import { toast } from "sonner";
 
 interface Image {
     x: number,
@@ -12,9 +15,16 @@ interface Image {
 }
 
 export function NaiveMouseTrail() {
+    const RECORD_KEY = "Naive";
+
     const [images, setImages] = useState<Image[]>([]);
     const containerRef = useRef<HTMLDivElement | null>(null);
     const lastSpawnTime = useRef<number>(0);
+    const lastFrameTimeRef = useRef<number | null>(null);
+    const frameTimesRef = useRef<number[]>([]);
+    const startObserving = useRef<boolean>(false);
+
+    const { recordFrameTime, hasRecord } = useInstrumentorContext();
 
     const [isTouch, setIsTouch] = useState(false);
     const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
@@ -23,6 +33,10 @@ export function NaiveMouseTrail() {
         const container = containerRef.current;
         if (!container || prefersReducedMotion) {
             return;
+        }
+
+        if (!hasRecord(RECORD_KEY) && !startObserving.current) {
+            startObserving.current = true;
         }
 
         const rect = container.getBoundingClientRect();
@@ -61,6 +75,15 @@ export function NaiveMouseTrail() {
 
         let animationFrameId: number;
         const renderLoop = () => {
+            const now = performance.now();
+            if (startObserving.current &&
+                lastFrameTimeRef.current !== null && 
+                frameTimesRef.current.length < INSTRUMENTED_FRAME_COUNT
+            ) {
+                frameTimesRef.current.push(now - lastFrameTimeRef.current);
+            }
+            lastFrameTimeRef.current = now;
+
             const floor = containerRef.current?.clientHeight ?? 0;
 
             setImages(prevImages => {
@@ -112,6 +135,19 @@ export function NaiveMouseTrail() {
             });
 
             animationFrameId = requestAnimationFrame(renderLoop);
+
+            if (frameTimesRef.current.length >= INSTRUMENTED_FRAME_COUNT) {
+                const { averageFrameTime, jankedFrameCount, worstFrameTime } = calculatePerFrameMetrics(frameTimesRef.current, FRAME_DURATION);
+                frameTimesRef.current = [];
+                startObserving.current = false;
+                recordFrameTime({
+                    key: RECORD_KEY, averageFrameTime, jankedFrameCount, worstFrameTime
+                });
+
+                toast.success(`Frame metrics recorded for the naive approach`, {
+                    position: "top-center"
+                });
+            }
         }
 
         if (!prefersReduced) {

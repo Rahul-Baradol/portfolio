@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from "react"
-import { GRAVITY, HORIZONTAL_FRICTION, HORIZONTAL_SPREAD, IMAGE_SIZE_PIXELS, imageLinks, INITIAL_BOUNCE_UP_SPEED, INITIAL_FALL_SPEED, SPAWN_THROTTLE_MS } from "./constants";
+import { FRAME_DURATION, GRAVITY, HORIZONTAL_FRICTION, HORIZONTAL_SPREAD, IMAGE_SIZE_PIXELS, imageLinks, INITIAL_BOUNCE_UP_SPEED, INITIAL_FALL_SPEED, INSTRUMENTED_FRAME_COUNT, SPAWN_THROTTLE_MS } from "./constants";
+import { calculatePerFrameMetrics } from "./utils";
+import { useInstrumentorContext } from "@/lib/use-instrumentor";
+import { toast } from "sonner";
 
 interface FallingImage {
     x: number,
@@ -12,6 +15,8 @@ interface FallingImage {
 }
 
 export function CanvasMouseTrail() {
+    const RECORD_KEY = "Canvas Refresh Rate Dependent";
+
     const imageCache = useRef<Map<string, HTMLImageElement>>(new Map());
     const containerRef = useRef<HTMLDivElement | null>(null);
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -22,9 +27,19 @@ export function CanvasMouseTrail() {
     const [isTouch, setIsTouch] = useState(false);
     const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
+    const lastFrameTimeRef = useRef<number | null>(null);
+    const frameTimesRef = useRef<number[]>([]);
+    const startObserving = useRef<boolean>(false);
+
+    const { recordFrameTime, hasRecord } = useInstrumentorContext();
+
     const handleMouseMove = (event: React.MouseEvent) => {
         if (!containerRef.current || prefersReducedMotion) {
             return;
+        }
+
+        if (!hasRecord(RECORD_KEY)) {
+            startObserving.current = true;
         }
 
         const rect = containerRef.current.getBoundingClientRect();
@@ -54,6 +69,15 @@ export function CanvasMouseTrail() {
     }
 
     const renderLoop = () => {
+        const now = performance.now();
+        if (startObserving.current &&
+            lastFrameTimeRef.current !== null && 
+            frameTimesRef.current.length < INSTRUMENTED_FRAME_COUNT
+        ) {
+            frameTimesRef.current.push(now - lastFrameTimeRef.current);
+        }
+        lastFrameTimeRef.current = now;
+
         let updatedImages = images.current.map(image => {
             if (image.stage === 'initial-bounce-up') {
                 image.y -= image.dy;
@@ -114,6 +138,19 @@ export function CanvasMouseTrail() {
         });
 
         animationFrameRef.current = requestAnimationFrame(renderLoop);
+
+        if (frameTimesRef.current.length >= INSTRUMENTED_FRAME_COUNT) {
+            const { averageFrameTime, jankedFrameCount, worstFrameTime } = calculatePerFrameMetrics(frameTimesRef.current, FRAME_DURATION);
+            frameTimesRef.current = [];
+            startObserving.current = false;
+            recordFrameTime({
+                key: RECORD_KEY, averageFrameTime, jankedFrameCount, worstFrameTime
+            });
+
+            toast.success(`Frame metrics recorded for the canvas approach, which is refresh-rate dependent`, {
+                position: "top-center"
+            });
+        }
     }
 
     useEffect(() => {

@@ -49,3 +49,7 @@ export const GRAVITY = 1;
 export const HORIZONTAL_FRICTION = 0.98;
 export const SPAWN_THROTTLE_MS = 100;   
 export const IMAGE_SIZE_PIXELS = 100;          
+
+export const INSTRUMENTED_FRAME_COUNT = 1000;
+
+export const FRAME_DURATION = 1000 / 60;

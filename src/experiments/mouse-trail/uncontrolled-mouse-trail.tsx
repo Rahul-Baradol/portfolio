@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from "react"
-import { GRAVITY, HORIZONTAL_FRICTION, HORIZONTAL_SPREAD, IMAGE_SIZE_PIXELS, imageLinks, INITIAL_BOUNCE_UP_SPEED, INITIAL_FALL_SPEED, SPAWN_THROTTLE_MS } from "./constants";
+import { FRAME_DURATION, GRAVITY, HORIZONTAL_FRICTION, HORIZONTAL_SPREAD, IMAGE_SIZE_PIXELS, imageLinks, INITIAL_BOUNCE_UP_SPEED, INITIAL_FALL_SPEED, INSTRUMENTED_FRAME_COUNT, SPAWN_THROTTLE_MS } from "./constants";
+import { calculatePerFrameMetrics } from "./utils";
+import { useInstrumentorContext } from "@/lib/use-instrumentor";
+import { toast } from "sonner";
 
 interface Image {
     x: number,
@@ -15,6 +18,8 @@ interface Image {
 }
 
 export function UncontrolledMouseTrail() {
+    const RECORD_KEY = "Uncontrolled";
+
     const imageCache = useRef<Map<number, HTMLImageElement>>(new Map());
     const paintElement = useRef<HTMLDivElement>(null);
     const images = useRef<Image[]>([]);
@@ -24,10 +29,21 @@ export function UncontrolledMouseTrail() {
     const [isTouch, setIsTouch] = useState(false);
     const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
+    const lastFrameTimeRef = useRef<number | null>(null);
+    const frameTimesRef = useRef<number[]>([]);
+    const startObserving = useRef<boolean>(false);
+
+    const { recordFrameTime, hasRecord } = useInstrumentorContext();
+
     const handleMouseMove = (event: React.MouseEvent) => {
         if (!paintElement.current || prefersReducedMotion) {
             return;
         }
+
+        if (!hasRecord(RECORD_KEY)) {
+            startObserving.current = true;
+        }
+
         const rect = paintElement.current.getBoundingClientRect();
         const curX = event.clientX - rect.left;
         const curY = event.clientY - rect.top;
@@ -63,6 +79,15 @@ export function UncontrolledMouseTrail() {
         if (paintElement.current) {
             let animationFrameId: number;
             const renderLoop = () => {
+                const now = performance.now();
+                if (startObserving.current &&
+                    lastFrameTimeRef.current !== null && 
+                    frameTimesRef.current.length < INSTRUMENTED_FRAME_COUNT
+                ) {
+                    frameTimesRef.current.push(now - lastFrameTimeRef.current);
+                }
+                lastFrameTimeRef.current = now;
+
                 images.current.forEach((image) => {
                     if (image.stage === 'initial-bounce-up') {
                         image.y -= image.dy;
@@ -127,6 +152,19 @@ export function UncontrolledMouseTrail() {
                 images.current = images.current.filter(image => !image.shouldBeDeleted);
 
                 animationFrameId = requestAnimationFrame(renderLoop);
+
+                if (frameTimesRef.current.length >= INSTRUMENTED_FRAME_COUNT) {
+                    const { averageFrameTime, jankedFrameCount, worstFrameTime } = calculatePerFrameMetrics(frameTimesRef.current, FRAME_DURATION);
+                    frameTimesRef.current = [];
+                    startObserving.current = false;
+                    recordFrameTime({
+                        key: RECORD_KEY, averageFrameTime, jankedFrameCount, worstFrameTime
+                    });
+
+                    toast.success(`Frame metrics recorded for uncontrolled component approach`, {
+                        position: "top-center"
+                    });
+                }
             }
 
             const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;

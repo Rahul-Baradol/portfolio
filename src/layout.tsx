@@ -4,6 +4,7 @@ import { ThemeToggle } from "./components/setting-toggle";
 import Footer from "./components/footer";
 import { useEffect, useRef } from "react";
 import Lenis from "lenis";
+import { Toaster } from "./components/ui/sonner";
 
 export function Layout() {
     const location = useLocation();
@@ -34,6 +35,7 @@ export function Layout() {
     return (
         <div className="p-10 relative w-screen min-h-screen flex flex-col gap-10 items-center text-foreground">
             <RippleCanvas />
+            <Toaster />
             <ThemeToggle />
             <Outlet />
             <Footer />

@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { experiments } from "@/constants";
 import { highlightCodeBlocks } from "@/lib/highlight";
 import NotFound from "@/components/not-found";
+import { InstrumentorProvider } from "@/lib/use-instrumentor";
 
 // Compile-time map of every experiment's MDX content, keyed by its folder slug.
 // Each value is a lazy importer, so an experiment's bundle (and the components
@@ -131,7 +132,9 @@ export function ExperimentPage() {
                 </div>
             ) : Content !== null ? (
                 <article ref={articleRef} className="medium-content text-foreground/90">
-                    <Content />
+                    <InstrumentorProvider>
+                        <Content />
+                    </InstrumentorProvider>
                 </article>
             ) : null}
         </div>

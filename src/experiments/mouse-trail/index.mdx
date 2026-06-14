@@ -3,6 +3,7 @@ import { NaiveMouseTrailWithTransforms } from "./naive-mouse-trail-with-transfor
 import { UncontrolledMouseTrail } from "./uncontrolled-mouse-trail";
 import { CanvasMouseTrail } from "./canvas-mouse-trail";
 import { CanvasWithFrameRateIndependentMouseTrail } from "./canvas-fr-independent-mouse-trail";
+import { Instrumentation } from "../../components/show-instrumentation";
 
 This is inspired from an <a href="https://tympanus.net/codrops/2026/05/20/made-with-gsap-building-a-fun-gravity-based-mouse-trail/" target="_blank" rel="noopener noreferrer"> experiment on Codrops </a>
 
@@ -178,7 +179,7 @@ And we render these as follows
 And here it is, running live; move your cursor over the box !
 
 <div className="relative overflow-hidden rounded-xl border border-border">
-  <NaiveMouseTrail />
+    <NaiveMouseTrail />
 </div>
 
 <div className="my-4 rounded-lg border-l-4 border-border bg-muted px-4 py-3 text-sm text-muted-foreground">
@@ -229,7 +230,7 @@ With the following changes,
 
 We get the following,
 <div className="relative overflow-hidden rounded-xl border border-border">
-  <NaiveMouseTrailWithTransforms />
+    <NaiveMouseTrailWithTransforms />
 </div>
 
 Better than before, but frame drops still happen when `images` count is high.
@@ -391,7 +392,7 @@ And we have the elements in DOM as follows
 And here we have it.
 
 <div className="relative overflow-hidden rounded-xl border border-border">
-  <UncontrolledMouseTrail />
+    <UncontrolledMouseTrail />
 </div>
 
 If you are on a powerful machine (like Mac), you won't feel the difference. 
@@ -563,7 +564,7 @@ And we would render the canvas as follows
 ```
 
 <div className="relative overflow-hidden rounded-xl border border-border">
-  <CanvasMouseTrail />
+    <CanvasMouseTrail />    
 </div>
 
 Few interesting lines worth mentioning are 
@@ -731,7 +732,7 @@ frameFactor = Math.min(frameFactor, 2);
 to prevent overshooting of the frameFactor. Which could happen when the user switches tabs, or moves away from the window, leading to a high frameFactor ( because we compare the lastFrameTime and currentFrameTime )
 
 <div className="relative overflow-hidden rounded-xl border border-border">
-  <CanvasWithFrameRateIndependentMouseTrail />
+    <CanvasWithFrameRateIndependentMouseTrail />
 </div>
 
 Again profiled with CPU throttled to low-end mobile phone on a Mac
@@ -741,4 +742,21 @@ Again profiled with CPU throttled to low-end mobile phone on a Mac
 Looks pretty clean!
 
 We don't have any partially presented frames any more, and no noticeable frame drops!
+
+Have also added a custom instrumentor, which helps in getting frame statistics.
+It does that by recording the frame times, by taking the difference between the current frame time and the last frame time.
+
+When instrumented on *Mac M4 13-inch*, CPU-throttled to *low-end mobile device*, we get the following stats after 1000 frames
+
+"stats incoming"
+
+And in case, you want to see what are the stats on your device, make sure you have interacted with the demos until a popup appears at the top, for each of them. We basically instrument 1000 frames for each approach, and show the stats. And the instrumenting starts the moment you interact with the demo, and stops after 1000 frames.
+
+<div className="my-4 rounded-lg border-l-4 border-border bg-muted px-4 py-3 text-sm text-muted-foreground">
+  <strong>Note:</strong> These frame stats never leave your device. They are <em>not</em> being collected, and everything is measured and shown locally in your browser.
+</div>
+
+<div className="relative overflow-hidden rounded-xl">
+    <Instrumentation />
+</div>
 
