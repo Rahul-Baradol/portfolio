@@ -46,10 +46,16 @@ export const SPAWN_THROTTLE_MS = 100;
 export const IMAGE_SIZE_PIXELS = 100;   
 ```    
 
-And maintain a state of these **images**
+Maintain a state of these **images**
 
 ```jsx
 const [images, setImages] = useState<Image[]>([]);
+
+```
+
+Some references to keep track of last spawn time, and container element
+```jsx
+const lastSpawnTime = useRef<number>(0);
 ```
 
 And then for each mouse event, we would "spawn" images by populating `images` state
@@ -251,12 +257,12 @@ We maintain the images as a React ref, which doesn't trigger a React re-render o
 const images = useRef<Image[]>([]);
 ```
 
-We also keep a incrementing counter for assigning images unique ids
+We also keep a incrementing counter for assigning unique ids to images
 ```jsx
 const nextDomId = useRef<number>(0);
 ```
 
-And for each mouse move, we update the ref, which doesn't trigger a re-render 
+And for each mouse move, we do the following where we update the ref and doesn't trigger a re-render 
 ```jsx
 const handleMouseMove = (event: React.MouseEvent) => {
     if (!paintElement.current) {
@@ -482,7 +488,7 @@ const renderLoop = () => {
 }
 ```
 
-And we have separated the *renderLoop* from the useEffect, and we trigger it in this *useEffect*
+And we have separated the *renderLoop* from the useEffect
 ```jsx
 useEffect(() => {
     const canvas = canvasRef.current;
@@ -632,9 +638,9 @@ Again profiled with CPU throttled to low-end mobile phone on a Mac
 One small problem i noticed when opened on my Dell laptop, the images are falling twice as much as they should be.
 To the point, where it is not visually appealing anymore.
 
-Then I realised it is the frame-rate!
+Then I realised it is the refresh-rate of the device!
 
-Mac's refresh rate is 60Hz, and the Dell laptop's refresh rate is 120Hz, and our logic of updating the image position is frame-rate dependent, and not independent!
+Mac's refresh rate is 60Hz, and the Dell laptop's refresh rate is 120Hz, and our logic of updating the image position is frame-rate dependent!
 
 For example, the following line 
 ```jsx
@@ -643,11 +649,11 @@ newImage.y += newImage.dy;
 
 would run 60 times on a Mac and 120 times on a Dell laptop, in a second...
 
-If `newImage.dy` is 1 let's say, then it `newImage.y` would be increased by 60px on a Mac, and 120px on a Dell laptop, in one second, where ideally we would need them to be the same.
+If *newImage.dy* is 1 let's say, then *newImage.y* would be increased by 60px on a Mac, and 120px on a Dell laptop, in one second, where ideally we would need them to be the same.
 
 We need to fix this!
 
-We start with the following line, where we keep track of timestamp of "when was last frame started"
+We start with the following line, where we keep track of "when was last frame started"
 ```jsx
 const lastFrameTime = useRef<number | null>(null);
 ```
@@ -755,9 +761,15 @@ When instrumented on *Mac M4 13-inch, 60Hz*; no CPU-throttling, we get the follo
 
 ![Frame Stats on Mac M4 13-inch without CPU throttling](/experiments/outcomes/stats-grid-mac-no-throttling-full-resolution.png)
 
-When instrumented on *Mac M4 13-inch, 60Hz*; CPU-throttled to *mid-end mobile device*, we get the following stats
+No wonder, why *Mac* is a beast!
+
+However if I throttle the CPU to *mid-end mobile device*, we get the following stats
 
 ![Frame Stats on Mac M4 13-inch with CPU throttling](/experiments/outcomes/stats-grid-mac-mid-tier-throttling-4.5x-down-full-resolution.png)
+
+Interesting!
+
+**Average Frame Time** is the least on Canvas approach, which is quite impressive, and is expected!
 
 When instrumented on *Dell, 8GB RAM, i3 11th gen, 120Hz*; no CPU-throttling, we get the following stats
 
