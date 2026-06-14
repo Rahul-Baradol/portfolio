@@ -2,19 +2,24 @@ import { createContext, useContext, useEffect, useRef, useState } from "react";
 
 type Theme = "light" | "dark";
 
-interface ThemeContextValue {
+interface SettingsContextValue {
   theme: Theme;
+  areRipplesEnabled: boolean;
   toggleTheme: () => void;
+  toggleRipples: () => void;
 }
 
-const ThemeContext = createContext<ThemeContextValue>({
+const SettingsContext = createContext<SettingsContextValue>({
   theme: "light",
+  areRipplesEnabled: true,
   toggleTheme: () => {},
+  toggleRipples: () => {},
 });
 
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  // Always "light" on first render so SSR HTML and client hydration match.
+export function SettingsProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>("light");
+  const [areRipplesEnabled, setAreRipplesEnabled] = useState(true);
+  
   const isMounted = useRef(false);
 
   useEffect(() => {
@@ -38,12 +43,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, [theme]);
 
   const toggleTheme = () => setTheme(t => (t === "dark" ? "light" : "dark"));
+  const toggleRipples = () => setAreRipplesEnabled(e => !e);
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <SettingsContext.Provider value={{ theme, toggleTheme, areRipplesEnabled, toggleRipples }}>
       {children}
-    </ThemeContext.Provider>
+    </SettingsContext.Provider>
   );
 }
 
-export const useTheme = () => useContext(ThemeContext);
+export const useSettings = () => useContext(SettingsContext);

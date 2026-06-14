@@ -1,5 +1,5 @@
-import { useEffect, useRef } from "react";
-import { useTheme } from "@/lib/theme";
+import { useCallback, useEffect, useRef } from "react";
+import { useSettings } from "@/lib/theme";
 
 function isLowEndDevice() {
     if (typeof window === "undefined" || typeof navigator === "undefined") return false;
@@ -8,7 +8,7 @@ function isLowEndDevice() {
     if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return true;
 
     // Coarse pointer + narrow viewport is a decent proxy for low-end phones.
-    const smallScreen = window.innerWidth < 640;    
+    const smallScreen = window.innerWidth < 640;
 
     // Few logical cores → likely a weak CPU.
     const lowCores =
@@ -26,15 +26,72 @@ export default function RippleCanvas() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const ripplesRef = useRef<any[]>([]);
     const sizeRef = useRef({ width: 0, height: 0 });
-    const { theme } = useTheme();
+    const { theme, areRipplesEnabled } = useSettings();
     const themeRef = useRef(theme);
     const disabledRef = useRef(isLowEndDevice());
+    const rippleId = useRef<number>(0);
+    const spawnInterval = useRef<ReturnType<typeof setInterval> | null>(null);
 
     const isVisibleRef = useRef(true);
 
     useEffect(() => {
         themeRef.current = theme;
     }, [theme]);
+
+    const addRipple = (x: number, y: number, withPluck = false) => {
+        ripplesRef.current.push({
+            x, y, radius: 0, alpha: 1,
+            pluckAge: withPluck ? 2 : undefined,
+            pluckLen: withPluck ? 50 + Math.random() * 20 : undefined,
+        });
+    }
+
+    const handleMouseMove = useCallback((e: MouseEvent) => {
+        if (!areRipplesEnabled) {
+            return;
+        }
+
+        rippleId.current = (rippleId.current + 1) % 100;
+        if (rippleId.current % 20 === 0) {
+            addRipple(e.clientX, e.clientY);
+        }
+    }, [areRipplesEnabled]);
+
+    const startSpawnInterval = useCallback(() => {
+        const canvas = canvasRef.current;
+
+        if (!canvas || !areRipplesEnabled) {
+            return;
+        }
+
+        spawnInterval.current = setInterval(() => {
+            if (!isVisibleRef.current) {
+                return;
+            }
+
+            addRipple(
+                Math.random() * canvas.width,
+                Math.random() * canvas.height,
+                Math.random() < 0.4
+            );
+        }, 750);
+    }, [areRipplesEnabled, canvasRef.current]);
+
+    useEffect(() => {
+        if (!areRipplesEnabled) {
+            return;
+        }
+
+        startSpawnInterval();
+        window.addEventListener("mousemove", handleMouseMove);
+
+        return () => {
+            window.removeEventListener("mousemove", handleMouseMove);
+            if (spawnInterval.current) {
+                clearInterval(spawnInterval.current);
+            }
+        };
+    }, [areRipplesEnabled, canvasRef.current]);
 
     useEffect(() => {
         if (disabledRef.current) {
@@ -44,7 +101,6 @@ export default function RippleCanvas() {
         const canvas = canvasRef.current!;
         const ctx = canvas.getContext("2d")!;
         let animationFrameId: number;
-        let spawnInterval: ReturnType<typeof setInterval>;
 
         function resize() {
             sizeRef.current = { width: window.innerWidth, height: window.innerHeight };
@@ -59,48 +115,19 @@ export default function RippleCanvas() {
         const notes: { x: number; y: number; vy: number; alpha: number; char: string; size: number }[] = [];
         const NOTE_CHARS = ["♪", "♫", "♩"];
 
-        function addRipple(x: number, y: number, withPluck = false) {
-            ripples.push({
-                x, y, radius: 0, alpha: 1,
-                pluckAge: withPluck ? 2 : undefined,
-                pluckLen: withPluck ? 50 + Math.random() * 20 : undefined,
-            });
-        }
-
         const handleVisibilityChange = () => {
             isVisibleRef.current = !document.hidden;
-            
+
             if (document.hidden) {
-                clearInterval(spawnInterval);
+                if (spawnInterval.current) {
+                    clearInterval(spawnInterval.current);
+                }
             } else {
                 startSpawnInterval();
             }
         };
 
         document.addEventListener("visibilitychange", handleVisibilityChange);
-
-        function startSpawnInterval() {
-            spawnInterval = setInterval(() => {
-                if (!isVisibleRef.current) return;
-                addRipple(
-                    Math.random() * canvas.width,
-                    Math.random() * canvas.height,
-                    Math.random() < 0.4
-                );
-            }, 750);
-        }
-
-        startSpawnInterval();
-
-        let rippleId = 0;
-        function handleMouse(e: MouseEvent) {
-            rippleId = (rippleId + 1) % 100;
-            if (rippleId % 20 === 0) {
-                addRipple(e.clientX, e.clientY);
-            }
-        }
-
-        window.addEventListener("mousemove", handleMouse);
 
         function animate() {
             if (!isVisibleRef.current) {
@@ -178,7 +205,7 @@ export default function RippleCanvas() {
                 ctx.fillStyle = isDark
                     ? `rgba(0, 200, 255, ${n.alpha})`
                     : `rgba(0, 0, 0, ${n.alpha * 0.6})`;
-                    
+
                 ctx.fillText(n.char, n.x, n.y);
             }
 
@@ -189,10 +216,8 @@ export default function RippleCanvas() {
 
         return () => {
             cancelAnimationFrame(animationFrameId);
-            clearInterval(spawnInterval);
             window.removeEventListener("resize", resize);
             document.removeEventListener("visibilitychange", handleVisibilityChange);
-            window.removeEventListener("mousemove", handleMouse);
         };
     }, []);
 

@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Layout } from "./layout";
-import { ThemeProvider } from "./lib/theme";
+import { SettingsProvider } from "./lib/theme";
 import { Home } from "./pages/home";
 import { PRsPage } from "./pages/prs";
 import { BlogPage } from "./pages/blog";
@@ -9,7 +9,7 @@ import NotFound from "./components/not-found";
 
 function App() {
   return (
-    <ThemeProvider>
+    <SettingsProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
@@ -21,7 +21,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-    </ThemeProvider>
+    </SettingsProvider>
   );
 }
 

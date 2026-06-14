@@ -1,6 +1,6 @@
 import { Outlet, useLocation } from "react-router-dom";
 import RippleCanvas from "./components/rippling";
-import { ThemeToggle } from "./components/theme-toggle";
+import { ThemeToggle } from "./components/setting-toggle";
 import Footer from "./components/footer";
 import { useEffect, useRef } from "react";
 import Lenis from "lenis";
