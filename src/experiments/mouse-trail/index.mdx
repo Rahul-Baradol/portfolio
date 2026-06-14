@@ -179,6 +179,10 @@ And here it is, running live; move your cursor over the box !
   <NaiveMouseTrail />
 </div>
 
+<div className="my-4 rounded-lg border-l-4 border-border bg-muted px-4 py-3 text-sm text-muted-foreground">
+  <strong>Note:</strong> If the animation is disabled, it's because you have <em>prefers-reduced-motion</em> enabled in your system settings. The code that handles this has been omitted from the demo snippets above to reduce noise.
+</div>
+
 Looks cool!?
 
 Well, open devtools, throttle CPU to low-end mobile device via Devtools, you will immediately see the frame drops
@@ -512,8 +516,6 @@ useEffect(() => {
 
         ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.scale(dpr, dpr);
-
-        console.log("adjusted canvas size.")
     }
 
     handleWindowResize();
