@@ -563,7 +563,7 @@ Few interesting lines worth mentioning are
 updatedImages.forEach(image => {
     const img = imageCache.current.get(image.src); // what is this !?
     if (img) {
-        ctx.drawImage(img, image.x, image.y, 100, 100);
+        ctx.drawImage(img, image.x, image.y, IMAGE_SIZE_PIXELS, IMAGE_SIZE_PIXELS);
     }
 });
 ```
@@ -575,7 +575,7 @@ Well traditionally, we would think of doing something like this
 updatedImages.forEach(image => {
     const img = new Image();
     img.src = image.src;
-    ctx.drawImage(img, image.x, image.y, 100, 100);
+    ctx.drawImage(img, image.x, image.y, IMAGE_SIZE_PIXELS, IMAGE_SIZE_PIXELS);
 });
 ```
 
