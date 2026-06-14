@@ -49,6 +49,18 @@ export default function RippleCanvas() {
         });
     }
 
+    const handleVisibilityChange = useCallback(() => {
+        isVisibleRef.current = !document.hidden;
+        
+        if (document.hidden) {
+            if (spawnInterval.current) {
+                clearInterval(spawnInterval.current);
+            }
+        } else if (areRipplesEnabled) {
+            startSpawnInterval();
+        }
+    }, [areRipplesEnabled]);
+
     const handleMouseMove = useCallback((e: MouseEvent) => {
         if (!areRipplesEnabled) {
             return;
@@ -88,8 +100,11 @@ export default function RippleCanvas() {
         startSpawnInterval();
         window.addEventListener("mousemove", handleMouseMove);
 
+        document.addEventListener("visibilitychange", handleVisibilityChange);
+
         return () => {
             window.removeEventListener("mousemove", handleMouseMove);
+            document.removeEventListener("visibilitychange", handleVisibilityChange);
             if (spawnInterval.current) {
                 clearInterval(spawnInterval.current);
             }
@@ -117,20 +132,6 @@ export default function RippleCanvas() {
         const ripples = ripplesRef.current;
         const notes: { x: number; y: number; vy: number; alpha: number; char: string; size: number }[] = [];
         const NOTE_CHARS = ["♪", "♫", "♩"];
-
-        const handleVisibilityChange = () => {
-            isVisibleRef.current = !document.hidden;
-
-            if (document.hidden) {
-                if (spawnInterval.current) {
-                    clearInterval(spawnInterval.current);
-                }
-            } else {
-                startSpawnInterval();
-            }
-        };
-
-        document.addEventListener("visibilitychange", handleVisibilityChange);
 
         function animate() {
             if (!isVisibleRef.current) {
