@@ -6,7 +6,9 @@ import { CanvasWithFrameRateIndependentMouseTrail } from "./canvas-fr-independen
 
 This is inspired from an <a href="https://tympanus.net/codrops/2026/05/20/made-with-gsap-building-a-fun-gravity-based-mouse-trail/" target="_blank" rel="noopener noreferrer"> experiment on Codrops </a>
 
-Although they have used GSAP to achieve the same, I thought let's give it a try with React and see what we can do...
+We want to recreate a similar effect, where images are spawned following the mouse trail.
+
+Although they have used GSAP with no React environment, I thought let's give it a try in React, starting off with naive methods, and gradually moving to optimized methods.
 
 ## Starting off with naive implementation
 
@@ -30,7 +32,7 @@ interface Image {
 } 
 ```
 
-And let the constants be 
+And since we would be simulating some physics ( like gravity ), some constants would help 
 ```jsx
 export const HORIZONTAL_SPREAD = 5;
 
@@ -237,17 +239,18 @@ Let's not use React "state" at all, and modify the DOM directly, bypassing React
 
 Why?
 
-Well React is not good for high-frequency updates like animations.
+Because React's reconciliation process can introduce latency, especially with frequent updates like animations.
+Here we are trying to achieve 60fps, which means we have around 16ms to update the positions of all images and render them. React's reconciliation can easily exceed this time budget when there are many images, leading to dropped frames and a janky animation.
 
-So how to do it?
+So how to do update DOM directly?
 
-We maintain the images as a React ref, which doesn't trigger a React re-render on update, and we directly manipulate the DOM to update the positions of the images.
+We maintain the images as a React ref, which doesn't trigger a React re-render on update
 
 ```jsx
 const images = useRef<Image[]>([]);
 ```
 
-And also a incrementing counter for assigning images unique ids
+We also keep a incrementing counter for assigning images unique ids
 ```jsx
 const nextDomId = useRef<number>(0);
 ```
@@ -288,7 +291,7 @@ const handleMouseMove = (event: React.MouseEvent) => {
 }
 ```
 
-And the render loop slightly changes as follows
+And then in the render loop, we iterate through the images in ref every frame, and update DOM directly.
 ```jsx
 useEffect(() => {
     if (paintElement.current) {
@@ -369,6 +372,9 @@ useEffect(() => {
 }, []);
 ```
 
+You might have noticed, we are selecting the DOM image via in-memory Map and not via document object's query selector.
+That is to avoid *O(N)* DOM scan, and directly access the DOM element we want to update, because remember we have to do all these operations under 16.6ms to achieve 60fps!
+
 And we have the elements in DOM as follows
 ```jsx
 <div ref={paintElement} onMouseMove={handleMouseMove} className="relative flex justify-center items-center w-full h-125 overflow-hidden bg-black">
@@ -395,17 +401,19 @@ Again profiled with CPU throttled to low-end mobile phone on a Mac
 
 ![Uncontrolled Profile](/experiments/outcomes/uncontrolled.png)
 
+Still we see those "yellow" frames!
+
 Can we make it even better?
 
 Yes!
 
 Moving to canvas.
 
-The reason is because, in canvas approach we would handle the rendering ourselves, giving us more control over the performance.
+The reason is because, in canvas approach we would handle the rendering ourselves, giving us more control over what operation to perform per frame.
 
 That also means, we have to be careful in memory handling, making sure we don't create GC pressure.
 
-In canvas approach, we would still store images as a React ref, handle the mouse event the same way as before, but the way we handle rendering would change significantly. Instead of relying on the DOM and React's reconciliation, we would draw the images directly onto the canvas.
+In canvas approach, we would still store images as a React ref, handle the mouse event the same way as before, but the way we handle rendering would change significantly. Instead of relying on the DOM, we would draw the images directly onto the canvas.
 
 The render loops changes to the following
 ```jsx
@@ -473,7 +481,7 @@ const renderLoop = () => {
 }
 ```
 
-And we have separated this from the useEffect, and we trigger it here 
+And we have separated the *renderLoop* from the useEffect, and we trigger it in this *useEffect*
 ```jsx
 useEffect(() => {
     const canvas = canvasRef.current;
@@ -625,7 +633,7 @@ To the point, where it is not visually appealing anymore.
 
 Then I realised it is the frame-rate!
 
-Mac's refresh rate is 60Hz, and the Dell laptop's refresh rate is 120Hz, and our logic of updating the image position is frame-rate dependent, and not time dependent!
+Mac's refresh rate is 60Hz, and the Dell laptop's refresh rate is 120Hz, and our logic of updating the image position is frame-rate dependent, and not independent!
 
 For example, the following line 
 ```jsx
@@ -638,7 +646,7 @@ If `newImage.dy` is 1 let's say, then it `newImage.y` would be increased by 60px
 
 We need to fix this!
 
-We start with the following line 
+We start with the following line, where we keep track of timestamp of "when was last frame started"
 ```jsx
 const lastFrameTime = useRef<number | null>(null);
 ```
@@ -729,3 +737,8 @@ to prevent overshooting of the frameFactor. Which could happen when the user swi
 Again profiled with CPU throttled to low-end mobile phone on a Mac
 
 ![Canvas Profile with frame rate dependence](/experiments/outcomes/frame-rate-independent-canvas.png)
+
+Looks pretty clean!
+
+We don't have any partially presented frames any more, and no noticeable frame drops!
+
