@@ -33,6 +33,9 @@ export default function RippleCanvas() {
     const spawnInterval = useRef<ReturnType<typeof setInterval> | null>(null);
 
     const isVisibleRef = useRef(true);
+    const lastFrameTime = useRef<number | null>(null);
+
+    const FRAME_DURATION = 1000 / 60;
 
     useEffect(() => {
         themeRef.current = theme;
@@ -135,6 +138,11 @@ export default function RippleCanvas() {
                 return;
             }
 
+            const now = performance.now();
+            let frameFactor = (lastFrameTime.current ? (now - lastFrameTime.current) / FRAME_DURATION : 1);
+            frameFactor = Math.min(frameFactor, 2);
+            lastFrameTime.current = now;
+
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             const isDark = themeRef.current === "dark";
 
@@ -175,8 +183,8 @@ export default function RippleCanvas() {
                     continue;
                 }
 
-                r.radius += 1.6;
-                r.alpha -= 0.009;
+                r.radius += 1.6 * frameFactor;
+                r.alpha -= 0.009 * frameFactor;
 
                 if (r.alpha <= 0) {
                     ripples.splice(i, 1);
