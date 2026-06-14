@@ -746,9 +746,26 @@ We don't have any partially presented frames any more, and no noticeable frame d
 Have also added a custom instrumentor, which helps in getting frame statistics.
 It does that by recording the frame times, by taking the difference between the current frame time and the last frame time.
 
-When instrumented on *Mac M4 13-inch*, CPU-throttled to *low-end mobile device*, we get the following stats after 1000 frames
 
-"stats incoming"
+<div className="my-4 rounded-lg border-l-4 border-border bg-muted px-4 py-3 text-sm text-muted-foreground">
+  <strong>Note:</strong> A janked frame is one which takes longer than 16.67ms to render.
+</div>
+
+When instrumented on *Mac M4 13-inch*; no CPU-throttling, we get the following stats
+
+![Frame Stats on Mac M4 13-inch without CPU throttling](/experiments/outcomes/stats-grid-mac-no-throttling-full-resolution.png)
+
+When instrumented on *Mac M4 13-inch*; CPU-throttled to *mid-end mobile device*, we get the following stats
+
+![Frame Stats on Mac M4 13-inch with CPU throttling](/experiments/outcomes/stats-grid-mac-mid-tier-throttling-4.5x-down-full-resolution.png)
+
+When instrumented on *Dell, 8GB RAM, i3 11th gen*; no CPU-throttling, we get the following stats
+
+![Frame Stats on Dell, 8GB RAM, i3 11th gen without CPU throttling](/experiments/outcomes/stats-grid-dell-8gb-11th-gen-i3-no-throttling.jpeg)
+
+Also instrumented on a phone! (Samsung A36, 8GB memory, Snapdragon 6 Gen 3); we get the following stats
+
+![Frame Stats on Samsung A36](/experiments/outcomes/stats-grid-samsung-8gb-snapdragon-6-gen-3-half.jpeg)
 
 And in case, you want to see what are the stats on your device, make sure you have interacted with the demos until a popup appears at the top, for each of them. We basically instrument 1000 frames for each approach, and show the stats. And the instrumenting starts the moment you interact with the demo, and stops after 1000 frames.
 
