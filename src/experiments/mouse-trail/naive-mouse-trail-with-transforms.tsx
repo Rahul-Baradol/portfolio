@@ -17,10 +17,13 @@ export function NaiveMouseTrailWithTransforms() {
     const lastSpawnTime = useRef<number>(0);
 
     const [isTouch, setIsTouch] = useState(false);
+    const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
     const handleMouseMove = (event: React.MouseEvent) => {
         const container = containerRef.current;
-        if (!container) return;
+        if (!container || prefersReducedMotion) {
+            return;
+        }
 
         const rect = container.getBoundingClientRect();
         const curX = event.clientX - rect.left;
@@ -33,7 +36,7 @@ export function NaiveMouseTrailWithTransforms() {
 
         lastSpawnTime.current = now;
 
-        const randomImageIndex = Math.floor(Math.random() * imageLinks.length); 
+        const randomImageIndex = Math.floor(Math.random() * imageLinks.length);
 
         const newImage: Image = {
             x: curX - (IMAGE_SIZE_PIXELS / 2),
@@ -108,36 +111,47 @@ export function NaiveMouseTrailWithTransforms() {
             animationFrameId = requestAnimationFrame(renderLoop);
         }
 
-        animationFrameId = requestAnimationFrame(renderLoop);
+        const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        setPrefersReducedMotion(prefersReduced);
+
+        if (!prefersReduced) {
+            animationFrameId = requestAnimationFrame(renderLoop);
+        }
 
         return () => {
-            cancelAnimationFrame(animationFrameId);
+            if (!prefersReduced) {
+                cancelAnimationFrame(animationFrameId);
+            }
         }
     }, []);
 
     return <div ref={containerRef} onPointerMove={handleMouseMove} className="touch-none relative flex justify-center items-center w-full h-125 overflow-hidden bg-black">
-        <div className="flex flex-col items-center z-10 text-center px-4">
-            {
-                isTouch ? <span className="text-white text-2xl md:text-3xl select-none opacity-90">Move your finger to spawn</span> :
-                <span className="text-white text-2xl md:text-3xl select-none opacity-90">Move your cursor to spawn</span>
-            }
-            <span className="text-white text-2xl md:text-3xl select-none opacity-75">bouncy images!</span>
-        </div>
-        {images.map((image, index) => (
-            <img
-                key={index}
-                src={image.src}
-                alt={`Falling image ${index}`}
-                className="absolute pointer-events-none"
-                style={{
-                    top: '0px',
-                    left: '0px',
-                    transform: `translate(${image.x}px, ${image.y}px)`,
-                    willChange: 'transform',
-                    width: `${IMAGE_SIZE_PIXELS}px`,
-                    height: `${IMAGE_SIZE_PIXELS}px`,
-                }}
-            />
-        ))}
+        {
+            !prefersReducedMotion ? <>
+                <div className="flex flex-col items-center z-10 text-center px-4">
+                    {
+                        isTouch ? <span className="text-white text-2xl md:text-3xl select-none opacity-90">Move your finger to spawn</span> :
+                            <span className="text-white text-2xl md:text-3xl select-none opacity-90">Move your cursor to spawn</span>
+                    }
+                    <span className="text-white text-2xl md:text-3xl select-none opacity-75">bouncy images!</span>
+                </div>
+                {images.map((image, index) => (
+                    <img
+                        key={index}
+                        src={image.src}
+                        alt={`Falling image ${index}`}
+                        className="absolute pointer-events-none"
+                        style={{
+                            top: '0px',
+                            left: '0px',
+                            transform: `translate(${image.x}px, ${image.y}px)`,
+                            willChange: 'transform',
+                            width: `${IMAGE_SIZE_PIXELS}px`,
+                            height: `${IMAGE_SIZE_PIXELS}px`,
+                        }}
+                    />
+                ))}
+            </> : <span>Animation disabled for reduced motion preference.</span>
+        }
     </div>;
 }

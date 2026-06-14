@@ -21,9 +21,10 @@ export function UncontrolledMouseTrail() {
     const lastSpawnTime = useRef<number>(0);
 
     const [isTouch, setIsTouch] = useState(false);
+    const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
     const handleMouseMove = (event: React.MouseEvent) => {
-        if (!paintElement.current) {
+        if (!paintElement.current || prefersReducedMotion) {
             return;
         }
         const rect = paintElement.current.getBoundingClientRect();
@@ -37,13 +38,13 @@ export function UncontrolledMouseTrail() {
 
         lastSpawnTime.current = now;
 
-        const randomImageIndex = Math.floor(Math.random() * imageLinks.length); 
+        const randomImageIndex = Math.floor(Math.random() * imageLinks.length);
 
         const newImage: Image = {
             x: curX - (IMAGE_SIZE_PIXELS / 2),
             y: curY - (IMAGE_SIZE_PIXELS / 2),
             id: imageLinks[randomImageIndex].id,
-            domId: Math.floor(Math.random() * 10000), 
+            domId: Math.floor(Math.random() * 10000),
             src: imageLinks[randomImageIndex].src,
             stage: 'initial-bounce-up',
             dx: (Math.random() * HORIZONTAL_SPREAD * 2) - HORIZONTAL_SPREAD,
@@ -61,7 +62,7 @@ export function UncontrolledMouseTrail() {
         if (paintElement.current) {
             let animationFrameId: number;
             const renderLoop = () => {
-                images.current.forEach((image) => {    
+                images.current.forEach((image) => {
                     if (image.stage === 'initial-bounce-up') {
                         image.y -= image.dy;
                         image.x += image.dx;
@@ -91,7 +92,7 @@ export function UncontrolledMouseTrail() {
                         image.y += image.dy;
                         image.dy += GRAVITY;
                     }
-    
+
                     if (image.insertedInDom === false) {
                         const domImage = document.createElement('img');
                         domImage.id = `image-${image.domId}`;
@@ -126,22 +127,31 @@ export function UncontrolledMouseTrail() {
 
                 animationFrameId = requestAnimationFrame(renderLoop);
             }
-    
-            animationFrameId = requestAnimationFrame(renderLoop);
-    
+
+            const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            setPrefersReducedMotion(prefersReduced);
+
+            if (!prefersReduced) {
+                animationFrameId = requestAnimationFrame(renderLoop);
+            }
+
             return () => {
-                cancelAnimationFrame(animationFrameId);
+                if (!prefersReduced) {
+                    cancelAnimationFrame(animationFrameId);
+                }
             }
         }
     }, [paintElement]);
 
     return <div ref={paintElement} onPointerMove={handleMouseMove} className="touch-none relative flex justify-center items-center w-full h-125 overflow-hidden bg-black">
-        <div className="flex flex-col items-center z-10 text-center">
-            {
-                isTouch ? <span className="text-white text-2xl md:text-3xl select-none opacity-90">Move your finger to spawn</span> :
-                <span className="text-white text-2xl md:text-3xl select-none opacity-90">Move your cursor to spawn</span>
-            }
-            <span className="text-white text-2xl md:text-3xl select-none opacity-75">bouncy images!</span>
-        </div>
+        {
+            !prefersReducedMotion ? <div className="flex flex-col items-center z-10 text-center">
+                {
+                    isTouch ? <span className="text-white text-2xl md:text-3xl select-none opacity-90">Move your finger to spawn</span> :
+                        <span className="text-white text-2xl md:text-3xl select-none opacity-90">Move your cursor to spawn</span>
+                }
+                <span className="text-white text-2xl md:text-3xl select-none opacity-75">bouncy images!</span>
+            </div> : <span>Animation disabled for reduced motion preference.</span>
+        }
     </div>;
 }

@@ -37,7 +37,6 @@ export default function RippleCanvas() {
     }, [theme]);
 
     useEffect(() => {
-        console.log(disabledRef.current)
         if (disabledRef.current) {
             return;
         }

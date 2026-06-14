@@ -22,9 +22,10 @@ export function CanvasWithFrameRateIndependentMouseTrail() {
     const FRAME_DURATION = 1000 / 60;
 
     const [isTouch, setIsTouch] = useState(false);
+    const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
     const handleMouseMove = (event: React.MouseEvent) => {
-        if (!containerRef.current) {
+        if (!containerRef.current || prefersReducedMotion) {
             return;
         }
 
@@ -165,13 +166,16 @@ export function CanvasWithFrameRateIndependentMouseTrail() {
 
             ctx.setTransform(1, 0, 0, 1, 0, 0);
             ctx.scale(dpr, dpr);
-
-            console.log("adjusted canvas size.")
         }
 
         handleWindowResize();
 
-        animationFrameRef.current = requestAnimationFrame(renderLoop);
+        const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        setPrefersReducedMotion(prefersReduced);
+
+        if (!prefersReduced) {
+            animationFrameRef.current = requestAnimationFrame(renderLoop);
+        }
 
         window.addEventListener("resize", handleWindowResize);
 
@@ -186,20 +190,24 @@ export function CanvasWithFrameRateIndependentMouseTrail() {
 
     return (
         <div ref={containerRef} className="relative flex justify-center items-center w-full h-125 overflow-hidden bg-black">
-            <canvas
-                ref={canvasRef}
-                onPointerMove={handleMouseMove}
-                className="touch-none absolute top-0 left-0 h-125 w-full bg-black"
-            >
-            </canvas>
+            {
+                !prefersReducedMotion ? <>
+                    <canvas
+                        ref={canvasRef}
+                        onPointerMove={handleMouseMove}
+                        className="touch-none absolute top-0 left-0 h-125 w-full bg-black"
+                    >
+                    </canvas>
 
-            <div className="absolute flex flex-col items-center">
-                {
-                    isTouch ? <span className="text-white text-2xl md:text-3xl select-none opacity-90">Move your finger to spawn</span> :
-                    <span className="text-white text-2xl md:text-3xl select-none opacity-90">Move your cursor to spawn</span>
-                }
-                <span className="text-white text-2xl md:text-3xl select-none opacity-75">bouncy images!</span>
-            </div>
+                    <div className="absolute flex flex-col items-center">
+                        {
+                            isTouch ? <span className="text-white text-2xl md:text-3xl select-none opacity-90">Move your finger to spawn</span> :
+                                <span className="text-white text-2xl md:text-3xl select-none opacity-90">Move your cursor to spawn</span>
+                        }
+                        <span className="text-white text-2xl md:text-3xl select-none opacity-75">bouncy images!</span>
+                    </div>
+                </> : <span>Animation disabled for reduced motion preference.</span>
+            }
         </div>
     );
 }
