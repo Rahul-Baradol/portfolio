@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useInstrumentorContext } from "../lib/use-instrumentor";
+import { INSTRUMENTED_FRAME_COUNT } from "@/experiments/mouse-trail/constants";
 
 export function Instrumentation() {
     const { records } = useInstrumentorContext();
@@ -21,7 +22,7 @@ export function Instrumentation() {
                     <tr>
                         <th style={cellStyle}>Approach</th>
                         <th style={cellStyle}>Avg Frame Time</th>
-                        <th style={cellStyle}>Janked Frame Count</th>
+                        <th style={cellStyle}>Janked Frame Count (out of {INSTRUMENTED_FRAME_COUNT})</th>
                         <th style={cellStyle}>Worst Frame Time</th>
                     </tr>
                 </thead>

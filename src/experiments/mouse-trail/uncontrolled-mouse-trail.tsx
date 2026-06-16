@@ -9,7 +9,6 @@ interface Image {
     y: number,
     dx: number,
     dy: number,
-    id: number,
     domId: number,
     src: string,
     stage: 'initial-bounce-up' | 'free-fall' | 'bounce-up' | 'bounce-down';
@@ -60,7 +59,6 @@ export function UncontrolledMouseTrail() {
         const newImage: Image = {
             x: curX - (IMAGE_SIZE_PIXELS / 2),
             y: curY - (IMAGE_SIZE_PIXELS / 2),
-            id: imageLinks[randomImageIndex].id,
             domId: nextDomId.current++,
             src: imageLinks[randomImageIndex].src,
             stage: 'initial-bounce-up',
@@ -88,6 +86,8 @@ export function UncontrolledMouseTrail() {
                 }
                 lastFrameTimeRef.current = now;
 
+                const floor = paintElement.current!.clientHeight;
+
                 images.current.forEach((image) => {
                     if (image.stage === 'initial-bounce-up') {
                         image.y -= image.dy;
@@ -103,7 +103,7 @@ export function UncontrolledMouseTrail() {
                         image.y += image.dy;
                         image.dy += GRAVITY;
 
-                        if (image.y >= (window.innerHeight - 100)) {
+                        if (image.y >= (floor - 100)) {
                             image.stage = 'bounce-up';
                             image.dy = INITIAL_BOUNCE_UP_SPEED;
                         }
@@ -134,7 +134,7 @@ export function UncontrolledMouseTrail() {
                         imageCache.current.set(image.domId, domImage);
 
                         image.insertedInDom = true;
-                    } else if (image.y < window.innerHeight) {
+                    } else if (image.y < floor) {
                         const domImage = imageCache.current.get(image.domId);
                         if (domImage) {
                             domImage.style.transform = `translate(${image.x}px, ${image.y}px)`;

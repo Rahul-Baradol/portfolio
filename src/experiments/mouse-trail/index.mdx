@@ -53,10 +53,13 @@ const [images, setImages] = useState<Image[]>([]);
 
 ```
 
-Some references to keep track of last spawn time, and container element
+Some references to keep track of last spawn time, container element, and a counter to hand out unique ids
 ```jsx
 const lastSpawnTime = useRef<number>(0);
+const nextId = useRef<number>(0);
 ```
+
+Here we slightly extend the schema: each spawned image gets a fresh `id` from `nextId`, and the chosen source image's id is kept separately as `imageId`. This is because we use `id` as the React `key`, and since many spawned images can share the same source image, the source id alone wouldn't be unique.
 
 And then for each mouse event, we would "spawn" images by populating `images` state
 
@@ -83,7 +86,8 @@ const handleMouseMove = (event: React.MouseEvent) => {
     const newImage: Image = {
         x: curX - (IMAGE_SIZE_PIXELS / 2),
         y: curY - (IMAGE_SIZE_PIXELS / 2),
-        id: imageLinks[randomImageIndex].id,
+        imageId: imageLinks[randomImageIndex].id,
+        id: nextId.current++,
         src: imageLinks[randomImageIndex].src,
         stage: 'initial-bounce-up',
         dx: (Math.random() * HORIZONTAL_SPREAD * 2) - HORIZONTAL_SPREAD,
@@ -166,11 +170,11 @@ useEffect(() => {
 And we render these as follows
 
 ```jsx
-{images.map((image, index) => (
+{images.map((image) => (
     <img
-        key={index}
+        key={image.id}
         src={image.src}
-        alt={`Falling image ${index}`}
+        alt={`Falling image ${image.id}`}
         className="absolute"
         style={{
             top: `${image.y}px`,
@@ -216,11 +220,11 @@ Because you might know, that `transforms` only trigger composition which is much
 
 With the following changes, 
 ```jsx
-{images.map((image, index) => (
+{images.map((image) => (
     <img
-        key={index}
+        key={image.id}
         src={image.src}
-        alt={`Falling image ${index}`}
+        alt={`Falling image ${image.id}`}
         className="absolute pointer-events-none"
         style={{
             top: '0px',
@@ -262,6 +266,8 @@ We also keep a incrementing counter for assigning unique ids to images
 const nextDomId = useRef<number>(0);
 ```
 
+The schema shifts a bit here too. Since we are no longer relying on React's reconciliation, we don't need the React `key`, so the `id` field is dropped. Instead we add a `domId` (from `nextDomId`) to map each image to its DOM node, along with two bookkeeping flags, `insertedInDom` and `shouldBeDeleted`, to track its lifecycle in the DOM.
+
 And for each mouse move, we do the following where we update the ref and doesn't trigger a re-render 
 ```jsx
 const handleMouseMove = (event: React.MouseEvent) => {
@@ -284,7 +290,6 @@ const handleMouseMove = (event: React.MouseEvent) => {
     const newImage: Image = {
         x: curX - (IMAGE_SIZE_PIXELS / 2),
         y: curY - (IMAGE_SIZE_PIXELS / 2),
-        id: imageLinks[randomImageIndex].id,
         domId: nextDomId.current++,
         src: imageLinks[randomImageIndex].src,
         stage: 'initial-bounce-up',
@@ -304,6 +309,8 @@ useEffect(() => {
     if (paintElement.current) {
         let animationFrameId: number;
         const renderLoop = () => {
+            const floor = paintElement.current!.clientHeight;
+
             images.current.forEach((image) => {    
                 if (image.stage === 'initial-bounce-up') {
                     image.y -= image.dy;
@@ -319,7 +326,7 @@ useEffect(() => {
                     image.y += image.dy;
                     image.dy += GRAVITY;
 
-                    if (image.y >= (window.innerHeight - 100)) {
+                    if (image.y >= (floor - 100)) {
                         image.stage = 'bounce-up';
                         image.dy = INITIAL_BOUNCE_UP_SPEED;
                     }
@@ -350,7 +357,7 @@ useEffect(() => {
                     imageCache.current.set(image.domId, domImage);
 
                     image.insertedInDom = true;
-                } else if (image.y < window.innerHeight) {
+                } else if (image.y < floor) {
                     const domImage = imageCache.current.get(image.domId);
                     if (domImage) {
                         domImage.style.transform = `translate(${image.x}px, ${image.y}px)`;
@@ -425,7 +432,9 @@ In canvas approach, we would still store images as a React ref, handle the mouse
 The render loops changes to the following
 ```jsx
 const renderLoop = () => {
-    let updatedImages = images.current.map(image => {
+    const floor = containerRef.current!.clientHeight;
+
+    images.current.forEach(image => {
         if (image.stage === 'initial-bounce-up') {
             image.y -= image.dy;
             image.x += image.dx;
@@ -441,7 +450,7 @@ const renderLoop = () => {
             image.y += image.dy;
             image.dy += GRAVITY;
 
-            if (image.y >= (window.innerHeight - 100)) {
+            if (image.y >= (floor - 100)) {
                 image.stage = 'bounce-up';
                 image.dy = INITIAL_BOUNCE_UP_SPEED;
             }
@@ -457,27 +466,19 @@ const renderLoop = () => {
             image.y += image.dy;
             image.dy += GRAVITY;
         }
-
-        return image;
     });
 
-    updatedImages = updatedImages.filter(image => image.y < window.innerHeight);
-
-    images.current = updatedImages;
+    images.current = images.current.filter(image => image.y < floor);
 
     const canvas = canvasRef.current;
-    if (!canvas) {
-        return;
-    }
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) {
+    const ctx = canvasContextRef.current;
+    if (!canvas || !ctx) {
         return;
     }
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    updatedImages.forEach(image => {
+    images.current.forEach(image => {
         const img = imageCache.current.get(image.src);
         if (img) {
             ctx.drawImage(img, image.x, image.y, IMAGE_SIZE_PIXELS, IMAGE_SIZE_PIXELS);
@@ -488,6 +489,8 @@ const renderLoop = () => {
 }
 ```
 
+A couple of things to note here. We grab the canvas's 2D context once and put it in `canvasContextRef`, instead of calling `canvas.getContext("2d")` on every frame; cheap, but there's no reason to pay it 60+ times a second. 
+
 And we have separated the *renderLoop* from the useEffect
 ```jsx
 useEffect(() => {
@@ -495,6 +498,8 @@ useEffect(() => {
     if (!canvas || !containerRef.current) {
         return;
     }
+
+    canvasContextRef.current = canvas.getContext("2d");
 
     imageLinks.forEach(link => {
         if (!imageCache.current.has(link.src)) {
@@ -544,6 +549,7 @@ useEffect(() => {
             cancelAnimationFrame(animationFrameRef.current);
         }
 
+        imageCache.current.clear(); // Also making sure we clear the image cache while unmounting
         window.removeEventListener("resize", handleWindowResize);
     }
 }, []);
@@ -575,7 +581,7 @@ And we would render the canvas as follows
 
 Few interesting lines worth mentioning are 
 ```jsx
-updatedImages.forEach(image => {
+images.current.forEach(image => {
     const img = imageCache.current.get(image.src); // what is this !?
     if (img) {
         ctx.drawImage(img, image.x, image.y, IMAGE_SIZE_PIXELS, IMAGE_SIZE_PIXELS);
@@ -587,7 +593,7 @@ What is this?
 
 Well traditionally, we would think of doing something like this
 ```jsx
-updatedImages.forEach(image => {
+images.current.forEach(image => {
     const img = new Image();
     img.src = image.src;
     ctx.drawImage(img, image.x, image.y, IMAGE_SIZE_PIXELS, IMAGE_SIZE_PIXELS);
@@ -624,10 +630,13 @@ useEffect(() => {
             cancelAnimationFrame(animationFrameRef.current);
         }
 
+        imageCache.current.clear();
         window.removeEventListener("resize", handleWindowResize);
     }
 }, []);
 ```
+
+And on cleanup, we `clear()` the image cache, so the cached `HTMLImageElement`s aren't held onto after the component unmounts.
 
 Looks good!
 
@@ -666,7 +675,9 @@ const renderLoop = () => {
     frameFactor = Math.min(frameFactor, 2);
     lastFrameTime.current = now;
 
-    let updatedImages = images.current.map(image => {
+    const floor = containerRef.current!.clientHeight;
+
+    images.current.forEach(image => {
         if (image.stage === 'initial-bounce-up') {
             image.y -= image.dy * frameFactor;
             image.x += image.dx * frameFactor;
@@ -682,7 +693,7 @@ const renderLoop = () => {
             image.y += image.dy * frameFactor;
             image.dy += GRAVITY * frameFactor;
 
-            if (image.y >= (window.innerHeight - 100)) {
+            if (image.y >= (floor - 100)) {
                 image.stage = 'bounce-up';
                 image.dy = INITIAL_BOUNCE_UP_SPEED;
             }
@@ -698,27 +709,19 @@ const renderLoop = () => {
             image.y += image.dy * frameFactor;
             image.dy += GRAVITY * frameFactor;
         }
-
-        return image;
     });
 
-    updatedImages = updatedImages.filter(image => image.y < window.innerHeight);
-
-    images.current = updatedImages;
+    images.current = images.current.filter(image => image.y < floor);
 
     const canvas = canvasRef.current;
-    if (!canvas) {
-        return;
-    }
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) {
+    const ctx = canvasContextRef.current;
+    if (!canvas || !ctx) {
         return;
     }
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    updatedImages.forEach(image => {
+    images.current.forEach(image => {
         const img = imageCache.current.get(image.src);
         if (img) {
             ctx.drawImage(img, image.x, image.y, IMAGE_SIZE_PIXELS, IMAGE_SIZE_PIXELS);

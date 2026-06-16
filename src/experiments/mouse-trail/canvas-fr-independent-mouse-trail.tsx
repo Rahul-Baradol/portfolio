@@ -20,6 +20,7 @@ export function CanvasWithFrameRateIndependentMouseTrail() {
     const imageCache = useRef<Map<string, HTMLImageElement>>(new Map());
     const containerRef = useRef<HTMLDivElement | null>(null);
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
+    const canvasContextRef = useRef<CanvasRenderingContext2D | null>(null);
     const images = useRef<FallingImage[]>([]);
     const animationFrameRef = useRef<number | null>(null);
     const lastFrameTime = useRef<number | null>(null);
@@ -82,7 +83,9 @@ export function CanvasWithFrameRateIndependentMouseTrail() {
 
         lastFrameTime.current = now;
 
-        let updatedImages = images.current.map(image => {
+        const floor = containerRef.current!.clientHeight;
+
+        images.current.forEach(image => {
             if (image.stage === 'initial-bounce-up') {
                 image.y -= image.dy * frameFactor;
                 image.x += image.dx * frameFactor;
@@ -98,7 +101,7 @@ export function CanvasWithFrameRateIndependentMouseTrail() {
                 image.y += image.dy * frameFactor;
                 image.dy += GRAVITY * frameFactor;
 
-                if (image.y >= (window.innerHeight - 100)) {
+                if (image.y >= (floor - 100)) {
                     image.stage = 'bounce-up';
                     image.dy = INITIAL_BOUNCE_UP_SPEED;
                 }
@@ -118,23 +121,17 @@ export function CanvasWithFrameRateIndependentMouseTrail() {
             return image;
         });
 
-        updatedImages = updatedImages.filter(image => image.y < window.innerHeight);
-
-        images.current = updatedImages;
+        images.current = images.current.filter(image => image.y < floor);
 
         const canvas = canvasRef.current;
-        if (!canvas) {
-            return;
-        }
-
-        const ctx = canvas.getContext("2d");
-        if (!ctx) {
+        const ctx = canvasContextRef.current;
+        if (!canvas || !ctx) {
             return;
         }
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        updatedImages.forEach(image => {
+        images.current.forEach(image => {
             const img = imageCache.current.get(image.src);
             if (img) {
                 ctx.drawImage(img, image.x, image.y, IMAGE_SIZE_PIXELS, IMAGE_SIZE_PIXELS);
@@ -164,6 +161,8 @@ export function CanvasWithFrameRateIndependentMouseTrail() {
         if (!canvas || !containerRef.current) {
             return;
         }
+
+        canvasContextRef.current = canvas.getContext("2d");
 
         imageLinks.forEach(link => {
             if (!imageCache.current.has(link.src)) {
@@ -218,6 +217,7 @@ export function CanvasWithFrameRateIndependentMouseTrail() {
                 cancelAnimationFrame(animationFrameRef.current);
             }
 
+            imageCache.current.clear();
             window.removeEventListener("resize", handleWindowResize);
         }
     }, []);

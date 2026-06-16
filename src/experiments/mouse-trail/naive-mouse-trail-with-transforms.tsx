@@ -9,6 +9,7 @@ interface Image {
     y: number,
     dx: number,
     dy: number,
+    imageId: number,
     id: number,
     src: string,
     stage: 'initial-bounce-up' | 'free-fall' | 'bounce-up' | 'bounce-down';
@@ -18,6 +19,7 @@ export function NaiveMouseTrailWithTransforms() {
     const RECORD_KEY = "Naive + Transforms";
 
     const [images, setImages] = useState<Image[]>([]);
+    const nextId = useRef<number>(0);
     const containerRef = useRef<HTMLDivElement | null>(null);
     const lastSpawnTime = useRef<number>(0);
 
@@ -56,7 +58,8 @@ export function NaiveMouseTrailWithTransforms() {
         const newImage: Image = {
             x: curX - (IMAGE_SIZE_PIXELS / 2),
             y: curY - (IMAGE_SIZE_PIXELS / 2),
-            id: imageLinks[randomImageIndex].id,
+            imageId: imageLinks[randomImageIndex].id,
+            id: nextId.current++,
             src: imageLinks[randomImageIndex].src,
             stage: 'initial-bounce-up',
             dx: (Math.random() * HORIZONTAL_SPREAD * 2) - HORIZONTAL_SPREAD,
@@ -172,11 +175,11 @@ export function NaiveMouseTrailWithTransforms() {
                     }
                     <span className="text-white text-2xl md:text-3xl select-none opacity-75">bouncy images!</span>
                 </div>
-                {images.map((image, index) => (
+                {images.map((image) => (
                     <img
-                        key={index}
+                        key={image.id}
                         src={image.src}
-                        alt={`Falling image ${index}`}
+                        alt={`Falling image ${image.id}`}
                         className="absolute pointer-events-none"
                         style={{
                             top: '0px',
