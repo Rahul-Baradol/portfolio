@@ -5,6 +5,7 @@ import Footer from "./components/footer";
 import { useEffect, useRef } from "react";
 import Lenis from "lenis";
 import { Toaster } from "./components/ui/sonner";
+import { LenisContext } from "./lib/lenis";
 
 export function Layout() {
     const location = useLocation();
@@ -37,7 +38,9 @@ export function Layout() {
             <RippleCanvas />
             <Toaster />
             <ThemeToggle />
-            <Outlet />
+            <LenisContext.Provider value={lenisRef}>
+                <Outlet />
+            </LenisContext.Provider>
             <Footer />
         </div>
     )

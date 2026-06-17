@@ -1,4 +1,4 @@
-import type { PR } from "./types/types";
+import type { Experiment, PR } from "./types/types";
 
 export const aboutMe = "A software engineer building scalable web products and helping businesses scale their systems, from frontend architecture to backend services.";
 
@@ -327,12 +327,20 @@ export const stories = [
     }
 ]
 
-export const experiments = [
+export const experiments: Experiment[] = [
     {
       slug: "mouse-trail",
       title: "Controlled vs Uncontrolled vs Canvas Components",
       description: "Exploring a gravity-based mouse trail in React; from a naive state-driven approach to canvas.",
       date: "7th June 2026",
-      tags: ["React", "Animation"]
+      tags: ["React", "Animation"],
+      toc: [
+        { id: "starting-off-with-naive-implementation", label: "Naive implementation" },
+        { id: "optimizing-with-css-transforms", label: "Optimizing with CSS transforms" },
+        { id: "bypassing-react-with-direct-dom-updates", label: "Bypassing React (direct DOM)" },
+        { id: "moving-to-canvas", label: "Moving to canvas" },
+        { id: "making-it-frame-rate-independent", label: "Frame-rate independence" },
+        { id: "measuring-with-instrumentation", label: "Measuring with instrumentation" },
+      ],
     }
 ]

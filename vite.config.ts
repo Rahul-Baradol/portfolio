@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import mdx from '@mdx-js/rollup'
 import remarkGfm from 'remark-gfm'
+import rehypeSlug from 'rehype-slug'
 import tailwindcss from '@tailwindcss/vite'
 import path from 'path'
 import { visualizer } from "rollup-plugin-visualizer";
@@ -13,7 +14,9 @@ let _isSsrBuild = false
 export default defineConfig({
   plugins: [
     // MDX must run before the React plugin so its compiled output is picked up.
-    { enforce: 'pre', ...mdx({ remarkPlugins: [remarkGfm] }) },
+    // rehypeSlug gives every heading a stable `id` derived from its text, which
+    // is what the experiment table of contents links jump to.
+    { enforce: 'pre', ...mdx({ remarkPlugins: [remarkGfm], rehypePlugins: [rehypeSlug] }) },
     react({
       babel: {
         plugins: [['babel-plugin-react-compiler']],

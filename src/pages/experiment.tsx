@@ -5,6 +5,7 @@ import { experiments } from "@/constants";
 import { highlightCodeBlocks } from "@/lib/highlight";
 import NotFound from "@/components/not-found";
 import { InstrumentorProvider } from "@/lib/use-instrumentor";
+import { ExperimentToc } from "@/components/experiment-toc";
 
 // Compile-time map of every experiment's MDX content, keyed by its folder slug.
 // Each value is a lazy importer, so an experiment's bundle (and the components
@@ -86,7 +87,7 @@ export function ExperimentPage() {
     }
 
     return (
-        <div className="animate-fade-up z-10 w-[90vw] lg:w-[50vw] flex flex-col gap-6">
+        <div className="animate-fade-up z-10 w-[90vw] lg:w-[50vw] flex flex-col gap-6 relative">
             <Link
                 to="/"
                 className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors self-start"
@@ -131,11 +132,16 @@ export function ExperimentPage() {
                     couldn&apos;t load this experiment right now.
                 </div>
             ) : Content !== null ? (
-                <article ref={articleRef} className="medium-content text-foreground/90">
-                    <InstrumentorProvider>
-                        <Content />
-                    </InstrumentorProvider>
-                </article>
+                <>
+                    {experiment.toc && experiment.toc.length > 0 && (
+                        <ExperimentToc toc={experiment.toc} />
+                    )}
+                    <article ref={articleRef} className="medium-content text-foreground/90">
+                        <InstrumentorProvider>
+                            <Content />
+                        </InstrumentorProvider>
+                    </article>
+                </>
             ) : null}
         </div>
     );

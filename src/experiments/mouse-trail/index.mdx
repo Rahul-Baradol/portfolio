@@ -235,6 +235,8 @@ Now before we get into optimizations, let's take a look at the current implement
 
 3. **Rendering Pipeline**: The naive approach goes through the entire rendering pipeline (DOM > Style Calculation > Layout > Paint > Composite) for each frame, leading to potential performance issues.
 
+## Optimizing with CSS transforms
+
 To address repeated-layout-recalculation, let's use `transforms` instead of `top` or `left`. 
 
 Because you might know, that `transforms` only trigger composition which is much cheaper as compared to full layout recalculation, and this I am talking about every frame!
@@ -265,6 +267,8 @@ We get the following,
 </div>
 
 Better than before, but frame drops still happen when `images` count is high.
+
+## Bypassing React with direct DOM updates
 
 So the next phase would be where we optimize the way we store and manage the images in the state.
 Let's not use React "state" at all, and modify the DOM directly, bypassing React's reconciliation.
@@ -437,7 +441,7 @@ Can we make it even better?
 
 Yes!
 
-Moving to canvas.
+## Moving to canvas
 
 The reason is because, in canvas approach we would handle the rendering ourselves, giving us more control over what operation to perform per frame.
 
@@ -670,6 +674,8 @@ If *newImage.dy* is 1 let's say, then *newImage.y* would be increased by 60px on
 
 We need to fix this!
 
+## Making it frame-rate independent
+
 We start with the following line, where we keep track of "when was last frame started"
 ```jsx
 const lastFrameTime = useRef<number | null>(null);
@@ -759,6 +765,8 @@ Again profiled with CPU throttled to low-end mobile phone on a Mac
 Looks pretty clean!
 
 We don't have any partially presented frames any more, and no noticeable frame drops!
+
+## Measuring with instrumentation
 
 Have also added a custom instrumentor, which helps in getting frame statistics.
 It does that by recording the frame times, by taking the difference between the current frame time and the last frame time.
