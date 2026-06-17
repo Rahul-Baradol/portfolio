@@ -53,10 +53,11 @@ const [images, setImages] = useState<Image[]>([]);
 
 ```
 
-Some references to keep track of last spawn time, container element, and a counter to hand out unique ids
+Some references to keep track of last spawn time, container element, a counter to hand out unique ids, and the current animation frame
 ```jsx
 const lastSpawnTime = useRef<number>(0);
 const nextId = useRef<number>(0);
+const animationFrameIdRef = useRef<number | null>(null);
 ```
 
 Here we slightly extend the schema: each spawned image gets a fresh `id` from `nextId`, and the chosen source image's id is kept separately as `imageId`. This is because we use `id` as the React `key`, and since many spawned images can share the same source image, the source id alone wouldn't be unique.
@@ -104,9 +105,13 @@ And we start a render loop like this
 
 ```jsx
 useEffect(() => {
-    let animationFrameId: number;
+    const container = containerRef.current;
+    if (!container) {
+        return;
+    }
+
     const renderLoop = () => {
-        const floor = containerRef.current?.clientHeight ?? 0;
+        const floor = container.clientHeight ?? 0;
 
         setImages(prevImages => {
             if (prevImages.length === 0) {
@@ -156,16 +161,32 @@ useEffect(() => {
             return updatedImages;
         });
 
-        animationFrameId = requestAnimationFrame(renderLoop);
+        animationFrameIdRef.current = requestAnimationFrame(renderLoop);
     }
 
-    animationFrameId = requestAnimationFrame(renderLoop);
+    const observer = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting && !animationFrameIdRef.current) {
+            animationFrameIdRef.current = requestAnimationFrame(renderLoop);
+        } else if (animationFrameIdRef.current) {
+            cancelAnimationFrame(animationFrameIdRef.current);
+            animationFrameIdRef.current = null;
+        }
+    });
+
+    observer.observe(container);
 
     return () => {
-        cancelAnimationFrame(animationFrameId);
+        if (animationFrameIdRef.current) {
+            cancelAnimationFrame(animationFrameIdRef.current);
+        }
+        observer.disconnect();
     }
 }, []);
 ```
+
+Notice we no longer start `requestAnimationFrame` unconditionally. Instead we gate it on visibility with an `IntersectionObserver`, so the loop only runs while the demo is actually on screen, and gets cancelled the moment it scrolls out of view.
+
+This matters because this page stacks several of these demos on top of each other. Without gating, every one of them would be running its render loop at once, even the ones you can't see, all fighting over the same frame budget. We apply this same visibility-gating to every approach that follows, so I'll leave it out of the snippets from here on to keep them focused.
 
 And we render these as follows
 
@@ -307,7 +328,6 @@ And then in the render loop, we iterate through the images in ref every frame, a
 ```jsx
 useEffect(() => {
     if (paintElement.current) {
-        let animationFrameId: number;
         const renderLoop = () => {
             const floor = paintElement.current!.clientHeight;
 
@@ -374,14 +394,10 @@ useEffect(() => {
 
             images.current = images.current.filter(image => !image.shouldBeDeleted);
 
-            animationFrameId = requestAnimationFrame(renderLoop);
+            animationFrameIdRef.current = requestAnimationFrame(renderLoop);
         }
 
-        animationFrameId = requestAnimationFrame(renderLoop);
-
-        return () => {
-            cancelAnimationFrame(animationFrameId);
-        }
+        // loop start + cleanup: same IntersectionObserver visibility-gating as before
     }
 }, []);
 ```
@@ -540,15 +556,11 @@ useEffect(() => {
 
     handleWindowResize();
 
-    animationFrameRef.current = requestAnimationFrame(renderLoop);
-
     window.addEventListener("resize", handleWindowResize);
 
-    return () => {
-        if (animationFrameRef.current) {
-            cancelAnimationFrame(animationFrameRef.current);
-        }
+    // loop start + cleanup: same IntersectionObserver visibility-gating as before
 
+    return () => {
         imageCache.current.clear(); // Also making sure we clear the image cache while unmounting
         window.removeEventListener("resize", handleWindowResize);
     }
@@ -626,10 +638,6 @@ useEffect(() => {
     ...
 
     return () => {
-        if (animationFrameRef.current) {
-            cancelAnimationFrame(animationFrameRef.current);
-        }
-
         imageCache.current.clear();
         window.removeEventListener("resize", handleWindowResize);
     }

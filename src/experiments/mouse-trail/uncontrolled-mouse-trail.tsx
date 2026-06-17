@@ -20,7 +20,7 @@ export function UncontrolledMouseTrail() {
     const RECORD_KEY = "Uncontrolled";
 
     const imageCache = useRef<Map<number, HTMLImageElement>>(new Map());
-    const paintElement = useRef<HTMLDivElement>(null);
+    const paintElementRef = useRef<HTMLDivElement>(null);
     const images = useRef<Image[]>([]);
     const nextDomId = useRef<number>(0);
     const lastSpawnTime = useRef<number>(0);
@@ -28,6 +28,7 @@ export function UncontrolledMouseTrail() {
     const [isTouch, setIsTouch] = useState(false);
     const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
+    const animationFrameIdRef = useRef<number | null>(null);
     const lastFrameTimeRef = useRef<number | null>(null);
     const frameTimesRef = useRef<number[]>([]);
     const startObserving = useRef<boolean>(false);
@@ -35,15 +36,17 @@ export function UncontrolledMouseTrail() {
     const { recordFrameTime, hasRecord } = useInstrumentorContext();
 
     const handleMouseMove = (event: React.MouseEvent) => {
-        if (!paintElement.current || prefersReducedMotion) {
+        if (!paintElementRef.current || prefersReducedMotion) {
             return;
         }
+
+        const paintElement = paintElementRef.current;
 
         if (!hasRecord(RECORD_KEY)) {
             startObserving.current = true;
         }
 
-        const rect = paintElement.current.getBoundingClientRect();
+        const rect = paintElement.getBoundingClientRect();
         const curX = event.clientX - rect.left;
         const curY = event.clientY - rect.top;
 
@@ -72,117 +75,131 @@ export function UncontrolledMouseTrail() {
     }
 
     useEffect(() => {
+        const paintElement = paintElementRef.current;
+        if (!paintElement) {
+            return;
+        }
+
         setIsTouch(window.matchMedia("(pointer: coarse)").matches);
 
-        if (paintElement.current) {
-            let animationFrameId: number;
-            const renderLoop = () => {
-                const now = performance.now();
-                if (startObserving.current &&
-                    lastFrameTimeRef.current !== null && 
-                    frameTimesRef.current.length < INSTRUMENTED_FRAME_COUNT
-                ) {
-                    frameTimesRef.current.push(now - lastFrameTimeRef.current);
+        const renderLoop = () => {
+            console.log(RECORD_KEY);
+            const now = performance.now();
+            if (startObserving.current &&
+                lastFrameTimeRef.current !== null &&
+                frameTimesRef.current.length < INSTRUMENTED_FRAME_COUNT
+            ) {
+                frameTimesRef.current.push(now - lastFrameTimeRef.current);
+            }
+            lastFrameTimeRef.current = now;
+
+            const floor = paintElement.clientHeight;
+
+            images.current.forEach((image) => {
+                if (image.stage === 'initial-bounce-up') {
+                    image.y -= image.dy;
+                    image.x += image.dx;
+
+                    image.dy -= GRAVITY;
+                    image.dx *= HORIZONTAL_FRICTION;
+                    if (image.dy <= 0) {
+                        image.stage = 'free-fall';
+                        image.dy = INITIAL_FALL_SPEED;
+                    }
+                } else if (image.stage === 'free-fall') {
+                    image.y += image.dy;
+                    image.dy += GRAVITY;
+
+                    if (image.y >= (floor - 100)) {
+                        image.stage = 'bounce-up';
+                        image.dy = INITIAL_BOUNCE_UP_SPEED;
+                    }
+                } else if (image.stage === 'bounce-up') {
+                    image.y -= image.dy;
+                    image.dy -= GRAVITY;
+                    if (image.dy <= 0) {
+                        image.stage = 'bounce-down';
+                        image.dy = INITIAL_FALL_SPEED;
+                    }
+                } else if (image.stage === 'bounce-down') {
+                    image.y += image.dy;
+                    image.dy += GRAVITY;
                 }
-                lastFrameTimeRef.current = now;
 
-                const floor = paintElement.current!.clientHeight;
+                if (image.insertedInDom === false) {
+                    const domImage = document.createElement('img');
+                    domImage.id = `image-${image.domId}`;
+                    domImage.src = image.src;
+                    domImage.style.position = 'absolute';
+                    domImage.style.width = `${IMAGE_SIZE_PIXELS}px`;
+                    domImage.style.height = `${IMAGE_SIZE_PIXELS}px`;
+                    domImage.style.left = `0px`;
+                    domImage.style.top = `0px`;
+                    domImage.style.transform = `translate(${image.x}px, ${image.y}px)`;
+                    paintElement.appendChild(domImage);
 
-                images.current.forEach((image) => {
-                    if (image.stage === 'initial-bounce-up') {
-                        image.y -= image.dy;
-                        image.x += image.dx;
+                    imageCache.current.set(image.domId, domImage);
 
-                        image.dy -= GRAVITY;
-                        image.dx *= HORIZONTAL_FRICTION;
-                        if (image.dy <= 0) {
-                            image.stage = 'free-fall';
-                            image.dy = INITIAL_FALL_SPEED;
-                        }
-                    } else if (image.stage === 'free-fall') {
-                        image.y += image.dy;
-                        image.dy += GRAVITY;
-
-                        if (image.y >= (floor - 100)) {
-                            image.stage = 'bounce-up';
-                            image.dy = INITIAL_BOUNCE_UP_SPEED;
-                        }
-                    } else if (image.stage === 'bounce-up') {
-                        image.y -= image.dy;
-                        image.dy -= GRAVITY;
-                        if (image.dy <= 0) {
-                            image.stage = 'bounce-down';
-                            image.dy = INITIAL_FALL_SPEED;
-                        }
-                    } else if (image.stage === 'bounce-down') {
-                        image.y += image.dy;
-                        image.dy += GRAVITY;
-                    }
-
-                    if (image.insertedInDom === false) {
-                        const domImage = document.createElement('img');
-                        domImage.id = `image-${image.domId}`;
-                        domImage.src = image.src;
-                        domImage.style.position = 'absolute';
-                        domImage.style.width = `${IMAGE_SIZE_PIXELS}px`;
-                        domImage.style.height = `${IMAGE_SIZE_PIXELS}px`;
-                        domImage.style.left = `0px`;
-                        domImage.style.top = `0px`;
+                    image.insertedInDom = true;
+                } else if (image.y < floor) {
+                    const domImage = imageCache.current.get(image.domId);
+                    if (domImage) {
                         domImage.style.transform = `translate(${image.x}px, ${image.y}px)`;
-                        paintElement.current!.appendChild(domImage);
-
-                        imageCache.current.set(image.domId, domImage);
-
-                        image.insertedInDom = true;
-                    } else if (image.y < floor) {
-                        const domImage = imageCache.current.get(image.domId);
-                        if (domImage) {
-                            domImage.style.transform = `translate(${image.x}px, ${image.y}px)`;
-                        }
-                    } else {
-                        const domImage = imageCache.current.get(image.domId);
-                        if (domImage) {
-                            paintElement.current!.removeChild(domImage);
-                            imageCache.current.delete(image.domId);
-                            image.shouldBeDeleted = true;
-                        }
                     }
+                } else {
+                    const domImage = imageCache.current.get(image.domId);
+                    if (domImage) {
+                        paintElement.removeChild(domImage);
+                        imageCache.current.delete(image.domId);
+                        image.shouldBeDeleted = true;
+                    }
+                }
+            });
+
+            images.current = images.current.filter(image => !image.shouldBeDeleted);
+
+            animationFrameIdRef.current = requestAnimationFrame(renderLoop);
+
+            if (frameTimesRef.current.length >= INSTRUMENTED_FRAME_COUNT) {
+                const { averageFrameTime, jankedFrameCount, worstFrameTime } = calculatePerFrameMetrics(frameTimesRef.current, FRAME_DURATION);
+                frameTimesRef.current = [];
+                startObserving.current = false;
+                recordFrameTime({
+                    key: RECORD_KEY, averageFrameTime, jankedFrameCount, worstFrameTime
                 });
 
-                images.current = images.current.filter(image => !image.shouldBeDeleted);
+                toast.success(`Frame metrics recorded for uncontrolled component approach`, {
+                    position: "top-center"
+                });
+            }
+        }
 
-                animationFrameId = requestAnimationFrame(renderLoop);
+        const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        setPrefersReducedMotion(prefersReduced);
 
-                if (frameTimesRef.current.length >= INSTRUMENTED_FRAME_COUNT) {
-                    const { averageFrameTime, jankedFrameCount, worstFrameTime } = calculatePerFrameMetrics(frameTimesRef.current, FRAME_DURATION);
-                    frameTimesRef.current = [];
-                    startObserving.current = false;
-                    recordFrameTime({
-                        key: RECORD_KEY, averageFrameTime, jankedFrameCount, worstFrameTime
-                    });
-
-                    toast.success(`Frame metrics recorded for uncontrolled component approach`, {
-                        position: "top-center"
-                    });
+        const observer = new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting) {
+                if (!animationFrameIdRef.current && !prefersReduced) {
+                    animationFrameIdRef.current = requestAnimationFrame(renderLoop);
+                }
+            } else {
+                if (animationFrameIdRef.current) {
+                    cancelAnimationFrame(animationFrameIdRef.current);
+                    animationFrameIdRef.current = null;
                 }
             }
+        });
 
-            const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-            setPrefersReducedMotion(prefersReduced);
+        observer.observe(paintElement);
 
-            if (!prefersReduced) {
-                animationFrameId = requestAnimationFrame(renderLoop);
-            }
-
-            return () => {
-                if (!prefersReduced) {
-                    cancelAnimationFrame(animationFrameId);
-                }
+        return () => {
+            if (!prefersReduced && animationFrameIdRef.current) {
+                cancelAnimationFrame(animationFrameIdRef.current);
             }
         }
     }, []);
 
-    return <div ref={paintElement} onPointerMove={handleMouseMove} className="touch-none relative flex justify-center items-center w-full h-125 overflow-hidden bg-black">
+    return <div ref={paintElementRef} onPointerMove={handleMouseMove} className="touch-none relative flex justify-center items-center w-full h-125 overflow-hidden bg-black">
         {
             !prefersReducedMotion ? <div className="flex flex-col items-center z-10 text-center">
                 {

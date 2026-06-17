@@ -24,6 +24,7 @@ export function NaiveMouseTrail() {
     const lastSpawnTime = useRef<number>(0);
     const lastFrameTimeRef = useRef<number | null>(null);
     const frameTimesRef = useRef<number[]>([]);
+    const animationFrameIdRef = useRef<number | null>(null);
     const startObserving = useRef<boolean>(false);
 
     const { recordFrameTime, hasRecord } = useInstrumentorContext();
@@ -71,13 +72,19 @@ export function NaiveMouseTrail() {
     }
 
     useEffect(() => {
+        const container = containerRef.current;
+
+        if (!container) {
+            return;
+        }
+
         setIsTouch(window.matchMedia("(pointer: coarse)").matches);
 
         const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         setPrefersReducedMotion(prefersReduced);
 
-        let animationFrameId: number;
         const renderLoop = () => {
+            console.log(RECORD_KEY)
             const now = performance.now();
             if (startObserving.current &&
                 lastFrameTimeRef.current !== null && 
@@ -87,7 +94,7 @@ export function NaiveMouseTrail() {
             }
             lastFrameTimeRef.current = now;
 
-            const floor = containerRef.current?.clientHeight ?? 0;
+            const floor = container.clientHeight ?? 0;
 
             setImages(prevImages => {
                 if (prevImages.length === 0) {
@@ -137,7 +144,7 @@ export function NaiveMouseTrail() {
                 return updatedImages;
             });
 
-            animationFrameId = requestAnimationFrame(renderLoop);
+            animationFrameIdRef.current = requestAnimationFrame(renderLoop);
 
             if (frameTimesRef.current.length >= INSTRUMENTED_FRAME_COUNT) {
                 const { averageFrameTime, jankedFrameCount, worstFrameTime } = calculatePerFrameMetrics(frameTimesRef.current, FRAME_DURATION);
@@ -153,14 +160,22 @@ export function NaiveMouseTrail() {
             }
         }
 
-        if (!prefersReduced) {
-            animationFrameId = requestAnimationFrame(renderLoop);
-        }
+        const observer = new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting && !animationFrameIdRef.current && !prefersReduced) {
+                animationFrameIdRef.current = requestAnimationFrame(renderLoop);
+            } else if (animationFrameIdRef.current) {
+                cancelAnimationFrame(animationFrameIdRef.current);
+                animationFrameIdRef.current = null;
+            }
+        });
+
+        observer.observe(container);
 
         return () => {
-            if (!prefersReduced) {
-                cancelAnimationFrame(animationFrameId);
+            if (!prefersReduced && animationFrameIdRef.current) {
+                cancelAnimationFrame(animationFrameIdRef.current);
             }
+            observer.disconnect();
         }
     }, []);
 

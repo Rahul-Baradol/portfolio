@@ -69,6 +69,7 @@ export function CanvasWithFrameRateIndependentMouseTrail() {
     }
 
     const renderLoop = () => {
+        console.log(RECORD_KEY);
         const now = performance.now();
         
         let frameFactor = lastFrameTime.current ? (now - lastFrameTime.current) / FRAME_DURATION : 1;
@@ -155,12 +156,14 @@ export function CanvasWithFrameRateIndependentMouseTrail() {
     };
 
     useEffect(() => {
-        setIsTouch(window.matchMedia("(pointer: coarse)").matches);
-
         const canvas = canvasRef.current;
-        if (!canvas || !containerRef.current) {
+        const container = containerRef.current;
+
+        if (!canvas || !container) {
             return;
         }
+
+        setIsTouch(window.matchMedia("(pointer: coarse)").matches);
 
         canvasContextRef.current = canvas.getContext("2d");
 
@@ -173,9 +176,6 @@ export function CanvasWithFrameRateIndependentMouseTrail() {
         });
 
         const handleWindowResize = () => {
-            const canvas = canvasRef.current;
-            const container = containerRef.current;
-
             if (!canvas || !container) {
                 return;
             }
@@ -206,9 +206,16 @@ export function CanvasWithFrameRateIndependentMouseTrail() {
         const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         setPrefersReducedMotion(prefersReduced);
 
-        if (!prefersReduced) {
-            animationFrameRef.current = requestAnimationFrame(renderLoop);
-        }
+        const observer = new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting && !animationFrameRef.current && !prefersReduced) {
+                animationFrameRef.current = requestAnimationFrame(renderLoop);
+            } else if (animationFrameRef.current) {
+                cancelAnimationFrame(animationFrameRef.current);
+                animationFrameRef.current = null;
+            }
+        });
+
+        observer.observe(canvas);
 
         window.addEventListener("resize", handleWindowResize);
 
@@ -219,6 +226,7 @@ export function CanvasWithFrameRateIndependentMouseTrail() {
 
             imageCache.current.clear();
             window.removeEventListener("resize", handleWindowResize);
+            observer.disconnect();
         }
     }, []);
 
