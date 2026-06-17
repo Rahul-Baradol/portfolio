@@ -73,7 +73,7 @@ export function ExperimentToc({ toc }: ExperimentTocProps) {
     const items = (
         <ul className="flex flex-col gap-0.5">
             {toc.map((entry) => (
-                <li key={entry.id}>
+                <li key={entry.id} className="staggered-fade-up">
                     <a
                         href={`#${entry.id}`}
                         onClick={(e) => handleClick(e, entry.id)}
