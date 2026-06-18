@@ -12,6 +12,11 @@ export interface TocEntry {
     label: string;
 }
 
+export interface ResourceLink {
+    label: string;
+    href: string;
+}
+
 export interface Experiment {
     slug: string;
     title: string;
@@ -19,4 +24,5 @@ export interface Experiment {
     date: string;
     tags?: string[];
     toc?: TocEntry[];
+    resources?: ResourceLink[];
 }

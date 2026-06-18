@@ -342,5 +342,10 @@ export const experiments: Experiment[] = [
         { id: "making-it-frame-rate-independent", label: "Frame-rate independence" },
         { id: "measuring-with-instrumentation", label: "Measuring with instrumentation" },
       ],
+      resources: [
+        { label: "Experiment on Codrops", href: "https://tympanus.net/codrops/2026/05/20/made-with-gsap-building-a-fun-gravity-based-mouse-trail/" },
+        { label: "Controlled vs Uncontrolled Components", href: "https://www.youtube.com/watch?v=_fKdyWwdfTk&t=201s" },
+        { label: "Inside look at the browser's rendering", href: "https://developer.chrome.com/blog/inside-browser-part3" }
+      ],
     }
 ]

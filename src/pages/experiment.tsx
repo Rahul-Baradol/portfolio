@@ -6,6 +6,7 @@ import { highlightCodeBlocks } from "@/lib/highlight";
 import NotFound from "@/components/not-found";
 import { InstrumentorProvider } from "@/lib/use-instrumentor";
 import { ExperimentToc } from "@/components/experiment-toc";
+import { ExperimentResources } from "@/components/experiment-resources";
 
 // Compile-time map of every experiment's MDX content, keyed by its folder slug.
 // Each value is a lazy importer, so an experiment's bundle (and the components
@@ -135,6 +136,9 @@ export function ExperimentPage() {
                 <>
                     {experiment.toc && experiment.toc.length > 0 && (
                         <ExperimentToc toc={experiment.toc} />
+                    )}
+                    {experiment.resources && experiment.resources.length > 0 && (
+                        <ExperimentResources resources={experiment.resources} />
                     )}
                     <article ref={articleRef} className="medium-content text-foreground/90">
                         <InstrumentorProvider>
