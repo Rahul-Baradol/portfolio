@@ -22,6 +22,7 @@ export interface Experiment {
     title: string;
     description: string;
     date: string;
+    isoDate?: string;
     tags?: string[];
     source?: string;
     toc?: TocEntry[];

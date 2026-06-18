@@ -333,6 +333,7 @@ export const experiments: Experiment[] = [
       title: "A mouse trail!",
       description: "Exploring a gravity-based mouse trail in React; from a naive state-driven approach to canvas.",
       date: "7th June 2026",
+      isoDate: "2026-06-07",
       tags: ["React", "Animation"],
       toc: [
         { id: "starting-off-with-naive-implementation", label: "Naive implementation" },

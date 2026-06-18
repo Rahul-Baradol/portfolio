@@ -107,7 +107,7 @@ export function ExperimentPage() {
                     {experiment.title}
                 </h1>
                 <div className="flex flex-row items-center gap-2 text-[11px] text-muted-foreground italic flex-wrap">
-                    <span>{experiment.date}</span>
+                    <time dateTime={experiment.isoDate}>{experiment.date}</time>
                     {experiment.tags && experiment.tags.length > 0 && (
                         <>
                             <span>•</span>
