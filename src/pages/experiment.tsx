@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ComponentType } from "react";
-import { ArrowLeft, FlaskConical } from "lucide-react";
+import { ArrowLeft, FlaskConical, Code2 } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import { experiments } from "@/constants";
 import { highlightCodeBlocks } from "@/lib/highlight";
@@ -106,7 +106,7 @@ export function ExperimentPage() {
                 <h1 className="text-2xl md:text-3xl font-bold text-foreground italic">
                     {experiment.title}
                 </h1>
-                <div className="flex flex-row items-center gap-2 text-[10px] text-muted-foreground italic flex-wrap">
+                <div className="flex flex-row items-center gap-2 text-[11px] text-muted-foreground italic flex-wrap">
                     <span>{experiment.date}</span>
                     {experiment.tags && experiment.tags.length > 0 && (
                         <>
@@ -121,6 +121,20 @@ export function ExperimentPage() {
                                     </span>
                                 ))}
                             </div>
+                        </>
+                    )}
+                    {experiment.source && (
+                        <>
+                            <span>•</span>
+                            <a
+                                href={experiment.source}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors not-italic"
+                            >
+                                <Code2 className="h-3 w-3" />
+                                Source
+                            </a>
                         </>
                     )}
                 </div>

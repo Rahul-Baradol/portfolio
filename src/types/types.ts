@@ -23,6 +23,7 @@ export interface Experiment {
     description: string;
     date: string;
     tags?: string[];
+    source?: string;
     toc?: TocEntry[];
     resources?: ResourceLink[];
 }

@@ -223,7 +223,7 @@ Well, open devtools, throttle CPU to low-end mobile device via Devtools, you wil
 
 I ran a profile which looked like this
 
-![Naive Profile](/experiments/outcomes/naive.png)
+![Naive Profile](/experiments/outcomes/naive.webp)
 
 Look at those yellow bars in "Frames"... those are partially-presented frames which means the frame had started rendering, but couldn't complete which leads to "janky" behaviour
 
@@ -433,7 +433,7 @@ But if you open it on a mid-tier machine, or even throttle CPU via DevTools, you
 
 Again profiled with CPU throttled to low-end mobile phone on a Mac
 
-![Uncontrolled Profile](/experiments/outcomes/uncontrolled.png)
+![Uncontrolled Profile](/experiments/outcomes/uncontrolled.webp)
 
 Still we see those "yellow" frames!
 
@@ -654,7 +654,7 @@ Looks good!
 
 Again profiled with CPU throttled to low-end mobile phone on a Mac
 
-![Canvas Profile with frame rate dependence](/experiments/outcomes/frame-rate-dependent-canvas.png)
+![Canvas Profile with frame rate dependence](/experiments/outcomes/frame-rate-dependent-canvas.webp)
 
 One small problem i noticed when opened on my Dell laptop, the images are falling twice as much as they should be.
 To the point, where it is not visually appealing anymore.
@@ -760,7 +760,7 @@ to prevent overshooting of the frameFactor. Which could happen when the user swi
 
 Again profiled with CPU throttled to low-end mobile phone on a Mac
 
-![Canvas Profile with frame rate dependence](/experiments/outcomes/frame-rate-independent-canvas.png)
+![Canvas Profile with frame rate dependence](/experiments/outcomes/frame-rate-independent-canvas.webp)
 
 Looks pretty clean!
 
@@ -782,7 +782,7 @@ It does that by recording the frame times, by taking the difference between the 
 
 When instrumented on *Mac M4 Air 13-inch, 60Hz*; no CPU-throttling, we get the following stats
 
-![Frame Stats on Mac M4 Air 13-inch without CPU throttling](/experiments/outcomes/stats-grid-mac-no-throttling-full-resolution.png)
+![Frame Stats on Mac M4 Air 13-inch without CPU throttling](/experiments/outcomes/stats-grid-mac-no-throttling-full-resolution.webp)
 
 On an *unthrottled M4 Air*, none of the approaches stress the 16.67ms budget! 
 
@@ -792,7 +792,7 @@ No wonder, why *Mac* is a beast!
 
 However if I throttle the CPU to *low-end mobile device (16.6x slower)* on the same *M4 Air*, we get the following stats
 
-![Frame Stats on Mac M4 Air 13-inch with CPU throttling](/experiments/outcomes/stats-grid-mac-low-tier-throttling-16.6x-down-full-resolution.png)
+![Frame Stats on Mac M4 Air 13-inch with CPU throttling](/experiments/outcomes/stats-grid-mac-low-tier-throttling-16.6x-down-full-resolution.webp)
 
 Interesting!
 
@@ -800,11 +800,11 @@ Interesting!
 
 When instrumented on *Dell, 8GB RAM, i3 11th gen, 120Hz*; no CPU-throttling, we get the following stats
 
-![Frame Stats on Dell, 8GB RAM, i3 11th gen without CPU throttling](/experiments/outcomes/stats-grid-dell-8gb-11th-gen-i3-no-throttling.jpeg)
+![Frame Stats on Dell, 8GB RAM, i3 11th gen without CPU throttling](/experiments/outcomes/stats-grid-dell-8gb-11th-gen-i3-no-throttling.webp)
 
 Also instrumented on a phone! *(Samsung A36, 8GB memory, Snapdragon 6 Gen 3, 120Hz)*; we get the following stats
 
-![Frame Stats on Samsung A36](/experiments/outcomes/stats-grid-samsung-8gb-snapdragon-6-gen-3.jpeg)
+![Frame Stats on Samsung A36](/experiments/outcomes/stats-grid-samsung-8gb-snapdragon-6-gen-3.webp)
 
 And in case, you want to see what are the stats on your device, make sure you have interacted with the demos until a popup appears at the top, for each of them. We basically instrument 1000 frames for each approach, and show the stats. And the instrumenting starts the moment you interact with the demo, and stops after 1000 frames.
 
