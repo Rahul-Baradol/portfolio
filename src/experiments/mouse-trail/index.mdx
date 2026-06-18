@@ -60,7 +60,7 @@ const nextId = useRef<number>(0);
 const animationFrameIdRef = useRef<number | null>(null);
 ```
 
-Here we slightly extend the schema: each spawned image gets a fresh `id` from `nextId`, and the chosen source image's id is kept separately as `imageId`. This is because we use `id` as the React `key`, and since many spawned images can share the same source image, the source id alone wouldn't be unique.
+Each spawned image gets a fresh `id` from `nextId`, and the chosen source image's id is kept separately as `imageId`. This is because we use `id` as the React `key`, and since many spawned images can share the same source image, the source id alone wouldn't be unique.
 
 And then for each mouse event, we would "spawn" images by populating `images` state
 
@@ -99,6 +99,17 @@ const handleMouseMove = (event: React.MouseEvent) => {
         return [...prevImages, newImage];
     });
 }
+```
+
+Think of imageLinks as an array of image objects, each with an `id` and `src` property.
+```jsx
+export const imageLinks = [
+    {
+        id: 1,
+        src: '/experiments/mouse-trail/01.png'
+    },
+    ...
+];
 ```
 
 And we start a render loop like this
@@ -184,7 +195,7 @@ useEffect(() => {
 }, []);
 ```
 
-Notice we no longer start `requestAnimationFrame` unconditionally. Instead we gate it on visibility with an `IntersectionObserver`, so the loop only runs while the demo is actually on screen, and gets cancelled the moment it scrolls out of view.
+Notice we don't start `requestAnimationFrame` unconditionally. Instead we gate it on visibility with an `IntersectionObserver`, so the loop only runs while the demo is actually on screen, and gets cancelled the moment it scrolls out of view.
 
 This matters because this page stacks several of these demos on top of each other. Without gating, every one of them would be running its render loop at once, even the ones you can't see, all fighting over the same frame budget. We apply this same visibility-gating to every approach that follows, so I'll leave it out of the snippets from here on to keep them focused.
 
@@ -411,7 +422,7 @@ That is to avoid *O(N)* DOM scan, and directly access the DOM element we want to
 
 And we have the elements in DOM as follows
 ```jsx
-<div ref={paintElement} onMouseMove={handleMouseMove} className="relative flex justify-center items-center w-full h-125 overflow-hidden bg-black">
+<div ref={paintElement} onPointerMove={handleMouseMove} className="relative flex justify-center items-center w-full h-125 overflow-hidden bg-black">
     <div className="flex flex-col items-center z-10 text-center">
         {
             isTouch ? <span className="text-white text-2xl md:text-3xl select-none opacity-90">Move your finger to spawn</span> :
@@ -576,7 +587,7 @@ And we would render the canvas as follows
  <div ref={containerRef} className="relative flex justify-center items-center w-full h-125 overflow-hidden bg-black">
     <canvas
         ref={canvasRef}
-        onMouseMove={handleMouseMove}
+        onPointerMove={handleMouseMove}
         className="absolute top-0 left-0 h-125 w-full bg-black"
     >
     </canvas>
@@ -760,7 +771,7 @@ to prevent overshooting of the frameFactor. Which could happen when the user swi
 
 Again profiled with CPU throttled to low-end mobile phone on a Mac
 
-![Canvas Profile with frame rate dependence](/experiments/outcomes/frame-rate-independent-canvas.webp)
+![Canvas Profile with frame rate independence](/experiments/outcomes/frame-rate-independent-canvas.webp)
 
 Looks pretty clean!
 
