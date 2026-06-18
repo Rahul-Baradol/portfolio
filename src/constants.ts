@@ -330,7 +330,7 @@ export const stories = [
 export const experiments: Experiment[] = [
     {
       slug: "mouse-trail",
-      title: "Controlled vs Uncontrolled vs Canvas Components",
+      title: "A mouse trail!",
       description: "Exploring a gravity-based mouse trail in React; from a naive state-driven approach to canvas.",
       date: "7th June 2026",
       tags: ["React", "Animation"],
