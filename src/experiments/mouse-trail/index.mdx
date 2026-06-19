@@ -175,27 +175,50 @@ useEffect(() => {
         animationFrameIdRef.current = requestAnimationFrame(renderLoop);
     }
 
-    const observer = new IntersectionObserver(([entry]) => {
-        if (entry.isIntersecting && !animationFrameIdRef.current) {
+    const startOrStopAnimation = () => {
+        const shouldAnimate = isVisibleRef.current && 
+                                isIntersectingRef.current &&
+                                !prefersReduced;
+
+        if (shouldAnimate && !animationFrameIdRef.current) {
+            console.log("Starting RAF");
             animationFrameIdRef.current = requestAnimationFrame(renderLoop);
-        } else if (animationFrameIdRef.current) {
+        }
+
+        if (!shouldAnimate && animationFrameIdRef.current) {
+            console.log("Stopping RAF");
             cancelAnimationFrame(animationFrameIdRef.current);
             animationFrameIdRef.current = null;
         }
+    };
+
+    const observer = new IntersectionObserver(([entry]) => {
+        isIntersectingRef.current = entry.isIntersecting;
+        startOrStopAnimation();
     });
 
     observer.observe(container);
+
+    const handleVisibilityChange = () => {
+        isVisibleRef.current = document.visibilityState === "visible";
+        startOrStopAnimation();
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
         if (animationFrameIdRef.current) {
             cancelAnimationFrame(animationFrameIdRef.current);
         }
         observer.disconnect();
+        document.removeEventListener("visibilitychange", handleVisibilityChange);
     }
 }, []);
 ```
 
 Notice we don't start `requestAnimationFrame` unconditionally. Instead we gate it on visibility with an `IntersectionObserver`, so the loop only runs while the demo is actually on screen, and gets cancelled the moment it scrolls out of view.
+
+We also listen for the `visibilitychange` event on the document to pause the animation when the tab is not visible.
 
 This matters because this page stacks several of these demos on top of each other. Without gating, every one of them would be running its render loop at once, even the ones you can't see, all fighting over the same frame budget. We apply this same visibility-gating to every approach that follows, so I'll leave it out of the snippets from here on to keep them focused.
 

@@ -33,6 +33,9 @@ export function UncontrolledMouseTrail() {
     const frameTimesRef = useRef<number[]>([]);
     const startObserving = useRef<boolean>(false);
 
+    const isIntersectingRef = useRef<boolean>(false);
+    const isVisibleRef = useRef<boolean>(true);
+
     const { recordFrameTime, hasRecord } = useInstrumentorContext();
 
     const handleMouseMove = (event: React.MouseEvent) => {
@@ -177,25 +180,43 @@ export function UncontrolledMouseTrail() {
         const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         setPrefersReducedMotion(prefersReduced);
 
-        const observer = new IntersectionObserver(([entry]) => {
-            if (entry.isIntersecting) {
-                if (!animationFrameIdRef.current && !prefersReduced) {
-                    animationFrameIdRef.current = requestAnimationFrame(renderLoop);
-                }
-            } else {
-                if (animationFrameIdRef.current) {
-                    cancelAnimationFrame(animationFrameIdRef.current);
-                    animationFrameIdRef.current = null;
-                }
+        const startOrStopAnimation = () => {
+            const shouldAnimate = isVisibleRef.current && 
+                                    isIntersectingRef.current &&
+                                    !prefersReduced;
+
+            if (shouldAnimate && !animationFrameIdRef.current) {
+                console.log("Starting RAF");
+                animationFrameIdRef.current = requestAnimationFrame(renderLoop);
             }
+
+            if (!shouldAnimate && animationFrameIdRef.current) {
+                console.log("Stopping RAF");
+                cancelAnimationFrame(animationFrameIdRef.current);
+                animationFrameIdRef.current = null;
+            }
+        };
+
+        const observer = new IntersectionObserver(([entry]) => {
+            isIntersectingRef.current = entry.isIntersecting;
+            startOrStopAnimation();
         });
 
         observer.observe(paintElement);
+
+        const handleVisibilityChange = () => {
+            isVisibleRef.current = document.visibilityState === "visible";
+            startOrStopAnimation();
+        };
+
+        document.addEventListener("visibilitychange", handleVisibilityChange);
 
         return () => {
             if (!prefersReduced && animationFrameIdRef.current) {
                 cancelAnimationFrame(animationFrameIdRef.current);
             }
+            document.removeEventListener("visibilitychange", handleVisibilityChange);
+            observer.disconnect();
         }
     }, []);
 
