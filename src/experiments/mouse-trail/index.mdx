@@ -281,15 +281,21 @@ Well, open devtools, throttle CPU to low-end mobile device via Devtools, you wil
 
 I ran a profile which looked like this
 
-![Naive Profile](/experiments/outcomes/naive.webp)
+![Naive Profile](/experiments/outcomes/naive-1.webp)
 
 Look at those yellow bars in "Frames"... those are partially-presented frames which means the frame had started rendering, but couldn't complete which leads to "janky" behaviour
+
+Looking at how at how time was divided in different operations, we see this
+
+![Naive Profile](/experiments/outcomes/naive-2.png)
+
+Around 36.2% of time is spent in rendering, and 34% time in scripting! This is problematic.
 
 Now before we get into optimizations, let's take a look at the current implementation and identify the bottlenecks.
 
 1. **Frequent Layout Calculations**: The current implementation triggers layout calculations on every frame, which is expensive. This is especially true for the "Layout" stage, which can be a significant performance bottleneck.
 
-2. **Image Management**: The way images are managed and updated in the state can lead to unnecessary re-renders. Each image's position is updated individually, which can be optimized.
+2. **Image Management**: The way images are managed and updated in the state can lead to unnecessary re-renders, increasing scripting time (because of react's reconciliation) and high rendering time. Each image's position is updated individually, which can be optimized. 
 
 3. **Rendering Pipeline**: The naive approach goes through the entire rendering pipeline (DOM > Style Calculation > Layout > Paint > Composite) for each frame, leading to potential performance issues.
 
@@ -324,7 +330,11 @@ We get the following,
     <NaiveMouseTrailWithTransforms />
 </div>
 
-Better than before, but frame drops still happen when `images` count is high.
+![Naive Profile](/experiments/outcomes/naive-transforms-1.png)
+
+![Naive Profile](/experiments/outcomes/naive-transforms-2.png)
+
+Well didn't seem to help much though :(
 
 ## Bypassing React with direct DOM updates
 
@@ -471,9 +481,13 @@ But if you open it on a mid-tier machine, or even throttle CPU via DevTools, you
 
 Again profiled with CPU throttled to low-end mobile phone on a Mac
 
-![Uncontrolled Profile](/experiments/outcomes/uncontrolled.webp)
+![Uncontrolled Profile](/experiments/outcomes/uncontrolled-1.webp)
 
-Still we see those "yellow" frames!
+![Uncontrolled Profile](/experiments/outcomes/uncontrolled-2.png)
+
+Scripting time looks to have decreased to like 25%, but the rendering still remains around 45%!
+
+And that explains the existing "yellow" frames...
 
 Can we make it even better?
 
@@ -662,7 +676,15 @@ Looks good!
 
 Again profiled with CPU throttled to low-end mobile phone on a Mac
 
-![Canvas Profile with frame rate dependence](/experiments/outcomes/frame-rate-dependent-canvas.webp)
+![Canvas Profile with frame rate dependence](/experiments/outcomes/canvas-1.webp)
+
+![Canvas Profile with frame rate dependence](/experiments/outcomes/canvas-2.png)
+
+There are no "yellow" frames anymore!
+
+And the rendering and scripting times have improved as well.
+
+Scripting is around 21%, and rendering drops to 5.2%!
 
 One small problem i noticed when opened on my Dell laptop, the images are falling twice as much as they should be.
 To the point, where it is not visually appealing anymore.
