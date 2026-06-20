@@ -340,7 +340,7 @@ export const experiments: Experiment[] = [
         { id: "optimizing-with-css-transforms", label: "Optimizing with CSS transforms" },
         { id: "bypassing-react-with-direct-dom-updates", label: "Bypassing React (direct DOM)" },
         { id: "moving-to-canvas", label: "Moving to canvas" },
-        { id: "making-it-frame-rate-independent", label: "Frame-rate independence" },
+        { id: "making-it-refresh-rate-independent", label: "Refresh-rate independence" },
         { id: "measuring-with-instrumentation", label: "Measuring with instrumentation" },
       ],
       source: "https://github.com/Rahul-Baradol/portfolio/tree/main/src/experiments/mouse-trail",

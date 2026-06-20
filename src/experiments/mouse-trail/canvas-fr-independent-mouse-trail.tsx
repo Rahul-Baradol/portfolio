@@ -3,16 +3,8 @@ import { FRAME_DURATION, GRAVITY, HORIZONTAL_FRICTION, HORIZONTAL_SPREAD, IMAGE_
 import { calculatePerFrameMetrics } from "./utils";
 import { useInstrumentorContext } from "@/lib/use-instrumentor";
 import { toast } from "sonner";
-
-interface FallingImage {
-    x: number,
-    y: number,
-    dx: number;
-    dy: number;
-    id: number,
-    src: string,
-    stage: 'initial-bounce-up' | 'free-fall' | 'bounce-up' | 'bounce-down';
-}
+import type { CanvasImage } from "./types";
+import { stepImageWithFrameFactor } from "./physics";
 
 export function CanvasWithFrameRateIndependentMouseTrail() {
     const RECORD_KEY = "Canvas Refresh Rate Independent";
@@ -21,7 +13,7 @@ export function CanvasWithFrameRateIndependentMouseTrail() {
     const containerRef = useRef<HTMLDivElement | null>(null);
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const canvasContextRef = useRef<CanvasRenderingContext2D | null>(null);
-    const images = useRef<FallingImage[]>([]);
+    const images = useRef<CanvasImage[]>([]);
     const animationFrameRef = useRef<number | null>(null);
     const lastFrameTime = useRef<number | null>(null);
     const lastSpawnTime = useRef<number>(0);
@@ -58,7 +50,7 @@ export function CanvasWithFrameRateIndependentMouseTrail() {
 
         const randomImageIndex = Math.floor(Math.random() * imageLinks.length);
 
-        const newImage: FallingImage = {
+        const newImage: CanvasImage = {
             x: curX - (IMAGE_SIZE_PIXELS / 2),
             y: curY - (IMAGE_SIZE_PIXELS / 2),
             id: imageLinks[randomImageIndex].id,
@@ -90,38 +82,7 @@ export function CanvasWithFrameRateIndependentMouseTrail() {
         const floor = containerRef.current!.clientHeight;
 
         images.current.forEach(image => {
-            if (image.stage === 'initial-bounce-up') {
-                image.y -= image.dy * frameFactor;
-                image.x += image.dx * frameFactor;
-
-                image.dx *= Math.pow(HORIZONTAL_FRICTION, frameFactor);
-                image.dy -= GRAVITY * frameFactor;
-
-                if (image.dy <= 0) {
-                    image.stage = 'free-fall';
-                    image.dy = INITIAL_FALL_SPEED;
-                }
-            } else if (image.stage === 'free-fall') {
-                image.y += image.dy * frameFactor;
-                image.dy += GRAVITY * frameFactor;
-
-                if (image.y >= (floor - 100)) {
-                    image.stage = 'bounce-up';
-                    image.dy = INITIAL_BOUNCE_UP_SPEED;
-                }
-            } else if (image.stage === 'bounce-up') {
-                image.y -= image.dy * frameFactor;
-                image.dy -= GRAVITY * frameFactor;
-
-                if (image.dy <= 0) {
-                    image.stage = 'bounce-down';
-                    image.dy = INITIAL_FALL_SPEED;
-                }
-            } else if (image.stage === 'bounce-down') {
-                image.y += image.dy * frameFactor;
-                image.dy += GRAVITY * frameFactor;
-            }
-
+            stepImageWithFrameFactor(image, floor, frameFactor);
             return image;
         });
 

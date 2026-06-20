@@ -3,25 +3,15 @@ import { FRAME_DURATION, GRAVITY, HORIZONTAL_FRICTION, HORIZONTAL_SPREAD, IMAGE_
 import { calculatePerFrameMetrics } from "./utils";
 import { useInstrumentorContext } from "@/lib/use-instrumentor";
 import { toast } from "sonner";
-
-interface Image {
-    x: number,
-    y: number,
-    dx: number,
-    dy: number,
-    domId: number,
-    src: string,
-    stage: 'initial-bounce-up' | 'free-fall' | 'bounce-up' | 'bounce-down';
-    insertedInDom: boolean;
-    shouldBeDeleted: boolean;
-}
+import type { UncontrolledImage } from "./types";
+import { stepImage } from "./physics";
 
 export function UncontrolledMouseTrail() {
     const RECORD_KEY = "Uncontrolled";
 
     const imageCache = useRef<Map<number, HTMLImageElement>>(new Map());
     const paintElementRef = useRef<HTMLDivElement>(null);
-    const images = useRef<Image[]>([]);
+    const images = useRef<UncontrolledImage[]>([]);
     const nextDomId = useRef<number>(0);
     const lastSpawnTime = useRef<number>(0);
 
@@ -62,7 +52,7 @@ export function UncontrolledMouseTrail() {
 
         const randomImageIndex = Math.floor(Math.random() * imageLinks.length);
 
-        const newImage: Image = {
+        const newImage: UncontrolledImage = {
             x: curX - (IMAGE_SIZE_PIXELS / 2),
             y: curY - (IMAGE_SIZE_PIXELS / 2),
             domId: nextDomId.current++,
@@ -99,35 +89,7 @@ export function UncontrolledMouseTrail() {
             const floor = paintElement.clientHeight;
 
             images.current.forEach((image) => {
-                if (image.stage === 'initial-bounce-up') {
-                    image.y -= image.dy;
-                    image.x += image.dx;
-
-                    image.dy -= GRAVITY;
-                    image.dx *= HORIZONTAL_FRICTION;
-                    if (image.dy <= 0) {
-                        image.stage = 'free-fall';
-                        image.dy = INITIAL_FALL_SPEED;
-                    }
-                } else if (image.stage === 'free-fall') {
-                    image.y += image.dy;
-                    image.dy += GRAVITY;
-
-                    if (image.y >= (floor - 100)) {
-                        image.stage = 'bounce-up';
-                        image.dy = INITIAL_BOUNCE_UP_SPEED;
-                    }
-                } else if (image.stage === 'bounce-up') {
-                    image.y -= image.dy;
-                    image.dy -= GRAVITY;
-                    if (image.dy <= 0) {
-                        image.stage = 'bounce-down';
-                        image.dy = INITIAL_FALL_SPEED;
-                    }
-                } else if (image.stage === 'bounce-down') {
-                    image.y += image.dy;
-                    image.dy += GRAVITY;
-                }
+                stepImage(image, floor);
 
                 if (image.insertedInDom === false) {
                     const domImage = document.createElement('img');

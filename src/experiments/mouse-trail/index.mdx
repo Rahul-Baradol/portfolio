@@ -13,25 +13,33 @@ Although they have used GSAP with no React environment, I thought let's give it 
 
 ## Starting off with naive implementation
 
-What do you expect ?
-
 What all things we need?
 - How to keep track of images in action ?
 - How to animate them ?
 
-We can define each Image with following properties
+Every image shares the same core shape, the bits the physics needs to move it around. Let's call that the `PhysicsImage`.
 
 ```jsx
-interface Image {
-    x: number, // current x position
-    y: number, // current y position
-    dx: number, // change in x position
-    dy: number, // change in y position
-    id: number, // unique identifier
-    src: string, // image source
+interface PhysicsImage {
+    x: number; // current x position
+    y: number; // current y position
+    dx: number; // change in x position
+    dy: number; // change in y position
+    src: string; // image source
     stage: 'initial-bounce-up' | 'free-fall' | 'bounce-up' | 'bounce-down'; // stage of the animation
-} 
+}
 ```
+
+Each approach we build will need a few extra fields on top of this ( like an `id`, or DOM bookkeeping ), so they'll just extend the base. For the naive approach, that looks like
+
+```jsx
+interface NaiveImage extends PhysicsImage {
+    id: number; // unique identifier, used as the React key
+    imageId: number; // id of the source image
+}
+```
+
+We'll see why later approaches tweak these extra fields, but the `PhysicsImage` base stays the same throughout, and that's exactly what lets us share the physics logic across every approach.
 
 And since we would be simulating some physics ( like gravity ), some constants would help 
 ```jsx
@@ -49,8 +57,7 @@ export const IMAGE_SIZE_PIXELS = 100;
 Maintain a state of these **images**
 
 ```jsx
-const [images, setImages] = useState<Image[]>([]);
-
+const [images, setImages] = useState<NaiveImage[]>([]);
 ```
 
 Some references to keep track of last spawn time, container element, a counter to hand out unique ids, and the current animation frame
@@ -84,7 +91,7 @@ const handleMouseMove = (event: React.MouseEvent) => {
 
     const randomImageIndex = Math.floor(Math.random() * imageLinks.length); 
 
-    const newImage: Image = {
+    const newImage: NaiveImage = {
         x: curX - (IMAGE_SIZE_PIXELS / 2),
         y: curY - (IMAGE_SIZE_PIXELS / 2),
         imageId: imageLinks[randomImageIndex].id,
@@ -112,7 +119,52 @@ export const imageLinks = [
 ];
 ```
 
-And we start a render loop like this
+Now, the actual physics, advancing an image by one frame, is identical no matter how we end up rendering it. So instead of inlining it into every render loop, let's pull it into one pure function that mutates a `PhysicsImage` in place.
+
+```jsx
+export function stepImage<T extends PhysicsImage>(image: T, floor: number) {
+    switch (image.stage) {
+        case 'initial-bounce-up':
+            image.y -= image.dy;
+            image.x += image.dx;
+
+            image.dy -= GRAVITY;
+            image.dx *= HORIZONTAL_FRICTION;
+            if (image.dy <= 0) {
+                image.stage = 'free-fall';
+                image.dy = INITIAL_FALL_SPEED;
+            }
+            break;
+
+        case 'free-fall':
+            image.y += image.dy;
+            image.dy += GRAVITY;
+
+            if (image.y >= (floor - 100)) {
+                image.stage = 'bounce-up';
+                image.dy = INITIAL_BOUNCE_UP_SPEED;
+            }
+            break;
+        
+        case 'bounce-up':
+            image.y -= image.dy;
+            image.dy -= GRAVITY;
+            if (image.dy <= 0) {
+                image.stage = 'bounce-down';
+                image.dy = INITIAL_FALL_SPEED;
+            }
+            break;
+
+        case 'bounce-down':
+            image.y += image.dy;
+            image.dy += GRAVITY;
+    }
+}
+```
+
+Because it accepts any `PhysicsImage`, every variant we build later, with its own extra fields, can be stepped by this exact same function. From here on, whenever you see `stepImage(image, floor)` in a render loop, this is what it's doing.
+
+We start the render loop like this
 
 ```jsx
 useEffect(() => {
@@ -134,35 +186,7 @@ useEffect(() => {
                     ...image,
                 }
 
-                if (image.stage === 'initial-bounce-up') {
-                    newImage.y -= newImage.dy;
-                    newImage.x += newImage.dx;
-
-                    newImage.dy -= GRAVITY;
-                    newImage.dx *= HORIZONTAL_FRICTION;
-                    if (newImage.dy <= 0) {
-                        newImage.stage = 'free-fall';
-                        newImage.dy = INITIAL_FALL_SPEED;
-                    }
-                } else if (image.stage === 'free-fall') {
-                    newImage.y += newImage.dy;
-                    newImage.dy += GRAVITY;
-
-                    if (newImage.y >= (floor - 100)) {
-                        newImage.stage = 'bounce-up';
-                        newImage.dy = INITIAL_BOUNCE_UP_SPEED;
-                    }
-                } else if (image.stage === 'bounce-up') {
-                    newImage.y -= newImage.dy;
-                    newImage.dy -= GRAVITY;
-                    if (newImage.dy <= 0) {
-                        newImage.stage = 'bounce-down';
-                        newImage.dy = INITIAL_FALL_SPEED;
-                    }
-                } else if (image.stage === 'bounce-down') {
-                    newImage.y += newImage.dy;
-                    newImage.dy += GRAVITY;
-                }
+                stepImage(newImage, floor);
 
                 return newImage;
             });
@@ -310,14 +334,14 @@ Let's not use React "state" at all, and modify the DOM directly, bypassing React
 Why?
 
 Because React's reconciliation process can introduce latency, especially with frequent updates like animations.
-Here we are trying to achieve 60fps, which means we have around 16ms to update the positions of all images and render them. React's reconciliation can easily exceed this time budget when there are many images, leading to dropped frames and a janky animation.
+Here we are trying to achieve 60fps, which means we have around 16ms for a frame to update the positions of all images and render them. React's reconciliation can easily exceed this time budget when there are many images, leading to dropped frames and a janky animation.
 
 So how to do update DOM directly?
 
-We maintain the images as a React ref, which doesn't trigger a React re-render on update
+First we maintain the images as a React ref, which doesn't trigger a React re-render on update
 
 ```jsx
-const images = useRef<Image[]>([]);
+const images = useRef<UncontrolledImage[]>([]);
 ```
 
 We also keep a incrementing counter for assigning unique ids to images
@@ -325,7 +349,15 @@ We also keep a incrementing counter for assigning unique ids to images
 const nextDomId = useRef<number>(0);
 ```
 
-The schema shifts a bit here too. Since we are no longer relying on React's reconciliation, we don't need the React `key`, so the `id` field is dropped. Instead we add a `domId` (from `nextDomId`) to map each image to its DOM node, along with two bookkeeping flags, `insertedInDom` and `shouldBeDeleted`, to track its lifecycle in the DOM.
+The extra fields shift a bit here too, but the `PhysicsImage` base stays untouched. Since we are no longer relying on React's reconciliation, we don't need the React `key`, so the `id` field is dropped. Instead we add a `domId` (from `nextDomId`) to map each image to its DOM node, along with two bookkeeping flags, `insertedInDom` and `shouldBeDeleted`, to track its lifecycle in the DOM.
+
+```jsx
+interface UncontrolledImage extends PhysicsImage {
+    domId: number; // maps the image to its DOM node
+    insertedInDom: boolean; // has it been appended to the DOM yet?
+    shouldBeDeleted: boolean; // is it ready to be removed?
+}
+```
 
 And for each mouse move, we do the following where we update the ref and doesn't trigger a re-render 
 ```jsx
@@ -346,7 +378,7 @@ const handleMouseMove = (event: React.MouseEvent) => {
 
     const randomImageIndex = Math.floor(Math.random() * imageLinks.length); 
 
-    const newImage: Image = {
+    const newImage: UncontrolledImage = {
         x: curX - (IMAGE_SIZE_PIXELS / 2),
         y: curY - (IMAGE_SIZE_PIXELS / 2),
         domId: nextDomId.current++,
@@ -370,35 +402,7 @@ useEffect(() => {
             const floor = paintElement.current!.clientHeight;
 
             images.current.forEach((image) => {    
-                if (image.stage === 'initial-bounce-up') {
-                    image.y -= image.dy;
-                    image.x += image.dx;
-
-                    image.dy -= GRAVITY;
-                    image.dx *= HORIZONTAL_FRICTION;
-                    if (image.dy <= 0) {
-                        image.stage = 'free-fall';
-                        image.dy = INITIAL_FALL_SPEED;
-                    }
-                } else if (image.stage === 'free-fall') {
-                    image.y += image.dy;
-                    image.dy += GRAVITY;
-
-                    if (image.y >= (floor - 100)) {
-                        image.stage = 'bounce-up';
-                        image.dy = INITIAL_BOUNCE_UP_SPEED;
-                    }
-                } else if (image.stage === 'bounce-up') {
-                    image.y -= image.dy;
-                    image.dy -= GRAVITY;
-                    if (image.dy <= 0) {
-                        image.stage = 'bounce-down';
-                        image.dy = INITIAL_FALL_SPEED;
-                    }
-                } else if (image.stage === 'bounce-down') {
-                    image.y += image.dy;
-                    image.dy += GRAVITY;
-                }
+                stepImage(image, floor);
 
                 if (image.insertedInDom === false) {
                     const domImage = document.createElement('img');
@@ -489,37 +493,7 @@ const renderLoop = () => {
     const floor = containerRef.current!.clientHeight;
 
     images.current.forEach(image => {
-        if (image.stage === 'initial-bounce-up') {
-            image.y -= image.dy;
-            image.x += image.dx;
-
-            image.dx *= HORIZONTAL_FRICTION;
-            image.dy -= GRAVITY;
-
-            if (image.dy <= 0) {
-                image.stage = 'free-fall';
-                image.dy = INITIAL_FALL_SPEED;
-            }
-        } else if (image.stage === 'free-fall') {
-            image.y += image.dy;
-            image.dy += GRAVITY;
-
-            if (image.y >= (floor - 100)) {
-                image.stage = 'bounce-up';
-                image.dy = INITIAL_BOUNCE_UP_SPEED;
-            }
-        } else if (image.stage === 'bounce-up') {
-            image.y -= image.dy;
-            image.dy -= GRAVITY;
-
-            if (image.dy <= 0) {
-                image.stage = 'bounce-down';
-                image.dy = INITIAL_FALL_SPEED;
-            }
-        } else if (image.stage === 'bounce-down') {
-            image.y += image.dy;
-            image.dy += GRAVITY;
-        }
+        stepImage(image, floor);
     });
 
     images.current = images.current.filter(image => image.y < floor);
@@ -682,7 +656,7 @@ useEffect(() => {
 }, []);
 ```
 
-And on cleanup, we `clear()` the image cache, so the cached `HTMLImageElement`s aren't held onto after the component unmounts.
+And on cleanup, we `clear()` the image cache, so the cached `HTMLImageElement` aren't held onto after the component unmounts.
 
 Looks good!
 
@@ -708,11 +682,90 @@ If *newImage.dy* is 1 let's say, then *newImage.y* would be increased by 60px on
 
 We need to fix this!
 
-## Making it frame-rate independent
+## Making it refresh-rate independent
 
 We start with the following line, where we keep track of "when was last frame started"
 ```jsx
 const lastFrameTime = useRef<number | null>(null);
+```
+
+We do this to calculate "how much time has elapsed since the last frame"
+
+With that, we can estimate frame time! And in 60fps, the frame time is around 16.67ms.
+
+So if frame time is 16.67ms, we can say frame rate is around 60fps.
+
+If frame time is 8.33ms, we can say frame rate is around 120fps.
+
+If frame time is 33.33ms, we can say frame rate is around 30fps.
+
+And we want to scale the physics based on the frame time, so that the images fall at the same speed, regardless of the frame rate.
+What frame rate we want to enforce? Let's do it 60fps.
+
+The current logic works well on 60fps.
+For example, look at the following line
+```jsx
+newImage.y += newImage.dy;
+```
+
+This works in 60fps. But breaks on 120fps, because it runs twice as much.
+So what can we do? Update by **newImage.dy / 2** 
+
+What if we run it on 30fps? Then we need to update by **newImage.dy * 2**
+
+So this multiplier, can be derived as follows...
+```jsx
+(now - lastFrameTime.current) / FRAME_DURATION
+```
+
+Where `now` is the current frame time, `lastFrameTime.current` is the last frame time, and `FRAME_DURATION` is the duration of a frame at 60fps (16.67ms).
+
+With this we are normalizing the position updates, to work on any frame rate, and we can call this multiplier as `frameFactor`
+
+Since the physics now needs to scale every step by this `frameFactor`, we make a frame-rate-aware sibling of `stepImage`. Same structure, same stages, just every delta multiplied by `frameFactor` ( and the friction raised to its power, since it's multiplicative ).
+
+```jsx
+export function stepImageWithFrameFactor<T extends PhysicsImage>(image: T, floor: number, frameFactor: number) {
+    switch (image.stage) {
+        case 'initial-bounce-up':
+            image.y -= image.dy * frameFactor;
+            image.x += image.dx * frameFactor;
+
+            image.dx *= Math.pow(HORIZONTAL_FRICTION, frameFactor);
+            image.dy -= GRAVITY * frameFactor;
+
+            if (image.dy <= 0) {
+                image.stage = 'free-fall';
+                image.dy = INITIAL_FALL_SPEED;
+            }
+            break;
+
+        case 'free-fall':
+            image.y += image.dy * frameFactor;
+            image.dy += GRAVITY * frameFactor;
+
+            if (image.y >= (floor - 100)) {
+                image.stage = 'bounce-up';
+                image.dy = INITIAL_BOUNCE_UP_SPEED;
+            }
+            break;
+
+        case 'bounce-up':
+            image.y -= image.dy * frameFactor;
+            image.dy -= GRAVITY * frameFactor;
+
+            if (image.dy <= 0) {
+                image.stage = 'bounce-down';
+                image.dy = INITIAL_FALL_SPEED;
+            }
+            break;
+
+        case 'bounce-down':
+            image.y += image.dy * frameFactor;
+            image.dy += GRAVITY * frameFactor;
+            break;
+    }
+}
 ```
 
 And the render loop would be 
@@ -726,37 +779,7 @@ const renderLoop = () => {
     const floor = containerRef.current!.clientHeight;
 
     images.current.forEach(image => {
-        if (image.stage === 'initial-bounce-up') {
-            image.y -= image.dy * frameFactor;
-            image.x += image.dx * frameFactor;
-
-            image.dx *= Math.pow(HORIZONTAL_FRICTION, frameFactor);
-            image.dy -= GRAVITY * frameFactor;
-
-            if (image.dy <= 0) {
-                image.stage = 'free-fall';
-                image.dy = INITIAL_FALL_SPEED;
-            }
-        } else if (image.stage === 'free-fall') {
-            image.y += image.dy * frameFactor;
-            image.dy += GRAVITY * frameFactor;
-
-            if (image.y >= (floor - 100)) {
-                image.stage = 'bounce-up';
-                image.dy = INITIAL_BOUNCE_UP_SPEED;
-            }
-        } else if (image.stage === 'bounce-up') {
-            image.y -= image.dy * frameFactor;
-            image.dy -= GRAVITY * frameFactor;
-
-            if (image.dy <= 0) {
-                image.stage = 'bounce-down';
-                image.dy = INITIAL_FALL_SPEED;
-            }
-        } else if (image.stage === 'bounce-down') {
-            image.y += image.dy * frameFactor;
-            image.dy += GRAVITY * frameFactor;
-        }
+        stepImageWithFrameFactor(image, floor, frameFactor);
     });
 
     images.current = images.current.filter(image => image.y < floor);
@@ -786,7 +809,13 @@ Also we do
 ```jsx
 frameFactor = Math.min(frameFactor, 2);
 ```
-to prevent overshooting of the frameFactor. Which could happen when the user switches tabs, or moves away from the window, leading to a high frameFactor ( because we compare the lastFrameTime and currentFrameTime )
+to prevent overshooting of the frameFactor.
+
+Imagine the user switches tab, does something else for a 1 minute, and comes back.
+
+Then the `lastFrameTime.current` will be 1 minute behind the `now` time, leading to a very high `frameFactor`. 
+
+So we need to clamp the `frameFactor` to a reasonable maximum value, to prevent any sudden jumps in the animation.
 
 <div className="relative overflow-hidden rounded-xl border border-border">
     <CanvasWithFrameRateIndependentMouseTrail />
