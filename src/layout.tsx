@@ -34,7 +34,7 @@ export function Layout() {
     }, [location.pathname, lenisRef])
 
     return (
-        <div className="relative w-screen min-h-screen flex flex-col gap-10 items-center text-foreground">
+        <div className="pb-5 relative w-screen min-h-screen flex flex-col gap-10 items-center text-foreground">
             <RippleCanvas />
             <Toaster />
             <ThemeToggle />
