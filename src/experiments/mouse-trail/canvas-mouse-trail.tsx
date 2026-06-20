@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import { FRAME_DURATION, GRAVITY, HORIZONTAL_FRICTION, HORIZONTAL_SPREAD, IMAGE_SIZE_PIXELS, imageLinks, INITIAL_BOUNCE_UP_SPEED, INITIAL_FALL_SPEED, INSTRUMENTED_FRAME_COUNT, SPAWN_THROTTLE_MS } from "./constants";
+import { FRAME_DURATION, HORIZONTAL_SPREAD, IMAGE_SIZE_PIXELS, imageLinks, INITIAL_BOUNCE_UP_SPEED, INSTRUMENTED_FRAME_COUNT, SPAWN_THROTTLE_MS } from "./constants";
 import { calculatePerFrameMetrics } from "./utils";
 import { useInstrumentorContext } from "@/lib/use-instrumentor";
 import { toast } from "sonner";
