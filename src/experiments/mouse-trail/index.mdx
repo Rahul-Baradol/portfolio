@@ -843,12 +843,6 @@ So we need to clamp the `frameFactor` to a reasonable maximum value, to prevent 
     <CanvasWithFrameRateIndependentMouseTrail />
 </div>
 
-Again profiled with CPU throttled to low-end mobile phone on a Mac
-
-Looks pretty clean!
-
-We don't have any partially presented frames any more, and no noticeable frame drops!
-
 ## Measuring with instrumentation
 
 Have also added a custom instrumentor, which helps in getting frame statistics.
