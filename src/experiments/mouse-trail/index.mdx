@@ -843,6 +843,16 @@ So we need to clamp the `frameFactor` to a reasonable maximum value, to prevent 
     <CanvasWithFrameRateIndependentMouseTrail />
 </div>
 
+We made sure the behaviour is consistent on diverse refresh-rate devices, and although it was not a "performance" optimization, on profiling we have the following
+
+![Canvas Profile with frame rate independence - 1](/experiments/outcomes/canvas-refresh-rate-independent-1.png)
+
+![Canvas Profile with frame rate independence - 2](/experiments/outcomes/canvas-refresh-rate-independent-2.png)
+
+**Scripting** around ~17% and **Rendering** around ~4.3%.
+
+Pretty satisfying!
+
 ## Measuring with instrumentation
 
 Have also added a custom instrumentor, which helps in getting frame statistics.
