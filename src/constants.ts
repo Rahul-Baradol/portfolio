@@ -342,6 +342,7 @@ export const experiments: Experiment[] = [
         { id: "moving-to-canvas", label: "Moving to canvas" },
         { id: "making-it-refresh-rate-independent", label: "Refresh-rate independence" },
         { id: "measuring-with-instrumentation", label: "Measuring with instrumentation" },
+        { id: "whats-next", label: "What's next?" },
       ],
       source: "https://github.com/Rahul-Baradol/portfolio/tree/main/src/experiments/mouse-trail",
       resources: [

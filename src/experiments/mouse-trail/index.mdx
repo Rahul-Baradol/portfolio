@@ -281,13 +281,13 @@ Well, open devtools, throttle CPU to low-end mobile device via Devtools, you wil
 
 I ran a profile which looked like this
 
-![Naive Profile](/experiments/outcomes/naive-1.webp)
+![Naive Profile 1](/experiments/outcomes/naive-1.webp)
 
 Look at those yellow bars in "Frames"... those are partially-presented frames which means the frame had started rendering, but couldn't complete which leads to "janky" behaviour
 
 Looking at how at how time was divided in different operations, we see this
 
-![Naive Profile](/experiments/outcomes/naive-2.png)
+![Naive Profile 2](/experiments/outcomes/naive-2.png)
 
 Around 36.2% of time is spent in rendering, and 34% time in scripting! This is problematic.
 
@@ -330,9 +330,9 @@ We get the following,
     <NaiveMouseTrailWithTransforms />
 </div>
 
-![Naive Profile](/experiments/outcomes/naive-transforms-1.png)
+![Naive Profile - Transforms - 1](/experiments/outcomes/naive-transforms-1.png)
 
-![Naive Profile](/experiments/outcomes/naive-transforms-2.png)
+![Naive Profile - Transforms - 2](/experiments/outcomes/naive-transforms-2.png)
 
 Well didn't seem to help much though :(
 
@@ -481,9 +481,9 @@ But if you open it on a mid-tier machine, or even throttle CPU via DevTools, you
 
 Again profiled with CPU throttled to low-end mobile phone on a Mac
 
-![Uncontrolled Profile](/experiments/outcomes/uncontrolled-1.webp)
+![Uncontrolled Profile - 1](/experiments/outcomes/uncontrolled-1.webp)
 
-![Uncontrolled Profile](/experiments/outcomes/uncontrolled-2.png)
+![Uncontrolled Profile - 2](/experiments/outcomes/uncontrolled-2.png)
 
 Scripting time looks to have decreased to like 25%, but the rendering still remains around 45%!
 
@@ -676,9 +676,9 @@ Looks good!
 
 Again profiled with CPU throttled to low-end mobile phone on a Mac
 
-![Canvas Profile with frame rate dependence](/experiments/outcomes/canvas-1.webp)
+![Canvas Profile with frame rate dependence - 1](/experiments/outcomes/canvas-1.webp)
 
-![Canvas Profile with frame rate dependence](/experiments/outcomes/canvas-2.png)
+![Canvas Profile with frame rate dependence - 2](/experiments/outcomes/canvas-2.png)
 
 There are no "yellow" frames anymore!
 
@@ -893,7 +893,7 @@ And in case, you want to see what are the stats on your device, make sure you ha
     <Instrumentation />
 </div>
 
-What next ?
+## What's next?
 
 We can actually try exploring **Offscreen Canvas**, which allows us to render a canvas off screen! 
 
