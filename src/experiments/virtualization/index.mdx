@@ -92,7 +92,7 @@ What is happening...?
 
 If you inspect and look at the message container, then you would see this
 
-![DOM Tree](/public/experiments/sliding-messages/naive.png)
+![DOM Tree](/experiments/sliding-messages/naive.png)
 
 The issue is that every message exists in the DOM, including the ones that are outside the viewport. The browser still has to keep track of all of them, which quickly becomes expensive as the list grows.
 
