@@ -349,5 +349,25 @@ export const experiments: Experiment[] = [
         { label: "Controlled vs Uncontrolled Components", href: "https://www.youtube.com/watch?v=_fKdyWwdfTk&t=201s" },
         { label: "Inside look at the browser's rendering", href: "https://developer.chrome.com/blog/inside-browser-part3" }
       ],
+    },
+    {
+      slug: "virtualization",
+      title: "Sliding messages...",
+      description: "Exploring virtualization techniques in web.",
+      date: "5th July 2026",
+      isoDate: "2026-07-05",
+      tags: ["Rendering", "Virtualization"],
+      toc: [
+        { id: "starting-by-defining-some-constants", label: "Naive implementation" },
+        { id: "so-the-first-step-of-optimization-is-this", label: "Idea, which barely works" },
+        { id: "so-this-is-how-react-window-does-it", label: "How react-window does it?" }
+      ],
+      source: "https://github.com/Rahul-Baradol/portfolio/tree/main/src/experiments/virtualization",
+      resources: [
+        { label: "react-window/list/List.tsx", href: "https://github.com/bvaughn/react-window/blob/main/lib/components/list/List.tsx" },
+        { label: "react-window/useVirtualizer.ts", href: "https://github.com/bvaughn/react-window/blob/main/lib/core/useVirtualizer.ts" },
+        { label: "react-window/useResizeObserver.ts", href: "https://github.com/bvaughn/react-window/blob/main/lib/hooks/useResizeObserver.ts" },
+        { label: "react-window/useDynamicRowHeight.ts", href: "https://github.com/bvaughn/react-window/blob/main/lib/components/list/useDynamicRowHeight.ts" },
+      ],
     }
 ]

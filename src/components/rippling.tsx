@@ -89,7 +89,7 @@ export default function RippleCanvas() {
                 Math.random() * canvas.height,
                 Math.random() < 0.4
             );
-        }, 750);
+        }, 1500);
     }, [areRipplesEnabled, canvasRef.current]);
 
     useEffect(() => {

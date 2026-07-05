@@ -1,0 +1,400 @@
+import { NaiveMessageContainer } from "./naive";
+import { Step2 } from "./step-2";
+import { EmptyScroller } from "./empty-scroller";
+import { EmptyDiv } from "./empty-div";
+import { FirstVirtualized } from "./virtualized-1";
+
+Have you ever noticed how effortlessly apps like WhatsApp let you scroll through thousands of messages? 
+
+We often don't think about the implementation behind these things, but there is a bit of complexity involved.
+
+To understand that, let's build a simple message viewer and see why rendering large lists is harder than it looks.
+
+## Starting by defining some constants...
+
+```jsx
+export enum MessageCountOption {
+    "TEN" = 10,
+    "HUNDRED" = 100,
+    "THOUSAND" = 1000,
+    "TEN_THOUSAND" = 10000
+}
+
+export const dummyMessages = [
+    "Hello, how are you?",
+    "I'm fine, thank you!",
+    "What are you up to today?",
+    "Just working on some projects.",
+    "That sounds interesting!"
+]
+
+export function generateMessages(length: MessageCountOption): Message[] {
+    return  Array.from({ length: length }, (_, index) => ({
+        agent: index % 2 === 0 ? "me" : "friend",
+        content: `${index + 1}. ${dummyMessages[index % dummyMessages.length]}`
+    }))
+}
+```
+
+Next, a basic implementation of rendering messages, that a person would write if they had recently picked up React
+
+```jsx
+import { useMemo, useRef, useState } from "react";
+import { ArrowUp } from "lucide-react";
+import { generateMessages, MessageCountOption } from "./constants";
+
+export function NaiveMessageContainer() {
+    const containerRef = useRef<HTMLDivElement | null>(null);
+    const [messageCountOption, setMessageCountOption] = useState<MessageCountOption>(MessageCountOption.TEN);
+
+    const messages = useMemo(() => generateMessages(messageCountOption), [messageCountOption])
+
+    return (
+        <div className="flex flex-col items-center gap-4">
+            <div className="relative w-full h-full">
+                <div data-lenis-prevent ref={containerRef} className="w-full h-100 overflow-auto border-2 border-foreground/10 rounded-md flex flex-col overscroll-contain">
+                    {messages.map((message, index) => (
+                        <div key={index} className={`py-2.5 w-full ${index < (messages.length - 1) ? 'border-b' : ''} border-foreground/10 ${message.agent == "me" ? "text-end pr-4.5" : "pl-4"}`}>{message.content}</div>
+                    )) }
+                </div>
+
+                <button onClick={() => {
+                    containerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+                }} className={"absolute right-4 bottom-4 flex flex-row items-center border-2 rounded-lg px-4 py-1.5 cursor-pointer bg-background hover:scale-105 transition-transform duration-250"}>
+                    <ArrowUp className="h-4 w-4 text-foreground/75" />
+                </button>
+            </div>
+            <div className="flex flex-col gap-2 items-center">
+                <span className="text-sm text-foreground/30">Number of messages</span>
+                <div className="flex flex-row items-center gap-2">
+                    <button className={`w-20 p-2 border rounded-lg text-foreground/75 cursor-pointer ${messageCountOption === MessageCountOption.TEN ? "bg-foreground/20" : "self-end"}`} onClick={() => setMessageCountOption(MessageCountOption.TEN)}>10</button>
+                    <button className={`w-20 p-2 border rounded-lg text-foreground/75 cursor-pointer ${messageCountOption === MessageCountOption.HUNDRED ? "bg-foreground/20" : "self-end"}`} onClick={() => setMessageCountOption(MessageCountOption.HUNDRED)}>100</button>
+                    <button className={`w-20 p-2 border rounded-lg text-foreground/75 cursor-pointer ${messageCountOption === MessageCountOption.THOUSAND ? "bg-foreground/20" : "self-end"}`} onClick={() => setMessageCountOption(MessageCountOption.THOUSAND)}>1000</button>
+                    <button className={`w-20 p-2 border rounded-lg text-foreground/75 cursor-pointer ${messageCountOption === MessageCountOption.TEN_THOUSAND ? "bg-foreground/20" : "self-end"}`} onClick={() => setMessageCountOption(MessageCountOption.TEN_THOUSAND)}>10000</button>
+                </div>
+            </div>
+        </div>
+    )
+}
+```
+
+<NaiveMessageContainer />
+
+At first glance, this looks perfectly fine. The UI behaves exactly as you'd expect.
+
+<div className="my-4 rounded-lg border-l-4 border-border bg-muted px-4 py-3 text-sm text-muted-foreground">
+    Try increasing the message count. As the list grows, you'll notice the page becoming sluggish or even freezing. This is exactly the kind of problem you'd run into in a production application.
+</div>
+
+Well then !?
+
+What is happening...?
+
+If you inspect and look at the message container, then you would see this
+
+![DOM Tree](/public/experiments/sliding-messages/naive.png)
+
+The issue is that every message exists in the DOM, including the ones that are outside the viewport. The browser still has to keep track of all of them, which quickly becomes expensive as the list grows.
+
+## So the first step of optimization is this...
+
+Can we make sure that only the messages which are visible in the viewport are rendered in the DOM?
+
+My first idea was simple: render only a fixed number of messages, the ones that actually fit inside the viewport.
+
+Let's say 8 for this container, because they perfectly fit within the visible area.
+
+We attach a wheel event listener to the container, which is responsible for incrementing/decrementing a state called **scrollPosition**
+
+```jsx
+const [scrollPosition, setScrollPosition] = useState<number>(0);
+```
+
+```jsx
+useEffect(() => {
+    if (!containerRef.current) {
+        return;
+    }
+
+    const handleScroll = (e: WheelEvent) => {
+        if (!containerRef.current) {
+            return;
+        }
+
+        if (e.deltaY > 0) {
+            setScrollPosition(ele => ele + 1);
+        } else {
+            setScrollPosition(ele => Math.max(ele - 1, 0));
+        }
+    };
+
+    containerRef.current?.addEventListener("wheel", handleScroll);
+    return () => {
+        containerRef.current?.removeEventListener("wheel", handleScroll);
+    };
+}, []);
+```
+
+And then based on this scrollPosiiton, we decide which 8 elements to render among N messages.
+
+<div className="my-4 rounded-lg border-l-4 border-border bg-muted px-4 py-3 text-sm text-muted-foreground">
+    Very similar to a sliding window <a target="_blank" href="https://leetcode.com/problems/maximum-average-subarray-i/description/">problem</a> on Leetcode
+</div>
+
+```jsx
+useEffect(() => {
+    const messages = generateMessages(messageCountOption);
+
+    const start = Math.floor(scrollPosition / 10);
+    const end = Math.min(start + MAX_MESSAGES_IN_DOM, messages.length);
+    const visibleMessages = messages.slice(start, end);
+
+    containerRef.current!.innerHTML = visibleMessages.map((message, index) => {
+        let style = `width: 100%; padding: 10px 0px; border-color: color-mix(in oklab, var(--foreground) 10%, transparent);`;
+        if (index < visibleMessages.length - 1) {
+            style += "border-bottom-width: 1px; border-bottom-style: var(--tw-border-style);";
+        }
+        if (message.agent == "me") {
+            style += "text-align: end; padding-right: 18px;";
+        } else {
+            style += "text-align: start; padding-left: 16px;";
+        }
+
+        return `<div key=${index} style="${style}">${message.content}</div>`;
+    }).join("");
+}, [scrollPosition, messageCountOption])
+```
+
+Here we're bypassing React and manipulating the DOM directly. 
+
+It's not something we do for production, but it helps demonstrate the idea without introducing extra abstractions.
+
+<Step2 />
+
+And it is working!
+
+Even when you choose 10k messages, the tab isn't crashing!
+
+But.. the experience isn't smooth :(
+
+The messages are snapping from one position to another as you scroll, which is not ideal. 
+
+We need to find a way to make this scrolling experience smoother.
+
+And I honestly ran out of ideas.
+
+The problem is that, user experience should still be smooth, and the messages should not snap from one position to another.
+
+This is where I wondered, how do <a target="_blank" href="https://www.npmjs.com/package/react-window">react-window</a> and <a target="_blank" href="https://www.npmjs.com/package/react-virtualized">react-virtualized</a> do it? They are both libraries that help with rendering large lists efficiently by only rendering the items that are visible in the viewport.
+
+Instead of guessing further, I cloned the react-window source code to understand how a production-grade virtualization library actually solves this problem.
+
+<div className="my-4 rounded-lg border-l-4 border-border bg-muted px-4 py-3 text-sm text-muted-foreground">
+    Chose to start with react-window, because it is more lightweight and easier to understand than react-virtualized.
+</div>
+
+### So, this is how **react-window** does it...
+
+Imagine we start with an outer scrolling container.
+
+Like this...
+
+```jsx
+export function EmptyDiv() {
+    return (
+        <div className="flex flex-col items-center gap-4">
+            <div data-lenis-prevent className="w-full h-100 overflow-scroll border-2 border-foreground/10 rounded-md overscroll-contain">
+
+            </div>
+        </div>
+    )
+}
+```
+
+which would look like this
+
+<EmptyDiv />
+
+Add a placeholder element whose height matches the total height of the list.
+
+```jsx
+export function EmptyScroller() {
+    return (
+        <div className="flex flex-col items-center gap-4">
+            <div data-lenis-prevent className="w-full h-100 overflow-scroll border-2 border-foreground/10 rounded-md overscroll-contain">
+                <div className="h-1000 w-full">Scroll here!</div>
+            </div>
+        </div>
+    )
+}
+```
+
+<EmptyScroller />
+
+Now!
+
+We render each message, making every message's position absolute, and we apply transform for vertical alignment.
+
+Something like this,
+
+```jsx
+function Message({ content, alignRight, translateY, height }: MessageProps) {
+    return (
+        <div 
+            className={`absolute top-0 left-0 w-full py-2.5 border-b border-foreground/10 ${alignRight ? "text-end pr-4.5" : "pl-4"}`}
+            style={{
+                transform: `translateY(${translateY}px)`,
+                height: `${height}px`,
+            }}
+        >
+            <p>{content}</p>
+        </div>
+    )
+}
+```
+
+And as usual, we have a event listener attached to the wheel event on the outer-div, and which would be triggered on a wheel change
+
+```jsx
+const handleScroll = useCallback(() => {
+    const container = scrollContainerRef.current;
+    if (!container) {
+        return;
+    }
+
+    const messages = generateMessages(Number(messageCountOption));
+
+    setContainerHeight(messages.length * ROW_HEIGHT);
+    
+    const numberOfRows = Math.floor(CONTAINER_HEIGHT / ROW_HEIGHT) * 2;
+    const startIndex = Math.floor(container.scrollTop / ROW_HEIGHT);
+    const endIndex = Math.min(startIndex + numberOfRows, messages.length);
+
+    console.log(startIndex, endIndex)
+
+    const visibleMessages = messages.slice(startIndex, endIndex).map((message, index) => ({
+        content: message.content,
+        alignRight: (startIndex + index) % 2 === 0,
+        translateY: (startIndex + index) * ROW_HEIGHT,
+        height: ROW_HEIGHT
+    }));
+
+    setMessagesToRender(visibleMessages);
+}, [messageCountOption])
+```
+
+```jsx
+useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) {
+        return;
+    }
+
+    container?.addEventListener("scroll", handleScroll);
+    return () => {
+        container?.removeEventListener("scroll", handleScroll);
+    };
+}, [messageCountOption]);
+
+// We call the function once on initial mount of the component, to render the first set of messages
+// Otherwise no messages would be shown until the user scrolls
+useEffect(() => {
+    handleScroll();
+}, [])
+```
+
+You can see that we are mutating the state **visibleMessages** just like before, and doing a sliding window of what messages to show.
+
+But how is this different from previous approach?
+
+Well the messages won't snap, like before, because their position is with respect to the position of the parent element in the DOM, which is outer div. Unlike previous approach, where one message's position was determined by the message above it, causing the snapping.
+
+If you observe, then the transform value for a given message would be the same, and would not change. 
+
+Here is how the container looks like
+
+```jsx
+<div className="flex flex-col items-center gap-4">
+    <div className="relative w-full h-100 border-2 border-foreground/10 rounded-md flex flex-col">
+        <div 
+            data-lenis-prevent 
+            ref={scrollContainerRef} 
+            className="relative w-full border-foreground/10 overflow-scroll rounded-md overscroll-contain"
+            style={{
+                height: `${CONTAINER_HEIGHT}px`
+            }}
+        >
+            <div style={{
+                height: `${containerHeight}px`
+            }} className="relative"></div>
+            {messagesToRender.map((message, index) => (
+                <Message 
+                    key={index} 
+                    content={message.content} 
+                    alignRight={message.alignRight}
+                    translateY={message.translateY}    
+                    height={ROW_HEIGHT}
+                />
+            ))}
+        </div>
+
+        <button onClick={() => {
+            scrollContainerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+        }} className={"absolute right-4 bottom-4 flex flex-row items-center border-2 rounded-lg px-4 py-1.5 cursor-pointer bg-background hover:scale-105 transition-transform duration-250"}>
+            <ArrowUp className="h-4 w-4 text-foreground/75" />
+        </button>
+    </div>
+    <div className="flex flex-col gap-2 items-center">
+        <span className="text-sm text-foreground/30">Number of messages</span>
+        <div className="flex flex-row items-center gap-2">
+            <button className={`w-20 p-2 border rounded-lg text-foreground/75 cursor-pointer ${messageCountOption === MessageCountOption.TEN ? "bg-foreground/20" : "self-end"}`} onClick={() => setMessageCountOption(MessageCountOption.TEN)}>10</button>
+            <button className={`w-20 p-2 border rounded-lg text-foreground/75 cursor-pointer ${messageCountOption === MessageCountOption.HUNDRED ? "bg-foreground/20" : "self-end"}`} onClick={() => setMessageCountOption(MessageCountOption.HUNDRED)}>100</button>
+            <button className={`w-20 p-2 border rounded-lg text-foreground/75 cursor-pointer ${messageCountOption === MessageCountOption.THOUSAND ? "bg-foreground/20" : "self-end"}`} onClick={() => setMessageCountOption(MessageCountOption.THOUSAND)}>1000</button>
+            <button className={`w-20 p-2 border rounded-lg text-foreground/75 cursor-pointer ${messageCountOption === MessageCountOption.TEN_THOUSAND ? "bg-foreground/20" : "self-end"}`} onClick={() => setMessageCountOption(MessageCountOption.TEN_THOUSAND)}>10000</button>
+        </div>
+    </div>
+</div>
+```
+
+<FirstVirtualized />
+
+Very satisfying!
+
+Some tradeoffs worth mentioning. When you seek into a far away message, you can see the div remains empty for a split second, and then we see messages.
+
+This is something we see with **react-window** as well, and it is a tradeoff. We can tweak a value called **overscan**, which determines how many items outside the visible area are rendered in advance.
+
+Higher overscan, means we render more items in advance, which can help with smooth scrolling, but also increases memory usage.
+
+Lower overscan, means we render fewer items in advance, which can reduce memory usage but may lead to less smooth scrolling.
+
+We made one important assumption: every row has a fixed height, which lets us calculate the total scrollable height ahead of time.
+
+In the real world, messages often have different heights. Supporting that efficiently is one of the reasons libraries like react-window and react-virtualized become considerably more sophisticated.
+
+Even so, this experiment conveys the core idea behind list virtualization
+- Let the browser believe it's scrolling through the entire list.
+- Render only the items that are currently visible.
+- Absolutely position those items within the scrollable space.
+
+This mental model helps in understanding how virtualization works.
+
+You can read following source files from **react-window**, that help in understanding implementation details of list virtualization.
+- <a target="_blank" href="https://github.com/bvaughn/react-window/blob/main/lib/components/list/List.tsx">lib/components/list/List.tsx</a>
+- <a target="_blank" href="https://github.com/bvaughn/react-window/blob/main/lib/core/useVirtualizer.ts">lib/core/useVirtualizer.ts</a>
+- <a target="_blank" href="https://github.com/bvaughn/react-window/blob/main/lib/hooks/useResizeObserver.ts">lib/hooks/useResizeObserver.ts</a>
+
+And in case you are interested, how they handle dynamic rows, this file would help.
+- <a target="_blank" href="https://github.com/bvaughn/react-window/blob/main/lib/components/list/useDynamicRowHeight.ts">lib/components/list/useDynamicRowHeight.ts</a>
+
+Although I recommend to clone the repository yourself, and peek into how things work together.
+
+## What's next?
+
+Readers can try exploring the source code of <a target="_blank" href="https://github.com/bvaughn/react-window">react-window</a> to gain a deeper understanding of list virtualization techniques. 
+
+Like how dynamic rows are handled, or how scrollToIndex works. 
+
+These are pretty straight-forward to understand through codebase, once core idea is grasped.
+
+happy engineering!
