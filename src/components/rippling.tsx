@@ -29,7 +29,6 @@ export default function RippleCanvas() {
     const { theme, areRipplesEnabled } = useSettings();
     const themeRef = useRef(theme);
     const disabledRef = useRef(isLowEndDevice());
-    const rippleId = useRef<number>(0);
     const spawnInterval = useRef<ReturnType<typeof setInterval> | null>(null);
 
     const isVisibleRef = useRef(true);
@@ -61,17 +60,6 @@ export default function RippleCanvas() {
         }
     }, [areRipplesEnabled]);
 
-    const handleMouseMove = useCallback((e: MouseEvent) => {
-        if (!areRipplesEnabled) {
-            return;
-        }
-
-        rippleId.current = (rippleId.current + 1) % 100;
-        if (rippleId.current % 20 === 0) {
-            addRipple(e.clientX, e.clientY);
-        }
-    }, [areRipplesEnabled]);
-
     const startSpawnInterval = useCallback(() => {
         const canvas = canvasRef.current;
 
@@ -98,12 +86,10 @@ export default function RippleCanvas() {
         }
 
         startSpawnInterval();
-        window.addEventListener("mousemove", handleMouseMove);
 
         document.addEventListener("visibilitychange", handleVisibilityChange);
 
         return () => {
-            window.removeEventListener("mousemove", handleMouseMove);
             document.removeEventListener("visibilitychange", handleVisibilityChange);
             if (spawnInterval.current) {
                 clearInterval(spawnInterval.current);
