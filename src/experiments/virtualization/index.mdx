@@ -94,6 +94,12 @@ If you inspect and look at the message container, then you would see this
 
 ![DOM Tree](/experiments/sliding-messages/naive.png)
 
+When I recorded the interaction of clicking the "10k" message option in DevTools, here is how the flamegraph looked
+
+![Naive Trace](/experiments/sliding-messages/naive-trace.png)
+
+The rendering is blocked due to a huge task marked in red over there!
+
 The issue is that every message exists in the DOM, including the ones that are outside the viewport. The browser still has to keep track of all of them, which quickly becomes expensive as the list grows.
 
 ## So the first step of optimization is this...
@@ -174,6 +180,12 @@ It's not something we do for production, but it helps demonstrate the idea witho
 And it is working!
 
 Even when you choose 10k messages, the tab isn't crashing!
+
+On recording in DevTools again, we got this
+
+![Trace of Idea That Barely Works](/experiments/sliding-messages/trace-of-idea-that-barely-works.png)
+
+There is no render-blocking task.
 
 But.. the experience isn't smooth :(
 
@@ -360,6 +372,12 @@ Here is how the container looks like
 
 Very satisfying!
 
+On recording in DevTools again, we got the following trace
+
+![Virtualization Trace](/experiments/sliding-messages/virtualization.png)
+
+No render-blocking tasks, and the experience is smooth!
+
 Some tradeoffs worth mentioning. When you seek into a far away message, you can see the div remains empty for a split second, and then we see messages.
 
 This is something we see with **react-window** as well, and it is a tradeoff. We can tweak a value called **overscan**, which determines how many items outside the visible area are rendered in advance.
@@ -393,8 +411,12 @@ Although I recommend to clone the repository yourself, and peek into how things 
 
 Readers can try exploring the source code of <a target="_blank" href="https://github.com/bvaughn/react-window">react-window</a> to gain a deeper understanding of list virtualization techniques. 
 
-Like how dynamic rows are handled, or how scrollToIndex works. 
+There are a lot of things going on like dynamic row handling, scrollToIndexing, horizontal virtualization and what not...
 
-These are pretty straight-forward to understand through codebase, once core idea is grasped.
+No wonder why these libraries are complex!
+
+But once you grasp the core idea, these concepts become pretty straight-forward to understand through the codebase.
+
+That's it for this experiment; 
 
 happy engineering!
