@@ -364,10 +364,10 @@ export const experiments: Experiment[] = [
       ],
       source: "https://github.com/Rahul-Baradol/portfolio/tree/main/src/experiments/virtualization",
       resources: [
-        { label: "react-window/list/List.tsx", href: "https://github.com/bvaughn/react-window/blob/main/lib/components/list/List.tsx" },
-        { label: "react-window/useVirtualizer.ts", href: "https://github.com/bvaughn/react-window/blob/main/lib/core/useVirtualizer.ts" },
-        { label: "react-window/useResizeObserver.ts", href: "https://github.com/bvaughn/react-window/blob/main/lib/hooks/useResizeObserver.ts" },
-        { label: "react-window/useDynamicRowHeight.ts", href: "https://github.com/bvaughn/react-window/blob/main/lib/components/list/useDynamicRowHeight.ts" },
+        { label: "List.tsx", href: "https://github.com/bvaughn/react-window/blob/main/lib/components/list/List.tsx" },
+        { label: "useVirtualizer.ts", href: "https://github.com/bvaughn/react-window/blob/main/lib/core/useVirtualizer.ts" },
+        { label: "useResizeObserver.ts", href: "https://github.com/bvaughn/react-window/blob/main/lib/hooks/useResizeObserver.ts" },
+        { label: "useDynamicRowHeight.ts", href: "https://github.com/bvaughn/react-window/blob/main/lib/components/list/useDynamicRowHeight.ts" },
       ],
     }
 ]
