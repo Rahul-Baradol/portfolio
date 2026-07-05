@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { generateMessages, MAX_MESSAGES_IN_DOM, MessageCountOption } from "./constants";
 import { ArrowUp } from "lucide-react";
 
-export function Step2() {
+export function IdeaThatBarelyWorks() {
     const containerRef = useRef<HTMLDivElement | null>(null);
     const [scrollPosition, setScrollPosition] = useState<number>(0);
     const [messageCountOption, setMessageCountOption] = useState<MessageCountOption>(MessageCountOption.TEN);

@@ -17,7 +17,7 @@ export function ExperimentResources({ resources }: ExperimentResourcesProps) {
     const items = (
         <ul className="flex flex-col gap-0.5">
             {resources.map((resource, idx) => (
-                <li key={`${resource.href}-${idx}`} className="staggered-fade-up">
+                <li key={`${resource.href}-${idx}`} className="">
                     <a
                         href={resource.href}
                         target="_blank"
@@ -50,7 +50,7 @@ export function ExperimentResources({ resources }: ExperimentResourcesProps) {
                       )}
 
                       {open && (
-                          <nav className="fixed bottom-24 left-5 z-50 w-64 max-h-[60vh] overflow-y-auto rounded-xl border border-border bg-background/95 backdrop-blur p-3 shadow-xl animate-fade-up">
+                          <nav className="fixed bottom-24 left-5 z-50 w-64 max-h-[60vh] overflow-y-auto rounded-xl border border-border bg-background/95 backdrop-blur p-3 shadow-xl">
                               <p className="flex items-center gap-2 text-[10px] font-medium uppercase tracking-wide text-muted-foreground mb-2">
                                   <BookOpen className="h-3.5 w-3.5" />
                                   Resources

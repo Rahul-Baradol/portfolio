@@ -5,6 +5,7 @@ import Footer from "./components/footer";
 import { useEffect, useRef } from "react";
 import Lenis from "lenis";
 import { Toaster } from "./components/ui/sonner";
+import ScrollProgress from "./components/scroll-progress";
 import { LenisContext } from "./lib/lenis";
 
 export function Layout() {
@@ -39,6 +40,7 @@ export function Layout() {
             <Toaster />
             <ThemeToggle />
             <LenisContext.Provider value={lenisRef}>
+                <ScrollProgress />
                 <Outlet />
             </LenisContext.Provider>
             <Footer />

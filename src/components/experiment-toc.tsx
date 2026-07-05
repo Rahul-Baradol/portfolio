@@ -73,7 +73,7 @@ export function ExperimentToc({ toc }: ExperimentTocProps) {
     const items = (
         <ul className="flex flex-col gap-0.5">
             {toc.map((entry) => (
-                <li key={entry.id} className="staggered-fade-up">
+                <li key={entry.id}>
                     <a
                         href={`#${entry.id}`}
                         onClick={(e) => handleClick(e, entry.id)}
@@ -103,7 +103,7 @@ export function ExperimentToc({ toc }: ExperimentTocProps) {
                       )}
 
                       {open && (
-                          <nav className="fixed bottom-24 right-5 z-50 w-64 max-h-[60vh] overflow-y-auto rounded-xl border border-border bg-background/95 backdrop-blur p-3 shadow-xl animate-fade-up">
+                          <nav className="fixed bottom-24 right-5 z-50 w-64 max-h-[60vh] overflow-y-auto rounded-xl border border-border bg-background/95 backdrop-blur p-3 shadow-xl">
                               <p className="flex items-center gap-2 text-[10px] font-medium uppercase tracking-wide text-muted-foreground mb-2">
                                   <List className="h-3.5 w-3.5" />
                                   Contents
