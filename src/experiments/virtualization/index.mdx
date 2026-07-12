@@ -118,12 +118,13 @@ const [scrollPosition, setScrollPosition] = useState<number>(0);
 
 ```jsx
 useEffect(() => {
-    if (!containerRef.current) {
+    const container = containerRef.current;
+    if (!container) {
         return;
     }
 
-    const handleScroll = (e: WheelEvent) => {
-        if (!containerRef.current) {
+    const handleWheel = (e: WheelEvent) => {
+        if (!container) {
             return;
         }
 
@@ -134,14 +135,53 @@ useEffect(() => {
         }
     };
 
-    containerRef.current?.addEventListener("wheel", handleScroll);
+    const handlePointerDown = (e: PointerEvent) => {
+        startYRef.current = e.clientY;
+        container.setPointerCapture(e.pointerId);
+    };
+
+    const handlePointerUp = (e: PointerEvent) => {
+        if (startYRef.current === null) {
+            return;
+        }
+
+        const deltaY = startYRef.current - e.clientY;
+
+        container.releasePointerCapture(e.pointerId);
+        startYRef.current = null;
+
+        if (deltaY > 0) {
+            setScrollPosition((p) => p + 10);
+        } else {
+            setScrollPosition((p) => Math.max(p - 10, 0));
+        }
+    };
+
+    const handlePointerCancel = (e: PointerEvent) => {
+        container.releasePointerCapture(e.pointerId);
+        startYRef.current = null;
+    };
+
+    containerRef.current?.addEventListener("wheel", handleWheel);
+    container.addEventListener("pointerdown", handlePointerDown);
+    container.addEventListener("pointerup", handlePointerUp);
+    container.addEventListener("pointercancel", handlePointerCancel);
     return () => {
-        containerRef.current?.removeEventListener("wheel", handleScroll);
+        containerRef.current?.removeEventListener("wheel", handleWheel);
+        container.removeEventListener("pointerdown", handlePointerDown);
+        container.removeEventListener("pointerup", handlePointerUp);
+        container.removeEventListener("pointercancel", handlePointerCancel);
     };
 }, []);
 ```
 
-And then based on this scrollPosiiton, we decide which 8 elements to render among N messages.
+You can see that we are also attaching pointer event listeners to the container.
+
+To make sure it works for different inputs like "touch" on mobile phones.
+
+We keep track of the Y position of the pointer when the user starts scrolling, and then when the user stops scrolling, we calculate the difference to determine how much to scroll, and update the scrollPosition.
+
+And then based on this scrollPosition, we decide which 8 elements to render among N messages. 
 
 <div className="my-4 rounded-lg border-l-4 border-border bg-muted px-4 py-3 text-sm text-muted-foreground">
     Very similar to a sliding window <a target="_blank" href="https://leetcode.com/problems/maximum-average-subarray-i/description/">problem</a> on Leetcode
@@ -174,6 +214,13 @@ useEffect(() => {
 Here we're bypassing React and manipulating the DOM directly. 
 
 It's not something we do for production, but it helps demonstrate the idea without introducing extra abstractions.
+
+Also this line is interesting, 
+```jsx
+const start = Math.floor(scrollPosition / 10);
+```
+
+We are making sure the user has scrolled at least 10 pixels before we update the visible messages. We do this by using a threshold to limit the frequency of updates.
 
 <IdeaThatBarelyWorks />
 
@@ -378,7 +425,9 @@ On recording in DevTools again, we got the following trace
 
 No render-blocking tasks, and the experience is smooth!
 
-Some tradeoffs worth mentioning. When you seek into a far away message, you can see the div remains empty for a split second, and then we see messages.
+## Some tradeoffs worth mentioning. 
+
+When you seek into a far away message, you can see the div remains empty for a split second, and then we see messages.
 
 This is something we see with **react-window** as well, and it is a tradeoff. We can tweak a value called **overscan**, which determines how many items outside the visible area are rendered in advance.
 
@@ -386,7 +435,8 @@ Higher overscan, means we render more items in advance, which can help with smoo
 
 Lower overscan, means we render fewer items in advance, which can reduce memory usage but may lead to less smooth scrolling.
 
-We made one important assumption: every row has a fixed height, which lets us calculate the total scrollable height ahead of time.
+### We made one important assumption: 
+every row has a fixed height, which lets us calculate the total scrollable height ahead of time.
 
 In the real world, messages often have different heights. Supporting that efficiently is one of the reasons libraries like react-window and react-virtualized become considerably more sophisticated.
 

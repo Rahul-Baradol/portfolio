@@ -4,8 +4,13 @@ import { ArrowUp } from "lucide-react";
 
 export function IdeaThatBarelyWorks() {
     const containerRef = useRef<HTMLDivElement | null>(null);
+    const startYRef = useRef<number | null>(null);
     const [scrollPosition, setScrollPosition] = useState<number>(0);
     const [messageCountOption, setMessageCountOption] = useState<MessageCountOption>(MessageCountOption.TEN);
+
+    useEffect(() => {
+        console.log(scrollPosition);
+    }, [scrollPosition])
 
     useEffect(() => {
         const messages = generateMessages(messageCountOption);
@@ -30,12 +35,13 @@ export function IdeaThatBarelyWorks() {
     }, [scrollPosition, messageCountOption])
 
     useEffect(() => {
-        if (!containerRef.current) {
+        const container = containerRef.current;
+        if (!container) {
             return;
         }
 
-        const handleScroll = (e: WheelEvent) => {
-            if (!containerRef.current) {
+        const handleWheel = (e: WheelEvent) => {
+            if (!container) {
                 return;
             }
 
@@ -46,16 +52,49 @@ export function IdeaThatBarelyWorks() {
             }
         };
 
-        containerRef.current?.addEventListener("wheel", handleScroll);
+        const handlePointerDown = (e: PointerEvent) => {
+            startYRef.current = e.clientY;
+            container.setPointerCapture(e.pointerId);
+        };
+
+        const handlePointerUp = (e: PointerEvent) => {
+            if (startYRef.current === null) {
+                return;
+            }
+
+            const deltaY = startYRef.current - e.clientY;
+
+            container.releasePointerCapture(e.pointerId);
+            startYRef.current = null;
+
+            if (deltaY > 0) {
+                setScrollPosition((p) => p + 10);
+            } else {
+                setScrollPosition((p) => Math.max(p - 10, 0));
+            }
+        };
+
+        const handlePointerCancel = (e: PointerEvent) => {
+            container.releasePointerCapture(e.pointerId);
+            startYRef.current = null;
+        };
+
+        containerRef.current?.addEventListener("wheel", handleWheel);
+        container.addEventListener("pointerdown", handlePointerDown);
+        container.addEventListener("pointerup", handlePointerUp);
+        container.addEventListener("pointercancel", handlePointerCancel);
         return () => {
-            containerRef.current?.removeEventListener("wheel", handleScroll);
+            containerRef.current?.removeEventListener("wheel", handleWheel);
+            container.removeEventListener("pointerdown", handlePointerDown);
+            container.removeEventListener("pointerup", handlePointerUp);
+            container.removeEventListener("pointercancel", handlePointerCancel);
         };
     }, []);
 
     return (
         <div className="flex flex-col items-center gap-4">
             <div className="relative w-full h-100 overflow-auto border-2 border-foreground/10 rounded-md flex flex-col overscroll-contain">
-                <div data-lenis-prevent ref={containerRef} className="w-full h-full"></div>
+                <div data-lenis-prevent ref={containerRef} className="w-full h-full touch-none"></div>
                 <button onClick={() => {
                     setScrollPosition(0);
                 }} className={"absolute right-4 bottom-4 flex flex-row items-center border-2 rounded-lg px-4 py-1.5 cursor-pointer bg-background hover:scale-105 transition-transform duration-250"}>

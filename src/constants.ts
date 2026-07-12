@@ -359,8 +359,9 @@ export const experiments: Experiment[] = [
       tags: ["Rendering", "Virtualization"],
       toc: [
         { id: "starting-by-defining-some-constants", label: "Naive implementation" },
-        { id: "so-the-first-step-of-optimization-is-this", label: "Idea, which barely works" },
-        { id: "so-this-is-how-react-window-does-it", label: "How react-window does it?" }
+        { id: "so-the-first-step-of-optimization-is-this", label: "Idea, that barely works" },
+        { id: "so-this-is-how-react-window-does-it", label: "How react-window does it?" },
+        { id: "some-tradeoffs-worth-mentioning", label: "Tradeoffs worth mentioning" }
       ],
       source: "https://github.com/Rahul-Baradol/portfolio/tree/main/src/experiments/virtualization",
       resources: [
