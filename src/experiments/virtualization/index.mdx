@@ -181,6 +181,10 @@ To make sure it works for different inputs like "touch" on mobile phones.
 
 We keep track of the Y position of the pointer when the user starts scrolling, and then when the user stops scrolling, we calculate the difference to determine how much to scroll, and update the scrollPosition.
 
+<div className="my-4 rounded-lg border-l-4 border-border bg-muted px-4 py-3 text-sm text-muted-foreground">
+    We didn't have to do this before, because we had browser handling scroll events for us. But now, since there is no scrollbar in the container, we need to handle the swipe gesture, especially on phone separately.
+</div>
+
 And then based on this scrollPosition, we decide which 8 elements to render among N messages. 
 
 <div className="my-4 rounded-lg border-l-4 border-border bg-muted px-4 py-3 text-sm text-muted-foreground">
