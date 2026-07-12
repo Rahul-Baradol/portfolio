@@ -1,7 +1,5 @@
 import type { Experiment, PR } from "./types/types";
 
-export const aboutMe = "A software engineer building scalable web products and helping businesses scale their systems, from frontend architecture to backend services.";
-
 export const skills = [
   { redirect_url: "https://www.typescriptlang.org/", image_url: "/ts.webp", tech: "Typescript" },
   { redirect_url: "https://reactjs.org/", image_url: "/react.webp", tech: "React" },
@@ -29,20 +27,10 @@ export const sections = [
         { redirect_url: "https://fastapi.tiangolo.com/", image_url: "/fastapi.webp", tech: "FastAPI" }
     ],
     bulletPoints: [
-      "Owned the end-to-end B2B procurement platform — spanning frontend systems, infrastructure, order processing, and checkout — enabling purchases from a managed network of global suppliers.",
-      "Owned the Amazon seller listing platform — spanning frontend architecture, state management, and credit system — enabling sellers to manage and optimize product listings across categories and marketplaces",
-      "Drove org-wide performance improvements",
-      "    - Reduced deployment costs by 70% by introducing and enforcing efficient CI practices",
-      "    - Improving page load times by 1.5 seconds (ex. by reducing bundle size by 50%)",
-      "    - Achieved 10x faster API latencies (ex. by database query optimization)",
-      "Led development of a high-traffic campaign platform for a leading Indian movie production house",
-      "    - Handled peak traffic of 8,300 users/min during a blockbuster launch",
-      "Mentored engineers through structured 1:1s and growth plans",
-      "    - Scaled team output without proportional headcount increase",
-      "Collaborated with stakeholders, cross-border suppliers, and dropshippers",
-      "    - Delivered features with high design fidelity and zero-regression standards",
-      "Partnered closely with design teams",
-      "    - Built pixel-perfect, responsive UIs across all device breakpoints",
+      "Architected and owned multiple production systems across procurement, seller tooling, and campaign platforms, covering frontend, backend integrations, infrastructure, and performance optimization.",
+      "Delivered organization-wide engineering improvements that reduced deployment costs by 70%, improved page load performance by 1.5 seconds, and accelerated API latency by 10x.",
+      "Built a campaign platform that sustained 8,300 users/minute during a high-profile movie launch without service degradation.",
+      "Partnered with product, design, operations, and international supplier teams to ship high-quality features with responsive, pixel-perfect interfaces and strong reliability standards.",
     ],
     role: "full stack / software engineer",
     active: true,
