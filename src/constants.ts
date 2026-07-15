@@ -342,7 +342,7 @@ export const experiments: Experiment[] = [
       slug: "virtualization",
       title: "Sliding messages...",
       description: "Exploring virtualization techniques in web.",
-      date: "5th July 2026",
+      date: "15th July 2026",
       isoDate: "2026-07-05",
       tags: ["Rendering", "Virtualization"],
       toc: [

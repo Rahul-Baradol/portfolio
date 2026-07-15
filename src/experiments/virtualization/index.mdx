@@ -433,23 +433,20 @@ No render-blocking tasks, and the experience is smooth!
 
 When you seek into a far away message, you can see the div remains empty for a split second, and then we see messages.
 
-This is something we see with **react-window** as well, and it is a tradeoff. We can tweak a value called **overscan**, which determines how many items outside the visible area are rendered in advance.
+This is something we see with **react-window** as well, and it is a tradeoff. We can decide how many elements to render in advance (even the ones which are out of viewport), to prevent the "empty container" state in exchange for memory consumed. 
+
+The number of messages here is the **overscan**, and react-window allows the user to tweak it.
 
 Higher overscan, means we render more items in advance, which can help with smooth scrolling, but also increases memory usage.
 
 Lower overscan, means we render fewer items in advance, which can reduce memory usage but may lead to less smooth scrolling.
 
 ### We made one important assumption: 
-every row has a fixed height, which lets us calculate the total scrollable height ahead of time.
+Every row has a fixed height, which lets us calculate the total scrollable height ahead of time.
 
 In the real world, messages often have different heights. Supporting that efficiently is one of the reasons libraries like react-window and react-virtualized become considerably more sophisticated.
 
-Even so, this experiment conveys the core idea behind list virtualization
-- Let the browser believe it's scrolling through the entire list.
-- Render only the items that are currently visible.
-- Absolutely position those items within the scrollable space.
-
-This mental model helps in understanding how virtualization works.
+Even so, this experiment conveys the core idea behind list virtualization and helps develop a mental model for understanding how virtualization works.
 
 You can read following source files from **react-window**, that help in understanding implementation details of list virtualization.
 - <a target="_blank" href="https://github.com/bvaughn/react-window/blob/main/lib/components/list/List.tsx">lib/components/list/List.tsx</a>
@@ -460,16 +457,6 @@ And in case you are interested, how they handle dynamic rows, this file would he
 - <a target="_blank" href="https://github.com/bvaughn/react-window/blob/main/lib/components/list/useDynamicRowHeight.ts">lib/components/list/useDynamicRowHeight.ts</a>
 
 Although I recommend to clone the repository yourself, and peek into how things work together.
-
-## What's next?
-
-Readers can try exploring the source code of <a target="_blank" href="https://github.com/bvaughn/react-window">react-window</a> to gain a deeper understanding of list virtualization techniques. 
-
-There are a lot of things going on like dynamic row handling, scrollToIndexing, horizontal virtualization and what not...
-
-No wonder why these libraries are complex!
-
-But once you grasp the core idea, these concepts become pretty straight-forward to understand through the codebase.
 
 That's it for this experiment; 
 
