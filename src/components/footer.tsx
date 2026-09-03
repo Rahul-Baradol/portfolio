@@ -4,7 +4,7 @@ export default function Footer() {
     return (
         <footer className="mt-auto z-10 flex flex-col items-center gap-3 py-4 select-none">
             <div className="text-[11px] text-foreground/75 hover:text-foreground transition-all duration-300">
-                Also i love to fingerstyle guitar :) 
+                Also i love to play fingerstyle guitar :) 
             </div>
 
             <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-xs text-muted-foreground/60 px-4">
