@@ -1,38 +1,6 @@
 import { Dot } from "lucide-react";
-import { useState, useEffect } from "react";
-import { FALLBACK_SONG } from "@/constants";
-
-function useRecentSong() {
-    const [song, setSong] = useState<{ songName: string; artists: string[]; imageUrl: string } | null>(null);
-
-    useEffect(() => {
-        const controller = new AbortController();
-
-        fetch(`${import.meta.env.VITE_RESONANCE_API}/api/recent-song-played`, { signal: controller.signal })
-            .then(r => { if (!r.ok) throw new Error(); return r.json(); })
-            .then(setSong)
-            .catch(() => setSong(FALLBACK_SONG));
-
-        return () => controller.abort();
-    }, []);
-
-    return song;
-}
 
 export default function Footer() {
-    const [visible, setVisible] = useState(true);
-    const song = useRecentSong();
-
-    useEffect(() => {
-        const id = setInterval(() => {
-            setVisible(false);
-            setTimeout(() => {
-                setVisible(true);
-            }, 350);
-        }, 3500);
-        return () => clearInterval(id);
-    }, []);
-
     return (
         <footer className="mt-auto z-10 flex flex-col items-center gap-3 py-4 select-none">
             <div className="text-[11px] text-foreground/75 hover:text-foreground transition-all duration-300">

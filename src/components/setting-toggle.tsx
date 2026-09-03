@@ -1,8 +1,8 @@
-import { Bubbles, Moon, Sun } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 import { useSettings } from "@/lib/theme";
 
 export function ThemeToggle() {
-  const { theme, toggleTheme, areRipplesEnabled, toggleRipples } = useSettings();
+  const { theme, toggleTheme } = useSettings();
 
   return (
     <div 
