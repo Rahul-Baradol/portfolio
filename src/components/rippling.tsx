@@ -30,7 +30,6 @@ export default function RippleCanvas() {
     const themeRef = useRef(theme);
     const disabledRef = useRef(isLowEndDevice());
     const rippleId = useRef<number>(0);
-    const spawnInterval = useRef<ReturnType<typeof setInterval> | null>(null);
 
     const isVisibleRef = useRef(true);
     const lastFrameTime = useRef<number | null>(null);
@@ -49,18 +48,6 @@ export default function RippleCanvas() {
         });
     }
 
-    const handleVisibilityChange = useCallback(() => {
-        isVisibleRef.current = !document.hidden;
-        
-        if (document.hidden) {
-            if (spawnInterval.current) {
-                clearInterval(spawnInterval.current);
-            }
-        } else if (areRipplesEnabled) {
-            startSpawnInterval();
-        }
-    }, [areRipplesEnabled]);
-
     const handleMouseMove = useCallback((e: MouseEvent) => {
         if (!areRipplesEnabled) {
             return;
@@ -72,42 +59,15 @@ export default function RippleCanvas() {
         }
     }, [areRipplesEnabled]);
 
-    const startSpawnInterval = useCallback(() => {
-        const canvas = canvasRef.current;
-
-        if (!canvas || !areRipplesEnabled) {
-            return;
-        }
-
-        spawnInterval.current = setInterval(() => {
-            if (!isVisibleRef.current) {
-                return;
-            }
-
-            addRipple(
-                Math.random() * canvas.width,
-                Math.random() * canvas.height,
-                Math.random() < 0.4
-            );
-        }, 1500);
-    }, [areRipplesEnabled, canvasRef.current]);
-
     useEffect(() => {
         if (!areRipplesEnabled) {
             return;
         }
 
-        startSpawnInterval();
         window.addEventListener("mousemove", handleMouseMove);
-
-        document.addEventListener("visibilitychange", handleVisibilityChange);
 
         return () => {
             window.removeEventListener("mousemove", handleMouseMove);
-            document.removeEventListener("visibilitychange", handleVisibilityChange);
-            if (spawnInterval.current) {
-                clearInterval(spawnInterval.current);
-            }
         };
     }, [areRipplesEnabled, canvasRef.current]);
 
@@ -226,7 +186,6 @@ export default function RippleCanvas() {
         return () => {
             cancelAnimationFrame(animationFrameId);
             window.removeEventListener("resize", resize);
-            document.removeEventListener("visibilitychange", handleVisibilityChange);
         };
     }, []);
 

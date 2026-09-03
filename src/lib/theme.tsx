@@ -18,7 +18,7 @@ const SettingsContext = createContext<SettingsContextValue>({
 
 export function SettingsProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>("light");
-  const [areRipplesEnabled, setAreRipplesEnabled] = useState(true);
+  const [areRipplesEnabled, setAreRipplesEnabled] = useState(false);
   
   const isMounted = useRef(false);
 

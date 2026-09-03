@@ -2,13 +2,6 @@ import { Dot } from "lucide-react";
 import { useState, useEffect } from "react";
 import { FALLBACK_SONG } from "@/constants";
 
-const TAGLINES = [
-    "built to the sound of fingerpicking",
-    "powered by minor chords",
-    "shipped at 2am, debugged at 3am",
-    "handcrafted, pixel by pixel",
-];
-
 function useRecentSong() {
     const [song, setSong] = useState<{ songName: string; artists: string[]; imageUrl: string } | null>(null);
 
@@ -27,7 +20,6 @@ function useRecentSong() {
 }
 
 export default function Footer() {
-    const [idx, setIdx] = useState(0);
     const [visible, setVisible] = useState(true);
     const song = useRecentSong();
 
@@ -35,7 +27,6 @@ export default function Footer() {
         const id = setInterval(() => {
             setVisible(false);
             setTimeout(() => {
-                setIdx(i => (i + 1) % TAGLINES.length);
                 setVisible(true);
             }, 350);
         }, 3500);
@@ -44,32 +35,9 @@ export default function Footer() {
 
     return (
         <footer className="mt-auto z-10 flex flex-col items-center gap-3 py-4 select-none">
-            <span
-                className="text-[11px] text-center px-4 text-muted-foreground/75 italic transition-opacity duration-300"
-                style={{ opacity: visible ? 1 : 0 }}
-            >
-                {TAGLINES[idx]}
-            </span>
-
-            {song ? (
-                <a
-                    href={`https://open.spotify.com/search/${encodeURIComponent(song.songName)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-[11px] text-foreground/75 hover:text-foreground transition-colors px-6 text-center"
-                >
-                    <span className="opacity-60 italic">while listening to</span>
-                    <span className="flex items-center gap-1.5 flex-wrap justify-center">
-                        <img src={song.imageUrl} alt={`${song.songName} album art`} className="w-4 h-4 rounded-sm object-cover shrink-0" />
-                        <span>{song.songName}</span>
-                        <span>—</span>
-                        <span>{song.artists[0]}</span>
-                        <img src="/spotify-no-bg.webp" alt="Spotify" className="w-3 h-3 opacity-60 shrink-0" />
-                    </span>
-                </a>
-            ) : (
-                <div className="h-4 w-48 rounded bg-muted-foreground/10 animate-pulse" />
-            )}
+            <div className="text-[11px] text-foreground/75 hover:text-foreground transition-all duration-300">
+                Also i love to fingerstyle guitar :) 
+            </div>
 
             <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-xs text-muted-foreground/60 px-4">
                 <span className="font-medium text-foreground/70">Rahul Baradol</span>
