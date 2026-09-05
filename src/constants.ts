@@ -358,5 +358,16 @@ export const experiments: Experiment[] = [
         { label: "useResizeObserver.ts", href: "https://github.com/bvaughn/react-window/blob/main/lib/hooks/useResizeObserver.ts" },
         { label: "useDynamicRowHeight.ts", href: "https://github.com/bvaughn/react-window/blob/main/lib/components/list/useDynamicRowHeight.ts" },
       ],
+    },
+    {
+      slug: "rate-limiter",
+      title: "Maintaining limits...",
+      description: "Designing rate limiter",
+      date: "15th July 2026",
+      isoDate: "2026-07-05",
+      tags: ["Rendering", "Virtualization"],
+      toc: [],
+      source: "https://github.com/Rahul-Baradol/portfolio/tree/main/src/experiments/virtualization",
+      resources: [],
     }
 ]

@@ -1,0 +1,328 @@
+Let's build a rate limiter!
+
+So let's take the following situation
+
+![Situation](/experiments/rate-limiter/situation.png)
+
+First question would be where will this rate limiter live?
+
+Would it be out of API server?
+
+![Separate](/experiments/rate-limiter/separate.png)
+
+Or be integrated?
+
+![Integrated](/experiments/rate-limiter/integrated.png)
+
+Let's go with the integrated approach, to keep things simple starting off.
+
+Let's choose FastAPI as the environment.
+
+<a href="https://github.com/Rahul-Baradol/rate-limiter/tree/bed8dfb2e9d6bb9944e12a71681ed6c88d6af3b8" target='_blank'>Here</a> is the base setup
+
+Now, let's implement the simplest approach.
+
+## We just limit the requests being processed
+
+How?
+
+Let's maintain a counter!
+
+Let's create a class `Ratelimiter` that will handle the rate limiting logic. 
+
+And for now, we can have the following logic in place.
+
+```python
+class Ratelimiter:
+    def __init__(self):
+        self.requests_processed = 0
+
+    def is_allowed(self) -> bool:
+        return self.requests_processed < 5
+
+    def register_request(self):
+        self.requests_processed += 1
+        print(f"Request registered. Total requests: {self.requests_processed}")
+
+    def release_request(self):
+        self.requests_processed -= 1
+        print(f"Request released. Total requests: {self.requests_processed}")
+```
+
+And the FastAPI routes could be these
+
+```python
+from fastapi.responses import JSONResponse
+import asyncio
+from ratelimiter import Ratelimiter
+from fastapi import Request
+from fastapi import FastAPI
+import time
+
+app = FastAPI()
+
+ratelimiter = Ratelimiter()
+
+@app.middleware('http')
+async def add_process_time_header(request: Request, call_next):
+    start_time = time.monotonic()
+
+    if ratelimiter.is_allowed():
+        ratelimiter.register_request()
+    else:
+        return JSONResponse(status_code=429, content={"message": "Too Many Requests"})
+
+    response = await call_next(request)
+    process_time = time.monotonic() - start_time
+    response.headers["X-Process-Time"] = str(process_time)
+
+    ratelimiter.release_request()
+
+    return response
+
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}
+
+@app.get("/work")
+async def work():
+    await asyncio.sleep(2)
+    return {"message": "Work completed"}
+```
+
+Once we test with the following code,
+```python
+import asyncio
+import httpx
+
+async def hit(client):
+    return await client.get("http://localhost:8000/work")
+
+async def main():
+    async with httpx.AsyncClient(timeout=10) as client:
+        results = await asyncio.gather(*[hit(client) for _ in range(100)])
+    codes = [r.status_code for r in results]
+    print(f"200s: {codes.count(200)}  429s: {codes.count(429)}")
+
+asyncio.run(main())
+```
+
+We get the following output
+
+![Console Output - Tester](/public/experiments/rate-limiter/tester.png)
+
+Looks good!
+
+But, if we look at the ratelimiter's implementation, we are performing a counter read and then performing a write.
+
+**This is not atomic**
+
+Which means, if two requests come in at the same time, they could both read the counter as 4, and then both increment it to 5, allowing 6 requests to be processed instead of 5.
+
+How can we prove it?
+
+Right now in the current tester, it is not happening because if you look at the middleware logic, we reading and writing to the counter in a synchronous manner. The FastAPI event loop doesn't interleave.
+
+But if the middleware code is modified to include some asynchronous I/O work between the counter read and write...
+
+```python
+@app.middleware('http')
+async def add_process_time_header(request: Request, call_next):
+    start_time = time.monotonic()
+
+    if ratelimiter.is_allowed():
+        await asyncio.sleep(0.5)
+        ratelimiter.register_request()
+    else:
+        return JSONResponse(status_code=429, content={"message": "Too Many Requests"})
+
+    response = await call_next(request)
+    process_time = time.monotonic() - start_time
+    response.headers["X-Process-Time"] = str(process_time)
+
+    ratelimiter.release_request()
+
+    return response
+```
+
+Now when we run the tester!
+
+![Console Output - Tester Off](/public/experiments/rate-limiter/off.png)
+
+This is bad!
+
+We need to do something!
+
+How about combining counter check, and request registration in a single function, instead of having separate calls to `is_allowed`, `register_request`?
+
+Rate limiter class changes to
+
+```python
+class Ratelimiter:
+    def __init__(self):
+        self.requests_processed = 0
+
+    def try_and_register(self) -> bool:
+        flag = self.requests_processed < 5
+        if flag:
+            self.requests_processed += 1
+            print(f"Request registered. Total requests: {self.requests_processed}")
+        return flag
+
+    def release_request(self):
+        self.requests_processed -= 1
+        print(f"Request released. Total requests: {self.requests_processed}")
+```
+
+And the middleware changes to
+
+```python
+@app.middleware('http')
+async def add_process_time_header(request: Request, call_next):
+    start_time = time.monotonic()
+
+    if not ratelimiter.try_and_register():
+        return JSONResponse(status_code=429, content={"message": "Too Many Requests"})
+
+    response = await call_next(request)
+    process_time = time.monotonic() - start_time
+    response.headers["X-Process-Time"] = str(process_time)
+
+    ratelimiter.release_request()
+
+    return response
+```
+
+Now the user can't do something which causes the race condition!
+
+**One more edge case is, what if the `call_next` raises an exception?**
+
+If that happens, the control won't reach `ratelimiter.release_request()` and the counter won't be decremented, which will cause the rate limiter to block all future requests.
+
+So, we can prevent that by using a try/finally block in the middleware:
+
+```python
+@app.middleware('http')
+async def add_process_time_header(request: Request, call_next):
+    start_time = time.monotonic()
+
+    if not ratelimiter.try_and_register():
+        return JSONResponse(status_code=429, content={"message": "Too Many Requests"})
+
+    try:
+        response = await call_next(request)
+        process_time = time.monotonic() - start_time
+        response.headers["X-Process-Time"] = str(process_time)
+    finally:
+        ratelimiter.release_request()
+
+    return response
+```
+
+One more question worth asking is, what if the client cancels the request?
+- Will we see the request slot being released immediately, or will it be held until the request is fully processed?
+
+Let's introduce a script called `request_canceller.py` which fires 5 requests, and cancels after some time.
+
+```python
+import asyncio
+import httpx
+
+async def hit(client, i):
+    try:
+        r = await client.get("http://localhost:8000/work")
+        print(f"req {i}: {r.status_code}")
+        return r.status_code
+    except asyncio.CancelledError:
+        print(f"req {i}: cancelled")
+        raise
+    except Exception as e:
+        print(f"req {i}: error {e!r}")
+        return None
+
+async def main():
+    async with httpx.AsyncClient(
+        timeout=20,
+        limits=httpx.Limits(max_connections=10, max_keepalive_connections=10),
+    ) as client:
+        # --- batch 1: fire 5, then immediately cancel them ---
+        batch1 = [asyncio.create_task(hit(client, i)) for i in range(5)]
+        # give them a tick to actually start hitting the wire
+        await asyncio.sleep(2)
+        for t in batch1:
+            t.cancel()
+        # wait for cancellation to settle, don't let exceptions propagate
+        await asyncio.gather(*batch1, return_exceptions=True)
+
+asyncio.run(main())
+```
+
+On running the above script, we see that the request slots are not released immediately, and the next batch of requests are blocked until the first batch is fully processed.
+
+![Console Output - No Cooperative Cancellation](/public/experiments/rate-limiter/no-cooperative-cancellation.png)
+
+Ideally, we want the request slot to be released ASAP when the client cancels the request, to allow other requests to be processed without delay.
+
+The way FastAPI works, that doesn't happen.
+
+We need to find a way to release the request slot as soon as the client cancels the request.
+
+We will have to create a mechanism to detect client cancellations and release the request slot accordingly.
+
+The middleware code changes to the following 
+
+```python
+@app.middleware("http")
+async def add_process_time_header(request: Request, call_next):
+    start_time = time.monotonic()
+
+    if not ratelimiter.try_and_register():
+        return JSONResponse(status_code=429, content={"message": "Too Many Requests"})
+
+    handler_task = asyncio.ensure_future(call_next(request))
+
+    try:
+        response = await _run_with_disconnect_guard(request, handler_task)
+        process_time = time.monotonic() - start_time
+        response.headers["X-Process-Time"] = str(process_time)
+        return response
+    finally:
+        ratelimiter.release_request()
+
+
+async def _run_with_disconnect_guard(request: Request, handler_task: asyncio.Task):
+    async def poll_disconnect():
+        while True:
+            if await request.is_disconnected():
+                return
+            await asyncio.sleep(0.25)  # tune to taste
+
+    disconnect_task = asyncio.ensure_future(poll_disconnect())
+
+    done, _ = await asyncio.wait(
+        {handler_task, disconnect_task},
+        return_when=asyncio.FIRST_COMPLETED,
+    )
+
+    if handler_task in done:
+        disconnect_task.cancel()
+        return handler_task.result()
+
+    handler_task.cancel()
+    try:
+        await handler_task
+    except asyncio.CancelledError:
+        pass
+    return JSONResponse(status_code=499, content={"message": "Client Closed Request"})
+```
+
+Here, we are creating a new task `poll_disconnect` which will keep polling the request to check if the client has disconnected. If it has, we cancel the handler task and return a 499 response.
+
+Now when we run the `request_canceller.py` script again, we should see that the request slots are released immediately when the client cancels the request.
+
+![Console Output - Cooperative Cancellation](/public/experiments/rate-limiter/cooperative-cancellation.png)
+
+Pretty neat!
+
+The take-away is that we need to be mindful of client disconnections and handle them gracefully to free up resources.
+
