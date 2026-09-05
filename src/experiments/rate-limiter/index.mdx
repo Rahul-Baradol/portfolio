@@ -109,7 +109,7 @@ asyncio.run(main())
 
 We get the following output
 
-![Console Output - Tester](/public/experiments/rate-limiter/tester.png)
+![Console Output - Tester](/experiments/rate-limiter/tester.png)
 
 Looks good!
 
@@ -259,7 +259,7 @@ asyncio.run(main())
 
 On running the above script, we see that the request slots are not released immediately, and the next batch of requests are blocked until the first batch is fully processed.
 
-![Console Output - No Cooperative Cancellation](/public/experiments/rate-limiter/no-cooperative-cancellation.png)
+![Console Output - No Cooperative Cancellation](/experiments/rate-limiter/no-cooperative-cancellation.png)
 
 Ideally, we want the request slot to be released ASAP when the client cancels the request, to allow other requests to be processed without delay.
 
@@ -320,7 +320,7 @@ Here, we are creating a new task `poll_disconnect` which will keep polling the r
 
 Now when we run the `request_canceller.py` script again, we should see that the request slots are released immediately when the client cancels the request.
 
-![Console Output - Cooperative Cancellation](/public/experiments/rate-limiter/cooperative-cancellation.png)
+![Console Output - Cooperative Cancellation](/experiments/rate-limiter/cooperative-cancellation.png)
 
 Pretty neat!
 
