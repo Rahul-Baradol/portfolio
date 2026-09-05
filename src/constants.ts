@@ -375,5 +375,16 @@ export const experiments: Experiment[] = [
       ],
       source: "",
       resources: []
+    },
+    {
+      slug: "rate-limiter",
+      title: "Maintaining limits...",
+      description: "Designing rate limiter",
+      date: "15th July 2026",
+      isoDate: "2026-07-05",
+      tags: ["Rendering", "Virtualization"],
+      toc: [],
+      source: "https://github.com/Rahul-Baradol/portfolio/tree/main/src/experiments/virtualization",
+      resources: [],
     }
 ]
