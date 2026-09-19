@@ -1,0 +1,157 @@
+Imagine a typical organization setup, and you being an engineer there!
+
+Infra on AWS, bunch of EC2s spinned-up, with proper security groups.
+
+Everything looks good. 
+
+Now the team thinks about marketing, and starts to post stuff online about the product/work.
+
+Now you notice something!
+
+You see domains being indexed on the first page of Google, which normally shouldn't be accessed by public.
+
+Ofcourse you can prevent the indexing by updating your `robots.txt`. But then the question arises!
+
+What if someone lands on a site, which they shouldn't be on!
+
+Example?
+
+An admin site or an internal dashboard, which only your org should access.
+
+You might have something `project.com` indexed on Google, for people to access.
+
+But one curious hacker would try things like `admin.project.com`, `dashboard.project.com` and then they suddenly have access to something which you thought nobody would touch.
+
+So, how to prevent this ?!
+
+One good thought is, whitelisting certain IPs via security-groups in AWS for these "internal" sites.
+
+But the problem with IPs, is that they keep changing.
+
+So the idea is correct, but we run into another problem! 
+
+Is there anyway to visit these sites through a certain IP, which only we have access to, and then rest gets access-denied.
+
+You can get this done through a VPN!
+
+- It stands for Virtual Private Network. A network which only your org has access to.
+
+## But how does it work?
+
+To understand that, let's slowly dive into how the request travels from your machine to the server.
+
+If you are not familier with <a href="https://en.wikipedia.org/wiki/Computer_network" target="_blank">Computer Networks</a>
+
+Then you would think, the path taken by the request would be,
+
+![Journey 1](/public/experiments/building-a-fence/journey-1.png)
+
+But that is not what happens in reality. The request goes through multiple <a href="https://en.wikipedia.org/wiki/Router_(computing)" target="_blank">routers</a>.
+
+
+And also we need to mention that the request is broken down into multiple <a href="https://en.wikipedia.org/wiki/Network_packet" target="_blank">packets</a>, which are sent to the server.
+
+So the path actually looks like this,
+
+![Journey 2](/public/experiments/building-a-fence/journey-2.png)
+
+Now if you are a hacker, and you want to access `admin.project.com`, then you would try to send a request to the server.
+
+Which would be fulfilled following the path above.
+
+So how do we prevent that?
+
+In VPN setup, the path looks like this 
+
+![Journey 3](/public/experiments/building-a-fence/journey-3.png)
+
+Note that the data sent to the VPN server is encrypted. And then the VPN server makes the request to ther destination server.
+
+And since the VPN server's IP would not change, we whitelist that IP in the destination server config, particularly for those sites which contain organization's internal data.
+
+## How this works in AWS?
+
+Suppose you have a destination server as an EC2, running nginx, hosting 2 sites `project.com` and `admin.project.com`
+
+As of now, anyone can hit them from the internet. 
+
+You want to restrict the public access of `admin.project.com`. How can we do this?
+
+First spin up another EC2 instance which would act as the VPN server.
+
+Setup <a href="https://openvpn.net/" target="_blank">openvpn</a> in the instance. It would be the one which would accept the request from the client, and then forward it to the destination server, provided the client is authorized.
+
+Setup the openvpn-server configs, which mentions what protocol does the server speak, and the needed certificates for the server to work.
+
+The server typically uses the port `1194` for openVPN connections.
+
+Then one more step to take care of, is to enable something called `port forwarding`.
+
+You see, typically when a request arrives at the server, the server assumes it is the destination. It does not act as the router.
+
+To make a machine act as a router, we modify this config which is `net.ipv4.ip_forward`.
+
+It is set to `1`. 
+
+Post this, we create client files, which would be then used by the people, to connect to the VPN.
+
+## AWS-nuances
+
+Certain config changes which need to be kept in mind, when it comes to AWS.
+
+The AWS does something called `source/destination check` for every request that EC2 receives.
+
+This check ensures that the packet the EC2 is receiving is meant to be received by that EC2. 
+
+But this would stop our VPN server from functioning, because it is supposed to act as a router and forward the packet.
+
+So we disable that check.
+
+We can disable that in `EC2 -> Network Interfaces`, choose the interface linked to the EC2, and you would see a check like this
+
+![Actions](/public/experiments/building-a-fence/actions.png)
+
+And we choose the `Change source/dest. check`
+
+![Source/Dest](/public/experiments/building-a-fence/source-dest.png)
+
+One more notable config change would be, to add a route entry in main route table of the VPC.
+
+Why?
+
+Think about this!
+
+A request comes out of your machine, goes to the VPN server, then the request is routed to the needed EC2.
+
+But when the reply comes back from the destination server, the destination address would belong to the VPN subnet. But there would be no route entry in VPC route taable mentioning that if the packet is to be sent to this VPN subnet, then forward it to the network interface of the VPN server.
+
+![Route Table](/public/experiments/building-a-fence/route-table.png)
+
+The VPN subnet here is `10.8.0.0/24`!
+
+And yes, all the other stuff is redacted (via Chrome DevTools), just to be safe :)
+
+After this, one small step is to update the A record of the `admin.project.com` to point to the private address of the EC2 instance.
+
+Why?
+
+Because, in every .ovpn client config, we have the following rule 
+```
+route 172.a.b.c 255.255.0.0
+```
+
+Where the 172.a.b.c is a CIDR block assigned to your VPC in AWS.
+
+And if you recall :)
+
+These addresses are private, and cannot be accessed from the internet.
+
+## In a nutshell flow looks like
+
+When not connected to VPN
+- `admin.project.com` is not accessible, because the A record points to a private IP of the EC2.
+
+When connected to VPN
+- `admin.project.com` is accessible, because the A record points to a private IP of the EC2, and the request is routed through the VPN server. VPN server forwards the request to the EC2, and the EC2 responds back to the VPN server, which then sends it back to the client.
+
+Computer Networks is fun :)

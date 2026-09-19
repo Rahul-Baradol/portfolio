@@ -358,5 +358,22 @@ export const experiments: Experiment[] = [
         { label: "useResizeObserver.ts", href: "https://github.com/bvaughn/react-window/blob/main/lib/hooks/useResizeObserver.ts" },
         { label: "useDynamicRowHeight.ts", href: "https://github.com/bvaughn/react-window/blob/main/lib/components/list/useDynamicRowHeight.ts" },
       ],
+    },
+    {
+      slug: "building-a-fence",
+      title: "Building a fence...",
+      description: "What is, and how does a VPN work? How to set up a VPN server in AWS, and route requests through it.",
+      date: "19th September 2026",
+      isoDate: "2026-09-19",
+      tags: ["Systems", "Networking"],
+      toc: [
+        { id: "", label: "What is a VPN?" },
+        { id: "but-how-does-it-work", label: "How VPN works?" },
+        { id: "how-this-works-in-aws", label: "How it works in AWS?" },
+        { id: "aws-nuances", label: "Nuances in AWS..." },
+        { id: "in-a-nutshell-flow-looks-like", label: "Summary" }
+      ],
+      source: "",
+      resources: []
     }
 ]
