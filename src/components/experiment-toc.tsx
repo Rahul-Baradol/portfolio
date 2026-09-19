@@ -39,6 +39,14 @@ export function ExperimentToc({ toc }: ExperimentTocProps) {
     }, [toc]);
 
     const handleClick = (event: React.MouseEvent, id: string) => {
+        if (id == "") {
+            const lenis = lenisRef?.current;
+            if (lenis) {
+                lenis.scrollTo(0, { offset: -SCROLL_OFFSET });
+            }
+            return;
+        }
+
         event.preventDefault();
         const el = document.getElementById(id);
         if (!el) {
