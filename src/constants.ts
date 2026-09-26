@@ -365,7 +365,7 @@ export const experiments: Experiment[] = [
       description: "What is, and how does a VPN work? How to set up a VPN server in AWS, and route requests through it.",
       date: "19th September 2026",
       isoDate: "2026-09-19",
-      tags: ["Systems", "Networking"],
+      tags: ["Systems", "Security", "Networking"],
       toc: [
         { id: "", label: "What is a VPN?" },
         { id: "but-how-does-it-work", label: "How VPN works?" },
@@ -380,11 +380,15 @@ export const experiments: Experiment[] = [
       slug: "rate-limiter",
       title: "Maintaining limits...",
       description: "Designing rate limiter",
-      date: "15th July 2026",
-      isoDate: "2026-07-05",
-      tags: ["Rendering", "Virtualization"],
-      toc: [],
-      source: "https://github.com/Rahul-Baradol/portfolio/tree/main/src/experiments/virtualization",
+      date: "26th September 2026",
+      isoDate: "2026-09-26",
+      tags: ["Backend", "API Rate Limiting"],
+      toc: [
+        { id: "", label: "Painting a picture" },
+        { id: "implementing-first-thoughts", label: "First thoughts" },
+        { id: "the-gaps", label: "The Gaps" }
+      ],
+      source: "https://github.com/Rahul-Baradol/rate-limiter",
       resources: [],
     }
 ]

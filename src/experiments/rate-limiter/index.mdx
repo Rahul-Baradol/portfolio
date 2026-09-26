@@ -1,30 +1,47 @@
-Let's build a rate limiter!
-
-So let's take the following situation
+Let's take the following situation, where we have a happy API server, serving requests.
 
 ![Situation](/experiments/rate-limiter/situation.png)
 
-First question would be where will this rate limiter live?
+And say this server is user facing, which means the number of requests coming to the server completely depends on the users.
 
-Would it be out of API server?
+Which brings a question: what happens if the number of users hitting this server increases significantly?
 
-![Separate](/experiments/rate-limiter/separate.png)
+Why would that happen?
+- Imagine a sale being introduced, or good marketing leading to increased traffic.
 
-Or be integrated?
+In this case, we need to ensure that our API server can handle the increased load without crashing or slowing down.
+
+We have few options to handle this:
+1. Either increase the server resources to handle more requests.
+2. Or introduce a mechanism which allows a limited number of requests to be processed at a time, and reject the rest.
+
+Either approach has its trade-offs. For example
+- option 1 would lead to increased costs, but it would ensure that all users have a consistent experience.
+- option 2 might mess with user-experience, as some users may be denied access during peak times.
+
+We choose solutions depending on the situation, and let's say we go with option 2 i.e building a rate limiter.
+
+First question is what is this rate-limiter, in terms of code?
+- It is just an algorithm which decides whether to accept a incoming request or not.
+
+So now, next questions would be, where will this algorithm live?
+- Would it be part of the API server?
+- Or a separate server, which would act as a proxy 
+
+Tradeoffs?
+- if it's part of the API server, then no overhead of infra, but makes horizontal scaling tricky
+- if it's a separate server, then it can be scaled independently, but adds complexity and network latency
+
+Let's say we don't have the need to scale horizontally, and one server would suffice
+- We go with integrated ratelimiter 
 
 ![Integrated](/experiments/rate-limiter/integrated.png)
 
-Let's go with the integrated approach, to keep things simple starting off.
+## Implementing first thoughts
 
-Let's choose FastAPI as the environment.
+Let's go with FastAPI as our environment.
 
-<a href="https://github.com/Rahul-Baradol/rate-limiter/tree/bed8dfb2e9d6bb9944e12a71681ed6c88d6af3b8" target='_blank'>Here</a> is the base setup
-
-Now, let's implement the simplest approach.
-
-## We just limit the requests being processed
-
-How?
+Now if we want to enforce a limit of say 5 processing requests at a time, we need to keep track of the number of requests being processed.
 
 Let's maintain a counter!
 
@@ -113,6 +130,8 @@ We get the following output
 
 Looks good!
 
+## The Gaps
+
 But, if we look at the ratelimiter's implementation, we are performing a counter read and then performing a write.
 
 **This is not atomic**
@@ -121,7 +140,7 @@ Which means, if two requests come in at the same time, they could both read the 
 
 How can we prove it?
 
-Right now in the current tester, it is not happening because if you look at the middleware logic, we reading and writing to the counter in a synchronous manner. The FastAPI event loop doesn't interleave.
+Right now in the current tester, it is not happening because if you look at the middleware logic, we are reading and writing to the counter in a synchronous manner. The FastAPI event loop doesn't interleave.
 
 But if the middleware code is modified to include some asynchronous I/O work between the counter read and write...
 
@@ -193,7 +212,7 @@ async def add_process_time_header(request: Request, call_next):
     return response
 ```
 
-Now the user can't do something which causes the race condition!
+Now the programmer/LLM can't do something which causes the race condition!
 
 **One more edge case is, what if the `call_next` raises an exception?**
 
