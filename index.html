@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Map</title>
+  <link rel="stylesheet" href="https://esm.sh/@excalidraw/excalidraw@0.18.0/dist/prod/index.css" />
+  <script>
+    // Excalidraw loads its fonts from here.
+    window.EXCALIDRAW_ASSET_PATH = "https://esm.sh/@excalidraw/excalidraw@0.18.0/dist/prod/";
+  </script>
+  <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@19.1.0",
+        "react/jsx-runtime": "https://esm.sh/react@19.1.0/jsx-runtime",
+        "react-dom": "https://esm.sh/react-dom@19.1.0",
+        "react-dom/client": "https://esm.sh/react-dom@19.1.0/client",
+        "@excalidraw/excalidraw": "https://esm.sh/@excalidraw/excalidraw@0.18.0?external=react,react-dom"
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --bg: #f7f7f8;
+      --panel: #ffffff;
+      --border: #e3e3e8;
+      --text: #1e1e1e;
+      --muted: #6b6b76;
+    }
+    :root[data-theme="dark"] {
+      --bg: #121212;
+      --panel: #1b1b1f;
+      --border: #2c2c33;
+      --text: #e6e6ea;
+      --muted: #9a9aa5;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font: 14px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    main { position: fixed; inset: 0; }
+    #canvas { position: absolute; inset: 0; }
+    #theme-toggle {
+      position: absolute;
+      right: 16px;
+      top: 16px;
+      z-index: 10;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--panel);
+      color: var(--text);
+      font: inherit;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    #theme-toggle:hover { border-color: var(--muted); }
+    .status {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      padding: 16px;
+      text-align: center;
+    }
+    .status[hidden] { display: none; }
+  </style>
+</head>
+<body>
+  <main>
+    <div id="canvas"></div>
+    <div id="status" class="status">Loading…</div>
+    <button id="theme-toggle" type="button"></button>
+  </main>
+
+  <script type="module">
+    // Full URLs (matching the import map) so Vite leaves them alone instead of resolving bare imports.
+    import React from "https://esm.sh/react@19.1.0";
+    import { createRoot } from "https://esm.sh/react-dom@19.1.0/client";
+    import { Excalidraw } from "https://esm.sh/@excalidraw/excalidraw@0.18.0?external=react,react-dom";
+
+    const statusEl = document.getElementById("status");
+    const toggleEl = document.getElementById("theme-toggle");
+    const root = createRoot(document.getElementById("canvas"));
+
+    // Always open in light mode; the toggle only applies to the current visit.
+    let theme = "light";
+
+    let scene = null;
+
+    function applyTheme() {
+      document.documentElement.dataset.theme = theme;
+      toggleEl.textContent = theme === "dark" ? "Light mode" : "Dark mode";
+      if (scene) renderScene();
+    }
+
+    toggleEl.addEventListener("click", () => {
+      theme = theme === "dark" ? "light" : "dark";
+      applyTheme();
+    });
+    applyTheme();
+
+    function renderScene() {
+      root.render(
+        React.createElement(Excalidraw, {
+          viewModeEnabled: true,
+          theme,
+          // Zoom so the whole drawing fits on screen.
+          excalidrawAPI: (api) =>
+            requestAnimationFrame(() =>
+              api.scrollToContent(undefined, { fitToContent: true, animate: false })
+            ),
+          initialData: {
+            elements: scene.elements ?? [],
+            files: scene.files ?? {},
+            appState: {
+              viewBackgroundColor: scene.appState?.viewBackgroundColor,
+              gridSize: scene.appState?.gridSize ?? null,
+            },
+          },
+        })
+      );
+    }
+
+    const setStatus = (msg) => {
+      statusEl.textContent = msg ?? "";
+      statusEl.hidden = !msg;
+    };
+
+    try {
+      const res = await fetch("map.excalidraw", { cache: "no-cache" });
+      if (!res.ok) throw new Error(res.status);
+      scene = await res.json();
+      setStatus(null);
+      renderScene();
+    } catch (err) {
+      setStatus(`Failed to load map.excalidraw (${err.message}).`);
+    }
+  </script>
+</body>
+</html>
