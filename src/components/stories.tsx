@@ -60,7 +60,7 @@ export function BlogCard({ title, description, slug, tags, date, className, anim
 
 export function StoriesContainer() {
     return (
-        <div className="animate-fade-up p-0 text-muted-foreground w-[90vw] lg:w-[50vw] h-full rounded-xl relative flex flex-col gap-5 bg-transparent">
+        <div className="animate-fade-up p-0 text-muted-foreground w-full h-full rounded-xl relative flex flex-col gap-5 bg-transparent">
             <div className="flex flex-row gap-2 items-center italic">
                 <Lightbulb className="h-4 w-4 text-muted-foreground" />
                 Stories

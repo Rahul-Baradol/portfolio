@@ -1,0 +1,174 @@
+We hear this buzzword called eventloop almost everywhere when we do asynchronous programming.
+
+So thought to implement myself once to understand it!
+
+First off, why do we need it?
+
+Well what happens in synchronous programming?
+
+We have a sequence of instructions laid out, and the CPU executes them one by one.
+
+But what if one step takes some time?
+
+For example picture this scenario
+
+```python
+calculation_1 = do_some_calculation_1()
+db_result = call_db()
+calculation_2 = do_some_calculation_2()
+```
+
+Here the call_db() might take some time.
+
+So if the main thread is blocked on this function, we delay executing `do_some_calculation_2()`
+
+But you know the main problem here is not actually blocking!
+
+It's actually CPU stuck at `call_db` without doing any actual work.
+
+Because if you think about it, then `call_db` is just calling the database and waiting for the response.
+
+Something that CPU shouldn't be blocked, but it is!
+
+And here is where async programming comes in.
+
+Let's build it step by step!
+
+### Starting off with simple loop which accepts commands
+
+Defining `EventLoop.py`
+
+```python
+from collections import deque
+
+class EventLoop:
+    def __init__(self):
+        self.tasks = deque()
+
+    def enqueue(self, callback):
+        self.tasks.append(callback)
+
+    def run(self):
+        while len(self.tasks) > 0:
+            callback = self.tasks.popleft()
+            callback()
+```
+
+Defining `main.py`
+
+```python
+from EventLoop import EventLoop
+
+eventloop = EventLoop()
+
+eventloop.enqueue(lambda: print("A"))
+eventloop.enqueue(lambda: print("B"))
+eventloop.enqueue(lambda: print("C"))
+
+eventloop.run()
+```
+
+The output of this would be 
+
+```python
+A
+B
+C
+```
+
+All of these commands are CPU instructions.
+
+Let's introduce a `timer` in the event loop!
+
+`EventLoop.py` changes to this 
+
+```python
+import heapq
+from collections import deque
+import time 
+
+class EventLoop:
+    def __init__(self):
+        self.tasks = deque()
+        self.timers = []
+
+    def enqueue(self, callback):
+        self.tasks.append(callback)
+
+    def run(self):
+        while self.tasks or self.timers:
+            now = time.monotonic()
+            while self.timers and self.timers[0][0] <= now:
+                element = heapq.heappop(self.timers)
+                self.tasks.append(element[1])
+
+            if self.tasks:
+                callback = self.tasks.popleft()
+                callback()
+
+    def call_later(self, delay, callback):
+        next_execute_at = time.monotonic() + delay
+
+        heapq.heappush(self.timers, 
+            (next_execute_at, callback)
+        )
+```
+
+Updating `main.py` to 
+
+```python
+from EventLoop import EventLoop
+
+eventloop = EventLoop()
+
+eventloop.enqueue(lambda: print("A"))
+eventloop.call_later(2, lambda: print("B"))
+eventloop.enqueue(lambda: print("C"))
+eventloop.call_later(2, lambda: print("D"))
+
+
+eventloop.run()
+```
+
+We get the following output 
+
+```python
+A
+C
+B
+D
+```
+
+Here A and C get printed immediately, and after 2 seconds, B and D are printed!
+
+But the loop doesn't handle Network I/O yet.
+
+Let's do that.
+
+Traditionally, when we open a socket to read data, we block the main thread until the data is available.
+
+```python
+data = sock.recv(1024)
+```
+
+However, there is an option to disable the blocking 
+
+```python
+sock.setblocking(False)
+```
+
+In which case, the `recv` raises `BlockingIOError` instead of waiting.
+
+But still that's a problem, because we would have to keep polling OS to see if the socket is ready with the data.
+
+So is there a way for us to know when the data is available and then only call this?
+
+Yes, OS allows us to do that.
+
+In linux, there is a sys-call called `epoll()`, which allows us to subscribe to an event, which in this case is a socket readiness, and then having OS call the callback we give to it when the socket is ready.
+
+In Python, we can achieve this using the package called `selectors` which is an abstraction to async-IO features across operating systems.
+
+So, the `EventLoop.py` changes to 
+
+```python

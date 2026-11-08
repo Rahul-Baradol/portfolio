@@ -19,7 +19,7 @@ interface ProjectContainerProps {
 
 export default function ProjectCard({ title, videoDemoUrl, posterUrl, story, websiteUrl, githubUrl, linkedinUrl, blogUrl }: ProjectCardProps) {
     return (
-        <div className="animate-fade-up pt-1 pl-1 pr-0 pb-0 group text-muted-foreground w-[90vw] lg:w-[50vw] h-fit border-l-4 border-t-4 border-r-[1.5px] border-b-[1.5px] border-foreground/10 dark:border-cyan-500/20 hover:border-foreground/20 dark:hover:border-cyan-600/10 rounded-xl relative">
+        <div className="animate-fade-up pt-1 pl-1 pr-0 pb-0 group text-muted-foreground w-full h-fit border-l-4 border-t-4 border-r-[1.5px] border-b-[1.5px] border-foreground/10 dark:border-cyan-500/20 hover:border-foreground/20 dark:hover:border-cyan-600/10 rounded-xl relative">
             <div className="w-full pt-4 pl-4 pr-4 pb-4 relative z-10 dark:bg-black/20 rounded-xl h-full flex flex-col gap-5">
                 <div className="w-full flex flex-row items-center justify-between rounded-xl">
                     <span className="text-md text-foreground">{title}</span>
@@ -86,7 +86,7 @@ export default function ProjectCard({ title, videoDemoUrl, posterUrl, story, web
                     <div className="text-sm w-full">
                         {story}
                     </div>
-                    <a href={websiteUrl} target="_blank" aria-label={`Preview ${title}`} className="relative w-full h-[300px] overflow-hidden group">
+                    <a href={websiteUrl} target="_blank" aria-label={`Preview ${title}`} className="relative w-full h-[300px] 2xl:h-[240px] overflow-hidden group">
                         <div className="absolute top-0 left-0 w-full h-full z-10 bg-foreground/8 dark:bg-cyan-500/10 transition-all duration-500 group-hover:bg-foreground/3 dark:group-hover:bg-cyan-500/20"></div>
                         <video
                             className="absolute bottom-0 right-0 w-full h-full object-cover scale-[1.1] transition-transform duration-700 ease-in-out group-hover:scale-120 group-hover:rotate-0"
@@ -109,27 +109,29 @@ export default function ProjectCard({ title, videoDemoUrl, posterUrl, story, web
 
 export function ProjectsContainer({ projects }: ProjectContainerProps) {
     return (
-        <div className="animate-fade-up p-0 text-muted-foreground w-[90vw] lg:w-[50vw] h-full rounded-xl relative flex flex-col gap-5 bg-transparent">
+        <div className="animate-fade-up p-0 text-muted-foreground w-full h-full rounded-xl relative flex flex-col gap-5 bg-transparent">
             <div className="flex flex-row gap-2 items-center italic">
                 <Balloon className="h-4 w-4 text-muted-foreground" />
                 Built for fun
             </div>
 
-            {
-                projects.map((project: ProjectCardProps, index: number) => (
-                    <ProjectCard
-                        key={index}
-                        title={project.title}
-                        websiteUrl={project.websiteUrl}
-                        githubUrl={project.githubUrl}
-                        linkedinUrl={project.linkedinUrl}
-                        videoDemoUrl={project.videoDemoUrl}
-                        posterUrl={project.posterUrl}
-                        story={project.story}
-                        blogUrl={project.blogUrl}
-                    />
-                ))
-            }
+            <div className="flex flex-col gap-5 2xl:grid 2xl:grid-cols-2">
+                {
+                    projects.map((project: ProjectCardProps, index: number) => (
+                        <ProjectCard
+                            key={index}
+                            title={project.title}
+                            websiteUrl={project.websiteUrl}
+                            githubUrl={project.githubUrl}
+                            linkedinUrl={project.linkedinUrl}
+                            videoDemoUrl={project.videoDemoUrl}
+                            posterUrl={project.posterUrl}
+                            story={project.story}
+                            blogUrl={project.blogUrl}
+                        />
+                    ))
+                }
+            </div>
         </div>
     );
 }

@@ -4,7 +4,7 @@ import { TechBadge } from "./tech-badges";
 
 export function SkillsContainer() {
     return (
-        <div className="animate-fade-up p-0 text-muted-foreground w-[90vw] lg:w-[50vw] h-full rounded-xl relative flex flex-col gap-5 bg-transparent">
+        <div className="animate-fade-up p-0 text-muted-foreground w-full h-full rounded-xl relative flex flex-col gap-5 bg-transparent">
             <div className="flex flex-row gap-2 items-center italic">
                 <Code2 className="h-4 w-4 text-muted-foreground" />
                 Skills

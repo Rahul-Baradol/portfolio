@@ -94,7 +94,7 @@ export function OpenPRsContainer() {
         : "unable to reach github - showing some older contributions in the meantime:";
 
     return (
-        <div className="animate-fade-up z-10 p-0 text-muted-foreground w-[90vw] lg:w-[50vw] flex flex-col gap-5 bg-transparent">
+        <div className="animate-fade-up z-10 p-0 text-muted-foreground w-full flex flex-col gap-5 bg-transparent">
             <div className="flex flex-row items-center gap-2 italic">
                 <GitPullRequest className="h-4 w-4 text-muted-foreground" />
                 Open Source & Contributions
