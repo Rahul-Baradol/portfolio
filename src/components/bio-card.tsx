@@ -15,13 +15,17 @@ export function BioCard() {
             </p>
 
             <p className={`text-sm leading-relaxed ${expanded ? "" : "line-clamp-2"}`}>
-                At 13, came across Java and started coding, figuring out how software is written, and building toy projects myself for fun.
+                Currently leading cross-border supply chain tech at Alaiy!
             </p>
 
             <div
                 className={`grid transition-[grid-template-rows] duration-300 ease-out ${expanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
             >
                 <div className="overflow-hidden flex flex-col gap-3">
+                    <p className={`text-sm leading-relaxed ${expanded ? "" : "line-clamp-2"}`}>
+                        At 13, came across Java and started coding, figuring out how software is written, and building toy projects myself for fun.
+                    </p>
+
                     <p className="text-sm leading-relaxed">
                         At 20, worked on building chat platform for a client, where I took care of the frontend and backend, and worked with some of the best people of my college who took care of design, and ML stuff! 
                     </p>
@@ -31,7 +35,7 @@ export function BioCard() {
                     </p>
 
                     <p className="text-sm leading-relaxed">
-                        At 21, joined an early-stage startup, working on building web apps, and platforms with a focus on user experience and performance. It's been a year, and am still here!
+                        At 21, joined an early-stage startup, working on platforms and automations that help in moving products from one place to another.
                     </p>
                 </div>
             </div>
