@@ -125,7 +125,7 @@ export function Home() {
                                 websiteUrl: "https://signature.rahulbaradol.in/",
                                 githubUrl: "https://github.com/Rahul-Baradol/signature",
                                 linkedinUrl: "https://www.linkedin.com/posts/rahul-baradol_so-i-listen-to-songs-a-lot-and-thought-activity-7376004232765722624-hx_M?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEX65n8BwCmiX146yfLfYwDy_g61M6mYJ8I",
-                                blogUrl: "/blog/breaking-down-signature-28e9b0d2904e"
+                                blogUrl: "/blog/breaking-down-signature"
                             },
                             {
                                 title: "Flow",
@@ -133,7 +133,8 @@ export function Home() {
                                 posterUrl: "/flow-demo-poster.png",
                                 websiteUrl: "https://flow.rahulbaradol.in/",
                                 story: "Algorithm which solves flow free puzzles!",
-                                githubUrl: "https://github.com/Rahul-Baradol/flow"
+                                githubUrl: "https://github.com/Rahul-Baradol/flow",
+                                blogUrl: "/blog/solving-flow-free-with-algorithms"
                             },
                             // {
                             //     title: "Flow Puzzle Solver",
