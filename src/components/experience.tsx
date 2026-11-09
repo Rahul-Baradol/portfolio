@@ -30,11 +30,11 @@ export default function ExperienceCard({ companyName, companyLogo, websiteUrl, g
             collapsible
             defaultValue={(expanded === true) ? "item-1" : undefined}
         >
-            <AccordionPrimitive.Item data-slot="accordion-item" value="item-1" className="flex flex-col gap-2">
+            <AccordionPrimitive.Item data-slot="accordion-item" value="item-1" className="flex flex-col border border-border rounded-xl overflow-hidden bg-background has-[[data-slot=accordion-trigger]:hover]:border-foreground/15 dark:has-[[data-slot=accordion-trigger]:hover]:border-cyan-500/20">
                 <AccordionPrimitive.Header className="flex">
                     <AccordionPrimitive.Trigger
                         data-slot="accordion-trigger"
-                        className="flex flex-row items-center gap-3 focus-visible:border-ring focus-visible:ring-ring/50 p-4 text-left text-sm font-medium outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&[data-state=open]>svg]:rotate-180 group w-full cursor-pointer border border-border rounded-xl bg-background hover:bg-foreground/5 dark:hover:bg-cyan-600/10 hover:border-foreground/15 dark:hover:border-cyan-500/5"
+                        className="flex flex-row items-center gap-3 focus-visible:ring-ring/50 p-4 text-left text-sm font-medium outline-none focus-visible:ring-[3px] focus-visible:ring-inset disabled:pointer-events-none disabled:opacity-50 [&[data-state=open]>svg]:rotate-180 group w-full cursor-pointer bg-background hover:bg-foreground/5 dark:hover:bg-cyan-600/10"
                     >
                         <div className="flex flex-col items-center w-full">
                             <div className="animate-fade-up flex flex-row justify-between items-center overflow-hidden w-full">
@@ -130,7 +130,7 @@ export default function ExperienceCard({ companyName, companyLogo, websiteUrl, g
                     data-slot="accordion-content"
                     className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden text-sm"
                 >
-                    <div className="p-4 border border-border bg-black/2 dark:bg-black/5 rounded-xl flex flex-row items-center gap-1 flex-wrap">
+                    <div className="p-4 border-t border-border bg-black/2 dark:bg-black/5 flex flex-row items-center gap-1 flex-wrap">
                         {
                             techBadges.map((badge, index) => (
                                 <TechBadge
@@ -184,7 +184,7 @@ interface ExperienceContainerProps {
 
 export function ExperienceContainer({ snaps }: ExperienceContainerProps) {
     return (
-        <div className="animate-fade-up p-0 text-muted-foreground w-full h-full rounded-xl relative flex flex-col gap-5 bg-transparent">
+        <div className="animate-fade-up p-0 text-muted-foreground w-full h-full rounded-xl relative flex flex-col gap-6 bg-transparent">
             <div className="flex flex-row gap-2 items-center italic">
                 <Road className="h-4 w-4 text-muted-foreground" />
                 Experience
