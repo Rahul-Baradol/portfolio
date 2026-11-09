@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { TransitionLink } from "./transition-link";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { Balloon, Globe } from "lucide-react";
 
@@ -70,9 +70,9 @@ export default function ProjectCard({ title, videoDemoUrl, posterUrl, story, web
                             blogUrl ? (
                                 <Tooltip>
                                     <TooltipTrigger asChild className="bg-background">
-                                        <Link to={blogUrl} rel="noopener noreferrer" className="text-muted-foreground bg-transparent text-xs">
+                                        <TransitionLink to={blogUrl} className="text-muted-foreground bg-transparent text-xs">
                                             Blog
-                                        </Link>
+                                        </TransitionLink>
                                     </TooltipTrigger>
                                     <TooltipContent className="bg-background text-muted-foreground border-border">
                                         Read the blog
