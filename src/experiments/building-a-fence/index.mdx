@@ -44,7 +44,7 @@ If you are not familier with <a href="https://en.wikipedia.org/wiki/Computer_net
 
 Then you would think, the path taken by the request would be,
 
-![Journey 1](/public/experiments/building-a-fence/journey-1.png)
+![Journey 1](/experiments/building-a-fence/journey-1.png)
 
 But that is not what happens in reality. The request goes through multiple <a href="https://en.wikipedia.org/wiki/Router_(computing)" target="_blank">routers</a>.
 
@@ -53,7 +53,7 @@ And also we need to mention that the request is broken down into multiple <a hre
 
 So the path actually looks like this,
 
-![Journey 2](/public/experiments/building-a-fence/journey-2.png)
+![Journey 2](/experiments/building-a-fence/journey-2.png)
 
 Now if you are a hacker, and you want to access `admin.project.com`, then you would try to send a request to the server.
 
@@ -63,7 +63,7 @@ So how do we prevent that?
 
 In VPN setup, the path looks like this 
 
-![Journey 3](/public/experiments/building-a-fence/journey-3.png)
+![Journey 3](/experiments/building-a-fence/journey-3.png)
 
 Note that the data sent to the VPN server is encrypted. And then the VPN server makes the request to ther destination server.
 
@@ -109,11 +109,11 @@ So we disable that check.
 
 We can disable that in `EC2 -> Network Interfaces`, choose the interface linked to the EC2, and you would see a check like this
 
-![Actions](/public/experiments/building-a-fence/actions.png)
+![Actions](/experiments/building-a-fence/actions.png)
 
 And we choose the `Change source/dest. check`
 
-![Source/Dest](/public/experiments/building-a-fence/source-dest.png)
+![Source/Dest](/experiments/building-a-fence/source-dest.png)
 
 One more notable config change would be, to add a route entry in main route table of the VPC.
 
@@ -125,7 +125,7 @@ A request comes out of your machine, goes to the VPN server, then the request is
 
 But when the reply comes back from the destination server, the destination address would belong to the VPN subnet. But there would be no route entry in VPC route taable mentioning that if the packet is to be sent to this VPN subnet, then forward it to the network interface of the VPN server.
 
-![Route Table](/public/experiments/building-a-fence/route-table.png)
+![Route Table](/experiments/building-a-fence/route-table.png)
 
 The VPN subnet here is `10.8.0.0/24`!
 
