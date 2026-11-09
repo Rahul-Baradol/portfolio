@@ -128,12 +128,12 @@ export function Home() {
                                 blogUrl: "/blog/breaking-down-signature-28e9b0d2904e"
                             },
                             {
-                                title: "Resonance",
-                                videoDemoUrl: "/resonance.mov",
-                                posterUrl: "/resonance-poster.webp",
-                                websiteUrl: "https://resonating.vercel.app/",
-                                story: "What if I lose all my spotify songs? Need a backup system for it, which periodically saves my songs and playlists.",
-                                githubUrl: "https://github.com/Rahul-Baradol/resonance"
+                                title: "Flow",
+                                videoDemoUrl: "/flow-demo.mp4",
+                                posterUrl: "/flow-demo-poster.png",
+                                websiteUrl: "https://flow.rahulbaradol.in/",
+                                story: "Algorithm which solves flow free puzzles!",
+                                githubUrl: "https://github.com/Rahul-Baradol/flow"
                             },
                             // {
                             //     title: "Flow Puzzle Solver",
