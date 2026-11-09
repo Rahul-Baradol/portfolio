@@ -7,6 +7,7 @@ import Lenis from "lenis";
 import { Toaster } from "./components/ui/sonner";
 import ScrollProgress from "./components/scroll-progress";
 import { LenisContext } from "./lib/lenis";
+import { takeScrollPosition } from "./lib/scroll-memory";
 
 export function Layout() {
     const location = useLocation();
@@ -28,9 +29,19 @@ export function Layout() {
         };
     }, []);
 
+    // New pages start at the top; a page the user left through a TransitionLink
+    // comes back where they left it.
     useEffect(() => {
-        lenisRef.current?.scrollTo(0, {
-            immediate: true
+        const lenis = lenisRef.current;
+        const saved = takeScrollPosition(location.pathname);
+        // Cancel any smooth-scroll glide still running from the previous page;
+        // otherwise it carries on into the new page once its content loads.
+        lenis?.stop();
+        lenis?.start();
+        lenis?.resize();
+        lenis?.scrollTo(saved ?? 0, {
+            immediate: true,
+            force: true,
         });
     }, [location.pathname, lenisRef])
 

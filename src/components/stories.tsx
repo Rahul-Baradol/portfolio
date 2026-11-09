@@ -1,5 +1,6 @@
 import { ArrowUpRight, Lightbulb } from "lucide-react";
-import { Link } from "react-router-dom";
+import { TransitionLink } from "./transition-link";
+import { titleTransitionName } from "@/lib/view-transition";
 import { Tooltip, TooltipTrigger, TooltipContent } from "./ui/tooltip";
 import { stories } from "@/constants";
 
@@ -15,14 +16,17 @@ interface BlogCardProps {
 
 export function BlogCard({ title, description, slug, tags, date, className, animationDelay }: BlogCardProps) {
     return (
-        <Link
+        <TransitionLink
             to={`/blog/${slug}`}
             style={animationDelay ? { animationDelay } : undefined}
             className={`animate-fade-up flex flex-col gap-3 p-4 rounded-xl border border-border bg-black/3 dark:bg-black/10 hover:bg-foreground/5 dark:hover:bg-cyan-600/5 hover:border-foreground/20 dark:hover:border-cyan-400/30 hover:scale-[1.02] active:scale-[0.97] transition-all duration-200 cursor-pointer group ${className}`}
         >
             <div className="flex flex-row justify-between items-start">
                 <div className="flex flex-col gap-2 w-[90%]">
-                    <div className="text-sm italic text-foreground group-hover:text-foreground dark:group-hover:text-cyan-300 transition-colors">
+                    <div
+                        data-vt-title={titleTransitionName("story", slug)}
+                        className="vt-title w-fit text-sm italic text-foreground group-hover:text-foreground dark:group-hover:text-cyan-300 transition-colors"
+                    >
                         {title}
                     </div>
                     <div className="text-xs text-muted-foreground line-clamp-4">
@@ -54,7 +58,7 @@ export function BlogCard({ title, description, slug, tags, date, className, anim
                     ))}
                 </div>
             </div>
-        </Link>
+        </TransitionLink>
     );
 }
 

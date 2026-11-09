@@ -10,7 +10,9 @@ import NotFound from "./components/not-found";
 function App() {
   return (
     <SettingsProvider>
-      <BrowserRouter>
+      {/* Commit route changes synchronously so page transitions
+          (src/lib/view-transition.ts) can snapshot the new page. */}
+      <BrowserRouter unstable_useTransitions={false}>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />

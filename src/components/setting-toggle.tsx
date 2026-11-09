@@ -6,7 +6,7 @@ export function ThemeToggle() {
 
   return (
     <div 
-      className="fixed top-3 right-3 z-50 flex flex-col md:flex-row items-center gap-2"
+      className="fixed top-3 right-3 z-50 [view-transition-name:theme-toggle] flex flex-col md:flex-row items-center gap-2"
     >
       {/* <button
         onClick={toggleRipples}

@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState, type ComponentType } from "react";
 import { ArrowLeft, FlaskConical, Code2 } from "lucide-react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { TransitionLink } from "@/components/transition-link";
+import { titleTransitionName } from "@/lib/view-transition";
 import { experiments } from "@/constants";
 import { highlightCodeBlocks } from "@/lib/highlight";
 import NotFound from "@/components/not-found";
@@ -89,13 +91,14 @@ export function ExperimentPage() {
 
     return (
         <div className="animate-fade-up z-10 w-[90vw] lg:w-[50vw] flex flex-col gap-6 relative">
-            <Link
+            <TransitionLink
                 to="/"
+                rememberScroll={false}
                 className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors self-start"
             >
                 <ArrowLeft className="h-3 w-3" />
                 Back
-            </Link>
+            </TransitionLink>
 
             <div className="flex flex-row items-center gap-2 text-muted-foreground italic">
                 <FlaskConical className="h-4 w-4" />
@@ -103,7 +106,10 @@ export function ExperimentPage() {
             </div>
 
             <div className="flex flex-col gap-3">
-                <h1 className="text-2xl md:text-3xl font-bold text-foreground italic">
+                <h1
+                    data-vt-title={titleTransitionName("experiment", experiment.slug)}
+                    className="vt-title w-fit text-2xl md:text-3xl font-bold text-foreground italic"
+                >
                     {experiment.title}
                 </h1>
                 <div className="flex flex-row items-center gap-2 text-[11px] text-muted-foreground italic flex-wrap">

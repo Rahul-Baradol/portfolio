@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, ExternalLink, Lightbulb } from "lucide-react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { TransitionLink } from "@/components/transition-link";
+import { titleTransitionName } from "@/lib/view-transition";
 import { stories } from "@/constants";
 import { fetchMediumPost, MediumPostNotFoundError, type MediumPost } from "@/lib/medium";
 import { highlightCodeBlocks } from "@/lib/highlight";
@@ -76,13 +78,14 @@ export function BlogPage() {
 
     return (
         <div className="animate-fade-up z-10 w-[90vw] lg:w-[50vw] flex flex-col gap-6">
-            <Link
+            <TransitionLink
                 to="/"
+                rememberScroll={false}
                 className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors self-start"
             >
                 <ArrowLeft className="h-3 w-3" />
                 Back
-            </Link>
+            </TransitionLink>
 
             <div className="flex flex-row items-center gap-2 text-muted-foreground italic">
                 <Lightbulb className="h-4 w-4" />
@@ -90,7 +93,10 @@ export function BlogPage() {
             </div>
 
             <div className="flex flex-col gap-3">
-                <h1 className="text-2xl md:text-3xl font-bold text-foreground italic">
+                <h1
+                    data-vt-title={titleTransitionName("story", story.slug)}
+                    className="vt-title w-fit text-2xl md:text-3xl font-bold text-foreground italic"
+                >
                     {story.title}
                 </h1>
                 <div className="flex flex-row items-center gap-2 text-[10px] text-muted-foreground italic flex-wrap">

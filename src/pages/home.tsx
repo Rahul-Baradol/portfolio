@@ -6,7 +6,6 @@ import { StoriesContainer } from "@/components/stories";
 import { ExperimentsContainer } from "@/components/experiments";
 import { OpenPRsContainer } from "@/components/open-prs";
 import { EducationContainer } from "@/components/education";
-import { useEffect } from "react";
 import { BioCard } from "@/components/bio-card";
 import EmailContact from "@/components/email-contact";
 import { Dot, Download } from "lucide-react";
@@ -24,10 +23,6 @@ const NAV_SECTIONS = [
 ];
 
 export function Home() {
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, [])
-
     return (
         <div className="z-10 w-[90vw] lg:w-[50vw] xl:w-[min(94vw,1320px)] 2xl:w-[min(90vw,1640px)] flex flex-col gap-10 xl:grid xl:grid-cols-[380px_minmax(0,1fr)] xl:gap-16 2xl:grid-cols-[440px_minmax(0,1fr)] 2xl:gap-24 xl:items-start">
             <aside

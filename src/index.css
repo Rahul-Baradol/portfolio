@@ -125,6 +125,50 @@
   }
 }
 
+/* Page transitions (see src/lib/view-transition.ts). The old page fades out,
+   the new one rises in, and a clicked card's title morphs into the page heading. */
+::view-transition-old(root) {
+  animation: vt-page-out 180ms ease-in both;
+}
+
+::view-transition-new(root) {
+  animation: vt-page-in 420ms cubic-bezier(0.22, 1, 0.36, 1) 80ms both;
+}
+
+@keyframes vt-page-out {
+  to { opacity: 0; transform: translateY(-6px); }
+}
+
+@keyframes vt-page-in {
+  from { opacity: 0; transform: translateY(14px); }
+}
+
+.vt-title {
+  view-transition-class: vt-title;
+}
+
+::view-transition-group(.vt-title) {
+  animation-duration: 480ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* A title with no partner on the other page (e.g. the heading when going
+   back) moves with the page instead of lingering on its own. */
+::view-transition-old(.vt-title):only-child {
+  animation: vt-page-out 180ms ease-in both;
+}
+
+::view-transition-new(.vt-title):only-child {
+  animation: vt-page-in 420ms cubic-bezier(0.22, 1, 0.36, 1) 80ms both;
+}
+
+/* Scale the title snapshots by height so text grows instead of stretching. */
+::view-transition-old(.vt-title),
+::view-transition-new(.vt-title) {
+  height: 100%;
+  width: auto;
+}
+
 .perspective-500 {
   perspective: 1000px;
 }
@@ -135,6 +179,12 @@
 
 .rotate-y-6 {
   transform: rotateY(6deg);
+}
+
+/* No browser scroll anchoring: it nudges the restored scroll position on Back
+   (src/lib/scroll-memory.ts) while the home page re-renders. */
+html {
+  overflow-anchor: none;
 }
 
 html, body {
