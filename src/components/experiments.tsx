@@ -71,7 +71,7 @@ export function ExperimentsContainer() {
             </div>
 
             <div className="flex flex-col gap-2">
-                {experiments.map((experiment, idx) => (
+                {[...experiments].sort((a, b) => (b.isoDate ?? "").localeCompare(a.isoDate ?? "")).map((experiment, idx) => (
                     <ExperimentCard
                         key={experiment.slug}
                         title={experiment.title}

@@ -71,7 +71,7 @@ export function StoriesContainer() {
             </div>
 
             <div className="flex flex-col gap-2">
-                {stories.map((story, idx) => (
+                {[...stories].sort((a, b) => b.isoDate.localeCompare(a.isoDate)).map((story, idx) => (
                     <BlogCard
                         key={story.slug}
                         title={story.title}

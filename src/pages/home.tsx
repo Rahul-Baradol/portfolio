@@ -4,7 +4,7 @@ import { ProjectsContainer } from "@/components/projects";
 import { SkillsContainer } from "@/components/skills";
 import { StoriesContainer } from "@/components/stories";
 import { ExperimentsContainer } from "@/components/experiments";
-import { OpenPRsContainer } from "@/components/open-prs";
+// import { OpenPRsContainer } from "@/components/open-prs";
 import { EducationContainer } from "@/components/education";
 import { BioCard } from "@/components/bio-card";
 import EmailContact from "@/components/email-contact";
@@ -110,9 +110,9 @@ export function Home() {
 
                 {/* <DevTipsCard /> */}
 
-                <section id="open-source">
+                {/* <section id="open-source">
                     <OpenPRsContainer />
-                </section>
+                </section> */}
 
                 <section id="projects">
                     <ProjectsContainer

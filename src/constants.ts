@@ -28,11 +28,11 @@ export const sections = [
     ],
     bulletPoints: [
       "Architected and owned multiple production systems across procurement, seller tooling, and campaign platforms, covering frontend, backend integrations, infrastructure, and performance optimization.",
-      "Delivered organization-wide engineering improvements that reduced deployment costs by 70%, improved page load performance by 1.5 seconds, and accelerated API latency by 10x.",
+      "Delivered organization-wide engineering improvements that reduced deployment costs by 70%; cut API latency by 10x.",
       "Built a campaign platform that sustained 8,300 users/minute during a high-profile movie launch without service degradation.",
       "Partnered with product, design, operations, and international supplier teams to ship high-quality features with responsive, pixel-perfect interfaces and strong reliability standards.",
     ],
-    role: "full stack / software engineer",
+    role: "software engineer (full stack)",
     active: true,
     expanded: true,
   },
@@ -52,9 +52,9 @@ export const sections = [
     bulletPoints: [
       "Reduced DB costs by 87% and CPU usage from 70% to 20% by eliminating redundant DB writes and optimizing backend logic for a service",
       "Restored ingestion reliability to 99.9% user coverage for a critical banking integration",
-      "Resolved extraction funnel failures impacting 300K workflows, 100K+ users; through debugging and pipeline fixes"
+      "Resolved extraction funnel failures impacting 300K workflows, 100K+ users, through debugging and pipeline fixes"
     ],
-    role: "backend developer / intern",
+    role: "backend intern",
     active: false,
     expanded: true,
   },
@@ -75,7 +75,7 @@ export const sections = [
       "Built a medical query platform, owning frontend and backend, with RAG-based retrieval and secure authentication, enabling real-time, context-aware responses.",
       "Engineered FastAPI backend for low-latency, structured outputs and scalable API design."
     ],
-    role: "full stack / intern",
+    role: "software engineering intern (full stack)",
     active: false,
     expanded: true,
   },
@@ -84,7 +84,7 @@ export const sections = [
 export const SignatureCardDetails = {
     title: "Signature",
     description:
-        "A platform to visualize and create music.",
+        "A platform to visualise and create music.",
     videoSrc: "/signature.mp4",
     posterSrc: "/signature-poster.webp",
     redirectUrl: "http://signature.rahulbaradol.in",
@@ -292,6 +292,7 @@ export const stories = [
       title: "Solving Flow Free With Algorithms!",
       description: "Attempt to come up with algorithms to solve Flow Free puzzles.",
       date: "28th October 2026",
+      isoDate: "2026-10-28",
       tags: ["Algorithms"],
       mediumUrl: "https://medium.com/@rahul.baradol.14/solving-flow-free-with-algorithms-5c460bc94fa1"
     },
@@ -301,6 +302,7 @@ export const stories = [
       title: "Breaking down Signature...",
       description: "9 months of building a platform to visualise and prototype music",
       date: "18th May 2026",
+      isoDate: "2026-05-18",
       tags: ["Creative Technology", "Digital Signal Processing"],
       mediumUrl: "https://medium.com/@rahul.baradol.14/breaking-down-signature-28e9b0d2904e"
     },
@@ -310,6 +312,7 @@ export const stories = [
       title: "How We Cut Store Page Data Transfer by 73%",
       description: "It so happens that we get so involved in shipping features for web apps, that we miss out on the tech debt creeping up.",
       date: "3rd May 2026",
+      isoDate: "2026-05-03",
       tags: ["Web Performance"],
       mediumUrl: "https://medium.com/@mail_99211/how-we-cut-store-page-data-transfer-by-73-9733af2dee20"
     },
@@ -319,6 +322,7 @@ export const stories = [
       title: "Scaling our web-app — managing data better",
       description: "A web app is only simple, until you break the abstraction",
       date: "1st December 2025",
+      isoDate: "2025-12-01",
       tags: ["Scalability"],
       mediumUrl: "https://medium.com/@mail_99211/scaling-our-web-app-managing-data-better-1ad980b75a2a"
     }
