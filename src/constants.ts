@@ -1,7 +1,7 @@
 import type { Experiment, PR } from "./types/types";
 
 export const skills = [
-  { redirect_url: "https://www.typescriptlang.org/", image_url: "/ts.webp", tech: "Typescript" },
+  { redirect_url: "https://www.typescriptlang.org/", image_url: "/ts.webp", tech: "TypeScript" },
   { redirect_url: "https://reactjs.org/", image_url: "/react.webp", tech: "React" },
   { redirect_url: "https://www.python.org/", image_url: "/python.webp", tech: "Python" },
   { redirect_url: "https://fastapi.tiangolo.com/", image_url: "/fastapi.webp", tech: "FastAPI" },
@@ -21,7 +21,7 @@ export const sections = [
     timeline: "July 2025 - Present",
     linkedinUrl: "https://www.linkedin.com/company/alaiy/posts/?feedView=all",
     techBadges: [
-        { redirect_url: "https://www.typescriptlang.org/", image_url: "/ts.webp", tech: "Typescript" },
+        { redirect_url: "https://www.typescriptlang.org/", image_url: "/ts.webp", tech: "TypeScript" },
         { redirect_url: "https://reactjs.org/", image_url: "/react.webp", tech: "React" },
         { redirect_url: "https://www.python.org/", image_url: "/python.webp", tech: "Python" },
         { redirect_url: "https://fastapi.tiangolo.com/", image_url: "/fastapi.webp", tech: "FastAPI" }
@@ -53,7 +53,7 @@ export const sections = [
       "Restored ingestion reliability to 99.9% user coverage for a critical banking integration",
       "Resolved extraction funnel failures impacting 300K workflows, 100K+ users, through debugging and pipeline fixes"
     ],
-    role: "Solution Engineer Intern (backend)",
+    role: "Backend Engineering Intern",
     active: false,
     expanded: true,
   },
@@ -64,7 +64,7 @@ export const sections = [
     timeline: "April 2024 - May 2024",
     linkedinUrl: "https://www.linkedin.com/company/cognitivelabai/",
     techBadges: [
-        { redirect_url: "https://www.typescriptlang.org/", image_url: "/ts.webp", tech: "Typescript" },
+        { redirect_url: "https://www.typescriptlang.org/", image_url: "/ts.webp", tech: "TypeScript" },
         { redirect_url: "https://reactjs.org/", image_url: "/react.webp", tech: "React" },
         { redirect_url: "https://nextjs.org/", image_url: "/nextjs.webp", tech: "Next.js" },
         { redirect_url: "https://www.python.org/", image_url: "/python.webp", tech: "Python" },
