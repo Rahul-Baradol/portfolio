@@ -47,7 +47,7 @@ export default function ExperienceCard({ companyName, companyLogo, websiteUrl, g
 
                                     <div className="flex flex-col gap-1.5 sm:gap-0">
                                         <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                                            <div className="text-sm italic">
+                                            <div className="text-md">
                                                 {companyName}
                                             </div>
 
@@ -112,13 +112,13 @@ export default function ExperienceCard({ companyName, companyLogo, websiteUrl, g
                                             </div>
                                         </div>
 
-                                        <div className="text-xs italic">
+                                        <div className="text-xs">
                                             {role}
                                         </div>
                                     </div>
                                 </div>
 
-                                <div className="text-xs italic text-muted-foreground flex flex-row items-center gap-1 sm:gap-2">
+                                <div className="text-xs text-muted-foreground flex flex-row items-center gap-1 sm:gap-2">
                                     <div>{timeline}</div>
                                 </div>
                             </div>

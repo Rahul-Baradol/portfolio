@@ -28,11 +28,10 @@ export const sections = [
     ],
     bulletPoints: [
       "Architected and owned multiple production systems across procurement, seller tooling, and campaign platforms, covering frontend, backend integrations, infrastructure, and performance optimization.",
-      "Delivered organization-wide engineering improvements that reduced deployment costs by 70%; cut API latency by 10x.",
-      "Built a campaign platform that sustained 8,300 users/minute during a high-profile movie launch without service degradation.",
-      "Partnered with product, design, operations, and international supplier teams to ship high-quality features with responsive, pixel-perfect interfaces and strong reliability standards.",
+      "Delivered organization-wide engineering improvements that reduced deployment costs by 70% and cut API latency by 10x.",
+      "Built a campaign platform that sustained 8,300 users/minute during a high-profile movie launch without service degradation."
     ],
-    role: "software engineer (full stack)",
+    role: "Software Engineer (full stack)",
     active: true,
     expanded: true,
   },
@@ -54,7 +53,7 @@ export const sections = [
       "Restored ingestion reliability to 99.9% user coverage for a critical banking integration",
       "Resolved extraction funnel failures impacting 300K workflows, 100K+ users, through debugging and pipeline fixes"
     ],
-    role: "backend intern",
+    role: "Solution Engineer Intern (backend)",
     active: false,
     expanded: true,
   },
@@ -75,7 +74,7 @@ export const sections = [
       "Built a medical query platform, owning frontend and backend, with RAG-based retrieval and secure authentication, enabling real-time, context-aware responses.",
       "Engineered FastAPI backend for low-latency, structured outputs and scalable API design."
     ],
-    role: "software engineering intern (full stack)",
+    role: "Software Engineering Intern (full stack)",
     active: false,
     expanded: true,
   },

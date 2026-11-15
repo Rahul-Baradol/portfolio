@@ -25,7 +25,7 @@ export function ExperimentCard({ title, description, slug, tags, date, className
                 <div className="flex flex-col gap-2 w-[90%]">
                     <div
                         data-vt-title={titleTransitionName("experiment", slug)}
-                        className="vt-title w-fit text-sm italic text-foreground group-hover:text-foreground dark:group-hover:text-cyan-300 transition-colors"
+                        className="vt-title w-fit text-sm text-foreground group-hover:text-foreground dark:group-hover:text-cyan-300 transition-colors"
                     >
                         {title}
                     </div>
@@ -44,7 +44,7 @@ export function ExperimentCard({ title, description, slug, tags, date, className
                 </Tooltip>
             </div>
 
-            <div className="flex flex-row items-center gap-2 text-[10px] text-muted-foreground italic">
+            <div className="flex flex-row items-center gap-2 text-[10px] text-muted-foreground">
                 <span>{date}</span>
                 <span>•</span>
                 <div className="flex flex-row gap-1 flex-wrap">
