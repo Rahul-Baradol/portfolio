@@ -50,7 +50,7 @@ export function BioCard() {
                         </p>
                         
                         <p className="text-sm leading-relaxed">
-                            I also love fingerstyle guitar on the side :)
+                            I also play fingerstyle guitar on the side :)
                         </p>
                     </div>
                 </div>
